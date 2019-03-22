@@ -140,6 +140,7 @@
     </div>
 </div>
 <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+<script src="./array.js"></script>
 <script>
     window.onload = function () {
         new Vue({
@@ -203,13 +204,7 @@
                 }
             },
             created() {
-                this.init([
-                    '1553239587-内存管理+如何处理常见的内存泄露-内存',
-                    '1553240709-防抖+节流+url+页面渲染-基础',
-                    '1553240927-网页解析的全过程(输入url到展示页面)-基础',
-                    '1553240896-浏览器渲染页面过程剖析-基础',
-                    '1553240795-闲聊JS中的apply和call-基础',
-                ]);
+                this.init(textList);
             },
         })
     };
