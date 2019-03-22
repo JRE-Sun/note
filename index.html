@@ -148,7 +148,7 @@
             data() {
                 return {
                     sourceList   : false,
-                    cateIndexList: [],
+                    cateIndexList: false,
                 }
             },
             methods: {
@@ -186,6 +186,7 @@
                             url  : `./${n}/index.html`,
                         };
                         if (typeof sourceList[cate] === 'undefined') {
+                            this.cateIndexList.push(cate);
                             sourceList[cate] = [];
                         }
                         sourceList[cate].push(options);
