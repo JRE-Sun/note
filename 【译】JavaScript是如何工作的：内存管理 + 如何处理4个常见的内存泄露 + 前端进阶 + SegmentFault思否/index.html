@@ -6,13 +6,13 @@
     <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>【译】JavaScript是如何工作的：内存管理 + 如何处理4个常见的内存泄露 - 前端进阶 - SegmentFault 思否</title>
+    <title>【译】JavaScript是如何工作的：内存管理 + 如何处理4个常见的内存泄露 + 前端进阶 + SegmentFault 思否-内存</title>
     
-<link rel="stylesheet" href="assets/1553155867-04b7a1551b9ea68bcf94f9ecf05846d5.css">
+<link rel="stylesheet" href="assets/1553239587-04b7a1551b9ea68bcf94f9ecf05846d5.css">
 
-<link rel="stylesheet" href="assets/1553155867-1bfac5bfd1d0b194dacc6adc89cc954a.css">
+<link rel="stylesheet" href="assets/1553239587-1bfac5bfd1d0b194dacc6adc89cc954a.css">
 
-<link rel="stylesheet" href="assets/1553155867-c86b6210e40f2befcca430cc00577148.css">
+<link rel="stylesheet" href="assets/1553239587-c86b6210e40f2befcca430cc00577148.css">
 <style>
 
 html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
@@ -149,7 +149,7 @@ object,embed{                -webkit-animation-duration:.001s;-webkit-animation-
                                         <div class="article__author clearfix">
                                             <div class="article__authorleft">
                                                 <a href="https://segmentfault.com/u/justjavac">
-                                                    <img class="avatar-40" src="assets/1553155867-fc82cf44e1e32920636ec77f3bd68dd8" alt="justjavac">
+                                                    <img class="avatar-40" src="assets/1553239587-fc82cf44e1e32920636ec77f3bd68dd8" alt="justjavac">
                                                 </a>
                                             </div>
                                             <div class="article__authorright">
@@ -158,7 +158,7 @@ object,embed{                -webkit-animation-duration:.001s;-webkit-animation-
                                         
                                                                                                 <i class="fa fa-check-circle userauth mr5" title="" data-toggle="tooltip" data-original-title="前端技术专家"></i>
                                                 
-                                                                                                <img src="assets/1553155867-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">44.9k</span>
+                                                                                                <img src="assets/1553239587-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">44.9k</span>
 
                                                                                                 发布于
                                                 <a href="https://segmentfault.com/blog/justjavac">前端进阶</a>
@@ -205,7 +205,7 @@ object,embed{                -webkit-animation-duration:.001s;-webkit-animation-
 <p>即使使用高级级语言，开发者也应该对于内存管理有一定的理解（至少有基本的理解）。有时自动内存管理存在一些问题（例如垃圾回收实现可能存在缺陷或者不足），开发者必须弄明白这些问题，以便找一个合适解决方法。</p>
 <h3 id="articleHeader1">内存生命周期</h3>
 <p>无论你用哪一种编程语言，内存生命周期几乎总是一样的：</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411126" src="assets/1553155867-525a21e30149b3bf0ab86e8e732f5369" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411126" src="assets/1553239587-525a21e30149b3bf0ab86e8e732f5369" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <p>Here is an overview of what happens at each step of the cycle:<br>这是对生命周期中的每一步大概的说明：</p>
 <ul>
 <li>
@@ -236,7 +236,7 @@ object,embed{                -webkit-animation-duration:.001s;-webkit-animation-
 <p>编译器会插入与操作系统交互的代码，来请求栈中必要大小的字节来储存变量。</p>
 <p>在上面的例子中，编辑器知道每个变量准确的地址。事实上，无论什么时候我们写变量<code>n</code>，将会在内部被翻译成类似“memory address 4127963”的语句。</p>
 <p>注意，如果我们尝试访问<code>x[4]</code>的内存（开始声明的x[4]是长度为4的数组，<code>x[4]</code>表示第五个元素），我们会访问m的数据。那是因为我们正在访问一个数组里不存在的元素，m比数组中实际分配内存的最后一个元素<code>x[3]</code>要远4个字节，可能最后的结果是读取（或者覆盖）了<code>m</code>的一些位。这肯定会对其他程序产生不希望产生的结果。</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411127" src="assets/1553155867-36659c7fcfd1a91f8154ee993b88a679" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411127" src="assets/1553239587-36659c7fcfd1a91f8154ee993b88a679" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <p>当函数调用其他函数的时候，每一个函数被调用的时候都会获得自己的栈块。在自己的栈块里会保存函数内所有的变量，还有一个程序计数器会记录变量执行时所在的位置。当函数执行完之后，会释放它的内存以作他用。</p>
 <h4>动态分配</h4>
 <p>不幸的是，事情并不是那么简单，因为在编译的时候我们并不知道一个变量将会需要多少内存。假设我们做了下面这样的事：</p>
@@ -248,7 +248,7 @@ object,embed{                -webkit-animation-duration:.001s;-webkit-animation-
 </code></pre>
 <p>编译器不知道这个数组需要多少内存，因为数组大小取决于用户提供的值。</p>
 <p>因此，此时不能在栈上分配空间。程序必须在运行时向操作系统请求够用的空间。此时内存从<strong>堆空间</strong>中被分配。静态与动态分配内存之间的不同在下面的表格中被总结出来：</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411128" src="assets/1553155867-217fee0030a4a98852ffca8ca283805e" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411128" src="assets/1553239587-217fee0030a4a98852ffca8ca283805e" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <p>静态分配内存与动态分配内存的区别。</p>
 <p>为了完全理解动态内存是如何分配的，我们需要花更多的时间在<strong>指针</strong>上，这个可能很大程度上偏离了这篇文章的主题。如果你有兴趣学习更多的知识，那就在评论中让我知道，我就可以在之后的文章中写更多关于指针的细节。</p>
 <h4>JavaScript中的内存分配</h4>
@@ -345,7 +345,7 @@ o4 = <span class="hljs-literal">null</span>;  <span class="hljs-regexp">//</span
 
 f();
 </code></pre>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411129" src="assets/1553155867-7a1ac824a246935b0331187a3c23d317" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411129" src="assets/1553239587-7a1ac824a246935b0331187a3c23d317" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <h4>标记清除算法</h4>
 <p>为了决定一个对象是否被需要，这个算法用于确定是否可以找到某个对象。</p>
 <p>这个算法包含以下步骤。</p>
@@ -354,14 +354,14 @@ f();
 <li>所有的根都被检查和标记成活跃的（不是垃圾），所有的子变量也被递归检查。所有可能从根元素到达的都不被认为是垃圾。</li>
 <li>所有没有被标记成活跃的内存都被认为是垃圾。垃圾回收器就可以释放内存并且把内存还给操作系统。</li>
 </ol>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411130" src="assets/1553155867-194b4a85f5a33567b8625edd2fdbcd04" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411130" src="assets/1553239587-194b4a85f5a33567b8625edd2fdbcd04" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <p>上图就是标记清除示意。</p>
 <p>这个算法就比之前的（引用计算）要好些，因为“一个对象没有被引用”导致这个对象不能被访问。相反，正如我们在循环引用的示例中看到的，对象不能被访问到，不一定不存在引用。</p>
 <p>2012年起，所有浏览器都内置了标记清除垃圾回收器。在过去几年中，JavaScript垃圾回收领域中的所有改进（代/增量/并行/并行垃圾收集）都是由这个算法（标记清除法）改进实现的，但并不是对垃圾收集算法本身的改进，也没有改变它确定对象是否可达这个目标。</p>
 <p>推荐<a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection" rel="nofollow noreferrer" target="_blank">一篇文章</a>，其中有关于跟踪垃圾回收的细节，包括了标记清除法和它的优化算法。</p>
 <h4>循环引用不再是问题</h4>
 <p>在上面的例子中（循环引用的那个），在函数执行完之后，这个2个对象没有被任何可以到达的全局对象所引用。因此，他们将会被垃圾回收器发现为不可到达的。</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411131" src="assets/1553155867-9e50498f081ae48022950a3f2fa55d02" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411131" src="assets/1553239587-9e50498f081ae48022950a3f2fa55d02" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <p>尽管在这两个对象之间有相互引用，但是他们不能从全局对象上到达。</p>
 <h4>垃圾回收器的反常行为</h4>
 <p>尽管垃圾回收器很方便，但是他们有一套自己的方案。其中之一就是不确定性。换句话说，GC是不可预测的。你不可能知道一个回收器什么时候会被执行。这意味着程序在某些情况下会使用比实际需求还要多的内存。在其他情况下，在特别敏感的应用程序中，可能会出现短停顿。尽管不确定意味着不能确定回收工作何时执行，但大多数GC实现都会在分配内存的期间启动收集例程。如果没有内存分配，大部分垃圾回收就保持空闲。参考下面的情况。</p>
@@ -373,7 +373,7 @@ f();
 <p>在这种情况下，大多数垃圾回收实现都不会做进一步的回收。换句话说，尽管这里有不可达的引用变量可供回收，回收器也不会管。严格讲，这不是泄露，但结果却会占用比通常情况下更多的内存。</p>
 <h4>什么是内存泄漏</h4>
 <p>内存泄漏基本上就是不再被应用需要的内存，由于某种原因，没有被归还给操作系统或者进入可用内存池。</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411132" src="assets/1553155867-356f8be6dd1b4e0fe065ad6885ad6cf1" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411132" src="assets/1553239587-356f8be6dd1b4e0fe065ad6885ad6cf1" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <p>编程语言喜欢不同的管理内存方式。然而，一段确定的内存是否被使用是一个不可判断的问题。换句话说，只有开发者才能弄清楚，是否一段内存可以被还给操作系统。</p>
 <p>某些编程语言为开发者提供了释放内存功能。另一些则期待开发者清楚的知道一段内存什么时候是没用的。Wikipedia有一篇非常好的关于内存管理的文章。</p>
 <h4>4种常见的JavaScript内存泄漏</h4>
@@ -486,10 +486,10 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
 <p>一旦你整合essionStack到你的生产应用中，它就开始记录所有的事情：DOM变化、用户交互、JS异常、堆栈跟踪、失败的网络请求、调试信息，等等。</p>
 <p>通过SessionStack，你可以回放应用中的问题，看到问题对用户的影响。所有这些都不会对你的应用产生性能的影响。因为用户可以重新加载页面或者在应用中跳转，所有的观察者、拦截器、变量分配都必须合理处置。以免造成内存泄漏，也预防增加整个应用的内存占用。</p>
 <p>这是一个免费的计划，你现在可以尝试一下。</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000011411133" src="assets/1553155867-bea54ef8b63c0804732cefb8de19f35a" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011411133" src="assets/1553239587-bea54ef8b63c0804732cefb8de19f35a" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
 <hr>
 <p>欢迎关注我的公众号，关注前端文章：</p>
-<p><span class="img-wrap"><img data-src="/img/remote/1460000004841853" src="assets/1553155867-73873368a8b5bcf67398477acd6c6202" alt="justjavac微信公众号" title="justjavac微信公众号" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000004841853" src="assets/1553239587-73873368a8b5bcf67398477acd6c6202" alt="justjavac微信公众号" title="justjavac微信公众号" style="cursor: pointer; display: inline;"></span></p>
 <h4>参考资料</h4>
 <ul>
 <li><a href="http://www-bcf.usc.edu/~dkempe/CS104/08-29.pdf" rel="nofollow noreferrer" target="_blank">http://www-bcf.usc.edu/~dkempe/CS104/08-29.pdf</a></li>
@@ -505,7 +505,7 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
                 </div>
                                                 
                 <div class="clearfix mt10">
-                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553155867-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="hidden-xs"><a href="https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec" target="_blank">阅读原文</a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000011411121" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553239587-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="hidden-xs"><a href="https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec" target="_blank">阅读原文</a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000011411121" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
                     <div class="pull-right mt-10 hidden-xs">
                         <div class="widget-share__full" data-text="【译】JavaScript是如何工作的：内存管理 + 如何处理4个常见的内存泄露" data-url="https://segmentfault.com/a/1190000011411121?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5V2Iv"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000011411121?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5V2Iv"><span class="icon-sn-dotted" data-original-title="" title=""></span></a></div>
 
@@ -513,7 +513,7 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
                     </div>
                 </div>
                 <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000011411121" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
-                                <span id="mainLikeNum">17 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000011411121" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">90</span></button><br><button type="button" data-id="1190000011411121" class="btn btn-danger btn-lg mt15 article__reward-btn">
+                                <span id="mainLikeNum">18 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000011411121" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">90</span></button><br><button type="button" data-id="1190000011411121" class="btn btn-danger btn-lg mt15 article__reward-btn">
                                     赞赏支持
                                 </button></div><div class="mt30 mb30 text-center article__reward-info"><span class="mr10">如果觉得我的文章对你有用，请随意赞赏</span></div>                
                                 
@@ -525,7 +525,7 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
                     
                 </div>
 
-                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000014784986" title="JavaScript 工作原理之三－内存管理及如何处理 4 类常见的内存泄漏问题(译)" target="_blank">JavaScript 工作原理之三－内存管理及如何处理 4 类常见的内存泄漏问题(译)</a><span class="text-muted">Troland</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/html5">html5</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000014640362" title="JavaScript工作原理（三）：内存管理和4种常见的内存泄漏" target="_blank">JavaScript工作原理（三）：内存管理和4种常见的内存泄漏</a><span class="text-muted">xupea</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000014770145" title="JavaScript 工作原理之二－如何在 V8 引擎中书写最优代码的 5 条小技巧(译)" target="_blank">JavaScript 工作原理之二－如何在 V8 引擎中书写最优代码的 5 条小技巧(译)</a><span class="text-muted">Troland</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000011289535/" title="JavaScript如何工作：V8引擎深入探究 + 优化代码的5个技巧（译文）" target="_blank">JavaScript如何工作：V8引擎深入探究 + 优化代码的5个技巧（译文）</a><span class="text-muted">PennyWang</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E7%BF%BB%E8%AF%91">翻译</a></li><li><a href="http://segmentfault.com/a/1190000012079022" title="JavaScript中的内存泄漏以及如何处理" target="_blank">JavaScript中的内存泄漏以及如何处理</a><span class="text-muted">葡萄城控件</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E8%91%A1%E8%90%84%E5%9F%8E%E6%8E%A7%E4%BB%B6">葡萄城控件</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000011338508" title="阿里云前端周刊 - 第 26 期" target="_blank">阿里云前端周刊 - 第 26 期</a><span class="text-muted">Houfeng</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/babel">babel</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/node.js">node.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000014593649" title="JavaScript工作原理（二）：V8引擎和5招优化" target="_blank">JavaScript工作原理（二）：V8引擎和5招优化</a><span class="text-muted">xupea</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000015640488" title="JavaScript 工作原理之十四－解析，语法抽象树及最小化解析时间的 5 条小技巧" target="_blank">JavaScript 工作原理之十四－解析，语法抽象树及最小化解析时间的 5 条小技巧</a><span class="text-muted">Troland</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html5">html5</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li></ul></div></div>
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000015453413" title="在Vue中使用Echarts的两种方式" target="_blank">在Vue中使用Echarts的两种方式</a><span class="text-muted">Yvonne</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/echarts">echarts</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a></li><li><a href="http://segmentfault.com/a/1190000008489881" title="使用 yarn global 代替 npm -g" target="_blank">使用 yarn global 代替 npm -g</a><span class="text-muted">边城</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/yarn">yarn</a></li><li><a href="http://segmentfault.com/a/1190000007124470" title="Vue2.0 新手完全填坑攻略—从环境搭建到发布——Jinkey 原创" target="_blank">Vue2.0 新手完全填坑攻略—从环境搭建到发布——Jinkey 原创</a><span class="text-muted">Jinkey</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-router">vue-router</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-resource">vue-resource</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-cli">vue-cli</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/webpack">webpack</a></li><li><a href="http://segmentfault.com/a/1190000002511877" title="Chrome 控制台console的用法（学了之后对于调试js可是大大有用的哦）" target="_blank">Chrome 控制台console的用法（学了之后对于调试js可是大大有用的哦）</a><span class="text-muted">JingDing</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/chrome-devtools">chrome-devtools</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/debug">debug</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/console">console</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/chrome">chrome</a></li><li><a href="http://segmentfault.com/a/1190000014523888" title="[折腾日记]win10 ,ubuntu双系统安装避坑指南" target="_blank">[折腾日记]win10 ,ubuntu双系统安装避坑指南</a><span class="text-muted">zinghd</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/windows">windows</a></li><li><a href="http://segmentfault.com/a/1190000006160703" title="JavaScript获取时间戳与时间戳转化" target="_blank">JavaScript获取时间戳与时间戳转化</a><span class="text-muted">silenceboy</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E6%97%B6%E9%97%B4%E6%88%B3">时间戳</a></li><li><a href="http://segmentfault.com/a/1190000010815403" title="【nuxtjs 指南】解决nuxtjs本地开发跨域和防止路由与api冲突问题" target="_blank">【nuxtjs 指南】解决nuxtjs本地开发跨域和防止路由与api冲突问题</a><span class="text-muted">starkwang</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/ssr">ssr</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB">前后端分离</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E8%B7%A8%E5%9F%9F">跨域</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/nuxt.js">nuxt.js</a></li><li><a href="http://segmentfault.com/a/1190000000357534" title="Jade —— 源于 Node.js 的 HTML 模板引擎" target="_blank">Jade —— 源于 Node.js 的 HTML 模板引擎</a><span class="text-muted">weakish</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D">开源项目介绍</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/web">web</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E">模板引擎</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/node.js">node.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/jade">jade</a></li></ul></div></div>
 
                 
         <div class="comments--news comments--default comments--article 
@@ -542,7 +542,7 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
                                 <div class="comments-list">
                 <div class="comments-item" data-id="1050000014746925">
             <div class="pull-left">
-                <a href="https://segmentfault.com/u/ad5441" target="_blank"><img class="avatar-32 " src="assets/1553155867-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+                <a href="https://segmentfault.com/u/ad5441" target="_blank"><img class="avatar-32 " src="assets/1553239587-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
             </div>
             <div class="comments-content">
                 <div class="comment-trigger">
@@ -584,7 +584,7 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
 
                                     <div class="comments-box" id="goToReplyEditor">
                 <div class="pull-left">
-                    <img class="avatar-32 " src="assets/1553155867-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
+                    <img class="avatar-32 " src="assets/1553239587-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
                 </div>
                 <div class="comments-box-content">
                     <form action="/api/article/1190000011411121/comments/add">
@@ -616,7 +616,7 @@ setInterval(replaceThing, <span class="hljs-number">1000</span>);
         <!-- clipping information -->
         <div class="clipping-information">
           <label>原网址: <a href="https://segmentfault.com/a/1190000011411121" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
-          <label>创建于: 2019-03-21 16:11:07</label><br />
+          <label>创建于: 2019-03-22 15:26:27</label><br />
           <label>目录: default</label><br />
           <label>标签: 无</label>
         </div>

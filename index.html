@@ -5,11 +5,198 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>前端买牛</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+
+        *, *:before,
+        *:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            letter-spacing: .25px;
+        }
+
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #FCFCFC;
+            color: #555;
+            font-size: 18px;
+        }
+
+        a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #app {
+            padding: 20px 100px;
+        }
+
+        .article-list {
+            overflow: hidden;
+            max-height: 0;
+            transition: .3s;
+            padding-left: 30px;
+        }
+
+        .article-name {
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .article-name:hover, .article-name.active {
+            background: #90979C;
+            color: #FCFCFC;
+        }
+
+        .article-list.active {
+            max-height: 1000000000000px;
+        }
+
+        .article-list a {
+            display: inline-block;
+            padding: 10px 20px;
+        }
+
+        .article-list span {
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-    <a href="./20190321203617-移动web性能优化从入门到进阶-掘金/index.html">移动web性能优化从入门到进阶-掘金</a>
-    <a href="./20190321181131-JS面试之数组的几个不low操作-掘金/index.html">JS面试之数组的几个不low操作-掘金</a>
-    <a href="./20190321161107-【译】JavaScript是如何工作的：内存管理-+-如何处理4个常见的内存泄露-前端进阶-SegmentFault-思否/index.html">【译】JavaScript是如何工作的：内存管理-+-如何处理4个常见的内存泄露-前端进阶-SegmentFault-思否</a>
-    <a href="./2019-03-21-1553155762-容易被遗忘的前端基础：JavaScript-内存详解-掘金/index.html">容易被遗忘的前端基础：JavaScript-内存详解-掘金</a>
+<div id="app" v-cloak>
+    <template v-for="(source,key) in sourceList">
+        <span class="article-name"
+              :class="{active : currCateIndex === key}"
+              @click="clickCate(key)">
+            {{ key }}
+        </span>
+        <div class="article-list"
+             :class="{active : currCateIndex === key}">
+            <a v-for="article in source"
+               target="_blank"
+               :href="article.url">{{ article.title }} <span>{{ article.date }}</span></a>
+        </div>
+    </template>
+</div>
+<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+<script>
+    window.onload = function () {
+        new Vue({
+            el     : "#app",
+            data() {
+                return {
+                    sourceList   : false,
+                    currCateIndex: -1,
+                }
+            },
+            methods: {
+                clickCate(key) {
+                    if (key === this.currCateIndex) {
+                        this.currCateIndex = -1;
+                        return;
+                    }
+                    this.currCateIndex = key;
+                },
+                formatDateTime(date) {
+                    let y      = date.getFullYear();
+                    let m      = date.getMonth() + 1;
+                    m          = m < 10 ? ('0' + m) : m;
+                    let d      = date.getDate();
+                    d          = d < 10 ? ('0' + d) : d;
+                    let h      = date.getHours();
+                    h          = h < 10 ? ('0' + h) : h;
+                    let minute = date.getMinutes();
+                    minute     = minute < 10 ? ('0' + minute) : minute;
+                    let second = date.getSeconds();
+                    second     = second < 10 ? ('0' + second) : second;
+                    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+                },
+                init(sourceArray) {
+                    let sourceList = {};
+                    sourceArray.forEach(n => {
+                        let tempData = n.split('-');
+                        let cate     = tempData[2];
+                        let options  = {
+                            date : this.formatDateTime(new Date(tempData[0] * 1000)),
+                            title: tempData[1],
+                            url  : `./${n}/index.html`,
+                        };
+                        if (typeof sourceList[cate] === 'undefined') {
+                            sourceList[cate] = [];
+                        }
+                        sourceList[cate].push(options);
+                        tempData = null;
+                        cate     = null;
+                        options  = null;
+                    });
+                    this.sourceList = sourceList;
+                }
+            },
+            created() {
+                this.init([
+                    '1553239587-【译】JavaScript是如何工作的：内存管理 + 如何处理4个常见的内存泄露 + 前端进阶 + SegmentFault思否-内存',
+                ]);
+            },
+        })
+    };
+</script>
 </body>
 </html>
