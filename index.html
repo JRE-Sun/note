@@ -92,6 +92,7 @@
             max-height: 0;
             transition: .3s;
             padding-left: 30px;
+            margin-top: 10px;
         }
 
         .article-name {
@@ -101,7 +102,7 @@
             cursor: pointer;
         }
 
-        .article-name:hover, .article-name.active {
+        .article-name.active {
             background: #90979C;
             color: #FCFCFC;
         }
@@ -113,6 +114,7 @@
         .article-list a {
             display: inline-block;
             padding: 10px 20px;
+            width: 50%;
         }
 
         .article-list span {
@@ -122,19 +124,20 @@
 </head>
 <body>
 <div id="app" v-cloak>
-    <template v-for="(source,key) in sourceList">
-        <span class="article-name"
-              :class="{active : currCateIndex === key}"
-              @click="clickCate(key)">
+    <div v-for="(source,key) in sourceList"
+         style="padding:10px 0">
+            <span class="article-name"
+                  :class="{active : cateIndexList.indexOf(key)>-1}"
+                  @click="clickCate(key)">
             {{ key }}
         </span>
         <div class="article-list"
-             :class="{active : currCateIndex === key}">
+             :class="{active : cateIndexList.indexOf(key)>-1}">
             <a v-for="article in source"
                target="_blank"
                :href="article.url">{{ article.title }} <span>{{ article.date }}</span></a>
         </div>
-    </template>
+    </div>
 </div>
 <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
 <script>
@@ -144,16 +147,17 @@
             data() {
                 return {
                     sourceList   : false,
-                    currCateIndex: -1,
+                    cateIndexList: [],
                 }
             },
             methods: {
                 clickCate(key) {
-                    if (key === this.currCateIndex) {
-                        this.currCateIndex = -1;
+                    let index = this.cateIndexList.indexOf(key);
+                    if (index > -1) {
+                        this.cateIndexList.splice(index, 1);
                         return;
                     }
-                    this.currCateIndex = key;
+                    this.cateIndexList.push(key);
                 },
                 formatDateTime(date) {
                     let y      = date.getFullYear();
@@ -175,6 +179,7 @@
                         let tempData = n.split('-');
                         let cate     = tempData[2];
                         let options  = {
+                            time : tempData[0],
                             date : this.formatDateTime(new Date(tempData[0] * 1000)),
                             title: tempData[1],
                             url  : `./${n}/index.html`,
@@ -187,16 +192,27 @@
                         cate     = null;
                         options  = null;
                     });
+
+                    Object.keys(sourceList).forEach(n => {
+                        sourceList[n] = sourceList[n].sort((a, b) => {
+                            return b.time - a.time;
+                        })
+                    });
+
                     this.sourceList = sourceList;
                 }
             },
             created() {
                 this.init([
-                    '1553239587-JavaScript是如何工作的:内存管理+如何处理4个常见的内存泄露+前端进阶+SegmentFault思否-内存',
+                    '1553239587-内存管理+如何处理常见的内存泄露-内存',
+                    '1553240709-防抖+节流+url+页面渲染-基础',
+                    '1553240927-网页解析的全过程(输入url到展示页面)-基础',
+                    '1553240896-浏览器渲染页面过程剖析-基础',
+                    '1553240795-闲聊JS中的apply和call-基础',
                 ]);
             },
         })
     };
-</script>  
+</script>
 </body>
 </html>

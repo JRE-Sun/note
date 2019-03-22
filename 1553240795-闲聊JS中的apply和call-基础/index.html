@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://www.cnblogs.com/alai88/p/5518441.html -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>闲聊JS中的apply和call-基础</title>
+    
+<link type="text/css" rel="stylesheet" href="assets/1553240795-78ceed8352e7a02cfc0710e6f69a8d9a.css">
+
+<link id="MainCss" type="text/css" rel="stylesheet" href="assets/1553240795-e5d7afffb8f8c965ab5af6fc1fa9d0c9.css">
+
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="assets/1553240795-13db6019cd8afbdb39f87f3ece055b7f.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 253, 250) !important;
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="home" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV id="main" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV id="mainContent" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="forFlow" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div id="post_detail" class="mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/alai88/p/5518441.html">兄台息怒，关于arguments，您的想法和大神是一样一样的----闲聊JS中的apply和call</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>JavaScript提供了apply和call两种调用方式来确定函数体中this的指向，表现出来的特征就是：对象可以'借用'其他对象的方法。<br>之前的几篇博客回顾了一些Web控件的一些开发方法，我们聊了<a href="http://www.cnblogs.com/alai88/p/5281602.html" target="_blank">如何实现一个自定义的组合框</a>，也聊了<a href="http://www.cnblogs.com/alai88/p/5412169.html" target="_blank">一个相对复杂一点的地址控件</a>的开发，从上一篇开始，开始聊一些JavaScript语言本身的话题，回顾了<a href="http://www.cnblogs.com/alai88/p/5491466.html" target="_blank">闭包和原型继承</a>，今天我们就一起来聊聊apply和call这两种调用方式的前世今生。<br>当然，尽管主题在变，但是<strong>基于业务场景来剖析理论知识</strong>的写作风格不会变。<br>我们还是从一个生活中的例子说起：<br>小明家有水果，也有一台'果汁机'，小红家也有水果，但是没有果汁机。有一天，小红也想把水果榨成果汁来喝，这时候，小红会怎么做呢?当然就是小红可以"借"小明家的果汁机用一下，用完之后再回去，因为不用时放在自己家里还占地方，下次要用，再去借就是了，因为'互助'是JavaScript社区的美德。<br>我们看看如何用JavaScript展示这种情况：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">var</span> xiaoming =<span style="color: #000000;"> {
+    name:</span>'小明'<span style="color: #000000;">,
+    fruit:</span>'橙子'<span style="color: #000000;">,
+    makeJuice:</span><span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+        console.log( </span>'正在榨：' + <span style="color: #0000ff;">this</span>.name + ' 家的' + <span style="color: #0000ff;">this</span>.fruit + '汁!'<span style="color: #000000;">);
+    }
+}
+</span><span style="color: #0000ff;">var</span> xiaohong =<span style="color: #000000;"> {
+    name:</span>'小红'<span style="color: #000000;">,
+    fruit:</span>'苹果'<span style="color: #000000;">
+}
+xiaoming.makeJuice( );                 </span><span style="color: #008000;">//</span><span style="color: #008000;">输出：正在榨：小明 家的橙子汁！</span>
+xiaoming.makeJuice.apply( xiaohong );  <span style="color: #008000;">//</span><span style="color: #008000;">输出：正在榨：小红 家的苹果汁！</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>apply方法最核心的意义就是这样，显然，如果某个函数体当中根本没有引用this，那是不是也就失去了调用apply的意义？也并非如此，有时候还需要处理传入的参数。</p>
+<p>进一步来看，如果调用的函数需要传递参数，那么调用apply时要如何处理呢？我们改进一下上面的例子，假设榨果汁的时候，需要传入参数：加水的量以及要榨多长时间。<br>这时候该如何使用apply呢？</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">var</span> xiaoming =<span style="color: #000000;"> {
+    name:</span>'小明'<span style="color: #000000;">,
+    fruit:</span>'橙子'<span style="color: #000000;">,
+    makeJuice:</span><span style="color: #0000ff;">function</span><span style="color: #000000;">( water, time ){
+        console.log( </span>'正在榨：' + <span style="color: #0000ff;">this</span>.name + ' 家的' + <span style="color: #0000ff;">this</span>.fruit + '汁，加水：' + water + ' mL，用时：' + time + ' 分钟。'<span style="color: #000000;">);
+    }
+}
+</span><span style="color: #0000ff;">var</span> xiaohong =<span style="color: #000000;"> {
+    name:</span>'小红'<span style="color: #000000;">,
+    fruit:</span>'苹果'<span style="color: #000000;">
+}
+</span><span style="color: #0000ff;">var</span> task_info = [ 500 , 1 ] ;          <span style="color: #008000;">//</span><span style="color: #008000;">把要传入的参数放到一个数组里</span>
+xiaoming.makeJuice.apply( xiaohong , task_info ) ;  <span style="color: #008000;">//</span><span style="color: #008000;">输出：正在榨：小红 家的苹果汁，加水：500 mL，用时：1 分钟。</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>【分析】<br>在使用apply方式使用一个函数时：</p>
+<ul>
+<li>第1个参数为thisObject，调用时采用传入的thisObject代替函数体中this的指向。</li>
+<li>第2个参数传入一个数组，函数会用数组的值取代"参数列表"。</li>
+</ul>
+<p>回到上面的例子，相当于这样的场景：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">小红：小明，你帮我榨一下苹果汁吧。
+<span style="background-color: #ffcc00;">小明：可以啊，你把我家的榨汁机拿去用就可以了。
+     用之前你得先想清楚</span></span><span style="background-color: #ffcc00;">'准备加多少水，要榨几分钟'</span><span style="color: #000000;"><span style="background-color: #ffcc00;">。</span>
+小红：好的。</span></pre>
+</div>
+<p><span style="line-height: 1.5;">小红把榨汁机拿来之后，就先把'<strong>加 500mL 水，榨 1 分钟</strong>'的内容写到'纸'上，准备好原材料之后，就按'纸'上的信息操作榨汁机，避免手忙脚乱。</span>用来写任务相关信息的<strong>'纸'</strong>就相当于在apply方式调用时用来传递参数列表信息的<strong>数组</strong>。</p>
+<p>说到参数列表，自然就想到了arguments，在调用函数时，函数的运行时环境会自动产生一个变量arguments指向实参列表。很多资料上都会说，arguments是具有数组某些特性的'类数组'(伪数组)。那么，当使用apply方式调用函数时，<strong>传入的第2个参数是否可以是一个像arguments这样的'类数组'(伪数组)呢？</strong><br>我们再构造一个场景来验证一下，最近小区又搬来了一位王奶奶，有一天王奶奶也想喝果汁，她知道小明家有榨汁机，本来想找小明帮忙，但是小明出差了。小明跟王奶奶说，你想好了要多少量的果汁以及想打多长时间，找小红帮忙就可以了。<br>现在，我们就来实现这样的场景，重点在于王奶奶求助小红的函数。</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">var</span> wang =<span style="color: #000000;"> {
+    name: </span>'王奶奶'<span style="color: #000000;">,
+    helpFromXiaohong: </span><span style="color: #0000ff;">function</span><span style="color: #000000;">( water , time ){
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">小红自己没有榨汁机，还是要使用小明的榨汁机，使用apply方式调用函数</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;">王奶奶的要求 与 使用榨汁机时要准备的'任务内容'完全一样，</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;">所以，这里直接传入arguments看看</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;">至于水果嘛，小红当然不会向王奶奶要了，就用自己家的</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;">于是，调用方式如下：</span>
+<span style="color: #000000;">        xiaoming.makeJuice.apply( xiaohong , arguments ) ;
+    }
+}
+wang.helpFromXiaohong( </span>400 , 2 ) ;   <span style="color: #008000;">//</span><span style="color: #008000;">老人家喝的量不多，但是希望把水果打烂一点</span>
+
+<span style="color: #008000;">//</span><span style="color: #008000;">输出：正在榨：小红 家的苹果汁，加水：400 mL，用时：2 分钟。</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>发现和我们预期的内容是完全一样的，这就意味着，传入apply中的第二个参数，<br>也可以是一个'类数组'，最常见的当然就是直接将arguments传入作为第2个参数。<br>'类数组'的特征：</p>
+<ul>
+<li>具有一个length成员，'表示'包含的'元素个数'。</li>
+<li>能够用1，2，3等数字来检索它的成员。</li>
+</ul>
+<p>到现在我们已经对apply调用方式有了一些认识，再回到我们日常的工作当中。我们经常会看到这样的调用方式：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> w = Array.prototype.shift.apply( arguments );</pre>
+</div>
+<p><span style="line-height: 1.5;">这行代码表示什么意思也许大家都很清楚，就是将隐含的'类数组'arguments的第一个参数值取出来，</span><span style="line-height: 1.5;">然后赋给变量w。</span></p>
+<p><span style="line-height: 1.5;">【思考】</span></p>
+<p><strong><span style="line-height: 1.5;">1. 为什么不直接用arguments调用shift函数呢？</span></strong></p>
+<p>因为arguments不是真正的'数组'，从JavaScript的语言特征来说，arguments仅仅是具有某些'数组特征'的对象。它不是通过new Array()的方式创建，它的原型链也没有链向'Array.prototype'，所以不能直接使用shift()函数。<br>"靠，既然是语言自带的东东，为什么不直接设计成数组呢？搞得老子每次想用一下数组的相关方法还得拐个弯。"<br>兄台息怒，其实这样想的人并不是您一个人，包括JavaScript的大师老道(Douglas Crockfod)也是这么想的，正所谓英雄所见略同。</p>
+<p><strong><span style="line-height: 1.5;">2.&nbsp;如何理解var w = Array.prototype.shift.apply( arguments );这一个语句呢？</span></strong></p>
+<p>我们了解到，根据apply的调用模式，它会用传入的第1个参数代替函数体中的this。从这里来看，就是用arguments这个对象(具有'数组'特征的特殊对象)代替了Array.prototype.shift中的this。</p>
+<p>   我们知道，如果用一个数组对象去调用shift是没有问题的。<br>   例如：</p>
+<div class="cnblogs_code">
+<pre>console.log( ['A','B','C'].shift() ) ; <span style="color: #008000;">//</span><span style="color: #008000;">输出: A</span></pre>
+</div>
+<p><span style="line-height: 1.5;">因为在['A','B','C'].shift()的调用过程中，没有传入任何参数，所以，可以推断Array.prototype.shift的函数体中，肯定引用了this。通过对this.length 以及 this[0] 这种方式的处理来计算运算结果，</span></p>
+<p>显然，这个特殊的对象arguments进行arguments.length 以及 arguments[0] 这样的使用方式是没有问题的，是能体现出它的'数组特征'的，所以，通过调用Array.prototype.shift.apply( arguments );能够获得传入的第1个参数值。</p>
+<p>为了增加'画面感'，我们把它放入前面王奶奶求助的函数中：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">var</span> wang =<span style="color: #000000;"> {
+    name: </span>'王奶奶'<span style="color: #000000;">,
+    helpFromXiaohong: </span><span style="color: #0000ff;">function</span><span style="color: #000000;">( water , time ){
+        </span><span style="color: #0000ff;">var</span> w =<span style="color: #000000;"> Array.prototype.shift.apply( arguments );
+        console.log( </span>'王奶奶想喝 ' + w + ' mL的果汁。'<span style="color: #000000;"> );  
+        xiaoming.makeJuice.apply( xiaohong , arguments ) ;
+        }
+    }
+   wang.helpFromXiaohong( </span>400 , 2 ) ;  </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>&gt;期望输出:<br>   王奶奶想喝 400 mL的果汁。<br>   正在榨：小红 家的苹果汁，加水：400 mL，用时：2 分钟。<br>&gt;实际输出:<br>   王奶奶想喝 400 mL的果汁。<br>   正在榨：小红 家的苹果汁，加水：2 mL，用时：undefined 分钟。</p>
+<p>【分析】</p>
+<p>1. 对于我们刚才想验证的结论，发现我们的假设是正确的。arguments对象成功'借用'了数组的shift函数，所以输出：王奶奶想喝 400 mL的果汁。<br>2. 但是，在下面的调用中，居然输出的是：正在榨：小红 家的苹果汁，加水：2 mL，用时：undefined 分钟。<br>   </p>
+<p> 这个很好理解，shift函数的作用是：'弹出'数组的'第1个元素'并返回。这就意味着，经过var w = Array.prototype.shift.apply( arguments );调用之后，arguments中的内容也发生了变化，arguments[0]的值已经不是400!</p>
+<p>这也再一次说明：</p>
+<ul>
+<li>apply的调用方式，除了替换函数体中的this的指向之外，函数的其他逻辑没有发生任何变化。<span style="line-height: 1.5;">'借用'的函数的效果，就跟对象自己拥有这个函数一样。</span></li>
+<li>arguments这个'类似数组'，除了不是'原型继承自'Array.prototype之外，其他的特征和数组也是一样一样的。</li>
+</ul>
+<p>3.&nbsp;在刚才的场景下，如果你确实需要在调用xiaoming.makeJuice.apply( xiaohong , arguments ) ;之前显示一下王奶奶想喝多少mL的果汁，直接调用var w = arguments[0]; 就可以了，何必要'弹'人家呢。</p>
+<p>完整的例子如下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">var</span> xiaoming =<span style="color: #000000;"> {
+    name:</span>'小明'<span style="color: #000000;">,
+    fruit:</span>'橙子'<span style="color: #000000;">,
+    makeJuice:</span><span style="color: #0000ff;">function</span><span style="color: #000000;">( water, time ){
+        console.log( </span>'正在榨：' + <span style="color: #0000ff;">this</span>.name + ' 家的' + <span style="color: #0000ff;">this</span>.fruit + '汁，加水：' + water + ' mL，用时：' + time + ' 分钟。'<span style="color: #000000;">);
+    }
+}
+</span><span style="color: #0000ff;">var</span> xiaohong =<span style="color: #000000;"> {
+    name:</span>'小红'<span style="color: #000000;">,
+    fruit:</span>'苹果'<span style="color: #000000;">
+}
+</span><span style="color: #0000ff;">var</span> wang =<span style="color: #000000;"> {
+    name: </span>'王奶奶'<span style="color: #000000;">,
+    helpFromXiaohong: </span><span style="color: #0000ff;">function</span><span style="color: #000000;">( water , time ){
+        </span><span style="color: #0000ff;">var</span> w = arguments[0<span style="color: #000000;">];
+        console.log( </span>'王奶奶想喝 ' + w + ' mL的果汁。'<span style="color: #000000;"> );  
+        xiaoming.makeJuice.apply( xiaohong , arguments ) ;
+        }
+}
+wang.helpFromXiaohong( </span>400 , 2 ) ;  </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>最后，我们再补充说明一个特性：<strong>如果我们在使用apply调用方式时，第1个参数传入的是null，但是，被'借用'函数的函数体本身又使用了this，那么，会不会报异常呢？</strong>因为直接写null.name这样的方式肯定是不行的。这里不卖关子，先把答案搁这里。<strong>答案是：不会报异常。</strong><br>话说过了几天，王奶奶又想要喝果汁了，于是又给小明打电话，但是小明还在出差啊，于是小明又叫王奶奶去找小红帮忙，另外，小明也给小红打了个电话解释情况。这回接到小明的电话，小红可有点不乐意了，心想：'小明你是什么人啊？好名声你来拿，麻烦事我去做。'尽管心里有些不爽，但是毕竟是热心肠的好女孩，王奶奶的忙还是帮了，不过，这一回，她可就没有拿自己家的水果去榨了，而是直接用了社区的水果。</p>
+<p>回到王奶奶的求助函数，既然不用xiaohong家的水果，就不用传入xiaohong这个对象了，传一个null试试看。</p>
+<div class="cnblogs_code">
+<pre>xiaoming.makeJuice.apply( xiaohong , arguments ) ;</pre>
+</div>
+<p><span style="line-height: 1.5;">修改为：</span></p>
+<div class="cnblogs_code">
+<pre>xiaoming.makeJuice.apply( <span style="color: #0000ff;">null</span> , arguments ) ;</pre>
+</div>
+<p><span style="line-height: 1.5;">并且在代码的开头增加以下变量：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> name = '社区'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> fruit = '西瓜' ;</pre>
+</div>
+<p>这时候，输出的内容为：<br>王奶奶想喝 400 mL的果汁。<br>正在榨：<span style="background-color: #ffcc00;">社区</span> 家的<span style="background-color: #ffcc00;">西瓜</span>汁，加水：400 mL，用时：2 分钟。</p>
+<p>也就是说，<strong>如果第一个传入的参数是null，那么，在函数体内的this会指向全局对象，在浏览器中就是window(在Chrome浏览器中是这样的效果)。</strong>很显然，如果函数体内用到了this，而你在用apply方式调用它时，给它传一个null过去，这是一种'小红同学赌气'的行为，不是一个好的习惯。</p>
+<p>所以，对于apply调用方式，我们可以总结如下：</p>
+<ol>
+<li>如果某个函数的函数体中明显使用了this，那么，就应该传入一个明确的thisObj对象，并且这个对象应该包含相关的属性。类似于人家把'榨汁机'借给你用已经不错了，你不能自己连水果也不准备吧？</li>
+<li>如果某个函数就是'工具'类型的，那么，在使用apply调用方式时，可以传入一个null作为thisObject。类似于'水果刀'，使用时放在跕板上的水果是什么，它就切什么，跟拿着水果刀的人有什么没有半毛钱关系。</li>
+</ol>
+<p>第二种情况的一个常见的使用场景是：<strong>函数的接口要求传入一个'参数列表'，但你手头只有一个数组。</strong><br>   例如：希望你这样调用Math.max( 2 , 10 , 6 , 1 ); 但是，你的手头只有[2,10,6,1]这样的一个数组。<br>   -如果直接调用Math.max([2,10,6,1]); 会输出NaN。因为Math.max会认为第一个参数[2,10,6,1]根本就不是一个number。<br>   -或者你可以这样：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> test_array = [2,10,6,1<span style="color: #000000;">];
+Math.max( test_array[</span>0] , test_array[1] , test_array[2] , test_array[3] );</pre>
+</div>
+<p><span style="line-height: 1.5;">显然，这种方式是在练习打字，而不是在编程序^_^～～</span></p>
+<p>[参数列表]和[数组]，[数组]和[参数列表].......apply调用方式不就可以实现转换嘛，所以，我们可以这样操作：</p>
+<div class="cnblogs_code">
+<pre> <span style="color: #0000ff;">var</span> test_array = [2,10,6,1<span style="color: #000000;">];
+ console.log(  Math.max.apply( </span><span style="color: #0000ff;">null</span> , test_array ) );  <span style="color: #008000;">//</span><span style="color: #008000;">输出：10</span>     </pre>
+</div>
+<p>输出了我们期望的结果：10，<span style="line-height: 1.5;">是的，当时就是这样。</span></p>
+<p>如果小红也不用社区的水果，直接用小明家的水果呢？那就不需要用apply方式调用了，直接用如下方式就可以了：</p>
+<div class="cnblogs_code">
+<pre>xiaoming.makeJuice( arguments ) ; </pre>
+</div>
+<p><span style="line-height: 1.5;">我们再来看一下这时候的王奶奶的求助函数：</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">var</span> wang =<span style="color: #000000;"> {
+name: </span>'王奶奶'<span style="color: #000000;">,
+helpFromXiaohong: </span><span style="color: #0000ff;">function</span><span style="color: #000000;">( water , time ){
+</span><span style="color: #0000ff;">     var</span> w = arguments[0<span style="color: #000000;">];
+     console.log( </span>'王奶奶想喝 ' + w + ' mL的果汁。'<span style="color: #000000;"> ); 
+     xiaoming.makeJuice( arguments ) ; 
+  }
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>看函数名称是helpFromXiaohong(从小红处获得帮助)，实际上却是xiaoming.makeJuice(小明在提供帮助)。我们隐约感受到了某些'设计模式'的感觉。关于设计模式，我们下次有空再聊。</p>
+<p>今天的话题就聊到这里...</p>
+<p>什么？还没有讲到call呢！</p>
+<p>差点搞忘了，<strong>call方式和apply方式的差别主要体现在传入的形式参数的不一样</strong>，当采用call调用的时候，第1个参数传入thisObject，第2个参数以及后面的参数组成'实参列表'传递给函数。<br>例如：<br>用apply方式调用时，我们会这样写：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">var</span> task_info = [400,2<span style="color: #000000;">];
+xiaoming.makeJuice.apply( xiaohong , task_info ) ;</span></pre>
+</div>
+<p>而用call方式调用时，我们会这样写：</p>
+<div class="cnblogs_code">
+<pre>xiaoming.makeJuice.call( xiaohong , 400 , 2 ) </pre>
+</div>
+<p>有人说，其实call调用方式就是使用apply方式实现的，类似于给Function.prototype定义了一个成员函数call。JavaScript引擎到底如何实现，我们无从知晓，不过从JavaScript大神老道在他的书中只字未提call方式，可见<strong>我们只要理解了apply调用方式，并且知道apply和call在形式参数上的不同</strong>，也许就可以了。</p>
+<p>形式参数上的差异，我们可以再用一个生活中的例子理解一下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">小明经常去韩国出差，小红呢，经常委托小明帮忙在韩国带一些化妆品。
+往常在小明出差前，小红都会把要买的化妆品写在一个清单里(相当于：apply模式把参数值放到一个数组里)，
+小明到了韩国的商场之后，只要拿出购物清单对照着买就可以了，相当于应用(apply)一下这个购物清单，这就是apply调用方式。<br>
+但是，有一次，小明因为出差时间短，就没有告诉小红，快回国到机场的时候，接到了小红的电话呼叫(call)，没错，是小红call过来的。
+</span>"死鬼，去韩国出差也不说一声！是存心躲着本姑奶奶吗？！"
+"你听我解释，这不时间太短了，我马上就回国了，现在已经快到釜山机场了。"
+"现在在机场了也得给我买！你听好了我要买什么！"
+"好吧，我现在去给你买，你说一下你要买什么。"<span style="color: #000000;">
+显然，小明手里头没有一个明确的购物清单，时间又那么紧，不可能先整理一张清单出来再去商场购买。
+于是，小明就到商场里面，听着小红的电话，小红说一个，小明就把对应商品往购物车里放，这就是call方式。</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1553240795-48304ba5e6f9fe08f3fa1abda7d326ab.gif" alt="复制代码"></a></span></div></div>
+<p>【总结】</p>
+<p>在本文当中，我们解释了函数的apply调用方式的价值和使用方式，并结合常见的使用场景，解释了函数体中隐含的arguments对象的一些特征，也解释了apply调用方式的一些注意事项，最后指出了apply调用方式和call调用方式的差异。<br>今天的话题就聊到这里，感谢诸位捧场。</p>
+<p>&nbsp;</p></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="https://www.cnblogs.com/alai88/category/800289.html" target="_blank">Web控件</a></div>
+<div id="EntryTag">标签: <a href="https://www.cnblogs.com/alai88/tag/call/">call</a>, <a href="https://www.cnblogs.com/alai88/tag/apply/">apply</a>, <a href="https://www.cnblogs.com/alai88/tag/arguments/">arguments</a>, <a href="https://www.cnblogs.com/alai88/tag/this/">this</a>, <a href="https://www.cnblogs.com/alai88/tag/shift/">shift</a>, <a href="https://www.cnblogs.com/alai88/tag/JavaScript/">JavaScript</a>, <a href="https://www.cnblogs.com/alai88/tag/%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F/">调用方式</a>, <a href="https://www.cnblogs.com/alai88/tag/%E5%B7%A5%E5%85%B7%E5%AF%B9%E8%B1%A1/">工具对象</a>, <a href="https://www.cnblogs.com/alai88/tag/%E6%95%B0%E7%BB%84/">数组</a>, <a href="https://www.cnblogs.com/alai88/tag/%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/">原型继承</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5518441,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow('40e659c2-1f91-e511-9fc1-ac853d9f53cc');" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="assets/1553240795-3212f7b914cc9773fb30bbf4656405fc.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="assets/1553240795-cb7153d1c13a5d9aef10ebab342f6f71.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/alai88/" target="_blank"><img src="assets/1553240795-6422195f7e61efdad4ca13e4f19dc4a2.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/alai88/">阿来之家</a><br>
+            <a href="http://home.cnblogs.com/u/alai88/followees">关注 - 0</a><br>
+            <a href="http://home.cnblogs.com/u/alai88/followers">粉丝 - 24</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow('40e659c2-1f91-e511-9fc1-ac853d9f53cc');return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5518441,'Digg')">
+        <span class="diggnum" id="digg_count">9</span>
+    </div>
+    <div class="buryit" onclick="votePost(5518441,'Bury')">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/alai88/p/5491466.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/alai88/p/5491466.html" title="发布于2016-05-13 23:01">业务建模 之 闲话'闭包'与'原型继承'</a><br><a href="https://www.cnblogs.com/alai88/p/5525615.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/alai88/p/5525615.html" title="发布于2016-05-25 01:00">"大哥，割草机借我用一下，我修整一下草坪。" ---- 谈谈this与JavaScript函数调用的不解之缘</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2016-05-23 00:09</span> <a href="https://www.cnblogs.com/alai88/">阿来之家</a> 阅读(<span id="post_view_count">1009</span>) 评论(<span id="post_comment_count">12</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5518441" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/alai88/p/5518441.html#" onclick="AddToWz(5518441);return false;">收藏</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+</div></DIV></DIV></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://www.cnblogs.com/alai88/p/5518441.html" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-22 15:46:35</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
