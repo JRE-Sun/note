@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://github.com/lin-xin/blog/issues/13 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>拖放API实现拖放排序-html5</title>
+    
+<link media="all" rel="stylesheet" href="assets/1553260737-09b396649efb642c7e759fff208c2e1c.css">
+
+<link media="all" rel="stylesheet" href="assets/1553260737-a6c64bbaf3351665250db7c8bee12c42.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 700px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="logged-in env-production emoji-size-boost">
+    <div class="mx-wc-main">
+      <DIV class="application-main " data-commit-hovercards-enabled="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV itemscope="" itemtype="http://schema.org/SoftwareSourceCode" class="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN id="js-repo-pjax-container" data-pjax-container="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="container new-discussion-timeline experiment-repo-nav  " style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="repository-content " style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="issues-listing js-check-all-container" data-pjax="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV id="show_issue" class="js-issues-results js-socket-channel js-updatable-content" data-channel="issue:224999320:timeline" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV id="discussion_bucket" class="clearfix" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="discussion-timeline js-quote-selection-container" data-quote-markdown=".js-comment-body" data-issue-and-pr-hovercards-enabled="" data-team-hovercards-enabled="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="js-discussion js-socket-channel" data-channel="marked-as-read:issue:224999320" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="timeline-comment-wrapper js-comment-container mt-0 js-socket-channel" data-gid="MDU6SXNzdWUyMjQ5OTkzMjA=" data-url="/_render_node/MDU6SXNzdWUyMjQ5OTkzMjA=/issues/body" data-channel="issue:224999320" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="timeline-comment-group js-minimizable-comment-group js-targetable-comment" id="issue-224999320" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="unminimized-comment comment previewable-edit js-comment js-task-list-container timeline-comment reorderable-task-lists " data-body-version="4b9d589035cf94a0cdab2f688ec734dc" data-unfurl-hide-url="/content_reference_attachments/hide" data-unfurl-authenticity-token="CBEkKkSkAax7JGRsQQy9zOrejxyySG4K7q0TO+TI2JcNe/esggwNlnDJhRG0FRkm1qtJqZV+ZRAFziuT1YMvcw==" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="edit-comment-hide mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+
+      
+<task-lists disabled="" sortable="">
+<table class="d-block">
+  <tbody class="d-block">
+    <tr class="d-block">
+      <td class="d-block comment-body markdown-body  js-comment-body">
+
+          <h2>前言</h2>
+<p>HTML5 中提供了直接拖放的 API，极大的方便我们实现拖放效果，不需要去写一大堆的 js，只需要通过监听元素的拖放事件就能实现各种拖放功能。</p>
+<p>想要拖放某个元素，必须设置该元素的 draggable 属性为 true，当该属性为 false 时，将不允许拖放。而 img 元素和 a 元素都默认设置了 draggable 属性为 true，可直接拖放，如果不想拖放这两个元素，把属性设为 false 即可。</p>
+<h2>拖放事件</h2>
+<p>拖放事件由不同的元素产生。一个元素被拖放，他可能会经过很多个元素上，最终到达想要放置的元素内。这里，我暂时把被拖放的元素称为源对象，被经过的元素称为过程对象，到达的元素我称为目标对象。不同的对象产生不同的拖放事件。</p>
+<p>源对象：</p>
+<ul>
+<li>dragstart：源对象开始拖放。</li>
+<li>drag：源对象拖放过程中。</li>
+<li>dragend：源对象拖放结束。</li>
+</ul>
+<p>过程对象：</p>
+<ul>
+<li>dragenter：源对象开始进入过程对象范围内。</li>
+<li>dragover：源对象在过程对象范围内移动。</li>
+<li>dragleave：源对象离开过程对象的范围。</li>
+</ul>
+<p>目标对象：</p>
+<ul>
+<li>drop：源对象被拖放到目标对象内。</li>
+</ul>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span> <span class="pl-e">draggable</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span>&gt;a元素&lt;/<span class="pl-ent">div</span>&gt;
+&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>process<span class="pl-pds">"</span></span>&gt;b元素&lt;/<span class="pl-ent">div</span>&gt;
+&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>target<span class="pl-pds">"</span></span>&gt;c元素&lt;/<span class="pl-ent">div</span>&gt;
+
+&lt;<span class="pl-ent">script</span>&gt;<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">var</span> source <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>),     <span class="pl-c"><span class="pl-c">//</span> a元素</span></span>
+<span class="pl-s1">        <span class="pl-c1">process</span> <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>process<span class="pl-pds">'</span></span>),   <span class="pl-c"><span class="pl-c">//</span> b元素</span></span>
+<span class="pl-s1">        target <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>target<span class="pl-pds">'</span></span>);     <span class="pl-c"><span class="pl-c">//</span> c元素</span></span>
+<span class="pl-s1">    </span>
+<span class="pl-s1">    <span class="pl-smi">source</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragstart<span class="pl-pds">'</span></span>,<span class="pl-k">function</span>(<span class="pl-smi">ev</span>){   <span class="pl-c"><span class="pl-c">//</span> dragstart事件由a元素产生</span></span>
+<span class="pl-s1">        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>a元素开始被拖动<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">    },<span class="pl-c1">false</span>)</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c1">process</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragenter<span class="pl-pds">'</span></span>,<span class="pl-k">function</span>(<span class="pl-smi">ev</span>){  <span class="pl-c"><span class="pl-c">//</span> dragenter事件由b元素产生</span></span>
+<span class="pl-s1">        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>a元素开始进入b元素<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">    },<span class="pl-c1">false</span>)</span>
+<span class="pl-s1">    <span class="pl-c1">process</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragleave<span class="pl-pds">'</span></span>,<span class="pl-k">function</span>(<span class="pl-smi">ev</span>){  <span class="pl-c"><span class="pl-c">//</span> dragleave事件由b元素产生</span></span>
+<span class="pl-s1">        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>a元素离开b元素<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">    },<span class="pl-c1">false</span>)</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-smi">target</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>drop<span class="pl-pds">'</span></span>,<span class="pl-k">function</span>(<span class="pl-smi">ev</span>){        <span class="pl-c"><span class="pl-c">//</span> drop事件由c元素产生</span></span>
+<span class="pl-s1">        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>a元素拖放到c元素了<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">        <span class="pl-smi">ev</span>.<span class="pl-c1">preventDefault</span>();</span>
+<span class="pl-s1">    },<span class="pl-c1">false</span>)</span>
+<span class="pl-s1">    <span class="pl-c1">document</span>.<span class="pl-en">ondragover</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">e</span>){<span class="pl-smi">e</span>.<span class="pl-c1">preventDefault</span>();}</span>
+<span class="pl-s1"></span>&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+<h2>dataTransfer 对象</h2>
+<p>在所有拖放事件中提供了一个数据传递对象 dataTransfer，用于在源对象和目标对象间传递数据。接下来认识一下这个对象的方法和属性，来了解它是如何传递数据的。</p>
+<h3>setData()</h3>
+<p>该方法向 dataTransfer 对象中存入数据。接收两个参数，第一个表示要存入数据种类的字符串，现在支持有以下几种：</p>
+<ul>
+<li>text/plain：文本文字。</li>
+<li>text/html：HTML文字。</li>
+<li>text/xml：XML文字。</li>
+<li>text/uri-list：URL列表，每个URL为一行。</li>
+</ul>
+<p>第二个参数为要存入的数据。例如：</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">event</span>.<span class="pl-smi">dataTransfer</span>.<span class="pl-en">setData</span>(<span class="pl-s"><span class="pl-pds">'</span>text/plain<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>Hello World<span class="pl-pds">'</span></span>);</pre></div>
+<h3>getData()</h3>
+<p>该方法从 dataTransfer 对象中读取数据。参数为在 setData 中指定的数据种类。例如：</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">event</span>.<span class="pl-smi">dataTransfer</span>.<span class="pl-en">getData</span>(<span class="pl-s"><span class="pl-pds">'</span>text/plain<span class="pl-pds">'</span></span>);</pre></div>
+<h3>clearData()</h3>
+<p>该方法清除 dataTransfer 对象中存放的数据。参数可选，为数据种类。若参数为空，则清空所有种类的数据。例如：</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">event</span>.<span class="pl-smi">dataTransfer</span>.<span class="pl-en">clearData</span>();</pre></div>
+<h3>setDragImage()</h3>
+<p>该方法通过用img元素来设置拖放图标。接收三个参数，第一个为图标元素，第二个为图标元素离鼠标指针的X轴位移量，第三个为图标元素离鼠标指针的Y轴位移量。例如：</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> source <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">getElementById</span>(<span class="pl-s"><span class="pl-pds">'</span>source<span class="pl-pds">'</span></span>),
+    icon <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>img<span class="pl-pds">'</span></span>);
+
+<span class="pl-smi">icon</span>.<span class="pl-smi">src</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>img.png<span class="pl-pds">'</span></span>;
+
+<span class="pl-smi">source</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragstart<span class="pl-pds">'</span></span>,<span class="pl-k">function</span>(<span class="pl-smi">ev</span>){
+    <span class="pl-smi">ev</span>.<span class="pl-smi">dataTransfer</span>.<span class="pl-en">setDragImage</span>(icon,<span class="pl-k">-</span><span class="pl-c1">10</span>,<span class="pl-k">-</span><span class="pl-c1">10</span>)
+},<span class="pl-c1">false</span>)</pre></div>
+<h3>effectAllowed 和 dropEffect 属性</h3>
+<p>这两个属性结合起来设置拖放的视觉效果。</p>
+<p>值得注意的是：dataTransfer 对象不支持IE。对，不支持IE。</p>
+<h2>实现拖放排序</h2>
+<p>上面已经熟悉了拖放 API 的使用，我们来实现个简单的拖放排序，这也是在项目中比较常见的。先来理一下思路：</p>
+<ul>
+<li>在一个列表中，每个元素都可以被拖放，那首先要给每个元素设置 draggable 属性为 true。</li>
+<li>监听每个元素的 dragstart 事件，对源对象做样式处理来区分。</li>
+<li>监听每个元素的 dragenter 事件，当源对象进入到当前元素里，就把源对象添加到该元素之前。这样子后面的元素就会被源对象挤下去了，实现了排序的效果。</li>
+<li>但是会发现，源对象无法排到最后一个去，只能在倒数第二。这时就要监听 dragleave 事件，当过程对象是最后一个元素时，源对象离开了过程对象，这时就把源对象添加到最后去。</li>
+</ul>
+<p>主要代码如下：</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> source <span class="pl-k">=</span> <span class="pl-c1">document</span>.<span class="pl-c1">querySelectorAll</span>(<span class="pl-s"><span class="pl-pds">'</span>.list<span class="pl-pds">'</span></span>),
+    dragElement <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+
+<span class="pl-k">for</span>(<span class="pl-k">var</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> <span class="pl-smi">source</span>.<span class="pl-c1">length</span>; i<span class="pl-k">++</span>){
+    source[i].<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragstart<span class="pl-pds">'</span></span>,<span class="pl-k">function</span>(<span class="pl-smi">ev</span>){
+        dragElement <span class="pl-k">=</span> <span class="pl-c1">this</span>;
+    },<span class="pl-c1">false</span>);
+
+    source[i].<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragenter<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">ev</span>){
+        <span class="pl-k">if</span>(dragElement <span class="pl-k">!=</span> <span class="pl-c1">this</span>){
+            <span class="pl-c1">this</span>.<span class="pl-c1">parentNode</span>.<span class="pl-c1">insertBefore</span>(dragElement,<span class="pl-c1">this</span>);
+        }
+    }, <span class="pl-c1">false</span>)
+
+    source[i].<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>dragleave<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">ev</span>){
+        <span class="pl-k">if</span>(dragElement <span class="pl-k">!=</span> <span class="pl-c1">this</span>){
+            <span class="pl-k">if</span>(<span class="pl-c1">this</span> <span class="pl-k">==</span> <span class="pl-c1">this</span>.<span class="pl-c1">parentNode</span>.<span class="pl-smi">lastElementChild</span> <span class="pl-k">||</span> <span class="pl-c1">this</span> <span class="pl-k">==</span> <span class="pl-c1">this</span>.<span class="pl-c1">parentNode</span>.<span class="pl-c1">lastChild</span>){
+                <span class="pl-c1">this</span>.<span class="pl-c1">parentNode</span>.<span class="pl-c1">appendChild</span>(dragElement);
+            }
+        }
+    }, <span class="pl-c1">false</span>)
+};
+
+<span class="pl-c1">document</span>.<span class="pl-en">ondragover</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">e</span>){<span class="pl-smi">e</span>.<span class="pl-c1">preventDefault</span>();}
+<span class="pl-c1">document</span>.<span class="pl-en">ondrop</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">e</span>){<span class="pl-smi">e</span>.<span class="pl-c1">preventDefault</span>();}</pre></div>
+<p>完整的代码地址：<a href="https://github.com/lin-xin/blog/tree/master/drag-demo">drag-demo</a></p>
+<h2>兼容</h2>
+<p>主要是在IE中的兼容不太好，不过至少在IE10中能兼容上面的拖动排序。</p>
+<p>而且在我简单的试验中发现，就是在 IE 中元素不设置 height 的时候，不会触发 dragleave 事件。</p>
+<p>更重要的一点是在 ios 和安卓上，完全不兼容。不过还好，有一个插件能让它在移动端完美兼容。<br>
+插件地址：<a href="https://github.com/timruffles/mobile-drag-drop">mobile-drag-drop</a></p>
+<p>只需要在原有的代码中引入该插件，即可在移动端上实现拖动了。</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>./mobile-drag-drop/index.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>./mobile-drag-drop/scroll-behaviour.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span>&gt;<span class="pl-s1"></span>
+<span class="pl-s1">        <span class="pl-smi">MobileDragDrop</span>.<span class="pl-en">polyfill</span>({</span>
+<span class="pl-s1">            <span class="pl-c"><span class="pl-c">//</span> use this to make use of the scroll behaviour</span></span>
+<span class="pl-s1">            dragImageTranslateOverride<span class="pl-k">:</span> <span class="pl-smi">MobileDragDrop</span>.<span class="pl-smi">scrollBehaviourDragImageTranslateOverride</span></span>
+<span class="pl-s1">        });</span>
+<span class="pl-s1"></span>&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</task-lists>
+
+
+        
+
+<div class="comment-reactions  js-reactions-container js-socket-channel js-updatable-content" data-channel="reaction:issue:224999320" data-url="/_render_node/MDU6SXNzdWUyMjQ5OTkzMjA=/comments/reactions">
+</div>
+
+
+        
+
+    </div></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV></DIV></MAIN></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://github.com/lin-xin/blog/issues/13" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-22 21:18:57</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

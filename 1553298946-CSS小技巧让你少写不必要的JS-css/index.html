@@ -1,0 +1,1265 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000011354975 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CSS小技巧让你少写不必要的JS-css</title>
+    
+<link rel="stylesheet" href="assets/1553298946-04b7a1551b9ea68bcf94f9ecf05846d5.css">
+
+<link rel="stylesheet" href="assets/1553298946-1bfac5bfd1d0b194dacc6adc89cc954a.css">
+
+<link rel="stylesheet" href="assets/1553298946-c86b6210e40f2befcca430cc00577148.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+
+</style>
+<style>
+.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+
+</style>
+<style>
+#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+
+</style>
+<style>
+#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000006812174" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li><a href="https://segmentfault.com/blog/jawil">微醺岁月</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="微醺岁月" data-userslug="jawil" data-useravatar="https://avatar-static.segmentfault.com/130/452/130452056-58ad9fb09b187_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/jawil">
+                                                    <img class="avatar-40" src="assets/1553298946-bb8fcb7dd55c97d2689a3806b693b613" alt="微醺岁月">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/jawil" class="mr5"><strong>微醺岁月</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1553298946-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">2.7k</span>
+
+                                                                                                发布于
+                                                <a href="https://segmentfault.com/blog/jawil">微醺岁月</a>
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                          <button type="button" class="btn btn-xs btn-success follow-article ml10" data-do="follow" data-type="blog" data-id="1200000006812174">关注专栏
+                                                       </button>
+                                                                                                                                                   </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2017-09-26 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000011354975">
+                                            <a href="https://segmentfault.com/a/1190000011354975"> CSS 黑魔法小技巧，让你少写不必要的JS，代码更优雅</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000011354975" data-license="cc">
+                    
+<p>之前不久，由于自己平时涉猎还算广泛，总结了一篇博客：<a href="https://github.com/jawil/blog/issues/24" rel="nofollow noreferrer" target="_blank">这些JavaScript编程黑科技，装逼指南，高逼格代码，让你惊叹不已</a>，没想到受到了大家的欢迎，有人希望能博主还能整理个 <code>CSS</code> 的一些黑魔法小技巧，无奈我 <code>CSS</code> 一直很渣，没什么干货，最近写了一个 <code>Chrome</code> 插件 <a href="https://github.com/jawil/GayHub" rel="nofollow noreferrer" target="_blank">GayHub</a>，算是把 <code>GitHub</code> 的样式审查了个变，在写的过程中，也收获了很多关于 <code>CSS</code> 的小技巧，尤其是开始的第一个技巧，学习到了很多，于是再加上一波搜集，就诞生这篇博文，欢迎补充~~~?。</p>
+<h3 id="articleHeader0">1、利用 <code>CSS</code> 的 <code>content</code> 属性 <code>attr</code> 抓取资料</h3>
+<h4>需求</h4>
+<blockquote><p><strong>鼠标悬浮实现一个提示的文字，类似github的这种，如图：</strong></p></blockquote>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354978" src="assets/1553298946-72a8e01ed2b7ed95f9c67dd01c554a16" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>想必大家都想到了伪元素 <code>after</code>，但是文字怎么获得呢，又不能用 <code>JavaScript</code>。</p>
+<p><code>CSS</code> 的伪元素是个很強大的东西，我们可以利用他做很多运用，通常为了做一些效果，<code>content:" "</code> 多半会留空，但其实可以在里面写上 <code>attr</code> 抓资料哦！</p>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">data-msg</span>=<span class="hljs-string">"Open this file in Github Desktop"</span>&gt;</span>
+    hover
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">div</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid red;
+  <span class="hljs-attribute">position</span>: relative;
+}
+
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-pseudo">:hover</span><span class="hljs-selector-pseudo">:after</span> {
+  <span class="hljs-attribute">content</span>: <span class="hljs-built_in">attr</span>(data-msg);
+  <span class="hljs-attribute">position</span>: absolute;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">200%</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">30px</span>;
+  <span class="hljs-attribute">text-align</span>: center;
+  <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">top</span>: <span class="hljs-number">25px</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid green;
+}</code></pre>
+<p>在 <code>attr</code> 里面塞入我们在 <code>html</code> 新增的 <code>data-msg</code> 属性，这样伪元素 <code>(:after)</code> 就会得到该值。</p>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354979" src="assets/1553298946-5a15d83c4b92466f3291f308ba5e9af1.svg" alt="" title="" style="cursor: pointer;"></span></p>
+<p>同样的，你还可以结合其他强大的选择器使用，例如：<strong>使用属性选择器选择空链接</strong></p>
+<p>显示没有文本值但是 <code>href</code> 属性具有链接的 <code>a</code> 元素的链接：</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">a</span><span class="hljs-selector-attr">[href^="http"]</span><span class="hljs-selector-pseudo">:empty</span><span class="hljs-selector-pseudo">::before</span> {
+  <span class="hljs-attribute">content</span>: <span class="hljs-built_in">attr</span>(href);
+}</code></pre>
+<p>这样做很方便。</p>
+<h3 id="articleHeader1">2、利用用 <code>:valid</code> 和 <code>:invalid</code> 来做表单即时校验</h3>
+<h4>需求</h4>
+<blockquote><p><strong>让表单检验变得简单优雅，不需要写冗长的 JS 代码来校验设置样式</strong></p></blockquote>
+<p><code>html5</code> 丰富了表单元素，提供了类似 <code>required</code>,<code>email</code>,<code>tel</code> 等表单元素属性。同样的，我们可以利用 <code>:valid</code> 和 <code>:invalid</code> 来做针对html5表单属性的校验。</p>
+<ul>
+<li>
+<code>:required</code>&nbsp;伪类指定具有required 属性的表单元素</li>
+<li>
+<code>:valid</code>&nbsp;伪类指定一个通过匹配正确的所要求的表单元素</li>
+<li>
+<code>:invalid</code>&nbsp;伪类指定一个不匹配指定要求的表单元素</li>
+</ul>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"row"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"margin-top: 2rem;"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">required</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"请输入名称"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>email<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">required</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"请输入邮箱"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>homepage<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"url"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"请输入博客url"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Comments<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">required</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.valid</span> {
+  <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#429032</span>;
+  <span class="hljs-attribute">box-shadow</span>: inset <span class="hljs-number">5px</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">#429032</span>;
+}
+
+<span class="hljs-selector-class">.invalid</span> {
+  <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#D61D1D</span>;
+  <span class="hljs-attribute">box-shadow</span>: inset <span class="hljs-number">5px</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">#D61D1D</span>;
+}
+
+<span class="hljs-selector-class">.form-group</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">32rem</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">1rem</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid transparent;
+  &amp;:hover {
+    <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#eee</span>;
+    <span class="hljs-attribute">transition</span>: border .<span class="hljs-number">2s</span>;
+  }
+  <span class="hljs-selector-tag">label</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">font-weight</span>: normal;
+  }
+  <span class="hljs-selector-tag">input</span>,
+  <span class="hljs-selector-tag">textarea</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">2rem</span>;
+    <span class="hljs-attribute">padding</span>: .<span class="hljs-number">5rem</span> .<span class="hljs-number">5rem</span> .<span class="hljs-number">5rem</span> <span class="hljs-number">1rem</span>;
+    <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#ccc</span>;
+    <span class="hljs-attribute">outline</span>: none;
+    &amp;:valid {
+      @extend .valid;
+    }
+    &amp;<span class="hljs-selector-pseudo">:invalid</span> {
+      @extend .invalid;
+    } 
+  }
+}</code></pre>
+<p>更多伪元素技巧可以参看这篇文章：<a href="https://segmentfault.com/a/1190000011194809">你不知道的CSS</a></p>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="assets/1553298946-ec487101356feb2a6e9ae768522aaceb" src="https://segmentfault.com/img/bVU8qM?w=385&amp;h=417" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader2">3、利用 <code>nth-of-type</code> 选择某范围内的子元素</h3>
+<h4>需求</h4>
+<blockquote><p><strong>table表格红绿相间，显示的更加直观</strong></p></blockquote>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>4<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>5<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>6<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">tbody</span> <span class="hljs-selector-tag">tr</span><span class="hljs-selector-pseudo">:nth-of-type(2n)</span>{  
+<span class="hljs-attribute">background-color</span>: red;
+}
+
+<span class="hljs-selector-tag">tbody</span> <span class="hljs-selector-tag">tr</span><span class="hljs-selector-pseudo">:nth-of-type(2n+1)</span>{
+<span class="hljs-attribute">background-color</span>: green;
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354980" src="assets/1553298946-c4d556821921198ec5e4544aef6da2e1" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>你也这样来做，选择5-10的子元素。</strong></p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">table</span> <span class="hljs-selector-tag">tr</span><span class="hljs-selector-pseudo">:nth-child(n+5)</span><span class="hljs-selector-pseudo">:nth-child(-n+10)</span> {
+    <span class="hljs-attribute">background-color</span>: red;
+}</code></pre>
+<h3 id="articleHeader3">4、让文字像古诗一样竖着呈现</h3>
+<h4>需求</h4>
+<blockquote><p><strong>有时候，需要容器的文字从上到下排列，而不是从左往右排列，如图所示：</strong></p></blockquote>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354981" src="assets/1553298946-8cb8bda7424a1e739e68b880e1e901a8" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>这是<a href="https://segmentfault.com/" target="_blank">segmentfault</a>的回到顶部，他的实现很简单，就是设置一定宽度让其折行，如果我要实现这种需求呢？</p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354982" src="assets/1553298946-aad4e365afa01b20be205b4d70005178" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<h4>代码</h4>
+<p><code>writing-mode</code> 这个 <code>CSS</code> 属性，我们是不是很少见到，很少用到！我们往往称不常见的东西为“生僻”，就像是不常见的文字我们叫“生僻字”，因此不常见的 <code>CSS</code> 属性，我们可以叫做“生僻属性”，<code>writing-mode</code> 给我们的感觉就是一个“生僻属性”，很弱，可有可无。这个属性可以追溯到 <code>IE 5.5</code> 时代，兼容性是相当好的。</p>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>咏柳<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>碧玉妆成一树高，<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>万条垂下绿丝绦。<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>不知细叶谁裁出，<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>二月春风似剪刀。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"verticle-mode"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>咏柳<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>碧玉妆成一树高，<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>万条垂下绿丝绦。<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>不知细叶谁裁出，<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>二月春风似剪刀。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.verticle-mode</span> {
+    <span class="hljs-attribute">writing-mode</span>: tb-rl;
+    <span class="hljs-attribute">-webkit-writing-mode</span>: vertical-rl;      
+    <span class="hljs-attribute">writing-mode</span>: vertical-rl;
+}
+<span class="hljs-comment">/* IE7比较弱，需要做点额外的动作 */</span>
+<span class="hljs-selector-class">.verticle-mode</span> {
+    *<span class="hljs-attribute">width</span>: <span class="hljs-number">120px</span>;
+}
+<span class="hljs-selector-class">.verticle-mode</span> <span class="hljs-selector-tag">h4</span>,
+<span class="hljs-selector-class">.verticle-mode</span> <span class="hljs-selector-tag">p</span> {
+    *<span class="hljs-attribute">display</span>: inline;
+    *<span class="hljs-attribute">writing-mode</span>: tb-rl;
+}
+<span class="hljs-selector-class">.verticle-mode</span> <span class="hljs-selector-tag">h4</span> {
+    *<span class="hljs-attribute">float</span>:right;
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354983" src="assets/1553298946-825974307a26a918016e1283aef82f75" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>更多细节与讨论请移步张鑫旭老师的这篇文章：<a href="http://www.zhangxinxu.com/wordpress/2016/04/css-writing-mode/" rel="nofollow noreferrer" target="_blank">改变CSS世界纵横规则的writing-mode属性</a></p>
+<h3 id="articleHeader4">5、实现鼠标悬浮内容自动撑开的过渡动画</h3>
+<h4>需求</h4>
+<blockquote><p><strong>需要为一个列表添加个动画，容器的高度是不确定的，也就是高度为 <code>auto</code>，悬浮时候撑开内容有个过渡动画</strong></p></blockquote>
+<p>如下图所示：</p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354984" src="assets/1553298946-5a15d83c4b92466f3291f308ba5e9af1.svg" alt="" title="" style="cursor: pointer;"></span></p>
+<p>而用 <code>CSS3</code> 实现的话，由于高度的不确定，而 <code>transtion</code> 是需要具体的树枝，所以设置 <code>height:auto</code> 是无法实现效果的，可以通过 <code>max-height</code> 这个属性间接的实现这么个效果，<code>css</code> 样式是这样的：</p>
+<h3 id="articleHeader5">代码</h3>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"hd"</span>&gt;</span> 列表1 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bd"</span>&gt;</span>列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"hd"</span>&gt;</span> 列表1 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bd"</span>&gt;</span>列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"hd"</span>&gt;</span> 列表1 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"bd"</span>&gt;</span>列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容列表内容<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>内容<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.bd</span> {
+  <span class="hljs-attribute">max-height</span>:<span class="hljs-number">0</span>;
+  <span class="hljs-attribute">overflow</span>:hidden;
+  <span class="hljs-attribute">transition</span>: all <span class="hljs-number">1s</span> ease-out;
+}
+<span class="hljs-selector-tag">li</span><span class="hljs-selector-pseudo">:hover</span> <span class="hljs-selector-class">.bd</span> {
+  <span class="hljs-attribute">max-height</span>: <span class="hljs-number">600px</span>;
+  <span class="hljs-attribute">transition-timing-function</span>: ease-in;
+}</code></pre>
+<h4>最终效果</h4>
+<p>跟前面 <code>GIF</code> 差不多，这里就不录 <code>GIF</code> 了，有兴趣的可以自己尝试感受一下</p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354985" src="assets/1553298946-5a15d83c4b92466f3291f308ba5e9af1.svg" alt="" title="" style="cursor: pointer;"></span></p>
+<h3 id="articleHeader6">6、利用 <code>pointer-events</code> 禁用 <code>a</code> 标签事件效果</h3>
+<h4>需求：</h4>
+<blockquote><p><strong>在做 <code>tab</code> 切换的时候，当选中当前项，禁用当前标签的事件，只有切换其他 <code>tab</code> 的时候，才重新请求新的数据。</strong></p></blockquote>
+<p><code>pointer-events</code> 是一个用于 <code>HTML</code> 指针事件的属性。</p>
+<p><code>pointer-events</code> 可以禁用 <code>HTML</code> 元素的 <code>hover/focus/active</code> 等动态效果。</p>
+<p>默认值为 <code>auto</code>，语法：<code>pointer-events: auto | none | visiblepainted | visiblefill | visiblestroke | visible | painted | fill | stroke | all;</code></p>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"> <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://google.com"</span>&gt;</span>aaa<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tab active"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://facebook.com"</span>&gt;</span>bbb<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"tab"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://stackoverflow.com"</span>&gt;</span>ccc<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css">   <span class="hljs-selector-class">.active</span>{
+         <span class="hljs-attribute">pointer-events</span>: none;
+     }</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354986" src="assets/1553298946-5a15d83c4b92466f3291f308ba5e9af1.svg" alt="" title="" style="cursor: pointer;"></span></p>
+<p>好像没什么效果?</p>
+<h3 id="articleHeader7">7、<code>CSS</code> 如何实现文字两端对齐</h3>
+<h4>需求</h4>
+<blockquote><p><strong>红框所在的文字有四个字的、三个字的、两个字的，如果不两端对齐可以选择居中对齐，或者右对齐。但是如果要想文字两端对齐呢？</strong></p></blockquote>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>姓名<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>手机号码<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>验证码<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>账号<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>密码<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">div</span>{
+<span class="hljs-attribute">margin</span>:<span class="hljs-number">10px</span> <span class="hljs-number">0</span>; 
+<span class="hljs-attribute">width</span>:<span class="hljs-number">100px</span>;
+<span class="hljs-attribute">border</span>:<span class="hljs-number">1px</span> solid red;
+<span class="hljs-attribute">text-align-last</span>: justify;
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354987" src="assets/1553298946-851780f38179a71e1e0a76a311d0d3e1" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader8">8、使用 <code>:not()</code> 去除导航上不需要的属性</h3>
+<h4>需求</h4>
+<blockquote><p><strong>有时候导航栏需要之间需要用逗号,进行隔离，但是最后一个不需要</strong></p></blockquote>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"nav"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>a<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>b<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>c<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>d<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>e<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">li</span>{
+<span class="hljs-attribute">list-style</span>:none;
+<span class="hljs-attribute">margin-bottom</span>:<span class="hljs-number">10px</span>;
+<span class="hljs-attribute">display</span>:inline-block;
+}
+
+<span class="hljs-selector-tag">ul</span> &gt; <span class="hljs-selector-tag">li</span><span class="hljs-selector-pseudo">:not(</span><span class="hljs-selector-pseudo">:last-child)</span><span class="hljs-selector-pseudo">::after</span> {
+  <span class="hljs-attribute">content</span>: <span class="hljs-string">","</span>;
+}</code></pre>
+<p>当然，你可以使用 <code>.nav li + li</code>(不包括第一个li) 或者 <code>.nav li:first-child ~ li</code>(不包括最后一个li)， 但是使用 <code>:not()</code> 的意图特别清晰，<code>CSS</code>选择器按照人类描述它的方式定义边框。</p>
+<h4>最后效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354988" src="assets/1553298946-bbab2be92e3475f8692b2eae9625e06d" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>或者，你已经学习了一些关于 使用 :not()，你还可以尝试：</p>
+<pre class="css hljs"><code class="css"><span class="hljs-comment">/* 选择1到3的元素并显示 */</span>
+<span class="hljs-selector-tag">li</span><span class="hljs-selector-pseudo">:not(</span><span class="hljs-selector-pseudo">:nth-child(-n+3))</span>{
+  <span class="hljs-attribute">display</span>: none;
+}</code></pre>
+<h3 id="articleHeader9">9、移动web页面支持弹性滚动</h3>
+<h4>需求</h4>
+<blockquote><p><strong>在IOS机型中，非body元素的滚动条会非常不流畅，又不想用JS模拟滚动条。</strong></p></blockquote>
+<p>传统 <code>pc</code> 端中，子容器高度超出父容器高度，通常使用 <code>overflow:auto</code> 可出现滚动条拖动显示溢出的内容，而移动<code>web</code>开发中，由于浏览器厂商的系统不同、版本不同，导致有部分机型尤其是 <code>IOS</code> 机型不支持弹性滚动，从而在开发中制造了所谓的 <code>BUG</code>。</p>
+<h4>代码</h4>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">body</span>{
+<span class="hljs-attribute">-webkit-overflow-scrolling</span>: touch; <span class="hljs-comment">/* ios5+ */</span>
+}
+<span class="hljs-selector-tag">ele</span>{
+<span class="hljs-attribute">overflow</span>:auto;
+}</code></pre>
+<p><code>-webkit-overflow-scrolling</code>属性具有继承效果，所以在 <code>body</code> 上设置即可，这样局部滚动条就非常的流畅了。</p>
+<h4>最终效果</h4>
+<p>所有滚动条都相当的流畅了</p>
+<h3 id="articleHeader10">10、美化浏览器自带的 <code>radio</code> ，<code>checkbox</code> 属性</h3>
+<h4>需求</h4>
+<blockquote><p><strong>设计师：你那个单选框按钮好丑啊，跟我的设计稿差好远。程序员：我有什么办法，浏览器就是这样的。。。</strong></p></blockquote>
+<p>记得刚开始写页面时候，被浏览器各种默认的 <code>UI</code> 样式恶心到了，当初确实也没啥办法，反正也不影响功能，就那样吧。</p>
+<p><strong>先讲一下原理：checkbox hack技术</strong></p>
+<blockquote>
+<p>我们使用 <code>CSS</code> 一些特殊的选择器，然后配合单选框以及复选框自带的一些特性，可以实现元素的显示隐藏效果。然后通过一些简单的扩展，我们可以不使用任何 <code>JavaScript</code> 代码实现类似：自定义的单复选框，“更多”展开与收起效果，选项卡切换效果，或是多级下拉列表效果等等。</p>
+<p>相信很多前端开发人员都会遇到 <code>boss</code> 让修改 <code>checkbox</code> 和 <code>radio</code> 样式，毕竟自带的样式太丑了。后来我们发现修改自带样式并不是那么容易，最后直接使出杀手锏——点击之后替换图片。</p>
+</blockquote>
+<p>今天教大家一种方法，不用替换图片，随意修改样式。</p>
+<blockquote>
+<p>先讲一下原理：两个关键东东，一是伪类选择器 <code>:checked</code>，表示对应控件元素（单选框或是复选框）选中时的样式；二就是加号 <code>+</code> 相邻兄弟选择器，这个符号表示选择后面的兄弟节点。于是，两者配合，就可以轻松自如控制后面元素的显示或者隐藏，或是其他样式了。</p>
+<p>而如何让单复选框选中和不选中了，那就是 <code>label</code> 标签了哈，<code>for</code> 属性锚定对应的单选框或是复选框，然后点击这里的 <code>label</code> 标签元素的时候，对应的单复选框就会选中或是取消选中。然后，就有上面的效果啦！</p>
+</blockquote>
+<h4>代码</h4>
+<p>这里只给一个 <code>radio</code> 单选框的代码,仅供参考:</p>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-beauty-container"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-name"</span>&gt;</span>前端工程师<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"radioName"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"radioName1"</span> <span class="hljs-attr">hidden</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"radioName1"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-beauty"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-name"</span>&gt;</span>后端工程师<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"radioName"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"radioName2"</span> <span class="hljs-attr">hidden</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"radioName2"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-beauty"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-name"</span>&gt;</span>全栈工程师<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"radioName"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"radioName3"</span> <span class="hljs-attr">hidden</span>/&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"radioName3"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"radio-beauty"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre class="hljs groovy"><code>.radio-beauty-container {
+    font-<span class="hljs-string">size:</span> <span class="hljs-number">0</span>;
+<span class="hljs-symbol">    $bgc:</span> green;
+    %common {
+<span class="hljs-symbol">        padding:</span> <span class="hljs-number">2</span>px;
+        background-<span class="hljs-string">color:</span> $bgc;
+        background-<span class="hljs-string">clip:</span> content-box;
+    }
+    .radio-name {
+        vertical-<span class="hljs-string">align:</span> middle;
+        font-<span class="hljs-string">size:</span> <span class="hljs-number">16</span>px;
+    }
+    .radio-beauty {
+<span class="hljs-symbol">        width:</span> <span class="hljs-number">18</span>px;
+<span class="hljs-symbol">        height:</span> <span class="hljs-number">18</span>px;
+        box-<span class="hljs-string">sizing:</span> border-box;
+<span class="hljs-symbol">        display:</span> inline-block;
+<span class="hljs-symbol">        border:</span> <span class="hljs-number">1</span>px solid $bgc;
+        vertical-<span class="hljs-string">align:</span> middle;
+<span class="hljs-symbol">        margin:</span> <span class="hljs-number">0</span> <span class="hljs-number">15</span>px <span class="hljs-number">0</span> <span class="hljs-number">3</span>px;
+        border-<span class="hljs-string">radius:</span> <span class="hljs-number">50</span>%;
+        &amp;:hover {
+            box-<span class="hljs-string">shadow:</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">7</span>px $bgc;
+            <span class="hljs-meta">@extend</span> %common;
+        }
+    }
+    input[type=<span class="hljs-string">"radio"</span>]:checked+.radio-beauty {
+        <span class="hljs-meta">@extend</span> %common;
+    }
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000008899279?w=351&amp;h=187" src="assets/1553298946-9724cd45c965622f14df052fd3a0aac7" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>美化radio单选框在线预览地址：<a href="http://codepen.io/jawil/pen/NRYRrw" rel="nofollow noreferrer" target="_blank">点击我呀</a><button class="btn btn-xs btn-default ml10 preview" data-url="jawil/pen/NRYRrw" data-typeid="3">点击预览</button><br>美化checkbox复选框在线预览地址：<a href="http://codepen.io/jawil/pen/qaoarB" rel="nofollow noreferrer" target="_blank">点击我呀</a><button class="btn btn-xs btn-default ml10 preview" data-url="jawil/pen/qaoarB" data-typeid="3">点击预览</button></p>
+<p>更多关于这方面的介绍和例子可以参看<strong>张鑫旭</strong>大神的这篇文章：<a href="http://www.zhangxinxu.com/wordpress/2012/01/css-css3-selector-element-display-tab-listdown/" rel="nofollow noreferrer" target="_blank">CSS radio/checkbox单复选框元素显隐技术</a></p>
+<h3 id="articleHeader11">11、改变 <code>input</code> 焦点光标的颜色</h3>
+<h4>需求</h4>
+<blockquote><p><strong>设计师觉得默认的光标颜色有点与整体设计风格不符合，有点突兀，想换成红色的</strong></p></blockquote>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"This field uses a default caret."</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"custom"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"I have a custom caret color!"</span> /&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">input</span> {
+  <span class="hljs-attribute">caret-color</span>: auto;
+  <span class="hljs-attribute">display</span>: block;
+  <span class="hljs-attribute">margin-bottom</span>: .<span class="hljs-number">5em</span>;
+}
+
+<span class="hljs-selector-tag">input</span><span class="hljs-selector-class">.custom</span> {
+  <span class="hljs-attribute">caret-color</span>: red;
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354989" src="assets/1553298946-1e56022c4316cc224fcf38469ab15f21" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader12">12、<code>rem</code> 布局不再使用 <code>JavaScript</code> 设置</h3>
+<p>这里不探讨 <code>rem</code> 的原理以及细节，还不熟悉的童鞋建议去恶补一下。</p>
+<h4>需求</h4>
+<blockquote><p><strong>有时候，移动端用 <code>rem</code> 布局时候，根据不同的屏幕宽度要设置不同的 <code>font-size</code> 来做到适配，要写一坨 <code>JS</code> 来设置，能不能不用JS呢？</strong></p></blockquote>
+<p>例如：以 <code>750px</code> 设计稿作为基准，根节点设置 <code>font-size</code> 为 <code>100px</code> ,只考虑 <code>DPR</code> 为 <code>2</code> 的情况，只考虑最简单的情况</p>
+<pre class="javascript hljs"><code class="JavaScript" style="word-break: break-word; white-space: initial;"> <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'html'</span>).style.fontSize = <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-built_in">window</span>.innerWidth <span class="hljs-regexp">/ 7.5 }px`;</span></span></span></code></pre>
+<h4>代码</h4>
+<p>现在移动端 <code>css3</code> 单位 <code>vw</code> ,<code>wh</code> 兼容性已经很不错了，在不需要兼容太低版本的安卓机情况下可以这样来：</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">html</span>{
+<span class="hljs-attribute">font-size</span>: <span class="hljs-number">100vw</span> / <span class="hljs-number">750</span>
+}</code></pre>
+<h4>最终结果</h4>
+<p>就这么简单的设置，<code>rem</code> 就可以使用了</p>
+<h3 id="articleHeader13">13、利用 <code>transparent</code> 属性实现各种三角形，提示框</h3>
+<h4>需求</h4>
+<blockquote><p><strong>在不使用图片的情况，实现一个简单的三角形箭头</strong></p></blockquote>
+<h4>代码</h4>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-id">#triangle-right</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">border-top</span>: <span class="hljs-number">50px</span> solid transparent;
+    <span class="hljs-attribute">border-left</span>: <span class="hljs-number">100px</span> solid red;
+    <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">50px</span> solid transparent;
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354990" src="assets/1553298946-23c3e37b9adbeb6f3d950a7f639e419d" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>复杂点的话，同样的原理还可以实现一个<strong>五角星</strong>，原理都是利用 <code>transparent</code> 的透明属性。</p>
+<h3 id="articleHeader14">14、让网站所有图片变成黑白色彩的</h3>
+<h4>需求</h4>
+<blockquote><p><strong>记得2008年时候汶川大地震时候，很多网站图片都变成黑白色彩悼念逝者</strong></p></blockquote>
+<h4>代码</h4>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://user-gold-cdn.xitu.io/2017/9/25/0844cf44a8d8c4ed026d6c488a6e9b80?
+imageView2/1/w/500/h/200/q/85/interlace/1"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"desaturate"</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-tag">img</span><span class="hljs-selector-class">.desaturate</span> {
+    <span class="hljs-attribute">filter</span>: <span class="hljs-built_in">grayscale</span>(100%);
+    <span class="hljs-attribute">-webkit-filter</span>: <span class="hljs-built_in">grayscale</span>(100%);
+    <span class="hljs-attribute">-moz-filter</span>: <span class="hljs-built_in">grayscale</span>(100%);
+    <span class="hljs-attribute">-ms-filter</span>: <span class="hljs-built_in">grayscale</span>(100%);
+    <span class="hljs-attribute">-o-filter</span>: <span class="hljs-built_in">grayscale</span>(100%);
+}</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354991" src="assets/1553298946-640187191b5497fca602e878bc0ca79f" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader15">15、实现文字的波浪线效果</h3>
+<h4>需求</h4>
+<blockquote><p><strong>实现文字波浪线的强调效果，如图所示</strong></p></blockquote>
+<p><span class="img-wrap"><img data-src="assets/1553298946-b0afddc836e799668853c13786ced648" src="https://segmentfault.com/img/remote/1460000009645776?w=274&amp;h=101" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p> 相信大家对于 <code>text-decoration</code> 这个属性并不陌生，在重置 <code>a</code> 标签的默认样式时，我们经常要这样写：<code>text-decoration: none;</code> 可能对它了解的人也很少，实际上 <code>text-decoration</code> 是一个复合属性，由 <code>line</code>、<code>style</code> 和 <code>color</code> 组成。</p>
+<p>  所以我们可以实现这样的效果：  <br><span class="img-wrap"><img data-src="assets/1553298946-00b8462c7dcf8142e2e3c6831aa48ee9" src="assets/1553298946-00b8462c7dcf8142e2e3c6831aa48ee9" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>  可惜的是 <code>line</code> 只有 <code>underline</code> (下划线)、<code>overline</code> (上划线)和 <code>line-through</code> (删除线)。如果突然需要下划波浪线，怎么办呢？不要急，神奇的 <code>CSS</code> 会帮你做到的。首先，你需要先了解一下<a href="http://www.jianshu.com/p/3b9c19746d6c" rel="nofollow noreferrer" target="_blank">渐变的使用技巧</a>。</p>
+<p>  说一下这里的思路，我们首先要用两段渐变构造一个基本元素：'X'(这里我就不放图了)，下一步就比较重要了，我们要截取'X'的上半部分，得到一个'V',从而结合 <code>repeat</code> 形成波浪线。下面是用 <code>scss</code> 写的一个 <code>mixin</code> ，方便以后使用。</p>
+<h4>代码</h4>
+<pre class="css hljs"><code class="css">    @<span class="hljs-keyword">mixin</span> waveline($color,$h) {
+        <span class="hljs-selector-tag">position</span>: <span class="hljs-selector-tag">relative</span>;
+        &amp;<span class="hljs-selector-pseudo">::after</span> {
+            <span class="hljs-attribute">content</span>: <span class="hljs-string">''</span>;
+            <span class="hljs-attribute">display</span>: block;
+            <span class="hljs-attribute">position</span>: absolute;
+            <span class="hljs-attribute">top</span>: <span class="hljs-number">100%</span>;
+            <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+            <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+            <span class="hljs-attribute">height</span>: $h;
+            <span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(135deg, transparent, transparent 45%, $color, transparent 55%, transparent 100%),
+                        <span class="hljs-built_in">linear-gradient</span>(45deg, transparent, transparent 45%, $color, transparent 55%, transparent 100%);
+            <span class="hljs-attribute">background-size</span>: $h * <span class="hljs-number">2</span> $h * <span class="hljs-number">2</span>;
+        }
+    }</code></pre>
+<h4>最终效果</h4>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354992" src="assets/1553298946-5a15d83c4b92466f3291f308ba5e9af1.svg" alt="" title="" style="cursor: pointer;"></span></p>
+<h3 id="articleHeader16">兼容性</h3>
+<p>这些技巧在当前版本的<code>Chrome</code>，<code>Firefox</code>， <code>Safari</code>， 以及<code>Edge</code>， 和<code>IE11</code>可以工作，移动端基本都没问题，<code>IE</code> 重度开发者慎用。</p>
+<p><strong>相关兼容性自行查找：<a href="https://caniuse.com/" rel="nofollow noreferrer" target="_blank">https://caniuse.com/</a></strong></p>
+<h3 id="articleHeader17">推荐一波</h3>
+<h4>有趣的 GitHub 仓库</h4>
+<p>国服第一切图仔的 CSS 仓库：你想知道的 CSS 奇技淫巧，在这里，都有。<a href="https://github.com/chokcoco/iCSS" rel="nofollow noreferrer" target="_blank">iCSS -- interesting css</a></p>
+<h4>张鑫旭老师的博客</h4>
+<p><a href="http://www.zhangxinxu.com/wordpress/" rel="nofollow noreferrer" target="_blank">前端技术</a></p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000011354974" src="assets/1553298946-f4af76666b9870cae2ae15fe67e322cf" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>受益颇多，所以推荐一波。?</p>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553298946-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000011354975" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="CSS 黑魔法小技巧，让你少写不必要的JS，代码更优雅" data-url="https://segmentfault.com/a/1190000011354975?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5VN6V"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000011354975?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5VN6V"><span class="icon-sn-dotted" data-original-title="" title=""></span></a></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000011354975" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">44 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000011354975" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">149</span></button></div>                
+                                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                
+                <div class="mb15 block">
+                    
+                </div>
+
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000003936841" title="20 个 CSS 高级技巧汇总" target="_blank">20 个 CSS 高级技巧汇总</a><span class="text-muted">仁平君</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E4%BB%81%E5%B9%B3%E5%90%9B">仁平君</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css3">css3</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000011879503" title="我不知道你知不知道我知道的伪元素小技巧" target="_blank">我不知道你知不知道我知道的伪元素小技巧</a><span class="text-muted">晴窗一扇</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000006887979" title="CSS之伪类元素" target="_blank">CSS之伪类元素</a><span class="text-muted">juno</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000011283860" title="【前端学习】-粗谈选择器" target="_blank">【前端学习】-粗谈选择器</a><span class="text-muted">miya</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%89%8D%E7%AB%AF">前端</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css3">css3</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css%E9%80%89%E6%8B%A9%E5%99%A8">css选择器</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E9%80%89%E6%8B%A9%E5%99%A8">选择器</a></li><li><a href="http://segmentfault.com/a/1190000013424772" title="CSS 选择器，一篇就够了" target="_blank">CSS 选择器，一篇就够了</a><span class="text-muted">Pines_Cheng</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000000474414" title="详解 CSS 属性 - :before &amp;&amp; :after" target="_blank">详解 CSS 属性 - :before &amp;&amp; :after</a><span class="text-muted">StephenLee</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000015351358" title="用typescript撸一个让元素高亮的库" target="_blank">用typescript撸一个让元素高亮的库</a><span class="text-muted">苍穹青空</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/typescript">typescript</a></li><li><a href="http://segmentfault.com/a/1190000012024131" title="CSS选择器（1）——基本选择器" target="_blank">CSS选择器（1）——基本选择器</a><span class="text-muted">xthought</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li></ul></div></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000011354975" data-user-id="1030000009484911" data-author-id="1030000005146192 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">13 条评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+                <div class="comments-item" data-id="1050000011387620">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/chandler0415" target="_blank"><img class="avatar-32 " src="assets/1553298946-c767d173bd2e1fd784f4fd07d186b07d" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/chandler0415">Chandler心沒長大</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月27日</span>
+                </div>
+
+                <div class="fmt mb10"><p>rem的那个应该用calc包裹一下吧，不然会报错。数据不能直接计算，要用CSS函数 calc()来帮助实现。</p></div>
+
+                <form action="/api/comment/1050000011387620/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011387686">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>恩，要先算出来，我这里为了更好的理解，所以就直接这么写了，忽略了这一点。。。</p></div>
+                                <form action="/api/comment/1050000011387686/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/jawil">
+                                            <strong>微醺岁月</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月27日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011401866">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p><a href="https://segmentfault.com/u/jawil">@微醺岁月</a> 哦哦、哈哈，我较真了，不过确实还是写上好一点。楼主文章很赞。</p></div>
+                                <form action="/api/comment/1050000011401866/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/chandler0415">
+                                            <strong>Chandler心沒長大</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月28日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011536401">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>rem最小值12px吧？楼主写法想法很好，现实很骨感</p></div>
+                                <form action="/api/comment/1050000011536401/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zhangyishao_58f04ba3b8e23">
+                                            <strong>张益韶</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年10月13日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011375558">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/glashtteoriginal" target="_blank"><img class="avatar-32 " src="assets/1553298946-0bb07cbe2720249d829b580ec2e9de75" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/glashtteoriginal">GlashütteOriginal</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月27日</span>
+                </div>
+
+                <div class="fmt mb10"><p>厉害</p></div>
+
+                <form action="/api/comment/1050000011375558/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011380958">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/limengke" target="_blank"><img class="avatar-32 " src="assets/1553298946-6a95162d73cd96d91361ad1f4e9d05e2" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/limengke">李梦克</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月27日</span>
+                </div>
+
+                <div class="fmt mb10"><p>还不错哦</p></div>
+
+                <form action="/api/comment/1050000011380958/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011383077">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/juo_ozi" target="_blank"><img class="avatar-32 " src="assets/1553298946-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/juo_ozi">juo_ozi</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月27日</span>
+                </div>
+
+                <div class="fmt mb10"><p>受益很多。。。基础一般，有些看不懂。。。<br>另外，这个 .nav li:first-child ~ li(不包括最后一个li)   也是不包括第一个li  而且 第一个的话 :first-child 好像是可以不用写的吧 就是 .nav li ~ li , 作者写是考虑可读性吧</p></div>
+
+                <form action="/api/comment/1050000011383077/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011383163">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>恩恩，最好语义化更容易让人理解，css其实很多可以深入的，平时自己也主要把精力放在js上了，最后发现自己图都切不好。。。</p></div>
+                                <form action="/api/comment/1050000011383163/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/jawil">
+                                            <strong>微醺岁月</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月27日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011409445">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/shilele" target="_blank"><img class="avatar-32 " src="assets/1553298946-797ad023e468f28cc0d92d245725d452" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/shilele">micstone</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月29日</span>
+                </div>
+
+                <div class="fmt mb10"><p>text-align-last兼容性不好</p></div>
+
+                <form action="/api/comment/1050000011409445/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011414298">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/xuanxuan_59cdfa84a2993" target="_blank"><img class="avatar-32 " src="assets/1553298946-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/xuanxuan_59cdfa84a2993">轩轩</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月29日</span>
+                </div>
+
+                <div class="fmt mb10"><p>请问，2、利用用 :valid 和 :invalid 来做表单即时校验，我拷贝你下面给的代码，怎么没有实现你那样的效果呢？求解答，求指教，谢谢。</p></div>
+
+                <form action="/api/comment/1050000011414298/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011475638">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>@extend 是 Sass语法</p></div>
+                                <form action="/api/comment/1050000011475638/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/chiroc">
+                                            <strong>Chiroc</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年10月09日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011490634">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/sailing_5978b26702f9a" target="_blank"><img class="avatar-32 " src="assets/1553298946-f276e6b56ec6c833231ebe5f547781d1" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/sailing_5978b26702f9a">Sailing</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年10月10日</span>
+                </div>
+
+                <div class="fmt mb10"><p>很实用的一些个功能，值得学习...</p></div>
+
+                <form action="/api/comment/1050000011490634/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011491520">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/sailing_5978b26702f9a" target="_blank"><img class="avatar-32 " src="assets/1553298946-f276e6b56ec6c833231ebe5f547781d1" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/sailing_5978b26702f9a">Sailing</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年10月10日</span>
+                </div>
+
+                <div class="fmt mb10"><p>问一下：表单即时校验那个例子，UI用的bootstrap吗？</p></div>
+
+                <form action="/api/comment/1050000011491520/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1553298946-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000011354975/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000011354975" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-23 07:55:46</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

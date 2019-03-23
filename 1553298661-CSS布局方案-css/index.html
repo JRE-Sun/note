@@ -1,0 +1,1770 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000010989110 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CSS布局方案-css</title>
+    
+<link rel="stylesheet" href="assets/1553298661-04b7a1551b9ea68bcf94f9ecf05846d5.css">
+
+<link rel="stylesheet" href="assets/1553298661-1bfac5bfd1d0b194dacc6adc89cc954a.css">
+
+<link rel="stylesheet" href="assets/1553298661-c86b6210e40f2befcca430cc00577148.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000011154394" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li><a href="https://segmentfault.com/blog/willspace">willspace</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="zwwill_木羽" data-userslug="zwwill" data-useravatar="https://avatar-static.segmentfault.com/895/756/895756399-5a4afe8ed89ed_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/zwwill">
+                                                    <img class="avatar-40" src="assets/1553298661-247e1d6354b2ed5a932d0aa0117df4d8" alt="zwwill_木羽">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/zwwill" class="mr5"><strong>zwwill_木羽</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1553298661-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">5.8k</span>
+
+                                                                                                发布于
+                                                <a href="https://segmentfault.com/blog/willspace">willspace</a>
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                          <button type="button" class="btn btn-xs btn-success follow-article ml10" data-do="follow" data-type="blog" data-id="1200000011154394">关注专栏
+                                                       </button>
+                                                                                                                                                   </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2017-09-03 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000010989110">
+                                            <a href="https://segmentfault.com/a/1190000010989110"> 【整理】CSS布局方案</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000010989110" data-license="cc">
+                    
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989115" src="assets/1553298661-7abd2b1c8a8afb595085ac9c7d22034a" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<blockquote><p>我们在日常开发中经常遇到布局问题，下面罗列几种常用的css布局方案<br>话不多说，上代码！</p></blockquote>
+<blockquote><p>以下所有demo的源码<br>github：<a href="https://github.com/zwwill/css-layout/tree/master/demo-1" rel="nofollow noreferrer" target="_blank">https://github.com/zwwill/css-layout/tree/master/demo-1</a><br>链接: <a href="http://pan.baidu.com/s/1cHBH3g" rel="nofollow noreferrer" target="_blank">http://pan.baidu.com/s/1cHBH3g  </a>  <br>密码:obkb</p></blockquote>
+<h1 id="articleHeader0">居中布局</h1>
+<blockquote><p>以下居中布局均以不定宽为前提，定宽情况包含其中</p></blockquote>
+<h2 id="articleHeader1">1、水平居中</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989116" src="assets/1553298661-93bfc01ec21385c2f20eff59cd0ef5a0" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader2">a) inline-block + text-align</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">text-align</span>: center;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">display</span>: inline-block;
+}</code></pre>
+<p>tips：此方案兼容性较好，可兼容至IE8，对于IE567并不支持inline-block，需要使用css hack进行兼容</p>
+<h3 id="articleHeader3">b) table + margin</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">display</span>: table;
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;
+}</code></pre>
+<p>tips：此方案兼容至IE8，可以使用<code>&lt;table/&gt;</code>代替css写法，兼容性良好</p>
+<h3 id="articleHeader4">c) absolute + transform</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">position</span>: relative;
+    <span class="hljs-attribute">height</span>:<span class="hljs-number">1.5em</span>;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateX</span>(-50%);
+}</code></pre>
+<p>tips：此方案兼容至IE9，因为transform兼容性限制，如果<code>.child</code>为定宽元素，可以使用以下写法，兼容性极佳</p>
+<pre class="css hljs"><code class="css">
+<span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">position</span>: relative;
+    <span class="hljs-attribute">height</span>:<span class="hljs-number">1.5em</span>;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">width</span>:<span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">margin-left</span>:-<span class="hljs-number">50px</span>;
+}</code></pre>
+<h3 id="articleHeader5">d) flex + justify-content</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+    <span class="hljs-attribute">justify-content</span>: center;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;
+}</code></pre>
+<p>tips：flex是一个强大的css，生而为布局，它可以轻松的满足各种居中、对其、平分的布局要求，但由于现浏览器兼容性问题，此方案很少被使用，但是值得期待浏览器兼容性良好但那一天！</p>
+<h2 id="articleHeader6">2、垂直</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989117" src="assets/1553298661-5f6e250f9a725597e51bd825c1f9e64c" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader7">a) table-cell + vertial-align</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: table-cell;
+    <span class="hljs-attribute">vertical-align</span>: middle;
+}</code></pre>
+<p>tips：可替换成<code>&lt;table /&gt;</code>布局，兼容性良好</p>
+<h3 id="articleHeader8">b) absolute + transform</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">position</span>: relative;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translateY</span>(-50%);
+}</code></pre>
+<p>tips：存在css3兼容问题，定宽兼容性良好</p>
+<h3 id="articleHeader9">c) flex + align-items</h3>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+    <span class="hljs-attribute">align-items</span>: center;
+}</code></pre>
+<p>tips：高版本浏览器兼容，低版本不适用</p>
+<h2 id="articleHeader10">3、水平垂直</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989118" src="assets/1553298661-8cde0ee2a159afda6ab5b2637d9696dc" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<p>a) inline-block + table-cell + text-align + vertical-align</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">text-align</span>: center;
+    <span class="hljs-attribute">display</span>: table-cell;
+    <span class="hljs-attribute">vertical-align</span>: middle;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">display</span>: inline-block;
+}</code></pre>
+<p>tips：兼容至IE8<br>b) absolute + transform</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">position</span>: relative;
+}
+<span class="hljs-selector-class">.child</span>{
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">50%</span>;
+    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(-50%,-50%);
+}</code></pre>
+<p>tips：兼容性稍差，兼容IE10以上<br>c) flex</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+    <span class="hljs-attribute">justify-content</span>: center;
+    <span class="hljs-attribute">align-items</span>: center;
+}</code></pre>
+<p>tips：兼容差</p>
+<h1 id="articleHeader11">多列布局</h1>
+<h2 id="articleHeader12">1、一列定宽，一列自适应</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989119" src="assets/1553298661-2d1c782e7386069e93ca99c5eb27afa8" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<p>a) float + margin</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">float</span>: left;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">margin-left</span>: <span class="hljs-number">120px</span>;
+}</code></pre>
+<p>tips：此方案对于定宽布局比较好，不定宽布局推荐方法b<br>b) float + overflow</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">float</span>: left;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">overflow</span>: hidden;
+}</code></pre>
+<p>tips：个人常用写法，此方案不管是多列定宽或是不定宽，都可以完美实现，同时可以实现登高布局<br>c) table</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: table; <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">table-layout</span>: fixed;
+}
+<span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">display</span>: table-cell;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">padding-right</span>: <span class="hljs-number">20px</span>;
+}</code></pre>
+<p>d) flex</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">padding-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+}</code></pre>
+<h2 id="articleHeader13">2、多列定宽，一列自适应</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989120" src="assets/1553298661-8ad46837eaf67af4a25fb75d0fdec6a9" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<p>a) float + overflow</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.center</span>{
+    <span class="hljs-attribute">float</span>: left;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">overflow</span>: hidden;
+}</code></pre>
+<p>b) table</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: table; <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">table-layout</span>: fixed;
+}
+<span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.center</span>,<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">display</span>: table-cell;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">padding-right</span>: <span class="hljs-number">20px</span>;
+}</code></pre>
+<p>c) flex</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+}
+<span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.center</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">padding-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+}</code></pre>
+<h2 id="articleHeader14">3、一列不定宽，一列自适应</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989121" src="assets/1553298661-e337c2372e2650e28a02c223f624b84e" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<p>a) float + overflow</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">float</span>: left;
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">overflow</span>: hidden;
+}
+<span class="hljs-selector-class">.left</span> <span class="hljs-selector-tag">p</span>{<span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;}</code></pre>
+<p>b) table</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: table; <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+}
+<span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">display</span>: table-cell;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">0.1%</span>;
+    <span class="hljs-attribute">padding-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.left</span> <span class="hljs-selector-tag">p</span>{<span class="hljs-attribute">width</span>:<span class="hljs-number">200px</span>;}</code></pre>
+<p>c) flex</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+}
+<span class="hljs-selector-class">.left</span> <span class="hljs-selector-tag">p</span>{<span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;}</code></pre>
+<h2 id="articleHeader15">4、多列不定宽，一列自适应</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989122" src="assets/1553298661-b48b6bf132da4f0b0f46e56b39831035" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span></p>
+<p>a) float + overflow</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.center</span>{
+    <span class="hljs-attribute">float</span>: left;
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">overflow</span>: hidden;
+}
+<span class="hljs-selector-class">.left</span> <span class="hljs-selector-tag">p</span>,<span class="hljs-selector-class">.center</span> <span class="hljs-selector-tag">p</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+}</code></pre>
+<h2 id="articleHeader16">5、等分</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989123" src="assets/1553298661-69043ca61e74ba4c4eadaefdfeabb4ec" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span><br>a) float + margin</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.column</span>{
+    <span class="hljs-attribute">float</span>: left;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">25%</span>;
+    <span class="hljs-attribute">padding-left</span>: <span class="hljs-number">20px</span>;
+    <span class="hljs-attribute">box-sizing</span>: border-box;
+}</code></pre>
+<p>b) table + margin</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent-fix</span>{
+    <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: table;
+    <span class="hljs-attribute">width</span>:<span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">table-layout</span>: fixed;
+}
+<span class="hljs-selector-class">.column</span>{
+    <span class="hljs-attribute">display</span>: table-cell;
+    <span class="hljs-attribute">padding-left</span>: <span class="hljs-number">20px</span>;
+}</code></pre>
+<p>c) flex</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: flex;
+}
+<span class="hljs-selector-class">.column</span>{
+    <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+}
+<span class="hljs-selector-class">.column</span>+<span class="hljs-selector-class">.column</span>{
+    <span class="hljs-attribute">margin-left</span>:<span class="hljs-number">20px</span>;
+}</code></pre>
+<h2 id="articleHeader17">6、等高</h2>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000010989124" src="assets/1553298661-99818de3bcc1bb53b1579663ad215041" alt="效果图" title="效果图" style="cursor: pointer; display: inline;"></span><br>a) float + overflow</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">overflow</span>: hidden;
+}
+<span class="hljs-selector-class">.left</span>,<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">9999px</span>;
+    <span class="hljs-attribute">margin-bottom</span>: -<span class="hljs-number">9999px</span>;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">float</span>: left; <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">overflow</span>: hidden;
+}</code></pre>
+<p>b) table</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>: table; 
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">display</span>:table-cell; 
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+    <span class="hljs-attribute">margin-right</span>: <span class="hljs-number">20px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">display</span>:table-cell; 
+}</code></pre>
+<p>c) flex</p>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.parent</span>{
+    <span class="hljs-attribute">display</span>:flex;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+}
+<span class="hljs-selector-class">.left</span>{
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;
+}
+<span class="hljs-selector-class">.right</span>{
+    <span class="hljs-attribute">flex</span>:<span class="hljs-number">1</span>;
+}</code></pre>
+<h1 id="articleHeader18">并排等分，单排对齐靠左布局</h1>
+<p>效果图<br><span class="img-wrap"><img data-src="/img/remote/1460000011002323" src="assets/1553298661-5a15d83c4b92466f3291f308ba5e9af1.svg" alt="效果图" title="效果图" style="cursor: pointer;"></span></p>
+<h2 id="articleHeader19">flex</h2>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.main</span> {
+    <span class="hljs-attribute">display</span>: flex;
+    <span class="hljs-attribute">flex-flow</span>: row wrap;
+    <span class="hljs-attribute">justify-content</span>: space-between;
+}
+<span class="hljs-selector-class">.item</span> {
+    <span class="hljs-attribute">display</span>: inline-block;
+}
+<span class="hljs-selector-class">.empty</span>{
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">visibility</span>: hidden;
+}</code></pre>
+<p>具体详解请见下文<br><a href="https://segmentfault.com/a/1190000011007357">https://segmentfault.com/a/1190000011007357</a></p>
+<h1 id="articleHeader20">圣杯布局&amp;双飞翼布局</h1>
+<blockquote><p>此处仅为代码展示，差别讲解请移驾下文<br><a href="https://segmentfault.com/a/1190000011149400" target="_blank">【方案】圣杯布局&amp;双飞翼布局</a></p></blockquote>
+<h2 id="articleHeader21">圣杯布局</h2>
+<p><span class="img-wrap"><img data-src="/img/bVUWBQ?w=1046&amp;h=632" src="assets/1553298661-a7788257a7f36f2f3c2ea159cbb38520" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<p>【JsFiddle】<br><a href="https://jsfiddle.net/zwwill/px57xzp4/" rel="nofollow noreferrer" target="_blank">https://jsfiddle.net/zwwill/px57xzp4/</a><button class="btn btn-xs btn-default ml10 preview" data-url="zwwill/px57xzp4/" data-typeid="0">点击预览</button></p>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header"</span>&gt;</span>header<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"wrapper clearfix"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"main col"</span>&gt;</span>main<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"left col"</span>&gt;</span>left<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"right col"</span>&gt;</span>right<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"footer"</span>&gt;</span>footer<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.container</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">500px</span>; <span class="hljs-attribute">margin</span>: <span class="hljs-number">50px</span> auto;}
+<span class="hljs-selector-class">.wrapper</span> {<span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span> <span class="hljs-number">100px</span> <span class="hljs-number">0</span> <span class="hljs-number">100px</span>;}
+<span class="hljs-selector-class">.col</span> {<span class="hljs-attribute">position</span>: relative; <span class="hljs-attribute">float</span>: left;}
+<span class="hljs-selector-class">.header</span>,<span class="hljs-selector-class">.footer</span> {<span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;}
+<span class="hljs-selector-class">.main</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>;}
+<span class="hljs-selector-class">.left</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">100%</span>;<span class="hljs-attribute">left</span>: -<span class="hljs-number">100px</span>;}
+<span class="hljs-selector-class">.right</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">100px</span>; <span class="hljs-attribute">right</span>: -<span class="hljs-number">100px</span>;}
+<span class="hljs-selector-class">.clearfix</span><span class="hljs-selector-pseudo">::after</span> {<span class="hljs-attribute">content</span>: <span class="hljs-string">""</span>; <span class="hljs-attribute">display</span>: block; <span class="hljs-attribute">clear</span>: both; <span class="hljs-attribute">visibility</span>: hidden; <span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">overflow</span>: hidden;}</code></pre>
+<h2 id="articleHeader22">双飞翼布局</h2>
+<p><span class="img-wrap"><img data-src="/img/bVUWBQ?w=1046&amp;h=632" src="assets/1553298661-a7788257a7f36f2f3c2ea159cbb38520" alt="" title="" style="cursor: pointer; display: inline;"></span></p>
+<blockquote><p>ps: <br>“这不是一样的图嘛？”<br>“对！就是一样的，因为是解决同一种问题的嘛。”</p></blockquote>
+<p>【JsFiddle】<br><a href="https://jsfiddle.net/zwwill/5xjyeu9d/" rel="nofollow noreferrer" target="_blank">https://jsfiddle.net/zwwill/5xjyeu9d/</a><button class="btn btn-xs btn-default ml10 preview" data-url="zwwill/5xjyeu9d/" data-typeid="0">点击预览</button></p>
+<pre class="xml hljs"><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"container"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header"</span>&gt;</span>header<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"wrapper clearfix"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"main col"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"main-wrap"</span>&gt;</span>main<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"left col"</span>&gt;</span>left<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"right col"</span>&gt;</span>right<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"footer"</span>&gt;</span>footer<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+<pre class="css hljs"><code class="css"><span class="hljs-selector-class">.col</span> {<span class="hljs-attribute">float</span>: left;}
+<span class="hljs-selector-class">.header</span> {<span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;}
+<span class="hljs-selector-class">.main</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;}
+<span class="hljs-selector-class">.main-wrap</span> {<span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> <span class="hljs-number">100px</span> <span class="hljs-number">0</span> <span class="hljs-number">100px</span>;<span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>;}
+<span class="hljs-selector-class">.left</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">100%</span>;}
+<span class="hljs-selector-class">.right</span> {<span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>; <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>; <span class="hljs-attribute">margin-left</span>: -<span class="hljs-number">100px</span>;}
+<span class="hljs-selector-class">.footer</span> {<span class="hljs-attribute">height</span>: <span class="hljs-number">50px</span>;}
+<span class="hljs-selector-class">.clearfix</span><span class="hljs-selector-pseudo">::after</span> {<span class="hljs-attribute">content</span>: <span class="hljs-string">""</span>; <span class="hljs-attribute">display</span>: block; <span class="hljs-attribute">clear</span>: both; <span class="hljs-attribute">visibility</span>: hidden; <span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">overflow</span>: hidden;}</code></pre>
+<h2 id="articleHeader23">无名布局</h2>
+<p>自己瞎搞的，简单的绝对定位即可解决问题，为啥还要搞什么圣杯和双飞翼<br><a href="https://jsfiddle.net/zwwill/awwkpwbL/" rel="nofollow noreferrer" target="_blank">https://jsfiddle.net/zwwill/a...</a><button class="btn btn-xs btn-default ml10 preview" data-url="zwwill/awwkpwbL/" data-typeid="0">点击预览</button></p>
+<pre class="hljs scala"><code>&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"header"</span>&gt;header&lt;/div&gt;
+&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"wrapper"</span>&gt;
+    &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"main col"</span>&gt;
+        main
+    &lt;/div&gt;
+    &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"left col"</span>&gt;
+        left
+    &lt;/div&gt;
+    &lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"right col"</span>&gt;
+        right
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"footer"</span>&gt;footer&lt;/div&gt;</code></pre>
+<pre class="hljs css"><code><span class="hljs-selector-class">.wrapper</span> { <span class="hljs-attribute">position</span>: relative; }
+<span class="hljs-selector-class">.main</span> { <span class="hljs-attribute">margin</span>:<span class="hljs-number">0</span> <span class="hljs-number">100px</span>;}
+<span class="hljs-selector-class">.left</span> { <span class="hljs-attribute">position</span>: absolute; <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;}
+<span class="hljs-selector-class">.right</span> { <span class="hljs-attribute">position</span>: absolute; <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;}</code></pre>
+<blockquote><p>如果你觉得此文对你有一定的帮助，可以点击下方的【喜欢】收藏备用</p></blockquote>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553298661-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000010989110" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="【整理】CSS布局方案" data-url="https://segmentfault.com/a/1190000010989110?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5UgVS"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000010989110?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5UgVS"><span class="icon-sn-dotted" data-original-title="" title=""></span></a></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000010989110" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">80 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000010989110" class="btn btn-default btn-lg  active"><span id="mainBookmarkText">已收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">611</span></button><br><button type="button" data-id="1190000010989110" class="btn btn-danger btn-lg mt15 article__reward-btn">
+                                    赞赏支持
+                                </button></div><div class="mt30 mb30 text-center article__reward-info"><span class="mr10">如果觉得我的文章对你有用，请随意赞赏</span></div>                
+                                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                
+                <div class="mb15 block">
+                    
+                </div>
+
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000003931851" title="利用HTML和CSS实现常见的布局" target="_blank">利用HTML和CSS实现常见的布局</a><span class="text-muted">mrshi</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80">页面布局</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css3">css3</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html5">html5</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a></li><li><a href="http://segmentfault.com/a/1190000009634332" title="CSS常见布局解决方案" target="_blank">CSS常见布局解决方案</a><span class="text-muted">山海</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css3">css3</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html5">html5</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a></li><li><a href="http://segmentfault.com/a/1190000011713011" title="css居中办法学习笔记?" target="_blank">css居中办法学习笔记?</a><span class="text-muted">oylp</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%B1%85%E4%B8%AD">居中</a></li><li><a href="http://segmentfault.com/a/1190000015583248" title="解决flex布局新旧版本的兼容性写法" target="_blank">解决flex布局新旧版本的兼容性写法</a><span class="text-muted">biaochenxuying</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000004149988" title="完美实现文字图片水平垂直居中" target="_blank">完美实现文字图片水平垂直居中</a><span class="text-muted">ChanceWong</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000015723169" title="浏览器兼容（CSS部分）" target="_blank">浏览器兼容（CSS部分）</a><span class="text-muted">mingo</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7">浏览器兼容性</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000003977098" title="没有flexbox弹性盒子，但我们还有table" target="_blank">没有flexbox弹性盒子，但我们还有table</a><span class="text-muted">苹果小萝卜</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000006118859" title="基于float的几种布局" target="_blank">基于float的几种布局</a><span class="text-muted">hopeCoder</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/float">float</a></li></ul></div></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000010989110" data-user-id="1030000009484911" data-author-id="1030000010878662 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">29 条评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+                <div class="comments-item" data-id="1050000011000742">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/eatcss" target="_blank"><img class="avatar-32 " src="assets/1553298661-1deb5a8df6bf4c0e8405a5ce2ed0855f" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/eatcss">eatcss</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月04日</span>
+                </div>
+
+                <div class="fmt mb10"><p>got it</p></div>
+
+                <form action="/api/comment/1050000011000742/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+2</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011004484">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/xiaobinwu" target="_blank"><img class="avatar-32 " src="assets/1553298661-f4e53b249f47295528d278658f28ceda" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/xiaobinwu">xiaobinwu</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月04日</span>
+                </div>
+
+                <div class="fmt mb10"><p>总结得十分周详</p></div>
+
+                <form action="/api/comment/1050000011004484/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011005838">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>还有一个瀑布流等分布局，今天sf系统好像出问题了，发布不了了</p></div>
+                                <form action="/api/comment/1050000011005838/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月04日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011010879">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>@zwwill 是的，我问题都发不出去</p></div>
+                                <form action="/api/comment/1050000011010879/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/eatcss">
+                                            <strong>eatcss</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月05日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011013624">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/jifeng_58461633c13c4" target="_blank"><img class="avatar-32 " src="assets/1553298661-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/jifeng_58461633c13c4">疾风</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月05日</span>
+                </div>
+
+                <div class="fmt mb10"><p>table-cell需要父级元素设置display:table才能生效</p></div>
+
+                <form action="/api/comment/1050000011013624/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011016110">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>是的，如果不指定依然是生效的，规范写法是该加上，感谢纠正</p></div>
+                                <form action="/api/comment/1050000011016110/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月05日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011050086">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/xixixixiao" target="_blank"><img class="avatar-32 " src="assets/1553298661-b65b5c37c3c963762ddb5fa93a1ed120" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/xixixixiao">YvonneCheung</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月07日</span>
+                </div>
+
+                <div class="fmt mb10"><p>想请问下，当用float的时候，边距用margin；用table和flex方法时，边距用了padding，这是为什么？</p></div>
+
+                <form action="/api/comment/1050000011050086/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011051115">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>先为你的细心点个赞！这样的，由于此处的布局是左边不定高的，其实就是为了给左列留出一个空隙，这样来看，margin和padding的效果都是一样的</p></div>
+                                <form action="/api/comment/1050000011051115/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/22136540">
+                                            <strong>22136540</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月07日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011059439">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>table-cell会使margin失效</p></div>
+                                <form action="/api/comment/1050000011059439/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/evgni0n">
+                                            <strong>Evgni0n</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月07日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011072634">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>table-cell 会触发BFC</p></div>
+                                <form action="/api/comment/1050000011072634/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/yanhappiness">
+                                            <strong>YANhappiness</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月08日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011059507">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/evgni0n" target="_blank"><img class="avatar-32 " src="assets/1553298661-4173842c88064b7415a4c43c0e0c7e9a" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/evgni0n">Evgni0n</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月07日</span>
+                </div>
+
+                <div class="fmt mb10"><p>并排等分，单排对齐靠左布局  后面几个empt 对seo不友好。昨天刚遇到这个问题，只能用flex-basis + margin解决了。。</p></div>
+
+                <form action="/api/comment/1050000011059507/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011059630">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value 
+                                         islike0-10
+                                        ">
+                                        1
+                                    </span>
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>这个布局倒是很好的例子，如果是3列的话可以用before和after当做empty使用，刚好解决了我遇到的问题。</p></div>
+                                <form action="/api/comment/1050000011059630/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/evgni0n">
+                                            <strong>Evgni0n</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月07日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011184503">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/fengjian_596b89222d107" target="_blank"><img class="avatar-32 " src="assets/1553298661-c98600bddbea276abd5cd2fd3e857fd9" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/fengjian_596b89222d107">風間</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月15日</span>
+                </div>
+
+                <div class="fmt mb10">
+<p>很受启发！多谢~</p>
+<p>关于等高，不太明白的是，下面这种写法的用意是？</p>
+<pre><code>padding-bottom: 9999px;
+margin-bottom: -9999px;
+</code></pre>
+<p>这样不是相互抵消了吗</p>
+</div>
+
+                <form action="/api/comment/1050000011184503/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011184551">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    <span class="comments-zan-value 
+                                         islike0-10
+                                        ">
+                                        2
+                                    </span>
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>@风间 占空抵消，实际的现实范围变大</p></div>
+                                <form action="/api/comment/1050000011184551/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月15日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011184690">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p><a href="https://segmentfault.com/u/zwwill">@zwwill</a> 受教了，谢谢</p></div>
+                                <form action="/api/comment/1050000011184690/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/fengjian_596b89222d107">
+                                            <strong>風間</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年09月15日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011827042">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/wangcongyi" target="_blank"><img class="avatar-32 " src="assets/1553298661-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/wangcongyi">王聪奕</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年11月02日</span>
+                </div>
+
+                <div class="fmt mb10">
+<p>水平垂直居中 还有一个：</p>
+<pre><code>        position: absolute;
+        top: 0;
+        left:0;
+        right:0;
+        bottom:0;
+        margin: auto;</code></pre>
+</div>
+
+                <form action="/api/comment/1050000011827042/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value">+1</span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011827961">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>这样不就全屏了吗？</p></div>
+                                <form action="/api/comment/1050000011827961/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年11月02日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000011941324">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>这个非常不错，但是需要在父元素上加上 position:relative;  兼容性也不错，作者可以在你的总结里面加上。如果只是需要在水平或垂直方向上居中只需要对应的轴线上比如垂直 top:0;bottom:0;margin:auto  0; 这样的就能够居中，非常灵活。</p></div>
+                                <form action="/api/comment/1050000011941324/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/_morelearn">
+                                            <strong>_morelearn</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年11月10日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000010992257">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/pillarboy_59ac15a59a299" target="_blank"><img class="avatar-32 " src="assets/1553298661-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/pillarboy_59ac15a59a299">pillarBoy</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月03日</span>
+                </div>
+
+                <div class="fmt mb10"><p>总结的很周详，非常有用，谢谢</p></div>
+
+                <form action="/api/comment/1050000010992257/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000010992657">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>@pillarBoy ?</p></div>
+                                <form action="/api/comment/1050000010992657/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月03日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000010996388">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/youling_59a0e763464f7" target="_blank"><img class="avatar-32 " src="assets/1553298661-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/youling_59a0e763464f7">幽灵</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月04日</span>
+                </div>
+
+                <div class="fmt mb10"><p>很精简，很全面，很受启发！</p></div>
+
+                <form action="/api/comment/1050000010996388/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000010996892">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>@幽灵 ?</p></div>
+                                <form action="/api/comment/1050000010996892/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月04日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000010999906">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/raphaelsoul" target="_blank"><img class="avatar-32 " src="assets/1553298661-b9c37eb8744486d783b5af4960ae4a42" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/raphaelsoul">raphaelsoul</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年09月04日</span>
+                </div>
+
+                <div class="fmt mb10"><p>放什么百度盘啊…github和jsfiddle不好吗？</p></div>
+
+                <form action="/api/comment/1050000010999906/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000011000998">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>有道理！<br><a href="https://github.com/zwwill/css-layout/tree/master/demo-1" rel="nofollow noreferrer">https://github.com/zwwill/css...</a></p></div>
+                                <form action="/api/comment/1050000011000998/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年09月04日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000011832275">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/linxi_59223381a31e3" target="_blank"><img class="avatar-32 " src="assets/1553298661-aa3f8ab00e278ead4b63a2315e0d1e08" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/linxi_59223381a31e3">渣渣辉</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年11月02日</span>
+                </div>
+
+                <div class="fmt mb10"><p>666</p></div>
+
+                <form action="/api/comment/1050000011832275/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000012295860">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/fushengruomeng_592630cba02d6" target="_blank"><img class="avatar-32 " src="assets/1553298661-5ac3fc9777abbb84f1d009e21b71960f" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/fushengruomeng_592630cba02d6">浮生若梦</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年12月05日</span>
+                </div>
+
+                <div class="fmt mb10"><p>666</p></div>
+
+                <form action="/api/comment/1050000012295860/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000014219087">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/moran_" target="_blank"><img class="avatar-32 " src="assets/1553298661-dcc75f4f31cbe851c6e8812ebe65e12a" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/moran_">不吃芒果</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年04月07日</span>
+                </div>
+
+                <div class="fmt mb10"><p>多列定宽，一列自适应,第二种table方式，table-layout属性可以不要(仅使用Chrome测试)。</p></div>
+
+                <form action="/api/comment/1050000014219087/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000014274545">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>需要的，否则左侧就是不定宽了</p></div>
+                                <form action="/api/comment/1050000014274545/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/zwwill">
+                                            <strong>zwwill_木羽</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2018年04月10日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000015344929">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/xiaoli2891121271" target="_blank"><img class="avatar-32 " src="assets/1553298661-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/xiaoli2891121271">小狸2891121271</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年06月21日</span>
+                </div>
+
+                <div class="fmt mb10"><p>为啥flex + justify-content的child要设置margin：0 auto；不设置也可居中呀</p></div>
+
+                <form action="/api/comment/1050000015344929/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1553298661-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000010989110/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000010989110" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-23 07:51:01</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
