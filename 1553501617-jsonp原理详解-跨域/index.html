@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://blog.csdn.net/hansexploration/article/details/80314948 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>jsonp原理详解-跨域</title>
+    
+<link rel="stylesheet" href="assets/1553501617-f166e036166639f07b8f8476f2dbb3df.css">
+
+<link rel="stylesheet" href="assets/1553501617-419000a4066fc284fccc76da096789ef.css">
+
+<link rel="stylesheet" href="assets/1553501617-3ee558b18d32cf19bc5f15c8f3dc942f.css">
+
+<link rel="stylesheet" type="text/css" href="assets/1553501617-287aed634bc19f202db333bc0533e7da.css">
+
+<link rel="stylesheet" href="assets/1553501617-f5d764629eb4ab8e3132c472f1fe7f49.css">
+
+<link rel="stylesheet" href="assets/1553501617-8afce11d00f7bc88a8191ad66e945525.css">
+
+<link href="assets/1553501617-47e7ddc9e1c45ba790d4476fa588d265.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/1553501617-d59c8fbcb4e99f490e1b848904625eb0.css">
+
+<link rel="stylesheet" href="assets/1553501617-5e49103610a4507dfceec6a81e7ab40f.css">
+
+<link rel="stylesheet" href="assets/1553501617-186b0d2f06ccc88e64f41fdb5cf32ed8.css">
+
+<link rel="stylesheet" href="assets/1553501617-5d588e322ad8d49b5f2cdad29f9344e9.css">
+
+<link rel="stylesheet" type="text/css" href="assets/1553501617-ce2a7a7a13b3b2aae540a44424b01c4b.css">
+
+<link rel="stylesheet" href="assets/1553501617-1e117311fa52f033d9339818a94d5677.css">
+
+<link rel="stylesheet" href="assets/1553501617-c4c55e51486fcfc5280a30bbe60ee721.css">
+<style>
+.login-box{position: fixed;display: none;left: 50%;top: 50%;z-index: 10000;-webkit-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);transform: translate(-50%, -50%);background-color: #fff;}.login-mark{position: fixed;top: 0;left: 0;z-index: 9999;background-color: rgba(0, 0, 0, 0.5);width: 100%;height: 100%;display: none;}
+</style>
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    
+</style>
+<style>
+.recommend-box ._4paradigm_box.T3 a .content-box{margin-left:0} .recommend-box ._4paradigm_box.T3 a .content-box h4{vertical-align:top}.recommend-box ._4paradigm_box.p4courset3_target {padding:0}.recommend-box ._4paradigm_box._paradigm_T_ads_render {padding:0} .recommend-box ._4paradigm_box._paradigm_T_ads_render a {width:100%;display:inline-block} ._4paradigm_box._paradigm_T_ads_render a:hover .text-truncate{color:#ca0c16}
+</style>
+<style>
+.recommend-box ._4paradigm_box.T3 a .content-box{margin-left:0} .recommend-box ._4paradigm_box.T3 a .content-box h4{vertical-align:top}.recommend-box ._4paradigm_box.p4courset3_target {padding:0}.recommend-box ._4paradigm_box._paradigm_T_ads_render {padding:0} .recommend-box ._4paradigm_box._paradigm_T_ads_render a {width:100%;display:inline-block} ._4paradigm_box._paradigm_T_ads_render a:hover .text-truncate{color:#ca0c16}
+</style>
+<style>
+.recommend-box ._4paradigm_box.T3 a .content-box{margin-left:0} .recommend-box ._4paradigm_box.T3 a .content-box h4{vertical-align:top}.recommend-box ._4paradigm_box.p4courset3_target {padding:0}.recommend-box ._4paradigm_box._paradigm_T_ads_render {padding:0} .recommend-box ._4paradigm_box._paradigm_T_ads_render a {width:100%;display:inline-block} ._4paradigm_box._paradigm_T_ads_render a:hover .text-truncate{color:#ca0c16}
+</style>
+<style>
+
+</style>
+<style>
+pre{position: relative}pre:hover .hljs-button{display: block}.hljs-button{display: none;position: absolute;right: 4px;top: 4px;font-size: 12px;color: #4d4d4d;background-color: white;padding: 2px 8px;margin: 8px;border-radius: 4px;cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);}.hljs-button:after{content: attr(data-title)}
+</style>
+<style>
+.hljs-ln{border-collapse:collapse}            .hljs-ln td{padding:0}            .hljs-ln-n{text-align: right;padding-right: 8px;}            .hljs-ln-n:before{content:attr(data-line-number)}
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+
+</style>
+<style>
+#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+
+</style>
+<style>
+.MathJax_Preview .MJXf-math {color: inherit!important}
+
+</style>
+<style>
+.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+
+</style>
+<style>
+#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+
+</style>
+<style>
+.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(245, 246, 247) !important;
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="nodata ">
+    <div class="mx-wc-main">
+      <DIV class="container clearfix" id="mainBox" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="blog-content-box mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+	<div class="article-header-box">
+		<div class="article-header">
+			<div class="article-title-box">
+				<span class="article-type type-2 float-left">转</span>				<h1 class="title-article">jsonp原理详解——终于搞清楚jsonp是啥了</h1>
+			</div>
+			<div class="article-info-box">
+				<div class="article-bar-top" style="height: 24px;">
+																				<span class="time">2018年05月14日 20:43:47</span>
+					<a class="follow-nickName" href="https://me.csdn.net/HansExploration" target="_blank">HansExploration</a>
+						<span class="read-count">阅读数：45617</span><span class="article_info_click" style="position: static;">更多</span>
+						
+																					<div class="tags-box space">
+								<span class="label">个人分类：</span>
+																<a class="tag-link" href="https://blog.csdn.net/HansExploration/article/category/7664237" target="_blank">jsonp																</a>
+							</div>
+																								</div>
+				<div class="operating">
+									</div>
+			</div>
+		</div>
+	</div>
+	<article class="baidu_pl">
+		<div id="article_content" class="article_content clearfix csdn-tracking-statistics" data-pid="blog" data-mod="popu_307" data-dsm="post">
+								            
+						<div class="htmledit_views" id="content_views">
+                <h2><a name="t0"></a>什么是JSONP？</h2><p>先说说JSONP是怎么产生的：</p><p>其实网上关于JSONP的讲解有很多，但却千篇一律，而且云里雾里，对于很多刚接触的人来讲理解起来有些困难，着用自己的方式来阐释一下这个问题，看看是否有帮助。</p><p>1、一个众所周知的问题，Ajax直接请求普通文件存在跨域无权限访问的问题，甭管你是静态页面、动态网页、web服务、WCF，只要是跨域请求，一律不准。</p><p>2、不过我们又发现，Web页面上调用js文件时则不受是否跨域的影响（不仅如此，我们还发现凡是拥有”src”这个属性的标签都拥有跨域的能力，比如&lt;\script&gt;、&lt;\img&gt;、&lt;\iframe&gt;）。</p><p>3、于是可以判断，当前阶段如果想通过纯web端（ActiveX控件、服务端代理、属于未来的HTML5之Websocket等方式不算）跨域访问数据就只有一种可能，那就是在远程服务器上设法把数据装进js格式的文件里，供客户端调用和进一步处理。</p><p>4、恰巧我们已经知道有一种叫做JSON的纯字符数据格式可以简洁的描述复杂数据，更妙的是JSON还被js原生支持，所以在客户端几乎可以随心所欲的处理这种格式的数据。</p><p>5、这样子解决方案就呼之欲出了，web客户端通过与调用脚本一模一样的方式，来调用跨域服务器上动态生成的js格式文件（一般以JSON为后缀），显而易见，服务器之所以要动态生成JSON文件，目的就在于把客户端需要的数据装入进去。</p><p>6、客户端在对JSON文件调用成功之后，也就获得了自己所需的数据，剩下的就是按照自己需求进行处理和展现了，这种获取远程数据的方式看起来非常像AJAX，但其实并不一样。</p><p>7、为了便于客户端使用数据，逐渐形成了一种非正式传输协议，人们把它称作JSONP，该协议的一个要点就是允许用户传递一个callback参数给服务端，然后服务端返回数据时会将这个callback参数作为函数名来包裹住JSON数据，这样客户端就可以随意定制自己的函数来自动处理返回数据了。</p><p>如果对于callback参数如何使用还有些模糊的话，我们后面会有具体的实例来讲解。</p><h2><a name="t1"></a><a target="_blank"></a>JSONP的客户端具体实现：</h2><p>不管jQuery也好，extjs也罢，又或者是其他支持jsonp的框架，他们幕后所做的工作都是一样的，下面我来循序渐进的说明一下jsonp在客户端的实现：</p><p><strong>1、我们知道，哪怕跨域js文件中的代码（当然指符合web脚本安全策略的），web页面也是可以无条件执行的。</strong></p><p>远程服务器remoteserver.com根目录下有个remote.js文件代码如下： </p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs scss has-numbering java"><span class="hljs-function">alert(<span class="hljs-string"><span class="hljs-string">'我是远程文件'</span></span>)</span>;</code></pre><p>本地服务器localserver.com下有个jsonp.html页面代码如下： </p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs xml has-numbering" style=""><ol class="hljs-ln" style="width:1094px"><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-doctype"><span class="hljs-meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">xmlns</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"http://www.w3.org/1999/xhtml"</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">type</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"text/javascript"</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">src</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"http://remoteserver.com/remote.js"</span></span></span><span class="hljs-tag">&gt;</span></span><span class="javascript"></span><span class="hljs-tag"><span class="undefined"></span><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"> </div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li></ol></code></pre><p>毫无疑问，页面将会弹出一个提示窗体，显示跨域调用成功。 </p><p><strong>2、现在我们在jsonp.html页面定义一个函数，然后在远程remote.js中传入数据进行调用。</strong> </p><p>jsonp.html页面代码如下：</p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs xml has-numbering"><ol class="hljs-ln" style="width:1094px"><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-doctype"><span class="hljs-meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">xmlns</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"http://www.w3.org/1999/xhtml"</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">type</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"text/javascript"</span></span></span><span class="hljs-tag">&gt;</span></span><span class="javascript"><span class="javascript"></span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword"><span class="javascript"><span class="hljs-keyword">var</span></span></span><span class="javascript"> localHandler = </span><span class="hljs-function"><span class="hljs-keyword"><span class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span></span></span></span><span class="hljs-params"><span class="javascript"><span class="hljs-function">(<span class="hljs-params">data</span>)</span></span></span><span class="javascript">{</span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">        alert(<span class="hljs-string"><span class="javascript"><span class="hljs-string">'我是本地函数，可以被跨域的remote.js文件调用，远程js带来的数据是：'</span></span></span><span class="javascript"> + data.result);</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    };</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">type</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"text/javascript"</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">src</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"http://remoteserver.com/remote.js"</span></span></span><span class="hljs-tag">&gt;</span></span><span class="javascript"></span><span class="hljs-tag"><span class="undefined"></span><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="13"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"> </div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="14"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="15"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li></ol></code></pre><p>remote.js文件代码如下： </p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs scss has-numbering java"><span class="hljs-function">localHandler({<span class="hljs-string"><span class="hljs-string">"result"</span></span>:<span class="hljs-string"><span class="hljs-string">"我是远程js带来的数据"</span></span>})</span>;</code></pre><p>运行之后查看结果，页面成功弹出提示窗口，显示本地函数被跨域的远程js调用成功，并且还接收到了远程js带来的数据。 <br>很欣喜，跨域远程获取数据的目的基本实现了，但是又一个问题出现了，我怎么让远程js知道它应该调用的本地函数叫什么名字呢？毕竟是jsonp的服务者都要面对很多服务对象，而这些服务对象各自的本地函数都不相同啊？我们接着往下看。 </p><p><strong>3、聪明的开发者很容易想到，只要服务端提供的js脚本是动态生成的就行了呗，这样调用者可以传一个参数过去告诉服务端 “我想要一段调用XXX函数的js代码，请你返回给我”，于是服务器就可以按照客户端的需求来生成js脚本并响应了。</strong> </p><p>看jsonp.html页面的代码： </p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs xml has-numbering" style=""><ol class="hljs-ln" style="width:1094px"><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-doctype"><span class="hljs-meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">xmlns</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"http://www.w3.org/1999/xhtml"</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">type</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"text/javascript"</span></span></span><span class="hljs-tag">&gt;</span></span><span class="javascript"><span class="javascript"></span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-comment"><span class="javascript"><span class="hljs-comment">// 得到航班信息查询结果后的回调函数</span></span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword"><span class="javascript"><span class="hljs-keyword">var</span></span></span><span class="javascript"> flightHandler = </span><span class="hljs-function"><span class="hljs-keyword"><span class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span></span></span></span><span class="hljs-params"><span class="javascript"><span class="hljs-function">(<span class="hljs-params">data</span>)</span></span></span><span class="javascript">{</span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">        alert(<span class="hljs-string"><span class="javascript"><span class="hljs-string">'你查询的航班结果是：票价 '</span></span></span><span class="javascript"> + data.price + </span><span class="hljs-string"><span class="javascript"><span class="hljs-string">' 元，'</span></span></span><span class="javascript"> + </span><span class="hljs-string"><span class="javascript"><span class="hljs-string">'余票 '</span></span></span><span class="javascript"> + data.tickets + </span><span class="hljs-string"><span class="javascript"><span class="hljs-string">' 张。'</span></span></span><span class="javascript">);</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    };</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-comment"><span class="javascript"><span class="hljs-comment">// 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）</span></span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword"><span class="javascript"><span class="hljs-keyword">var</span></span></span><span class="javascript"> url = </span><span class="hljs-string"><span class="javascript"><span class="hljs-string">"http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&amp;callback=flightHandler"</span></span></span><span class="javascript">;</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-comment"><span class="javascript"><span class="hljs-comment">// 创建script标签，设置其属性</span></span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="13"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-keyword"><span class="javascript"><span class="hljs-keyword">var</span></span></span><span class="javascript"> script = <span class="hljs-built_in">document</span>.createElement(</span><span class="hljs-string"><span class="javascript"><span class="hljs-string">'script'</span></span></span><span class="javascript">);</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="14"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    script.setAttribute(<span class="hljs-string"><span class="javascript"><span class="hljs-string">'src'</span></span></span><span class="javascript">, url);</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="15"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-comment"><span class="javascript"><span class="hljs-comment">// 把script标签加入head，此时调用开始</span></span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="16"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string"><span class="javascript"><span class="hljs-string">'head'</span></span></span><span class="javascript">)[</span><span class="hljs-number"><span class="javascript"><span class="hljs-number">0</span></span></span><span class="javascript">].appendChild(script); </span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="17"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="18"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="19"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="20"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"> </div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="21"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="22"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li></ol></code></pre><p>这次的代码变化比较大，不再直接把远程js文件写死，而是编码实现动态查询，而这也正是jsonp客户端实现的核心部分，本例中的重点也就在于如何完成jsonp调用的全过程。 <br>我们看到调用的url中传递了一个code参数，告诉服务器我要查的是CA1998次航班的信息，而callback参数则告诉服务器，我的本地回调函数叫做flightHandler，所以请把查询结果传入这个函数中进行调用。 <br>OK，服务器很聪明，这个叫做flightResult.aspx的页面生成了一段这样的代码提供给jsonp.html</p><p>（服务端的实现这里就不演示了，与你选用的语言无关，说到底就是拼接字符串）： </p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs scss has-numbering java"><ol class="hljs-ln"><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-function">flightHandler({</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-string"><span class="hljs-string">"code"</span></span>: <span class="hljs-string"><span class="hljs-string">"CA1998"</span></span>,</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-string"><span class="hljs-string">"price"</span></span>: <span class="hljs-number"><span class="hljs-number">1780</span></span>,</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-string"><span class="hljs-string">"tickets"</span></span>: <span class="hljs-number"><span class="hljs-number">5</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">});</div></div></li></ol></code></pre><p><strong>4、到这里为止的话，相信你已经能够理解jsonp的客户端实现原理了吧？剩下的就是如何把代码封装一下，以便于与用户界面交互，从而实现多次和重复调用</strong></p><p>jQuery如何实现jsonp调用？ </p><pre class="prettyprint" name="code" onclick="hljs.signin(event)"><code class="hljs xml has-numbering" style=""><ol class="hljs-ln" style="width:1168px"><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-doctype"><span class="hljs-meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">xmlns</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"http://www.w3.org/1999/xhtml"</span></span></span><span class="hljs-tag"> &gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="4"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">     <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span>Untitled Page<span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">title</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="5"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">      <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">type</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"text/javascript"</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">src</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">jquery.min.js</span>"</span></span><span class="hljs-tag">&gt;</span></span><span class="javascript"></span><span class="hljs-tag"><span class="undefined"></span><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="6"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">      <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag"> </span><span class="hljs-attribute"><span class="hljs-tag"><span class="hljs-attr">type</span></span></span><span class="hljs-tag">=</span><span class="hljs-value"><span class="hljs-tag"><span class="hljs-string">"text/javascript"</span></span></span><span class="hljs-tag">&gt;</span></span><span class="javascript"><span class="javascript"></span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="7"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">     jQuery(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword"><span class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span></span></span></span><span class="hljs-params"><span class="javascript"><span class="hljs-function">(<span class="hljs-params"></span>)</span></span></span><span class="javascript">{</span></span><span class="javascript"> </span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="8"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">        $.ajax({</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="9"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             <span class="hljs-attr">type</span>: <span class="hljs-string"><span class="javascript"><span class="hljs-string">"get"</span></span></span><span class="javascript">,</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="10"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             <span class="hljs-attr">async</span>: <span class="hljs-literal"><span class="javascript"><span class="hljs-literal">false</span></span></span><span class="javascript">,</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="11"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             <span class="hljs-attr">url</span>: <span class="hljs-string"><span class="javascript"><span class="hljs-string">"http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998"</span></span></span><span class="javascript">,</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="12"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             <span class="hljs-attr">dataType</span>: <span class="hljs-string"><span class="javascript"><span class="hljs-string">"jsonp"</span></span></span><span class="javascript">,</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="13"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             <span class="hljs-attr">jsonp</span>: <span class="hljs-string"><span class="javascript"><span class="hljs-string">"callback"</span></span></span><span class="javascript">,</span><span class="hljs-comment"><span class="javascript"><span class="hljs-comment">//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)</span></span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="14"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             jsonpCallback:<span class="hljs-string"><span class="javascript"><span class="hljs-string">"flightHandler"</span></span></span><span class="javascript">,</span><span class="hljs-comment"><span class="javascript"><span class="hljs-comment">//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据</span></span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="15"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             success: <span class="hljs-function"><span class="hljs-keyword"><span class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span></span></span></span><span class="hljs-params"><span class="javascript"><span class="hljs-function">(<span class="hljs-params">json</span>)</span></span></span><span class="javascript">{</span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="16"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">                 alert(<span class="hljs-string"><span class="javascript"><span class="hljs-string">'您查询到航班信息：票价： '</span></span></span><span class="javascript"> + json.price + </span><span class="hljs-string"><span class="javascript"><span class="hljs-string">' 元，余票： '</span></span></span><span class="javascript"> + json.tickets + </span><span class="hljs-string"><span class="javascript"><span class="hljs-string">' 张。'</span></span></span><span class="javascript">);</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="17"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             },</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="18"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-keyword"><span class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span></span></span></span><span class="hljs-params"><span class="javascript"><span class="hljs-function">(<span class="hljs-params"></span>)</span></span></span><span class="javascript">{</span></span><span class="javascript"></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="19"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">                 alert(<span class="hljs-string"><span class="javascript"><span class="hljs-string">'fail'</span></span></span><span class="javascript">);</span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="20"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">             }</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="21"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">         });</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="22"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">     });</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="23"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">     <span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">script</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="24"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">     <span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">head</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="25"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-tag"><span class="hljs-tag">&lt;</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="26"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">  <span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">body</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="27"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-tag"><span class="hljs-tag">&lt;/</span><span class="hljs-title"><span class="hljs-tag"><span class="hljs-name">html</span></span></span><span class="hljs-tag">&gt;</span></span></div></div></li></ol></code></pre><p>是不是有点奇怪？为什么我这次没有写flightHandler这个函数呢？而且竟然也运行成功了！ <br>这就是jQuery的功劳了，jquery在处理jsonp类型的ajax时（，虽然jquery也把jsonp归入了ajax，但其实它们真的不是一回事儿），自动帮你生成回调函数并把数据取出来供success属性方法来调用，是不是很爽呀？  <br>补充</p><p><strong>这里针对ajax与jsonp的异同再做一些补充说明：</strong></p><p>1、ajax和jsonp这两种技术在调用方式上”看起来”很像，目的也一样，都是请求一个url，然后把服务器返回的数据进行处理，因此jquery和ext等框架都把jsonp作为ajax的一种形式进行了封装。</p><p>2、但ajax和jsonp其实本质上是不同的东西。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加</p>            </div>
+                </div>
+	</article>
+</div></MAIN></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://blog.csdn.net/hansexploration/article/details/80314948" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-25 16:13:37</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
