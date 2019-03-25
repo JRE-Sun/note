@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000018605776 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>前端面试：谈谈 JS 垃圾回收机制-内存</title>
+    
+<link rel="stylesheet" href="assets/1553498564-04b7a1551b9ea68bcf94f9ecf05846d5.css">
+
+<link rel="stylesheet" href="assets/1553498564-1bfac5bfd1d0b194dacc6adc89cc954a.css">
+
+<link rel="stylesheet" href="assets/1553498564-c86b6210e40f2befcca430cc00577148.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000013536131" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li><a href="https://segmentfault.com/blog/zsxuexi">终身学习者</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="前端小智" data-userslug="minnanitkong" data-useravatar="https://avatar-static.segmentfault.com/392/949/3929497632-5c75d206ad1a5_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/minnanitkong">
+                                                    <img class="avatar-40" src="assets/1553498564-98336f22b16e0e1653f63fb6fc8908e7" alt="前端小智">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/minnanitkong" class="mr5"><strong>前端小智</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1553498564-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">18.4k</span>
+
+                                                                                                发布于
+                                                <a href="https://segmentfault.com/blog/zsxuexi">终身学习者</a>
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                          <button type="button" class="btn btn-xs btn-success follow-article ml10" data-do="follow" data-type="blog" data-id="1200000013536131">关注专栏
+                                                       </button>
+                                                                                                                                                   </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    22 小时前发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000018605776">
+                                            <a href="https://segmentfault.com/a/1190000018605776"> 前端面试：谈谈 JS 垃圾回收机制</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000018605776" data-license="cc">
+                    
+<p>最近看到一些面试的回顾，不少有被面试官问到谈谈JS 垃圾回收机制，说实话，面试官会问这个问题，说明他最近看到一些关于 JS 垃圾回收机制的相关的文章，为了 B 格，就会顺带的问问。</p>
+<p>最近看到一篇讲 JS 垃圾回收的国外文章，觉得讲得明白，所以就翻译过来了，希望对你们有所帮助。</p>
+<h2 id="articleHeader0">垃圾回收</h2>
+<p>JavaScript 中的内存管理是自动执行的，而且是不可见的。我们创建基本类型、对象、函数……所有这些都需要内存。</p>
+<p>当不再需要某样东西时会发生什么? JavaScript 引擎是如何发现并清理它?</p>
+<h2 id="articleHeader1">可达性</h2>
+<p>JavaScript 中内存管理的主要概念是可达性。</p>
+<p>简单地说，“可达性” 值就是那些以某种方式可访问或可用的值，它们被保证存储在内存中。</p>
+<p><strong>1. 有一组基本的固有可达值，由于显而易见的原因无法删除。例如:</strong></p>
+<ul>
+<li>本地函数的局部变量和参数</li>
+<li>当前嵌套调用链上的其他函数的变量和参数</li>
+<li>全局变量</li>
+<li>还有一些其他的，内部的</li>
+</ul>
+<p><strong>这些值称为根。</strong></p>
+<p><strong>2. 如果引用或引用链可以从根访问任何其他值，则认为该值是可访问的。</strong></p>
+<p>例如，如果局部变量中有对象，并且该对象具有引用另一个对象的属性，则该对象被视为<strong>可达性</strong>， 它引用的那些也是可以访问的，详细的例子如下。</p>
+<p>JavaScript 引擎中有一个后台进程称为<a href="https://en.wikipedia.org/wiki/Garbage_collection_%28computer_science%29" rel="nofollow noreferrer" target="_blank">垃圾回收器</a>，它监视所有对象，并删除那些不可访问的对象。</p>
+<h2 id="articleHeader2">一个简单的例子</h2>
+<p>下面是最简单的例子:</p>
+<pre class="hljs typescript"><code><span class="hljs-comment">// user 具有对象的引用</span>
+<span class="hljs-keyword">let</span> user = {
+  name: <span class="hljs-string">"John"</span>
+};
+</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bVbqbGS?w=120&amp;h=133" src="assets/1553498564-f7a58532d756f81b6d4b605ff107370d" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>这里箭头表示一个对象引用。全局变量<code>“user”</code>引用对象 <code>{name:“John”}</code> (为了简洁起见，我们将其命名为<strong>John</strong>)。John 的 <code>“name”</code> 属性存储一个基本类型，因此它被绘制在对象中。</p>
+<p>如果 <code>user</code> 的值被覆盖，则引用丢失:</p>
+<pre class="hljs ini"><code><span class="hljs-attr">user</span> = null;
+</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bVbqcUf?w=194&amp;h=153" src="assets/1553498564-a37f58fcd208e8e2c58b711b9332fbc2" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>现在 <strong>John</strong> 变成不可达的状态，没有办法访问它，没有对它的引用。垃圾回收器将丢弃 <strong>John</strong> 数据并释放内存。</p>
+<h2 id="articleHeader3">两个引用</h2>
+<p>现在让我们假设我们将引用从 <code>user</code> 复制到 <code>admin</code>:</p>
+<pre class="hljs typescript"><code><span class="hljs-comment">// user具有对象的引用</span>
+<span class="hljs-keyword">let</span> user = {
+  name: <span class="hljs-string">"John"</span>
+};
+
+<span class="hljs-keyword">let</span> admin = user;
+</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bVbqcVf?w=122&amp;h=127" src="assets/1553498564-964e06e3f17656aeb74cc74fc1267a79" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>现在如果我们做同样的事情:</p>
+<pre class="hljs ini"><code><span class="hljs-attr">user</span> = null;
+</code></pre>
+<p>该对象仍然可以通过 <code>admin</code> 全局变量访问，所以它在内存中。如果我们也覆盖<code>admin</code>，那么它可以被释放。</p>
+<h2 id="articleHeader4">相互关联的对象</h2>
+<p>现在来看一个更复杂的例子， family 对象：</p>
+<pre class="hljs javascript"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">marry</span> (<span class="hljs-params">man, woman</span>) </span>{
+  woman.husban = man;
+  man.wife = woman;
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">father</span>: man,
+    <span class="hljs-attr">mother</span>: woman
+  }
+}
+
+<span class="hljs-keyword">let</span> family = marry({
+  <span class="hljs-attr">name</span>: <span class="hljs-string">"John"</span>
+}, {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">"Ann"</span>
+})
+</code></pre>
+<p>函数 <code>marry</code> 通过给两个对象彼此提供引用来“联姻”它们，并返回一个包含两个对象的新对象。</p>
+<p>产生的内存结构:</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqcXI?w=329&amp;h=185" src="assets/1553498564-b78bf7132f54d959969d49aeb0d70404" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>到目前为止，所有对象都是可访问的。</p>
+<p>现在让我们删除两个引用:</p>
+<pre class="hljs sql"><code><span class="hljs-keyword">delete</span> family.father;
+<span class="hljs-keyword">delete</span> family.mother.husband;
+</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bVbqcZj?w=329&amp;h=188" src="assets/1553498564-ff77b82b1083e11b981cbb7f0d3a7d2e" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>仅仅删除这两个引用中的一个是不够的，因为所有对象仍然是可访问的。</p>
+<p>但是如果我们把这两个都删除，那么我们可以看到 Jo<strong>加粗文字</strong>hn 不再有传入的引用:</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqcZ4?w=390&amp;h=205" src="assets/1553498564-2373a64dd2712d76bf4c70b27bcb93de" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>输出引用无关紧要。只有传入的对象才能使对象可访问，因此，<strong>John</strong> 现在是不可访问的，并将从内存中删除所有不可访问的数据。</p>
+<p>垃圾回收之后：</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqc0I?w=120&amp;h=200" src="assets/1553498564-00f40e6617269eb76147144ca2357a25" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<h2 id="articleHeader5">无法访问的数据块</h2>
+<p>有可能整个相互连接的对象变得不可访问并从内存中删除。</p>
+<p>源对象与上面的相同。然后:</p>
+<pre class="hljs ini"><code><span class="hljs-attr">family</span> = null;
+</code></pre>
+<p>内存中的图片变成:</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqc2u?w=405&amp;h=239" src="assets/1553498564-e373dbebacaf0e458b24d72f1aab71d8" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>这个例子说明了可达性的概念是多么重要。</p>
+<p>很明显，John和Ann仍然链接在一起，都有传入的引用。但这还不够。</p>
+<p>“family”对象已经从根上断开了链接，不再有对它的引用，因此下面的整个块变得不可到达，并将被删除。</p>
+<h2 id="articleHeader6">内部算法</h2>
+<p>基本的垃圾回收算法称为<strong>“标记-清除”</strong>，定期执行以下“垃圾回收”步骤:</p>
+<ul>
+<li>垃圾回收器获取根并<strong>“标记”</strong>(记住)它们。</li>
+<li>然后它访问并“标记”所有来自它们的引用。</li>
+<li>然后它访问标记的对象并标记它们的引用。所有被访问的对象都被记住，以便以后不再访问同一个对象两次。</li>
+<li>以此类推，直到有未访问的引用(可以从根访问)为止。</li>
+<li>除标记的对象外，所有对象都被删除。</li>
+</ul>
+<p>例如，对象结构如下:</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqd7y?w=373&amp;h=189" src="assets/1553498564-78b554cfc7f8168772461b5ff9a69461" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>我们可以清楚地看到右边有一个“不可到达的块”。现在让我们看看<strong>“标记并清除”</strong>垃圾回收器如何处理它。</p>
+<p><strong>第一步标记根</strong></p>
+<p><span class="img-wrap"><img data-src="/img/bVbqd7V?w=373&amp;h=189" src="assets/1553498564-f3c396f0af53ac5caaac0b6576ba8f10" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>然后标记他们的引用</strong></p>
+<p><span class="img-wrap"><img data-src="/img/bVbqd71?w=373&amp;h=189" src="assets/1553498564-5fc369e7785928a95d19e64ae37a854c" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>以及子孙代的引用:</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqd8a?w=373&amp;h=189" src="assets/1553498564-b2d245638bb898a911cad532698f0100" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>现在进程中不能访问的对象被认为是不可访问的，将被删除:</p>
+<p><span class="img-wrap"><img data-src="/img/bVbqd8A?w=379&amp;h=192" src="assets/1553498564-6e76ad684490b8036d67edb72859d8c1" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>这就是垃圾收集的工作原理。JavaScript引擎应用了许多优化，使其运行得更快，并且不影响执行。</p>
+<p>一些优化:</p>
+<ul>
+<li>
+<strong>分代回收</strong>——对象分为两组:“新对象”和“旧对象”。许多对象出现，完成它们的工作并迅速结 ，它们很快就会被清理干净。那些活得足够久的对象，会变“老”，并且很少接受检查。</li>
+<li>
+<strong>增量回收</strong>——如果有很多对象，并且我们试图一次遍历并标记整个对象集，那么可能会花费一些时间，并在执行中会有一定的延迟。因此，引擎试图将垃圾回收分解为多个部分。然后，各个部分分别执行。这需要额外的标记来跟踪变化，这样有很多微小的延迟，而不是很大的延迟。</li>
+<li>
+<strong>空闲时间收集</strong>——垃圾回收器只在 CPU 空闲时运行，以减少对执行的可能影响。</li>
+</ul>
+<h2 id="articleHeader7">面试怎么回答</h2>
+<p><strong>1）问什么是垃圾</strong></p>
+<p>一般来说没有被引用的对象就是垃圾，就是要被清除， 有个例外如果几个对象引用形成一个环，互相引用，但根访问不到它们，这几个对象也是垃圾，也要被清除。</p>
+<p><strong>2）如何检垃圾</strong></p>
+<p>一种算法是标记 <strong>标记-清除</strong> 算法，还想说出不同的算法可以参考<a href="https://www.jianshu.com/p/a8a04fd00c3c" rel="nofollow noreferrer" target="_blank">这里</a>。</p>
+<p>更深入一些的讲解 <a href="http://newhtml.net/v8-garbage-collection/" rel="nofollow noreferrer" target="_blank">http://newhtml.net/v8-garbage...</a></p>
+<p>还有一种牛逼的答法就是说看我的博客，当然是要自己总结的博客。</p>
+<p><strong>代码部署后可能存在的BUG没法实时知道，事后为了解决这些BUG，花了大量的时间进行log 调试，这边顺便给大家推荐一个好用的BUG监控工具 <a href="https://www.fundebug.com/" rel="nofollow noreferrer" target="_blank">Fundebug</a>。</strong></p>
+<p><strong>你的点赞是我持续分享好东西的动力，欢迎点赞！</strong></p>
+<p><strong>一个笨笨的码农，我的世界只能终身学习！</strong></p>
+<p><strong>更多内容请关注公众号<a href="http://shiyuaniot.com:8888/daqian/daqian.jpg" rel="nofollow noreferrer" target="_blank">《大迁世界》</a>！</strong></p>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553498564-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="hidden-xs"><a href="https://javascript.info/garbage-collection#reachability" target="_blank">阅读原文</a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000018605776" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="前端面试：谈谈 JS 垃圾回收机制" data-url="https://segmentfault.com/a/1190000018605776?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5bqenk"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000018605776?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5bqenk"><span class="icon-sn-dotted" data-original-title="" title=""></span></a></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000018605776" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">27 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000018605776" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">19</span></button><br><button type="button" data-id="1190000018605776" class="btn btn-danger btn-lg mt15 article__reward-btn">
+                                    赞赏支持
+                                </button></div><div class="mt30 mb30 text-center article__reward-info"><span class="mr10">如果觉得我的文章对你有用，请随意赞赏</span></div>                
+                                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                
+                <div class="mb15 block">
+                    
+                </div>
+
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000013842254" title="Node(V8)的垃圾回收机制" target="_blank">Node(V8)的垃圾回收机制</a><span class="text-muted">RayLeo</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/node.js">node.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/v8">v8</a></li><li><a href="http://segmentfault.com/a/1190000007714028" title="【译文】Node.js垃圾回收机制-基础" target="_blank">【译文】Node.js垃圾回收机制-基础</a><span class="text-muted">uglybachelor</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/node.js">node.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000000333111" title="谈谈反垃圾" target="_blank">谈谈反垃圾</a><span class="text-muted">iammutex</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%8F%8D%E5%9E%83%E5%9C%BE">反垃圾</a></li><li><a href="http://segmentfault.com/a/1190000013893628" title="PHP垃圾回收机制" target="_blank">PHP垃圾回收机制</a><span class="text-muted">阿杰</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/php">php</a></li><li><a href="http://segmentfault.com/a/1190000000440270" title="浅谈V8引擎中的垃圾回收机制" target="_blank">浅谈V8引擎中的垃圾回收机制</a><span class="text-muted">天镶</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000016063287" title="javascript垃圾回收机制GC" target="_blank">javascript垃圾回收机制GC</a><span class="text-muted">Suzy323</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000016240169" title="php7 垃圾回收机制详解" target="_blank">php7 垃圾回收机制详解</a><span class="text-muted">我想做超人</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/php">php</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6">垃圾回收</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6">垃圾回收机制</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/php7">php7</a></li><li><a href="http://segmentfault.com/a/1190000011098241" title="简述JavaScript的垃圾回收机制" target="_blank">简述JavaScript的垃圾回收机制</a><span class="text-muted">谷雨</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6">垃圾回收</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/gc">gc</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li></ul></div></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000018605776" data-user-id="1030000009484911" data-author-id="1030000007460810 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1553498564-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000018605776/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000018605776" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-25 15:22:44</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

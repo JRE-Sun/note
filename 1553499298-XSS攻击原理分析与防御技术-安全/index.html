@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000013315450 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>XSS攻击原理分析与防御技术-xss</title>
+    
+<link rel="stylesheet" href="assets/1553499298-04b7a1551b9ea68bcf94f9ecf05846d5.css">
+
+<link rel="stylesheet" href="assets/1553499298-1bfac5bfd1d0b194dacc6adc89cc954a.css">
+
+<link rel="stylesheet" href="assets/1553499298-c86b6210e40f2befcca430cc00577148.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="小柚子" data-userslug="wenwenjie" data-useravatar="https://avatar-static.segmentfault.com/338/176/338176813-5a6c9cdc61f5c_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/wenwenjie">
+                                                    <img class="avatar-40" src="assets/1553499298-a6ba4af4a9d61e7d2c37e9be2d22a679" alt="小柚子">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/wenwenjie" class="mr5"><strong>小柚子</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1553499298-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">502</span>
+
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                            <button type="button" class="btn btn-xs btn-success follow-user" data-do="follow" data-type="user" data-id="1030000013014711">关注作者
+                                                        </button>
+                                                                                                                                                    </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2018-02-21 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000013315450">
+                                            <a href="https://segmentfault.com/a/1190000013315450"> XSS攻击原理分析与防御技术</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000013315450" data-license="">
+                    
+<p>跨站脚本攻击(Cross Site Scripting)，缩写为XSS。恶意攻击者往Web页面里插入恶意javaScript代码，当用户浏览该页之时，嵌入其中Web里面的javaScript代码会被执行，从而达到恶意攻击用户的目的。</p>
+<blockquote><h3 id="articleHeader0">一个简单的XSS攻击</h3></blockquote>
+<p><span class="img-wrap"><img data-src="/img/bV31qW?w=466&amp;h=268" src="assets/1553499298-23bb6ae569017550c1aca2607f06ce91" alt="图片描述" title="图片描述" style="cursor: pointer; display: inline;"></span></p>
+<p>代码：</p>
+<pre class="hljs cs"><code><span class="hljs-function"><span class="hljs-keyword">async</span> <span class="hljs-title">function</span>(<span class="hljs-params">ctx, next</span>)</span>{
+    ctx.<span class="hljs-keyword">set</span>(<span class="hljs-string">'X-XSS-Protection'</span>,<span class="hljs-number">0</span>);
+    ctx.render(<span class="hljs-string">'index'</span>,{<span class="hljs-keyword">from</span>:ctx.query.<span class="hljs-keyword">from</span>});
+};</code></pre>
+<p>注意：插入X-XSS-Protection头部使浏览器XSS拦截器失效。</p>
+<p>开始攻击：</p>
+<p><span class="img-wrap"><img data-src="/img/bV31Px?w=1007&amp;h=204" src="assets/1553499298-225528c84dce6971da43547bfe57184a" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p>大家发现网页执行了一段脚本，而且这段脚本是用户恶意输入的。这就是XSS攻击最简单的一个案例。把原本应该显示纯文本的地方，执行了一段黑客写入的脚本。</p>
+<p>那XSS攻击有什么危害呢？</p>
+<p>1、盗取各类用户帐号<br>2、控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力<br>3、盗窃企业重要的具有商业价值的资料<br>4、非法转账<br>5、强制发送电子邮件<br>6、网站挂马<br>7、控制受害者机器向其它网站发起攻击</p>
+<blockquote><h3 id="articleHeader1">XSS攻击的分类</h3></blockquote>
+<p><strong>1、反射型</strong></p>
+<p>又称为非持久性跨站点脚本攻击。漏洞产生的原因是攻击者注入的数据反映在响应中。非持久型XSS攻击要求用户访问一个被攻击者篡改后的链接，用户访问该链接时，被植入的攻击脚本被用户游览器执行，从而达到攻击目的。也就是我上面举的那个简单的XSS攻击案例，通过url参数直接注入。然后在响应的数据中包含着危险的代码。</p>
+<p>当黑客把这个链接发给你，你就中招啦！</p>
+<p><strong>2、存储型</strong></p>
+<p>又称为持久型跨站点脚本，它一般发生在XSS攻击向量(一般指XSS攻击代码)存储在网站数据库，当一个页面被用户打开的时候执行。持久的XSS相比非持久性XSS攻击危害性更大,容易造成蠕虫，因为每当用户打开页面，查看内容时脚本将自动执行。</p>
+<p>该网页有一个发表评论的功能，该评论会写入后台数据库，并且访问主页的时候，会从数据库中加载出所有的评论。</p>
+<p>当我添加一个评论，并且暗藏一个脚本，如下图：</p>
+<p><span class="img-wrap"><img data-src="/img/bV31PW?w=698&amp;h=283" src="assets/1553499298-959667d08b851ba6aca9399047ebb848" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p>当别人访问主页的时候，刚刚黑客写入的评论里面的脚本被浏览器当成代码执行了，用户莫名其妙受到攻击：</p>
+<p><span class="img-wrap"><img data-src="/img/bV31PY?w=919&amp;h=430" src="assets/1553499298-68559b0565a8e489ceb1e93f0eeedf64" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p>上面就是两种XSS攻击的两种基本类型。当然黑客不会弹出一个框框给你，告诉你被攻击，黑客不会这么傻的~他可以在用户不知情的情况下，盗取用户的cookie，改变网页业务逻辑等等。</p>
+<blockquote><h3 id="articleHeader2">XSS攻击的注入点</h3></blockquote>
+<p><strong>1、HTML节点内容</strong><br>这个其实就是我之前演示的，HTML节点中暗藏攻击脚本。</p>
+<p><span class="img-wrap"><img data-src="/img/bV31QU?w=380&amp;h=63" src="assets/1553499298-9096c41a3da19c9d4cc42489bc079471" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>2、HTML属性</strong><br>这里img的src属性是由用户传递过来的值，当用户把图片地址写成：1"%20onerror="alert(%27哈哈被攻击%27)<br>大家看下面发生了什么：</p>
+<p><span class="img-wrap"><img data-src="/img/bV31RO?w=410&amp;h=60" src="assets/1553499298-51813e603a04b8283dc593e74df5b9c2" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/bV31RM?w=909&amp;h=165" src="assets/1553499298-6d074a85013f12031d5421a1a931fd76" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>3、JavaScript代码 （字符串提前关闭）</strong><br>当JavaScript代码中有一个变量是由用户提供的数据，这个数据也有可能之前被写入了数据库。如下图，当用户输入的内容为：<br>小柚子";alert(%27哈哈你被攻击了！%27);"</p>
+<p><span class="img-wrap"><img data-src="/img/bV31Vh?w=532&amp;h=49" src="assets/1553499298-f1bc4913da20535cd2d28d2f8007893e" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><span class="img-wrap"><img data-src="/img/bV31Vd?w=1019&amp;h=163" src="assets/1553499298-6acd1ef9adff7d1204487fdf88d79703" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>4、富文本</strong><br>大家都知道，富文本其实就是一段HTML。既然它是一段HTML，那么就存在XSS攻击。而且富文本攻击的防御相对比较麻烦。</p>
+<blockquote><h3 id="articleHeader3">XSS攻击防御</h3></blockquote>
+<p>chrome浏览器自带防御,可拦截反射性XSS（HTML内容和属性），js和富文本的无法拦截，所以我们必须得自己做一些防御手段。</p>
+<p><strong>1、HTML节点内容的防御</strong></p>
+<p>将用户输入的内容进行转义：</p>
+<pre class="hljs javascript"><code><span class="hljs-keyword">var</span> escapeHtml = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>) </span>{
+    str = str.replace(<span class="hljs-regexp">/&lt;/g</span>,<span class="hljs-string">'&amp;lt;'</span>);
+    str = str.replace(<span class="hljs-regexp">/&lt;/g</span>,<span class="hljs-string">'&amp;gt;'</span>);
+    <span class="hljs-keyword">return</span> str;
+}</code></pre>
+<pre class="hljs cs"><code style="word-break: break-word; white-space: initial;">ctx.render(<span class="hljs-string">'index'</span>, {comments, <span class="hljs-keyword">from</span>: escapeHtml(ctx.query.<span class="hljs-keyword">from</span> || <span class="hljs-string">''</span>)});</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bV310b?w=574&amp;h=81" src="assets/1553499298-77b616258b87fd3b3882923543fab14c" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>2、HTML属性的防御</strong></p>
+<p>对空格，单引号，双引号进行转义</p>
+<pre class="hljs javascript"><code><span class="hljs-keyword">var</span> escapeHtmlProperty = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">str</span>) </span>{
+    <span class="hljs-keyword">if</span>(!str) <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+    str = str.replace(<span class="hljs-regexp">/"/g</span>,<span class="hljs-string">'&amp;quto;'</span>);
+    str = str.replace(<span class="hljs-regexp">/'/g</span>,<span class="hljs-string">'&amp;#39;'</span>);
+    str = str.replace(<span class="hljs-regexp">/ /g</span>,<span class="hljs-string">'&amp;#32;'</span>);
+    <span class="hljs-keyword">return</span> str;
+}</code></pre>
+<pre class="hljs ruby"><code>ctx.render(<span class="hljs-string">'index'</span>, {posts, comments,
+    <span class="hljs-symbol">from:</span>ctx.query.from <span class="hljs-params">||</span> <span class="hljs-string">''</span>,
+    <span class="hljs-symbol">avatarId:</span>escapeHtmlProperty(ctx.query.avatarId <span class="hljs-params">||</span> <span class="hljs-string">''</span>)});</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bV311b?w=572&amp;h=52" src="assets/1553499298-5337e38310f9b61da225d852ffebe0ba" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>3、JavaScript的防御</strong></p>
+<p>对引号进行转义</p>
+<pre class="hljs javascript"><code><span class="hljs-keyword">var</span> escapeForJS = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>)</span>{
+        <span class="hljs-keyword">if</span>(!str) <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+        str = str.replace(<span class="hljs-regexp">/\\/g</span>,<span class="hljs-string">'\\\\'</span>);
+        str = str.replace(<span class="hljs-regexp">/"/g</span>,<span class="hljs-string">'\\"'</span>);
+        <span class="hljs-keyword">return</span> str;
+}</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bV311y?w=484&amp;h=34" src="assets/1553499298-e1e308fb8b03341c881f3e9162d88ba4" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p><strong>4、富文本的防御</strong><br>富文本的情况非常的复杂，js可以藏在标签里，超链接url里，何种属性里。</p>
+<pre class="hljs xml"><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="undefined">alert(1)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"javascript:alert(1)"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"abc"</span> <span class="hljs-attr">onerror</span>=<span class="hljs-string">"alert(1)"</span>/&gt;</span></code></pre>
+<p>所以我们不能过用上面的方法做简单的转义。因为情况实在太多了。</p>
+<p>现在我们换个思路，<br>提供两种过滤的办法：</p>
+<p>1）黑名单<br>我们可以把&lt;script/&gt; onerror 这种危险标签或者属性纳入黑名单，过滤掉它。但是我们想，这种方式你要考虑很多情况，你也有可能漏掉一些情况等。</p>
+<p>2）白名单<br>这种方式只允许部分标签和属性。不在这个白名单中的，一律过滤掉它。但是这种方式编码有点麻烦，我们需要去解析html树状结构，然后进行过滤，把过滤后安全的html在输出。<br>这里提供一个包，帮助我们去解析html树状结构，它使用起来和jquery非常的类似。</p>
+<pre class="hljs sql"><code style="word-break: break-word; white-space: initial;">npm <span class="hljs-keyword">install</span> cheerio <span class="hljs-comment">--save</span></code></pre>
+<pre class="hljs javascript"><code><span class="hljs-keyword">var</span> xssFilter = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">html</span>) </span>{
+    <span class="hljs-keyword">if</span>(!html) <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+    <span class="hljs-keyword">var</span> cheerio = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cheerio'</span>);
+    <span class="hljs-keyword">var</span> $ = cheerio.load(html);
+    <span class="hljs-comment">//白名单</span>
+    <span class="hljs-keyword">var</span> whiteList = {
+        <span class="hljs-string">'html'</span> : [<span class="hljs-string">''</span>],
+        <span class="hljs-string">'body'</span> : [<span class="hljs-string">''</span>],
+        <span class="hljs-string">'head'</span> : [<span class="hljs-string">''</span>],
+        <span class="hljs-string">'div'</span> : [<span class="hljs-string">'class'</span>],
+        <span class="hljs-string">'img'</span> : [<span class="hljs-string">'src'</span>],
+        <span class="hljs-string">'a'</span> : [<span class="hljs-string">'href'</span>],
+        <span class="hljs-string">'font'</span>:[<span class="hljs-string">'size'</span>,<span class="hljs-string">'color'</span>]
+    };
+
+    $(<span class="hljs-string">'*'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index,elem</span>)</span>{
+        <span class="hljs-keyword">if</span>(!whiteList[elem.name]) {
+            $(elem).remove();
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> attr <span class="hljs-keyword">in</span> elem.attribs) {
+            <span class="hljs-keyword">if</span>(whiteList[elem.name].indexOf(attr) === <span class="hljs-number">-1</span>) {
+                $(elem).attr(attr,<span class="hljs-literal">null</span>);
+            }
+        }
+
+    });
+
+    <span class="hljs-keyword">return</span> $.html();
+}
+
+<span class="hljs-built_in">console</span>.log(xssFilter(<span class="hljs-string">'&lt;div&gt;&lt;font color="red"&gt;你好&lt;/font&gt;&lt;a href="http://www.baidu.com"&gt;百度&lt;/a&gt;&lt;script&gt;alert("哈哈你被攻击了")&lt;/script&gt;&lt;/div&gt;'</span>));
+</code></pre>
+<p>大家可以看到：</p>
+<p><span class="img-wrap"><img data-src="/img/bV314w?w=650&amp;h=42" src="assets/1553499298-9d08d84d804055e4ebecd8e30d723dd3" alt="clipboard.png" title="clipboard.png" style="cursor: pointer; display: inline;"></span></p>
+<p>&lt;script&gt;不在白名单中，所以被过滤掉了。</p>
+<p><strong>5、CSP(Content Security Policy)</strong></p>
+<p>内容安全策略（Content Security Policy，简称CSP）是一种以可信白名单作机制，来限制网站中是否可以包含某来源内容。默认配置下不允许执行内联代码（&lt;script&gt;块内容，内联事件，内联样式），以及禁止执行eval() , newFunction() , setTimeout([string], ...) 和setInterval([string], ...) 。     </p>
+<p><strong>示例：</strong></p>
+<p>1.只允许本站资源</p>
+<pre class="hljs objectivec"><code style="word-break: break-word; white-space: initial;">Content-Security-Policy： <span class="hljs-keyword">default</span>-src ‘<span class="hljs-keyword">self</span>’</code></pre>
+<p>2.允许本站的资源以及任意位置的图片以及 <a href="https://segmentfault.com/">https://segmentfault.com</a> 下的脚本。</p>
+<pre class="hljs objectivec"><code>Content-Security-Policy： <span class="hljs-keyword">default</span>-src ‘<span class="hljs-keyword">self</span>’; img-src *;
+script-src https:<span class="hljs-comment">//segmentfault.com</span></code></pre>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553499298-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000013315450" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="XSS攻击原理分析与防御技术" data-url="https://segmentfault.com/a/1190000013315450?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5317u"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000013315450?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5317u"><span class="icon-sn-dotted" data-original-title="" title=""></span></a></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000013315450" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">12 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000013315450" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">40</span></button></div>                
+                                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                
+                <div class="mb15 block">
+                    
+                </div>
+
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000004139891" title="XSS跨站脚本攻击" target="_blank">XSS跨站脚本攻击</a><span class="text-muted">山河永寂</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/xss">xss</a></li><li><a href="http://segmentfault.com/a/1190000007752362" title="Web如何防止XSS攻击" target="_blank">Web如何防止XSS攻击</a><span class="text-muted">快乐动起来</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html5">html5</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000009077090" title="安全->XSS" target="_blank">安全-&gt;XSS</a><span class="text-muted">jsdt</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%AE%89%E5%85%A8">安全</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/web">web</a></li><li><a href="http://segmentfault.com/a/1190000003798884" title="前端xss攻击" target="_blank">前端xss攻击</a><span class="text-muted">xuehen</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/xss">xss</a></li><li><a href="http://segmentfault.com/a/1190000010869619" title="史上前端面试最全问答（附答案）" target="_blank">史上前端面试最全问答（附答案）</a><span class="text-muted">AlloyTeamZy</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a></li><li><a href="http://segmentfault.com/a/1190000013805259" title="前端笔记(三)  前端如何防范XSS，浅谈JS中各种宽高属性" target="_blank">前端笔记(三)  前端如何防范XSS，浅谈JS中各种宽高属性</a><span class="text-muted">RetroAstro</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000016024510" title="XSS攻击原理及防御措施(转载)" target="_blank">XSS攻击原理及防御措施(转载)</a><span class="text-muted">轩雪初晨</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/xss">xss</a></li><li><a href="http://segmentfault.com/a/1190000006904327" title="【译】Excess-XSS 一份关于 XSS 的综合教程" target="_blank">【译】Excess-XSS 一份关于 XSS 的综合教程</a><span class="text-muted">HtmlCssJs</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%AE%89%E5%85%A8">安全</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/xss">xss</a></li></ul></div></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000013315450" data-user-id="1030000009484911" data-author-id="1030000013014711 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1553499298-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000013315450/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000013315450" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-25 15:34:58</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
