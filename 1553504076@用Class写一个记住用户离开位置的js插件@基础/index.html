@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://juejin.im/post/5c904f795188252d83554561 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>用Class写一个记住用户离开位置的js插件@基础</title>
+    
+<link rel="stylesheet" href="assets/1553504076-1f9e0f727e6a99422a0a1f6e2139bd56.css">
+
+<link rel="stylesheet" href="assets/1553504076-39cb236590c2d7f28116c42fb1c4858a.css">
+
+<link href="assets/1553504076-8fb9abf610d00a83db96fdbd8f6dda9e.css" rel="stylesheet">
+<style>
+body {
+        font-size: 16px;
+        line-height: 2;
+      }
+      a, button, input {
+        margin: 1rem 1.5rem;
+      }
+      img {
+        width: 0;
+        height: 0;
+      }
+      #juejin {
+        overflow-x: hidden;
+      }
+</style>
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(244, 245, 245) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="juejin" data-v-514f306c="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f6fdafdc="" data-v-f9ae5008="" data-v-514f306c="" class="view-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN data-v-f6fdafdc="" class="container main-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f9ae5008="" data-v-f6fdafdc="" class="view column-view" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="main-area article-area shadow mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;"><article data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Article" class="article" data-v-f6fdafdc=""><div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"></div><div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"></div></div><div data-v-f9ae5008="" class="author-info-block"><a data-v-f9ae5008="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-f9ae5008="" data-src="https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-f9ae5008="" class="author-info-box"><a data-v-f9ae5008="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username ellipsis">fengxianqi</a><div data-v-f9ae5008="" class="meta-box"><time data-v-f9ae5008="" datetime="2019-03-19T05:48:02.467Z" title="Tue Mar 19 2019 13:48:02 GMT+0800 (中国标准时间)" class="time">2019年03月19日</time><span data-v-f9ae5008="" class="views-count">阅读 1465</span><!----></div></div><button data-v-3a6ba87a="" data-v-f9ae5008="" class="follow-button follow">关注</button></div><!----><h1 data-v-f9ae5008="" class="article-title">用Class写一个记住用户离开位置的js插件</h1><div data-v-f9ae5008="" data-id="5c9082925188252d7c2162ce" itemprop="articleBody" class="article-content"><h2 class="heading" data-id="heading-0">前言</h2>
+<p>常见的js插件都很少使用ES6的<code>class</code>，一般都是通过构造函数，而且常常是手写<code>CMD</code>、<code>AMD</code>规范来封装一个库，比如这样：</p>
+<pre><code class="hljs bash copyable" lang="bash">// 引用自：https://www.jianshu.com/p/e65c246beac1
+;(<span class="hljs-keyword">function</span>(undefined) {
+    <span class="hljs-string">"use strict"</span>
+    var _global;
+    var plugin = {
+      // ...
+    }
+    _global = (<span class="hljs-function"><span class="hljs-title">function</span></span>(){ <span class="hljs-built_in">return</span> this || (0, <span class="hljs-built_in">eval</span>)(<span class="hljs-string">'this'</span>); }());
+    <span class="hljs-keyword">if</span> (typeof module !== <span class="hljs-string">"undefined"</span> &amp;&amp; module.exports) {
+        module.exports = plugin;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (typeof define === <span class="hljs-string">"function"</span> &amp;&amp; define.amd) {
+        define(<span class="hljs-function"><span class="hljs-title">function</span></span>(){<span class="hljs-built_in">return</span> plugin;});
+    } <span class="hljs-keyword">else</span> {
+        !(<span class="hljs-string">'plugin'</span> <span class="hljs-keyword">in</span> _global) &amp;&amp; (_global.plugin = plugin);
+    }
+}());
+<span class="copy-code-btn">复制代码</span></code></pre><p>但现在都9102年了，是时候祭出我们的ES6大法了，可以用更优雅的的写法来实现一个库，比如这样：</p>
+<pre><code class="hljs javascript copyable" lang="javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RememberScroll</span> </span>{
+    <span class="hljs-keyword">constructor</span>(options) {
+        ...
+    }
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> RememberScroll
+<span class="copy-code-btn">复制代码</span></code></pre><p>在这篇文章，博主主要通过分享最近自己写的一个<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll" rel="nofollow noopener noreferrer">记住页面滚动位置</a>小插件，讲一下如何用<code>class</code>语法配合<code>webpack 4.x</code>和<code>babel 7.x</code>封装一个可用的库。</p>
+<p>项目地址：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll" rel="nofollow noopener noreferrer">Github</a>， 在线Demo：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Ffengxianqi.github.io%2Fremember-scroll%2Fexamples%2F" rel="nofollow noopener noreferrer">Demo</a></p>
+<p>喜欢的朋友希望能点个<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll" rel="nofollow noopener noreferrer">Star</a>收藏一下，非常感谢。</p>
+<h2 class="heading" data-id="heading-1">需求来源</h2>
+<p>相信很多同学都会遇到这样一个需求：<strong>用户浏览一个页面并离开后，再次打开时需要重新定位到上一次离开的位置</strong>。</p>
+<p>这个需求很常见，我们平时在手机上阅读微信公众号的文章页面就有这个功能。想要做到这个需求，也比较好实现，但博主有点懒，心想有没有现成的库可以直接用呢？于是去GitHub上搜了一波，发现并没有很好的且符合我需求的，于是得自己实现一下。</p>
+<p>为了灵活使用（只是部分页面需要这个功能），博主在项目中单独封装了这个库，本来是在公司项目中用的，后来想想何不开源出来呢？于是有了这个分享，这也是对自己工作的一个总结。</p>
+<h2 class="heading" data-id="heading-2">预期效果</h2>
+<p>博主喜欢在做一件事情前先yy一下预期的效果。博主希望这个库用起来尽量简单，最好是插入一句代码就可以了，比如这样：</p>
+<pre><code class="hljs bash copyable" lang="bash">&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=<span class="hljs-string">"utf-8"</span>&gt;
+  &lt;title&gt;remember-scroll examples&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=<span class="hljs-string">"content"</span>&gt;&lt;/div&gt;
+  &lt;script src=<span class="hljs-string">"../dist/remember-scroll.js"</span>&gt;&lt;/script&gt;
+  &lt;script&gt;
+    new RememberScroll()
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><p>在想要加上记住用户浏览位置的页面上引入一下库，然后<code>new RememberScroll()</code>初始化一下即可。</p>
+<p>下面就带着这个目标，一步一步去实现啦。</p>
+<h2 class="heading" data-id="heading-3">设计方案</h2>
+<h3 class="heading" data-id="heading-4">1. 需要存哪些信息？</h3>
+<p>用户浏览页面的位置，主要需要存两个字段：<code>哪个页面</code>和<code>离开时的位置</code>，通过这两个字段，我们才可以在用户第二次打开网站的页面时，命中该页面，并自动跳转到上一次离开的位置。</p>
+<h3 class="heading" data-id="heading-5">2.存在哪？</h3>
+<p>记住浏览位置，需要将用户离开前的浏览位置记录在客户端的浏览器中。这些信息可以主要存放在：<code>cookie</code>、<code>sessionStorage</code>、<code>localStorage</code>中。</p>
+<ol>
+<li>存放在<code>cookie</code>，大小4K，空间虽有限但也勉强可以。但cookie是每次请求服务器时都会携带上的，无形中增加了带宽和服务器压力，所以总体来说是不太合适的。</li>
+<li>存放在<code>sessionStorage</code>中，由于仅在当前会话下有效，用户离开页面<code>sessionStorage</code>就会被清除，所以不能满足我们的需求。</li>
+<li>存放在<code>localStorage</code>,浏览器可永久保存，大小一般限制5M，满足我们需求。</li>
+</ol>
+<p>综上，最后我们应该选择<code>localStorage</code>。</p>
+<h3 class="heading" data-id="heading-6">3. 需注意的问题</h3>
+<ol>
+<li>一个站点可能有很多页面，<strong>如何标识是哪个页面呢？</strong></li>
+</ol>
+<p>一般来说可以用页面的url作为页面的唯一标识，比如：<code>www.xx.com/article/${id}</code>,不同的id对应不同的页面。</p>
+<p>但博主考虑到现在很多站点都是用spa了，而且常见在url后面会带有<code>#xxx</code>的哈希值，如<code>www.xx.com/article/${id}#tag1</code>和<code>www.xx.com/article/${id}#tag2</code>这种情况，这可能表示的是同一个页面的不同锚点，所以用url作为页面的唯一标识不太可靠。</p>
+<p>因此，博主决定将这个<strong>页面唯一标识</strong>作为一个参数来让使用者来决定，姑且命名为<code>pageKey</code>，让使用者保证是全站唯一的即可。</p>
+<ol start="2">
+<li>如果用户访问我们的站点中很多很多的页面，由于<code>localStorage</code>是永久保存的，<strong>如何避免localStorage不断累积占用过大？</strong></li>
+</ol>
+<p>我们的需求可能仅仅是想近期记住即可，即只需要记住用户的浏览位置几天，可能会更希望我们存的数据能够自动过期。</p>
+<p>但<code>localStorage</code>自身是没有自动过期机制的，一般只能在存数据的时候同时存一下时间戳，然后在使用时判断是否过期。如果只能是在使用时才判断是否清除，而新访问页面时又会生成新的记录，<code>localStorage</code>中始终都会存在至少一条记录的，也就是说无法真正实现自动过期。这里不禁就觉得有点多余了，既然都是会一直保留记录在<code>localStorage</code>中，那干脆就不判断了，咱换一个思路：<strong>只记录有限的最新页面数量</strong>。</p>
+<p>举个例子：</p>
+<blockquote>
+<p>咱们网站有个文章页：<code>www.xx.com/articles/${id}</code>，每个的<code>id</code>表示不同的文章，咱们只记录用户最新访问的5篇文章，即维护一个长度为5的队列。</p>
+</blockquote>
+<blockquote>
+<p>比如当前网站有id从<code>1</code>到<code>100</code>篇文章，用户分别访问第<code>1,2,3,4,5</code>篇文章时，这5篇文章都会记录离开的位置，而当用户打开第六篇文章时，第六条记录入队的同时第一条记录出队，此时<code>localStorage</code>中记录的是<code>2,3,4,5,6</code>这几篇文章的位置，这就保证了<code>localStorage</code>永远不会累积存储数据且旧记录会随着不断访问新页面自动“过期”。</p>
+</blockquote>
+<p>为了更灵活一点，博主决定给这个插件添加一个<code>maxLength</code>的参数，表示当前站点下记录的最新的页面最大数量，默认值设为<code>5</code>，如果有小伙伴的需求是记录更多的页面，可以通过这个参数来设置。</p>
+<h3 class="heading" data-id="heading-7">4. 实现思路</h3>
+<ol>
+<li>我们需要时刻监听用户浏览页面时的滚动条的位置，可以通过<code>window.onscroll</code>事件，获得当前的滚动条位置：<code>scrollTop</code>。</li>
+<li>将<code>scrollTop</code>和页面唯一标识<code>pageKey</code>存进<code>localStorage</code>中。</li>
+<li>用户再次打开之前访问过的页面，在页面初始化时，读取<code>localStorage</code>中的数据，判断页面的<code>pageKey</code>是否一致，若一致则将页面的滚动条位置自动滚动到相应的<code>scrollTop</code>值。</li>
+</ol>
+<blockquote>
+<p>是不是很简单？不过实现的过程中需要注意一下细节，比如做一下防抖处理。</p>
+</blockquote>
+<h2 class="heading" data-id="heading-8">实现步骤</h2>
+<p>逼逼了这么久，是时候开始撸代码了。</p>
+<h3 class="heading" data-id="heading-9">1.封装<code>localStorage</code>工具方法</h3>
+<p>工欲善其事，必先利其器。为更好服务接下来的工作，咱们先简单封装一下调用<code>localStorage</code>的几个方法,主要是<code>get</code>,<code>set</code>,<code>remove</code>：</p>
+<pre><code class="hljs bash copyable" lang="bash">// storage.js
+const Storage = {
+  <span class="hljs-function"><span class="hljs-title">isSupport</span></span> () {
+    <span class="hljs-keyword">if</span> (window.localStorage) {
+      <span class="hljs-built_in">return</span> <span class="hljs-literal">true</span>
+    } <span class="hljs-keyword">else</span> {
+      console.error(<span class="hljs-string">'Your browser cannot support localStorage!'</span>)
+      <span class="hljs-built_in">return</span> <span class="hljs-literal">false</span>
+    }
+  },
+  get (key) {
+    <span class="hljs-keyword">if</span> (!this.isSupport) {
+      <span class="hljs-built_in">return</span>
+    }
+    const data = window.localStorage.getItem(key)
+    <span class="hljs-built_in">return</span> data ? JSON.parse(data) : undefined
+  },
+  remove (key) {
+    <span class="hljs-keyword">if</span> (!this.isSupport) {
+      <span class="hljs-built_in">return</span>
+    }
+    window.localStorage.removeItem(key)
+  },
+  <span class="hljs-built_in">set</span> (key, data) {
+    <span class="hljs-keyword">if</span> (!this.isSupport) {
+      <span class="hljs-built_in">return</span>
+    }
+    const newData = JSON.stringify(data)
+    window.localStorage.setItem(key, newData)
+  }
+}
+
+<span class="hljs-built_in">export</span> default Storage
+<span class="copy-code-btn">复制代码</span></code></pre><h3 class="heading" data-id="heading-10">2. class大法</h3>
+<p><code>class</code>即类，本质上虽然是一个<code>function</code>,但使用<code>class</code>定义一个类会更直观。咱们为即将写的库起个名字为<code>RememberScroll</code>，开始就是如下的样子啦：</p>
+<pre><code class="hljs bash copyable" lang="bash">import Storage from <span class="hljs-string">'./storage'</span>
+class RememberScroll {
+    <span class="hljs-function"><span class="hljs-title">constructor</span></span>() {
+        
+    }
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>1.处理传进来的参数</p>
+<p>我们需要在类的构造函数<code>constructor</code>中接收参数，并覆盖默认参数。</p>
+<p>还记得上面咱们预期的用法吗？即<code>new RememberScroll({pageKey: 'myPage', maxLength: 10})</code>。</p>
+<pre><code class="hljs bash copyable" lang="bash">  constructor (options) {
+    <span class="hljs-built_in">let</span> defaultOptions = {
+      pageKey: <span class="hljs-string">'_page1'</span>, // 当前页面的唯一标识
+      maxLength: 5
+    }
+    this.options = Object.assign({}, defaultOptions, options)
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>如果没有传参数，就会使用默认的参数，如果传了参数，就使用传进来的参数。<code>this.options</code>就是最终处理后的参数啦。</p>
+<p>2.页面初始化</p>
+<p>当页面初始化时，咱们需要做三件事情：</p>
+<ul>
+<li>从<code>loaclStorage</code>取出缓存列表</li>
+<li>将滚动条滚动到记录的位置（若有记录的话）；</li>
+<li>注册<code>window.onscroll</code>事件监听用户滚动行为；
+因此，需要在构造函数中就执行<code>initScroll</code>和<code>addScrollEvent</code>这两个方法:</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">import Storage from <span class="hljs-string">'./utils/storage'</span>
+class RememberScroll {
+  constructor (options) {
+    // ...
+    this.storageKey = <span class="hljs-string">'_rememberScroll'</span>
+    this.list = Storage.get(this.storageKey) || []
+    this.initScroll()
+    this.addScrollEvent()
+  }
+  <span class="hljs-function"><span class="hljs-title">initScroll</span></span> () {
+    // ...
+  }
+  <span class="hljs-function"><span class="hljs-title">addScrollEvent</span></span> () {
+    // ...
+  }
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>这里咱们将<code>localStorage</code>中的键名命名为<code>_rememberScroll</code>，应该能够尽量避免和平常站点使用localStorage的键名冲突。</p>
+<p>3.监听滚动事件：addScrollEvent()的实现</p>
+<pre><code class="hljs bash copyable" lang="bash">  <span class="hljs-function"><span class="hljs-title">addScrollEvent</span></span> () {
+    window.onscroll = () =&gt; {
+      // 获取最新的位置，只记录垂直方向的位置
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      // 构造当前页面的数据对象
+      const data = {
+        pageKey: this.options.pageKey,
+        y: scrollTop
+      }
+      <span class="hljs-built_in">let</span> index = this.list.findIndex(item =&gt; item.pageKey === data.pageKey)
+      <span class="hljs-keyword">if</span> (index &gt;= 0) {
+        // 之前缓存过该页面，则替换掉之前的记录
+        this.list.splice(index, 1, data)
+      } <span class="hljs-keyword">else</span> {
+        // 如果已经超出长度了，则清除一条最早的记录
+        <span class="hljs-keyword">if</span> (this.list.length &gt;= this.options.maxLength) {
+          this.list.shift()
+        }
+        this.list.push(data)
+      }
+      // 更新<span class="hljs-built_in">local</span>Storage里面的记录
+      Storage.set(this.storageKey, this.list)
+    }
+  }
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>ps：这里最好需要做一下防抖处理</p>
+</blockquote>
+<p>4.初始化滚动条位置： initScroll()的实现</p>
+<pre><code class="hljs bash copyable" lang="bash"><span class="hljs-function"><span class="hljs-title">initScroll</span></span> () {
+    // 先判断是否有记录
+    <span class="hljs-keyword">if</span> (this.list.length) {
+      // 当前页面pageKey是否一致
+      <span class="hljs-built_in">let</span> currentPage = this.list.find(item =&gt; item.pageKey === this.options.pageKey)
+      <span class="hljs-keyword">if</span> (currentPage) {
+        <span class="hljs-built_in">set</span>Timeout(() =&gt; {
+          // 一致，则滚动到对应的y值
+          window.scrollTo(0, currentPage.y)
+        }, 0)
+    }
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>细心的同学可能会发现，这里用了setTimeout,而不是直接调用<code>window.scrollTo</code>。这是因为博主在这里遇到坑了，这里涉及到页面加载执行顺序的问题。</p>
+<p>在执行<code>window.scrollTo</code>前，页面必须是已经加载完成了的，滚动条要已存在才可以滚动对吧。如果页面加载时直接执行，当时的scroll高度可能为0，<code>window.scrollTo</code>执行就会无效。如果页面的数据是异步获取的，也会导致<code>window.scrollTo</code>无效。因此用<code>setTimeout</code>会是比较稳的一个办法。</p>
+<p>5.将模块export出去</p>
+<p>最后我们需要将模块export出去，整体代码大概是这个样子：</p>
+<pre><code class="hljs bash copyable" lang="bash">import Storage from <span class="hljs-string">'./utils/storage'</span>
+
+class RememberScroll {
+  constructor (options) {
+    <span class="hljs-built_in">let</span> defaultOptions = {
+      pageKey: <span class="hljs-string">'_page1'</span>, // 当前页面的唯一标识
+      maxLength: 5
+    }
+    this.storageKey = <span class="hljs-string">'_rememberScroll'</span>
+    // 参数
+    this.options = Object.assign({}, defaultOptions, options)
+
+    // 缓存列表
+    this.list = Storage.get(this.storageKey) || []
+    this.initScroll()
+    this.addScrollEvent()
+  }
+  <span class="hljs-function"><span class="hljs-title">initScroll</span></span> () {
+    // ...
+  }
+  <span class="hljs-function"><span class="hljs-title">addScrollEvent</span></span> () {
+    // ...
+  }
+}
+
+<span class="hljs-built_in">export</span> default RememberScroll
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样就基本完成整个插件的功能啦，是不是很简单哈哈。篇幅原因就不贴具体代码了，可以直接到GitHub上看：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll%2Fblob%2Fmaster%2Fsrc%2Findex.js" rel="nofollow noopener noreferrer">remember-scroll</a></p>
+<h2 class="heading" data-id="heading-11">打包</h2>
+<p>接下来应该是本文的重点了，首先要清楚为什么要打包？</p>
+<ol>
+<li>将项目中所用到的js文件合并，只对外输出一个js文件。</li>
+<li>使项目同时支持<code>AMD</code>,<code>CMD</code>、浏览器<code>&lt;script&gt;</code>标签引入，即<code>umd</code>规范。</li>
+<li>配合babel，将es6语法转为es5语法，兼容低版本浏览器。</li>
+</ol>
+<blockquote>
+<p>PS: 由于webpack和babel更新速度很快，网上很多教程可能早已过时，现在（2019-03）的版本已经是babel 7.3.0，webpack 4.29.6, 本篇文章只分享现在的最新的配置方法，因此本篇文章也是会过时的，读者们请注意版本号。</p>
+</blockquote>
+<h3 class="heading" data-id="heading-12">npm init项目</h3>
+<p>咱们先新建一个目录，这里名为：<code>remember-scroll</code>，然后将上面写好的<code>remember-scroll.js</code>放进<code>remember-scroll/src/</code>目录下。</p>
+<blockquote>
+<p>PS：一般项目的资源文件都放在src目录下，为了显得专业点，最好将<code>remember-scroll.js</code>改名为<code>index.js</code>。）</p>
+</blockquote>
+<p>此时项目还没有<code>package.json</code>文件，因此在根目录执行命令初始化package.json：</p>
+<pre><code class="hljs bash copyable" lang="bash">npm init
+<span class="copy-code-btn">复制代码</span></code></pre><p>需要根据提示填写一些项目相关信息。</p>
+<h3 class="heading" data-id="heading-13">安装webpack和webpack-cli</h3>
+<p>运行webpack命令时需要同时装上<code>webpack-cli</code>：</p>
+<pre><code class="hljs bash copyable" lang="bash">npm i webpack webpack-cli -D
+<span class="copy-code-btn">复制代码</span></code></pre><h3 class="heading" data-id="heading-14">配置webpack.config.js</h3>
+<p>在根目录中添加一个<code>webpack.config.js</code>,按照<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2F" rel="nofollow noopener noreferrer">webpack官网</a>的示例代码配置：</p>
+<pre><code class="hljs bash copyable" lang="bash">const path = require(<span class="hljs-string">'path'</span>);
+
+module.exports = {
+  entry: <span class="hljs-string">'./src/index.js'</span>,
+  output: {
+    path: path.resolve(__dirname, <span class="hljs-string">'dist'</span>),
+    filename: <span class="hljs-string">'remember-scroll.js'</span> // 修改下输出的名称
+  }
+};
+<span class="copy-code-btn">复制代码</span></code></pre><p>然后在<code>package.json</code>的script中配置运行<code>webpack</code>的命令：</p>
+<pre><code class="hljs bash copyable" lang="bash">  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>,
+    <span class="hljs-string">"dev"</span>: <span class="hljs-string">"webpack --mode=development --colors"</span>
+  },
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样配置完成，在根目录运行<code>npm run dev</code>，会自动生成<code>dist/remember-scroll.js</code>。</p>
+<p>此时已经实现了我们的第一个小目标：赚它一个亿，哦不，是将<code>storage.js</code>和<code>index.js</code>合并输出为一个<code>remember-scroll.js</code>。</p>
+<blockquote>
+<p>这种简单的打包可以称为：<code>非模块化打包</code>。由于我们在js文件中没有通过<code>AMD</code>的return或者<code>CommonJS</code>的exports或者this导出模块本身，导致模块被引入的时候只能执行代码而无法将模块引入后赋值给其它模块使用。</p>
+</blockquote>
+<h3 class="heading" data-id="heading-15">支持umd规范</h3>
+<p>相信很多同学都听过<code>AMD</code>,<code>CommonJS</code>规范了，不清楚的同学可以看看阮一峰老师的介绍：<a target="_blank" href="https://link.juejin.im/?target=http%3A%2F%2Fwww.ruanyifeng.com%2Fblog%2F2012%2F10%2Fasynchronous_module_definition.html" rel="nofollow noopener noreferrer">Javascript模块化编程（二）：AMD规范</a>。</p>
+<p>为了让我们的插件同时支持<code>AMD</code>,<code>CommonJS</code>,所以需要将我们的插件打包为<code>umd</code>通用模块。</p>
+<p>之前看过一篇文章：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwww.jianshu.com%2Fp%2Fe65c246beac1" rel="nofollow noopener noreferrer">如何定义一个高逼格的原生JS插件</a>，在没有使用webpack打包时，需要在插件中手写支持这些模块化的代码：</p>
+<pre><code class="hljs bash copyable" lang="bash">// 引用自：https://www.jianshu.com/p/e65c246beac1
+;(<span class="hljs-keyword">function</span>(undefined) {
+    <span class="hljs-string">"use strict"</span>
+    var _global;
+    var plugin = {
+      // ...
+    }
+    // 最后将插件对象暴露给全局对象
+    _global = (<span class="hljs-function"><span class="hljs-title">function</span></span>(){ <span class="hljs-built_in">return</span> this || (0, <span class="hljs-built_in">eval</span>)(<span class="hljs-string">'this'</span>); }());
+    <span class="hljs-keyword">if</span> (typeof module !== <span class="hljs-string">"undefined"</span> &amp;&amp; module.exports) {
+        module.exports = plugin;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (typeof define === <span class="hljs-string">"function"</span> &amp;&amp; define.amd) {
+        define(<span class="hljs-function"><span class="hljs-title">function</span></span>(){<span class="hljs-built_in">return</span> plugin;});
+    } <span class="hljs-keyword">else</span> {
+        !(<span class="hljs-string">'plugin'</span> <span class="hljs-keyword">in</span> _global) &amp;&amp; (_global.plugin = plugin);
+    }
+}());
+<span class="copy-code-btn">复制代码</span></code></pre><p>博主看到这坨东西，也是有点晕，不得不佩服大佬就是大佬。还好现在有了<code>webpack</code>，我们现在只需要写好主体关键代码，<code>webpack</code>会帮我们处理好这些打包的问题。</p>
+<p>在webpack4中，我们可以将js打包为一个库的形式，详情可看：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2Fguides%2Fauthor-libraries%2F%23expose-the-library" rel="nofollow noopener noreferrer">Webpack Expose the Library
+</a>。在我们这里只需在output中加上library属性：</p>
+<pre><code class="hljs bash copyable" lang="bash">const path = require(<span class="hljs-string">'path'</span>);
+
+module.exports = {
+  entry: <span class="hljs-string">'./src/index.js'</span>,
+  output: {
+    path: path.resolve(__dirname, <span class="hljs-string">'dist'</span>),
+    filename: <span class="hljs-string">'remember-scroll.js'</span>,
+    library: <span class="hljs-string">'RememberScroll'</span>,
+    libraryTarget: <span class="hljs-string">'umd'</span>,
+    libraryExport: <span class="hljs-string">'default'</span>
+  }
+};
+<span class="copy-code-btn">复制代码</span></code></pre><p>注意<code>libraryTarget</code>为<code>umd</code>，就是我们要打包的目标规范为<code>umd</code>。</p>
+<p>当我们在html中通过script标签引入这个js时，会在window下注册<code>RememberScroll</code>这个变量（类似引入<code>jQuery</code>时会在全局注册<code>$</code>这个变量）。此时就直接使用<code>RememberScroll</code>这个变量了。</p>
+<pre><code class="hljs bash copyable" lang="bash">&lt;script src=<span class="hljs-string">"../dist/remember-scroll.js"</span>&gt;&lt;/script&gt;
+&lt;script&gt;
+  console.log(RememberScroll)
+&lt;/script&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><p>这里有个坑需要注意一下，如果没有加上<code>libraryExport: 'default'</code>,由于我们代码中是<code>export default RememberScroll</code>,打包出来的代码会类似：</p>
+<pre><code class="hljs bash copyable" lang="bash">{
+    <span class="hljs-string">'default'</span>: {
+        <span class="hljs-function"><span class="hljs-title">initScroll</span></span> () {}
+    }
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>而我们期望的是这样：</p>
+<pre><code class="hljs bash copyable" lang="bash">{
+    <span class="hljs-function"><span class="hljs-title">initScroll</span></span> () {}
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>即我们希望的是直接输出<code>default</code>中的内容，而不是隔着一层<code>default</code>。所以这里还要加上<code>libraryExport: 'default'</code>，打包时只输出<code>default</code>的内容。</p>
+<blockquote>
+<p>PS: webpack英文文档看得有点懵逼，这个坑让博主折腾了很久才爬起来，所以特别讲下。刚兴趣的同学可以看下文档：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2Fconfiguration%2Foutput%2F%23outputlibraryexport" rel="nofollow noopener noreferrer">output.libraryExport</a>。</p>
+</blockquote>
+<p>到这里，已经实现了我们的第二个小目标：<strong>支持umd规范</strong>。</p>
+<h3 class="heading" data-id="heading-16">使用babel-loader</h3>
+<p>上面我们打包出来的js，其实已经可以正常运行在支持es6语法的浏览器中了，比如chrome。但想要运行在IE10，IE11中，还得让神器<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fbabeljs.io%2F" rel="nofollow noopener noreferrer">Babel</a>帮我们一把。</p>
+<blockquote>
+<p>PS: 虽然很多人说不考虑兼容IE了，但作为一个通用性的库，古董级的IE7,8,9可以不兼容，但较新版本的IE10,11还是需要兼容一下的。</p>
+</blockquote>
+<p><code>Babel</code>是一个JavaScript转译器，相信大家都听过。由于JavaScript在不断的发展，但是浏览器的发展速度跟不上，新的语法和特性不能马上被浏览器支持，因此需要一个能将新语法新特性转为现代浏览器能理解的语法的转译器，而Babel就是充当了转译器的角色。</p>
+<blockquote>
+<p>PS：以前博主一直以为（相信很多刚接触Babel的同学也是这样），只要使用了Babel，就可以放心无痛使用ES6的语法了，然而事情并不是这样。<strong>Babel编译并不会做polyfill</strong>，Babel为了保证正确的语义，只能转换语法而不会增加或修改原有的属性和方法。要想无痛使用ES6，还需要配合polyfill。不太理解的同学，在这里推荐大家看下这篇文章：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F27777995" rel="nofollow noopener noreferrer">21 分钟精通前端 Polyfill 方案</a>，写得非常通俗易懂。</p>
+</blockquote>
+<p>总的来说，就是Babel需要配合polyfill来使用。</p>
+<p><code>Babel</code>更新比较频繁，网上搜出来的很多配置教程是旧版本的，可能并不适用最新的<code>Babel 7.x</code>，所以我们这里折腾一下最新的webpack4配置Babel方案：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwebpack.js.org%2Floaders%2Fbabel-loader%2F%23root" rel="nofollow noopener noreferrer">babel-loader</a>。
+1.安装<code>babel-loader</code>,<code>@babel/core</code>、<code>@babel/preset-env</code>。</p>
+<pre><code class="hljs bash copyable" lang="bash">npm install -D babel-loader @babel/core @babel/preset-env core-js
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p><code>core-js</code>是JavaScript模块化标准库，在<code>@babel/preset-env</code>按需打包时会使用<code>core-js</code>中的函数，因此这里也是要安装的，不然打包的时候会报错。</p>
+</blockquote>
+<p>2.修改webpack.config.js配置，添加rules</p>
+<pre><code class="hljs bash copyable" lang="bash">const path = require(<span class="hljs-string">'path'</span>);
+
+module.exports = {
+  entry: <span class="hljs-string">'./src/index.js'</span>,
+  output: {
+    path: path.resolve(__dirname, <span class="hljs-string">'dist'</span>),
+    filename: <span class="hljs-string">'remember-scroll.js'</span>,
+    library: <span class="hljs-string">'RememberScroll'</span>,
+    libraryTarget: <span class="hljs-string">'umd'</span>,
+    libraryExport: <span class="hljs-string">'default'</span>
+  },
+  module: {
+    rules: [
+        {
+          <span class="hljs-built_in">test</span>: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: <span class="hljs-string">'babel-loader'</span>
+          }
+        }
+      ]
+  }
+};
+<span class="copy-code-btn">复制代码</span></code></pre><p>表示.js的代码使用<code>babel-loader</code>打包。</p>
+<p>3.在根目录新建<code>babel.config.js</code>，参考<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fbabeljs.io%2Fdocs%2Fen%2Fusage" rel="nofollow noopener noreferrer">Babel官网</a></p>
+<pre><code class="hljs bash copyable" lang="bash">const presets = [
+  [
+    <span class="hljs-string">"@babel/env"</span>,
+    {
+      targets: {
+        browsers: [
+            <span class="hljs-string">"last 1 version"</span>,
+            <span class="hljs-string">"&gt; 1%"</span>,
+            <span class="hljs-string">"maintained node versions"</span>,
+            <span class="hljs-string">"not dead"</span>
+          ]
+      },
+      useBuiltIns: <span class="hljs-string">"usage"</span>,
+    },
+  ],
+];
+<span class="copy-code-btn">复制代码</span></code></pre><p><code>browsers</code>配置的是目标浏览器，即我们想要兼容到哪些浏览器，比如我们想兼容到IE10，就可以写上IE10，然后webpack会在打包时自动为我们的库添加polyfill兼容到IE10。</p>
+<p>博主这里用的是推荐的参数，来自：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fbrowserslist" rel="nofollow noopener noreferrer">npm browserslist</a>，这样就能兼容到大多数浏览器啦。</p>
+<p>配置好后，<code>npm run dev</code>打包即可。
+此时，我们已经实现了第三个小目标：兼容低版本浏览器。</p>
+<h2 class="heading" data-id="heading-17">生产环境打包</h2>
+<p><code>npm run dev</code>打包出来的js会比较大，一般还需要压缩一下，而我们可以使用webpack的production模式，就会自动为我们压缩js，输出一个生产环境可用的包。在<code>package.json</code>再添加一条<code>build</code>命令：</p>
+<pre><code class="hljs bash copyable" lang="bash">  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>,
+    <span class="hljs-string">"build"</span>: <span class="hljs-string">"webpack --mode=production -o dist/remember-scroll.min.js --colors"</span>,
+    <span class="hljs-string">"dev"</span>: <span class="hljs-string">"webpack --mode=development --colors"</span>
+  },
+<span class="copy-code-btn">复制代码</span></code></pre><p>这里同时指定了输出的文件名为：<code>remember-scroll.min.js</code>，一般生产环境就是使用这个文件啦。</p>
+<h2 class="heading" data-id="heading-18">发布到npm</h2>
+<p>经过上面的步骤，我们已经写完这个库，有需求的同学可以将库发布到npm，让更多的人可以方便用到你这个库。</p>
+<p>在发布到npm前，需要修改一下<code>package.json</code>，完善下描述作者之类的信息，最重要的是要添加<code>main</code>入口文件：</p>
+<pre><code class="hljs bash copyable" lang="bash">{
+    <span class="hljs-string">"main"</span>: <span class="hljs-string">"dist/remember-scroll.min.js"</span>,
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样别人使用你的库时，可以直接通过<code>import RememberScroll from 'remember-scroll'</code>来使用<code>remember-scroll.min.js</code>。</p>
+<p>发布步骤：</p>
+<ol>
+<li>先到<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwww.npmjs.com%2F" rel="nofollow noopener noreferrer">www.npmjs.com/</a>注册一个账号，然后验证邮箱。</li>
+<li>然后在命令行中输入：<code>npm adduser</code>，输入账号密码邮箱登录。</li>
+<li>运行<code>npm publish</code>上传包，几分钟后就可以在npm搜到你的包了。</li>
+</ol>
+<p>至此，基本就完成一个插件的开发发布过程啦。</p>
+<p>不过一个优秀的开源项目，还应该要有详细的说明文档，使用示例等等，大家可以参考下博主这个项目的<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll%2Fblob%2Fmaster%2FREADME.md" rel="nofollow noopener noreferrer">README.md</a>， <a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll%2Fblob%2Fmaster%2FREADME_ZH-CN.md" rel="nofollow noopener noreferrer">中文README.md</a>。</p>
+<h2 class="heading" data-id="heading-19">最后</h2>
+<p>文章写了好几天了，可谓呕心沥血，虽然比较啰嗦，但应该比较清楚地交代了<strong>如何运用ES6语法从零写一个记住用户离开位置的js插件</strong>，也很详细地讲解了如何用最新的<code>webpack</code>打包我们的库，希望能让大家都有所收获,也希望大家能到<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll" rel="nofollow noopener noreferrer">GitHub</a>上点个Star鼓励一下啦。</p>
+<p><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll" rel="nofollow noopener noreferrer">remember-scroll</a>这个插件其实几个月前就已经发布到npm了，一直比较忙（懒）没写章分享。虽然功能简单但很有诚意，能兼容到IE9。</p>
+<p>使用起来也非常方便简单，可直接通过<code>script</code>标签<code>cdn</code>引入，也可以在vue中<code>import RememberScroll from 'remember-scroll'</code>使用。文档中有详细的使用示例：</p>
+<ul>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll%2Fblob%2Fmaster%2Fexamples%2Findex.html" rel="nofollow noopener noreferrer">script标签使用方式</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll%2Fblob%2Fmaster%2Fexamples%2Fnormal.vue" rel="nofollow noopener noreferrer">vue中使用方式</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll%2Fblob%2Fmaster%2Fexamples%2Fasync.vue" rel="nofollow noopener noreferrer">vue异步获取数据时使用方式</a></li>
+</ul>
+<p>项目地址<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ffengxianqi%2Fremember-scroll" rel="nofollow noopener noreferrer">Github</a>，在线<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Ffengxianqi.github.io%2Fremember-scroll%2Fexamples%2F" rel="nofollow noopener noreferrer">Demo</a>。</p>
+<p>欢迎大家评论交流，也欢迎PR，同时希望大家能点个Star鼓励一下啦。</p>
+</div></article><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-box"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-title">关注下面的标签，发现更多相似文章</div><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="tagList" class="tag-list"><a data-v-f9ae5008="" href="https://juejin.im/tag/%E6%B5%8F%E8%A7%88%E5%99%A8" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/baf3558e2acdfa623201.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/baf3558e2acdfa623201.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">浏览器</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/JavaScript" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">JavaScript</div></a></div></div><a data-v-f9ae5008="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" data-v-f6fdafdc=""><div data-v-f9ae5008="" class="footer-author-block"><div data-v-ccbf6674="" data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Person" class="author"><!----><div data-v-ccbf6674="" class="author-info-block"><a data-v-ccbf6674="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-ccbf6674="" data-src="https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-ccbf6674="" class="author-info-box"><div data-v-ccbf6674="" class="profile-box"><a data-v-ccbf6674="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username ellipsis">fengxianqi</a><span data-v-ccbf6674="" class="position ellipsis">前端</span></div><div data-v-ccbf6674="" class="meta-box"><a data-v-ccbf6674="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9/posts" target="_blank" rel="" class="posts"><span data-v-ccbf6674="" class="count post-count">发布了 10 篇专栏 · </span></a><span data-v-ccbf6674="" class="count">获得点赞 461 次 · </span><span data-v-ccbf6674="" class="count">文章被阅读 12,283 次</span></div></div><button data-v-3a6ba87a="" data-v-ccbf6674="" class="follow-button follow">关注</button></div></div></div></a><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="banner" class="article-banner"><a data-v-f9ae5008="" data-v-f6fdafdc="" st:name="link" st:state="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" class="banner-title" href="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" target="_blank">安装掘金浏览器插件</a><div data-v-f9ae5008="" data-v-f6fdafdc="" class="banner-content">打开新标签页发现好内容，掘金、GitHub、Dribbble、ProductHunt 等站点内容轻松获取。快来安装掘金浏览器插件获取高质量内容吧！</div></div><!----><!----><div data-v-6bc5fe54="" data-v-f9ae5008="" class="comment-list-box" id="comment-box" data-v-f6fdafdc=""><div data-v-6bc5fe54="" class="title">评论</div><div data-v-0f4f171a="" data-v-6bc5fe54="" class="comment-form comment-form"><div data-v-0f4f171a="" class="avatar-box"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-0f4f171a="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></div><div data-v-0f4f171a="" class="form-box"><div data-v-0f4f171a="" class="input-box"><div data-v-0f4f171a="" contenteditable="true" spellcheck="false" placeholder="输入评论..." class="rich-input empty"><br data-v-0f4f171a=""></div><!----></div><!----></div></div><div data-v-2cad70f5="" data-v-6bc5fe54="" class="comment-list comment-list"><div data-v-3d504eeb="" data-v-2cad70f5="" class="image-viewer-box"><!----></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="59a6cbc86fb9a0249a4140c0" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/59a6cbc86fb9a0249a4140c0" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2017/8/30/6c29d6c3292de050f1a81ec13d534e50?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/8/30/6c29d6c3292de050f1a81ec13d534e50?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="59a6cbc86fb9a0249a4140c0" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/59a6cbc86fb9a0249a4140c0" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">孤独的旅行者<!----></a></div><div data-v-419974fe="" class="position">学生 @ 沈阳农业大学</div></div><div data-v-419974fe="" class="content">this.isSupport没有被调用吧<img class="emoji" draggable="false" alt="🤔" src="assets/1553504076-221935a30e1ed5464bea8c1072decf1f.svg"></div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-03-20T11:40:51.752Z" title="Wed Mar 20 2019 19:40:51 GMT+0800 (中国标准时间)" class="time">4天前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username" data-v-14a78378="">fengxianqi<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">前端</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="59a6cbc86fb9a0249a4140c0" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/59a6cbc86fb9a0249a4140c0" target="_blank" rel="" class="username be-replied" data-v-14a78378="">孤独的旅行者</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">在实际的库中调用了，示例代码没用</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2019-03-21T01:39:14.055Z" title="Thu Mar 21 2019 09:39:14 GMT+0800 (中国标准时间)" class="time">4天前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="59a6cbc86fb9a0249a4140c0" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/59a6cbc86fb9a0249a4140c0" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://user-gold-cdn.xitu.io/2017/8/30/6c29d6c3292de050f1a81ec13d534e50?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/8/30/6c29d6c3292de050f1a81ec13d534e50?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="59a6cbc86fb9a0249a4140c0" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/59a6cbc86fb9a0249a4140c0" target="_blank" rel="" class="username" data-v-14a78378="">孤独的旅行者<!----></a></div><div data-v-63734c60="" class="position">学生 @ 沈阳农业大学</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username be-replied" data-v-14a78378="">fengxianqi</a></div><span data-v-63734c60="" class="author-badge-text">(作者)</span><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content"><img class="emoji" draggable="false" alt="😂" src="assets/1553504076-63c3261b86ccd07295b2fd4cadcaa8fc.svg">remember-scroll.js里面调用了，storage.js的get、set、remove并没有调用。我复盘了一下整个文章里的代码。</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2019-03-22T08:36:08.934Z" title="Fri Mar 22 2019 16:36:08 GMT+0800 (中国标准时间)" class="time">3天前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-63734c60="" class="action-title">1</span></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><div data-v-2140efbc="" class="item fetch-more"><div data-v-2140efbc="" class="fetch-more-comment">加载更多</div></div></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58761f3f61ff4b006d5c2663" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58761f3f61ff4b006d5c2663" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://leancloud-gold-cdn.xitu.io/9K0YYIK2YFByDLQ2GIVALiC?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/9K0YYIK2YFByDLQ2GIVALiC?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58761f3f61ff4b006d5c2663" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58761f3f61ff4b006d5c2663" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">frontEndJohn<!----></a></div><div data-v-419974fe="" class="position">前端搬砖师 @ 深圳创业公司</div></div><div data-v-419974fe="" class="content">厉害了<img class="emoji" draggable="false" alt="😍" src="assets/1553504076-4195b32c32aaa1199ba8fd14e3ab9a4e.svg"></div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-03-20T09:53:57.306Z" title="Wed Mar 20 2019 17:53:57 GMT+0800 (中国标准时间)" class="time">4天前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5989bd055188257cf8323031" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5989bd055188257cf8323031" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2017/8/8/81265b2c47c64ddbde51a8e7f69d5384?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/8/8/81265b2c47c64ddbde51a8e7f69d5384?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5989bd055188257cf8323031" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5989bd055188257cf8323031" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">隐<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">谢谢分享
+不过如果只是记录滚动位置的话 使用 window API 会不会更好一点？比如 window.onbeforeunload
+onscroll 换成 addEventListener 兼容性会不会好点？</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-03-20T03:43:58.055Z" title="Wed Mar 20 2019 11:43:58 GMT+0800 (中国标准时间)" class="time">5天前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5abaf4e3f265da237506ef9a" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5abaf4e3f265da237506ef9a" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2018/7/2/1645998cb4886001?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2018/7/2/1645998cb4886001?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5abaf4e3f265da237506ef9a" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5abaf4e3f265da237506ef9a" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">juejin周辉<!----></a></div><div data-v-419974fe="" class="position">efficient freak</div></div><div data-v-419974fe="" class="content">上拉加载更多的页面怎么处理?</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-03-20T02:27:51.758Z" title="Wed Mar 20 2019 10:27:51 GMT+0800 (中国标准时间)" class="time">5天前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username" data-v-14a78378="">fengxianqi<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">前端</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5abaf4e3f265da237506ef9a" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5abaf4e3f265da237506ef9a" target="_blank" rel="" class="username be-replied" data-v-14a78378="">juejin周辉</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">加载更多的情况暂时没有兼容。原理上是得页面先有滚动条（即保证页面渲染完所有dom后），再调用这个库去初始化才有效。
+像上拉加载或下滑加载更多的情况，vue的话建议直接用keep-alive。
+有更好的思路欢迎讨论<img class="emoji" draggable="false" alt="😃" src="assets/1553504076-419f14521dd59725b8a9d1090425513e.svg"></span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2019-03-20T02:43:21.094Z" title="Wed Mar 20 2019 10:43:21 GMT+0800 (中国标准时间)" class="time">5天前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5c4ad96de51d45299a08c602" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5c4ad96de51d45299a08c602" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://mirror-gold-cdn.xitu.io/168e09bf9a8de795045?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e09bf9a8de795045?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5c4ad96de51d45299a08c602" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5c4ad96de51d45299a08c602" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">ITHcc<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">很详细 谢谢分享</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-03-19T08:17:37.714Z" title="Tue Mar 19 2019 16:17:37 GMT+0800 (中国标准时间)" class="time">6天前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e08eef33fed2a515?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad553d3f265da237e0a35d9" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad553d3f265da237e0a35d9" target="_blank" rel="" class="username" data-v-14a78378="">fengxianqi<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">前端</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5c4ad96de51d45299a08c602" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5c4ad96de51d45299a08c602" target="_blank" rel="" class="username be-replied" data-v-14a78378="">ITHcc</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">断断续续写了大概一周时间<img class="emoji" draggable="false" alt="😂" src="assets/1553504076-63c3261b86ccd07295b2fd4cadcaa8fc.svg"></span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2019-03-19T08:50:05.328Z" title="Tue Mar 19 2019 16:50:05 GMT+0800 (中国标准时间)" class="time">6天前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div></div><!----></div></div></DIV></MAIN></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://juejin.im/post/5c904f795188252d83554561" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-25 16:54:36</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
