@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://juejin.im/post/5911df60da2f6000536c393f -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JavaScript 设计模式:生活中的'适配器'和'装饰者'模式@设计模式</title>
+    
+<link rel="stylesheet" href="assets/1553596564-1f9e0f727e6a99422a0a1f6e2139bd56.css">
+
+<link rel="stylesheet" href="assets/1553596564-39cb236590c2d7f28116c42fb1c4858a.css">
+
+<link href="assets/1553596564-8fb9abf610d00a83db96fdbd8f6dda9e.css" rel="stylesheet">
+<style>
+body {
+        font-size: 16px;
+        line-height: 2;
+      }
+      a, button, input {
+        margin: 1rem 1.5rem;
+      }
+      img {
+        width: 0;
+        height: 0;
+      }
+      #juejin {
+        overflow-x: hidden;
+      }
+</style>
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(244, 245, 245) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="juejin" data-v-514f306c="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f6fdafdc="" data-v-f9ae5008="" data-v-514f306c="" class="view-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN data-v-f6fdafdc="" class="container main-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f9ae5008="" data-v-f6fdafdc="" class="view column-view" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="main-area article-area shadow mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;"><article data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Article" class="article" data-v-f6fdafdc=""><div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"></div><div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"></div></div><div data-v-f9ae5008="" class="author-info-block"><a data-v-f9ae5008="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-f9ae5008="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-f9ae5008="" class="author-info-box"><a data-v-f9ae5008="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username ellipsis">庄文达</a><div data-v-f9ae5008="" class="meta-box"><time data-v-f9ae5008="" datetime="2017-05-09T17:24:11.601Z" title="Wed May 10 2017 01:24:11 GMT+0800 (中国标准时间)" class="time">2017年05月10日</time><span data-v-f9ae5008="" class="views-count">阅读 1455</span><!----></div></div><button data-v-3a6ba87a="" data-v-f9ae5008="" class="follow-button follow">关注</button></div><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://user-gold-cdn.xitu.io/2017/10/18/745fedc0d11beeba104fab7274139898?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1" class="lazy thumb article-hero loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/10/18/745fedc0d11beeba104fab7274139898?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1&quot;); background-size: cover;"></div><h1 data-v-f9ae5008="" class="article-title">JavaScript 设计模式 ：   生活中的'适配器'和'装饰者'模式</h1><div data-v-f9ae5008="" data-id="5911fb3b1b69e6006865a3fa" itemprop="articleBody" class="article-content"><p>首先很抱歉近期公务繁忙没来得及更新......
+为了适应节奏，先先抛出两个我认为相对简单、常用的用来节省开发效率的模式，使用的场景也是很多的，相对没有什么难点，这里结合场景我总结了一下。（本章适合快速阅读）</p>
+<hr>
+<h2 class="heading" data-id="heading-0">适配器模式</h2>
+<ul>
+<li>组建与组件间的适配</li>
+<li>类与类之间的适配</li>
+<li>方法与方法间的适配</li>
+<li>数据结构和数据结构之间的适配</li>
+</ul>
+<h3 class="heading" data-id="heading-1">举个栗子：</h3>
+<p>usb目前已经不满足我们主流手机的快充功能了，需要用到type-c接口，我们肯定不会把线剪短换上一个type-c的头的，我们完全可以通过买一个usb转type-c的转接头来解决我们这个问题。
+再多的例子就不讲了:)</p>
+<h3 class="heading" data-id="heading-2">underscore适配器</h3>
+<p>假设，注意是假设，公司有一个框架NB.js,他的语法以及实现形式基本和underscore.js相似，例如each操作：</p>
+<pre><code class="hljs bash copyable" lang="bash">//NB.js
+NB.each([1,2,3],<span class="hljs-keyword">function</span>(key,value){
+    console.log(this.location.href + <span class="hljs-string">'?'</span>+value)
+},window)
+<span class="copy-code-btn">复制代码</span></code></pre><pre><code class="hljs bash copyable" lang="bash">//underscore.js
+_.each([1,2,3],<span class="hljs-keyword">function</span>(value,key){
+    console.log(this.location.href + <span class="hljs-string">'?'</span>+value)
+},window)
+<span class="copy-code-btn">复制代码</span></code></pre><p>两个框架的key，value顺序是不一样的。
+公司新招了一批同事，他们用过underscore.js但是完全没听说过NB.js,公司时间紧任务重，领导决定，先让公司同事使用underscore的方式使用内部的框架，逐步完善NB.js文档。</p>
+<p>这个任务交给你，但总不能对NB.js进行大量的修改，就像上面转接头的问题，我们换一个转接头就好了：</p>
+<pre><code class="hljs bash copyable" lang="bash">window.NB = NB = _ ; //underscore转NB适配器。
+<span class="copy-code-btn">复制代码</span></code></pre><h3 class="heading" data-id="heading-3">参数适配器</h3>
+<pre><code class="hljs bash copyable" lang="bash"><span class="hljs-keyword">function</span> <span class="hljs-keyword">do</span>SomeThing(name,id,color,height,width){
+    
+}
+<span class="hljs-keyword">do</span>SomeThing(<span class="hljs-string">'input1'</span>,<span class="hljs-string">'99899'</span>,<span class="hljs-string">'red'</span>,<span class="hljs-string">'200'</span>,<span class="hljs-string">'200'</span>)
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样的一个函数有多个固定顺序的参数，我们知道显然是不友好的，我们写函数的时候一定要避免这样的问题，这样会显得很<code>low</code>，首先就要想到<code>适配</code></p>
+<pre><code class="hljs bash copyable" lang="bash"><span class="hljs-keyword">function</span> <span class="hljs-keyword">do</span>SomeThing(obj){
+    var adapter = {
+        name:<span class="hljs-string">'name'</span>,
+        id:<span class="hljs-string">'001'</span>,
+        color:<span class="hljs-string">'yellow'</span>,
+        height:<span class="hljs-string">'100'</span>,
+        width:<span class="hljs-string">'100'</span>
+    };
+    <span class="hljs-keyword">for</span>(var i <span class="hljs-keyword">in</span> adapter){
+        adapter[i] = obj[i] || adapter[i];
+    }
+    console.log(adapter);
+}
+
+var obj = {color:<span class="hljs-string">'red'</span>}
+<span class="hljs-keyword">do</span>SomeThing(obj)
+//object {name: <span class="hljs-string">"name"</span>, id: <span class="hljs-string">"001"</span>, color: <span class="hljs-string">"red"</span>, height: <span class="hljs-string">"100"</span>, width: <span class="hljs-string">"100"</span>}
+<span class="copy-code-btn">复制代码</span></code></pre><p>上面的问题其实很多同学早就知道了，还有一种情况就是，前后分离的开发过程中，后台人员习惯返回的格式跟全端人员预期的不一样，我们也可以进行适配。</p>
+<pre><code class="hljs bash copyable" lang="bash">// 后端返回Object，前端需要Array
+
+$.ajax({
+    url:xxx.action,
+    success:<span class="hljs-keyword">function</span>(data){
+        <span class="hljs-keyword">do</span>SomeThing(dataAdapter(data));
+    }
+})
+
+<span class="hljs-keyword">function</span> dataAdapter(obj){
+    <span class="hljs-built_in">return</span> [obj[<span class="hljs-string">'name],obj['</span>id<span class="hljs-string">'],obj['</span>color<span class="hljs-string">'],obj['</span>height<span class="hljs-string">'],obj['</span>width<span class="hljs-string">']];
+}
+</span><span class="copy-code-btn">复制代码</span></code></pre><p>像这样，后端有任何变化我们只需要修改dataAdapter函数就好，其他的通途大家自行脑补：）, 其实各种设计模式的宗旨都是<code>低耦合</code>,<code>易维护</code>。</p>
+<h2 class="heading" data-id="heading-4">装饰模式</h2>
+<p>在原型不变的基础是，通过对他进行包装，附加属性，附加方法，使原有的对象、函数能满足更复杂的需求。因为已经说了<code>装饰</code>，所以只是添加新功能时候可以用。</p>
+<p>举个最简单的例子：
+系统中有 一些 按钮，目前每个按钮点击后弹出<code>你好</code>，现在需要在弹出你好过5秒之后在弹出<code>再见</code>更具体的大家自己脑补，很常见的需求。
+有的人开始马上动手写了：</p>
+<pre><code class="hljs bash copyable" lang="bash">
+&lt;button id=<span class="hljs-string">"A"</span>&gt;&lt;/button&gt;
+//原来的
+ var A = document.getElementById(<span class="hljs-string">'A'</span>);
+    A.onclick = <span class="hljs-function"><span class="hljs-title">function</span></span>(){
+        alert(1)
+    };
+//修改后的
+ var A = document.getElementById(<span class="hljs-string">'A'</span>);
+    A.onclick = <span class="hljs-function"><span class="hljs-title">function</span></span>(){
+        alert(1)；
+        <span class="hljs-built_in">set</span>Timeout(<span class="hljs-function"><span class="hljs-title">function</span></span>(){
+            alert(2)
+        },5000)
+    };
+    
+<span class="copy-code-btn">复制代码</span></code></pre><p>当你沾沾自喜时，你发现还有99个按钮要改......当你真的完成了这个不可思议的任务后，你发现需求变了......好那我们还是尽快使用<code>装饰者模式</code>吧:</p>
+<pre><code class="hljs bash copyable" lang="bash">var A = document.getElementById(<span class="hljs-string">'A'</span>);
+    A.onclick = <span class="hljs-function"><span class="hljs-title">function</span></span>(){
+        alert(1)
+    }
+    //装饰者
+    var decorator = <span class="hljs-keyword">function</span> (id,fn){
+        var dom = document.getElementById(id);
+        <span class="hljs-keyword">if</span>(typeof dom.onclick === <span class="hljs-string">'function'</span>){
+            var oldClickFn = dom.onclick;
+            dom.onclick = <span class="hljs-function"><span class="hljs-title">function</span></span>(){
+                oldClickFn();
+                fn();
+            }
+        }<span class="hljs-keyword">else</span>{
+            dom.onclick = fn;
+        }
+    }
+    //利用装饰者对元素增加事件。
+    decorator(<span class="hljs-string">'A'</span>,<span class="hljs-function"><span class="hljs-title">function</span></span>(){
+        <span class="hljs-built_in">set</span>Timeout(<span class="hljs-function"><span class="hljs-title">function</span></span>(){
+            alert(2)
+        },5000)
+    })
+    
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样需求改了也不怕了，我们只要修改<code>decorator</code>函数就好了。
+当然随手写的也有缺点，我们的参数还是按照顺序来排列的，同学们可以参考上面讲的适配器模式，方便以后维护增加代码！decorator是全局的，有兴趣可以参考<code>javascript</code>命名空间问题，总之，代码是越写越优雅的。</p>
+<h2 class="heading" data-id="heading-5">适配器和装饰器的不同之处</h2>
+<ul>
+<li>适配器的方法是对原有对象进行适配，添加的方法与原有方法功能大致相似，只是换了一种更加便利与我们开发的形式，但是装饰者提供的方法是有区别的，一般都是比之前的更加丰满，弥补之前的不足之处。</li>
+<li>装饰者模式中可以不了解原有功能，并且原有的方法照样可以原封不动的使用，如果原有的方法不能用了，说明你的模式有问题，是不可取的。</li>
+</ul>
+<h2 class="heading" data-id="heading-6">PS:</h2>
+<p>最近私事比较多，设计模式的文章以后的更新频率是一周一章，比较复杂的单独一章，比较简单或关联较大的两章并一章，本章5分钟阅读流水账，希望大家共同努力。</p>
+<hr>
+<p></p><figure><img class="lazyload inited loaded" data-src="assets/1553596564-b98d39b8c817978320a6fb7b6449ed1b" data-width="800" data-height="600" src="assets/1553596564-b98d39b8c817978320a6fb7b6449ed1b"><figcaption></figcaption></figure><p></p>
+</div></article><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-box"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-title">关注下面的标签，发现更多相似文章</div><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="tagList" class="tag-list"><a data-v-f9ae5008="" href="https://juejin.im/tag/JavaScript" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">JavaScript</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E5%89%8D%E7%AB%AF" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/bac28828a49181c34110.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/bac28828a49181c34110.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">前端</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/95e6729d56b35272b0d6.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/95e6729d56b35272b0d6.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">设计模式</div></a></div></div><a data-v-f9ae5008="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" data-v-f6fdafdc=""><div data-v-f9ae5008="" class="footer-author-block"><div data-v-ccbf6674="" data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Person" class="author"><div itemprop="memberOf" itemscope="itemscope" itemtype="http://schema.org/Organization"></div><div data-v-ccbf6674="" class="author-info-block"><a data-v-ccbf6674="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-ccbf6674="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-ccbf6674="" class="author-info-box"><div data-v-ccbf6674="" class="profile-box"><a data-v-ccbf6674="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username ellipsis">庄文达</a><span data-v-ccbf6674="" class="position ellipsis">full-stack @ zinglabs</span></div><div data-v-ccbf6674="" class="meta-box"><a data-v-ccbf6674="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7/posts" target="_blank" rel="" class="posts"><span data-v-ccbf6674="" class="count post-count">发布了 16 篇专栏 · </span></a><span data-v-ccbf6674="" class="count">获得点赞 4,094 次 · </span><span data-v-ccbf6674="" class="count">文章被阅读 83,516 次</span></div></div><button data-v-3a6ba87a="" data-v-ccbf6674="" class="follow-button follow">关注</button></div></div></div></a><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="banner" class="article-banner"><a data-v-f9ae5008="" data-v-f6fdafdc="" st:name="link" st:state="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" class="banner-title" href="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" target="_blank">安装掘金浏览器插件</a><div data-v-f9ae5008="" data-v-f6fdafdc="" class="banner-content">打开新标签页发现好内容，掘金、GitHub、Dribbble、ProductHunt 等站点内容轻松获取。快来安装掘金浏览器插件获取高质量内容吧！</div></div><!----><!----><div data-v-6bc5fe54="" data-v-f9ae5008="" class="comment-list-box" id="comment-box" data-v-f6fdafdc="" manual="true"><div data-v-6bc5fe54="" class="title">评论</div><div data-v-0f4f171a="" data-v-6bc5fe54="" class="comment-form comment-form"><div data-v-0f4f171a="" class="avatar-box"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-0f4f171a="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></div><div data-v-0f4f171a="" class="form-box"><div data-v-0f4f171a="" class="input-box"><div data-v-0f4f171a="" contenteditable="true" spellcheck="false" placeholder="输入评论..." class="rich-input empty"><br data-v-0f4f171a=""></div><!----></div><!----></div></div><div data-v-2cad70f5="" data-v-6bc5fe54="" class="comment-list comment-list"><div data-v-3d504eeb="" data-v-2cad70f5="" class="image-viewer-box"><!----></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="56a86b472e958a00518fcf38" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/56a86b472e958a00518fcf38" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://lc-gold-cdn.xitu.io/oNR1ZNOdip3RSG3A4MvyMBB?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/oNR1ZNOdip3RSG3A4MvyMBB?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="56a86b472e958a00518fcf38" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/56a86b472e958a00518fcf38" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">NeverMe<!----></a></div><div data-v-419974fe="" class="position">java javaScript</div></div><div data-v-419974fe="" class="content">说白了就是将以前的以万变应万变，优化成以少变应万变，这也是我编写 js 遵循的原则</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-10T09:56:38.635Z" title="Wed May 10 2017 17:56:38 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58d4f3fd128fe1006cb9d8f9" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58d4f3fd128fe1006cb9d8f9" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://leancloud-gold-cdn.xitu.io/MT8EamAw7E44FAvAIcECRBA?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/MT8EamAw7E44FAvAIcECRBA?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58d4f3fd128fe1006cb9d8f9" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58d4f3fd128fe1006cb9d8f9" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">Drama<!----></a></div><div data-v-419974fe="" class="position">前端工程师，产品经理，项目负责人 @ 深圳市哎哟不错机器人科研有限公司</div></div><div data-v-419974fe="" class="content">要想人前显贵 必先人后受罪</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-10T03:53:45.002Z" title="Wed May 10 2017 11:53:45 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">2</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="591284c6a0bb9f0058b2a32f" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/591284c6a0bb9f0058b2a32f" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="591284c6a0bb9f0058b2a32f" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/591284c6a0bb9f0058b2a32f" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">MayRussell<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">各位小伙伴要支持 fundebug 全栈监测哦 支持 javascript nodejs 和微信小程序</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-10T03:18:34.903Z" title="Wed May 10 2017 11:18:34 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58acf7e82f301e006be1729e" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58acf7e82f301e006be1729e" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://leancloud-gold-cdn.xitu.io/cdec78cd89de677d7d5a.jpg?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/cdec78cd89de677d7d5a.jpg?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58acf7e82f301e006be1729e" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58acf7e82f301e006be1729e" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">Nodream<!----></a></div><div data-v-419974fe="" class="position">前端工程师 @ 火星时代</div></div><div data-v-419974fe="" class="content">装饰者中的 else 不是给所有本来没有事件的元素添加了新的事件吗   这样真的好吗???</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-10T02:10:27.160Z" title="Wed May 10 2017 10:10:27 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="56dbca145bbb50004cc6ecb5" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/56dbca145bbb50004cc6ecb5" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://user-gold-cdn.xitu.io/2016/11/29/e66accf9c58e97bffdb750b16b0a62c0?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2016/11/29/e66accf9c58e97bffdb750b16b0a62c0?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="56dbca145bbb50004cc6ecb5" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/56dbca145bbb50004cc6ecb5" target="_blank" rel="" class="username" data-v-14a78378="">丁全是宗媛依赖症患者<!----></a></div><div data-v-63734c60="" class="position"></div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="58acf7e82f301e006be1729e" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/58acf7e82f301e006be1729e" target="_blank" rel="" class="username be-replied" data-v-14a78378="">Nodream</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">不太好</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2017-05-10T06:59:23.956Z" title="Wed May 10 2017 14:59:23 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58e06aca44d904006d122e02" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58e06aca44d904006d122e02" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://leancloud-gold-cdn.xitu.io/DV62CwLwmnYSS8hqZlRhvKPKwCA6f9n4gFRa11Qa?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/DV62CwLwmnYSS8hqZlRhvKPKwCA6f9n4gFRa11Qa?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58e06aca44d904006d122e02" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58e06aca44d904006d122e02" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">oldliu<!----></a></div><div data-v-419974fe="" class="position">前端工程师 @ 腾讯</div></div><div data-v-419974fe="" class="content">幽默</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-10T01:22:59.507Z" title="Wed May 10 2017 09:22:59 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58c62d09128fe100603e9e3b" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58c62d09128fe100603e9e3b" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://leancloud-gold-cdn.xitu.io/i460nqi3Ya1tQkFXU32FX7M26ioGjOVJgX9uQNdt?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/i460nqi3Ya1tQkFXU32FX7M26ioGjOVJgX9uQNdt?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58c62d09128fe100603e9e3b" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58c62d09128fe100603e9e3b" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">Xavierxhq<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">嗯… 代码是越写越优雅的~ 觉得要改掉自己总是想很多然后才开始码的习惯~ 优雅要靠积累~</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-10T01:06:49.127Z" title="Wed May 10 2017 09:06:49 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">2</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div></div><div data-v-6bc5fe54="" class="fetch-more-comment">查看更多 &gt;</div></div></div></DIV></MAIN></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://juejin.im/post/5911df60da2f6000536c393f" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-26 18:36:04</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://juejin.im/post/59020f651b69e60058c1c743 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JavaScript 设计模式:巧用'工厂模式'和'创建者'模式@设计模式</title>
+    
+<link rel="stylesheet" href="assets/1553596474-1f9e0f727e6a99422a0a1f6e2139bd56.css">
+
+<link rel="stylesheet" href="assets/1553596474-39cb236590c2d7f28116c42fb1c4858a.css">
+
+<link href="assets/1553596474-8fb9abf610d00a83db96fdbd8f6dda9e.css" rel="stylesheet">
+<style>
+body {
+        font-size: 16px;
+        line-height: 2;
+      }
+      a, button, input {
+        margin: 1rem 1.5rem;
+      }
+      img {
+        width: 0;
+        height: 0;
+      }
+      #juejin {
+        overflow-x: hidden;
+      }
+</style>
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(244, 245, 245) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="juejin" data-v-514f306c="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f6fdafdc="" data-v-f9ae5008="" data-v-514f306c="" class="view-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN data-v-f6fdafdc="" class="container main-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f9ae5008="" data-v-f6fdafdc="" class="view column-view" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="main-area article-area shadow mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;"><article data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Article" class="article" data-v-f6fdafdc=""><div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"></div><div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"></div></div><div data-v-f9ae5008="" class="author-info-block"><a data-v-f9ae5008="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-f9ae5008="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-f9ae5008="" class="author-info-box"><a data-v-f9ae5008="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username ellipsis">庄文达</a><div data-v-f9ae5008="" class="meta-box"><time data-v-f9ae5008="" datetime="2017-04-27T19:20:17.617Z" title="Fri Apr 28 2017 03:20:17 GMT+0800 (中国标准时间)" class="time">2017年04月28日</time><span data-v-f9ae5008="" class="views-count">阅读 3306</span><!----></div></div><button data-v-3a6ba87a="" data-v-f9ae5008="" class="follow-button follow">关注</button></div><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://user-gold-cdn.xitu.io/2017/10/18/ca74de97ce30a628a104bbcf45caf1ff?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1" class="lazy thumb article-hero loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/10/18/ca74de97ce30a628a104bbcf45caf1ff?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1&quot;); background-size: cover;"></div><h1 data-v-f9ae5008="" class="article-title">JavaScript 设计模式 ：  巧用'工厂模式'和'创建者'模式</h1><div data-v-f9ae5008="" data-id="59024471ac502e0063d4337f" itemprop="articleBody" class="article-content"><p>我为什么把他们两个放在一起讲？我觉得这两个设计模式有相似之处，有时候会一个设计模式不能满足你的需求而采用另一种设计模式。基于这点考虑，而且为了大家更好地理解，我放到了一起，加深大家的印象，活学活用。</p>
+<pre><code class="hljs bash copyable" lang="bash">[这里我为了能更好的体现下设计模式与JS本体语言的结合，我用了一点继承关系.
+有的同学都不知道JS能继承，就算大家不懂继承也希望大家能看下去，弄懂它！]
+<span class="copy-code-btn">复制代码</span></code></pre><h2 class="heading" data-id="heading-0">本文扩展</h2>
+<p><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F24964910%3Frefer%3Dmuyichuanqi" rel="nofollow noopener noreferrer">掘金有个文章继承还是蛮透彻的</a>
+<a target="_blank" href="https://juejin.im/entry/58f94fcf1b69e600588227c0" rel="">JS原型链与继承别再被问倒了</a></p>
+<h2 class="heading" data-id="heading-1">工厂模式</h2>
+<ul>
+<li>创建对象跟对不同需求进行不同的实例化</li>
+</ul>
+<p>在我们Team协作开发过程当中，不同于我们写个人项目，对全局变量的限制很大，我们要尽量少的使用全局变量，对于一类对象在不同需求上的不同使用，甚至将一些有些类似的方法抽象化，可以用工厂模式来负责创建这些对象，调用者可以使用一部分资源也可以在基础上私人订制一套资源。</p>
+<p>就拿昨天入群的小伙伴举个栗子：他设计一个网页播放器有四个按钮：</p>
+<p></p><figure><img class="lazyload inited loaded" data-src="assets/1553596474-8e8e4826111c884190a11b17f7595f19" data-width="800" data-height="600" src="assets/1553596474-8e8e4826111c884190a11b17f7595f19"><figcaption></figcaption></figure><p></p>
+<p>我们不讨论他的实现方式，我们按照工厂模式来简单创建一个吧！</p>
+<pre><code class="hljs bash copyable" lang="bash"><span class="hljs-keyword">function</span> wangyiMusicAction(action){
+    var o = new Object;
+    o.vender = <span class="hljs-string">'网易云音乐'</span>;
+    o.playingMusic = <span class="hljs-string">'see you again'</span>
+    switch (action){
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'last'</span>:
+            o.information = {currentMusic:<span class="hljs-string">'Ich will'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'上一曲'</span>}
+            <span class="hljs-built_in">break</span>
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'next'</span>:
+            o.information = {currentMusic:<span class="hljs-string">'一人我编程累'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'下一曲'</span>}
+            <span class="hljs-built_in">break</span>
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'play'</span>:
+            o.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'播放'</span>}
+            <span class="hljs-built_in">break</span>
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'mute'</span>:
+            o.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'静音'</span>}
+            <span class="hljs-built_in">break</span>
+    }
+    <span class="hljs-built_in">return</span> o;
+
+}
+var music = wangyiMusicAction(<span class="hljs-string">'next'</span>)
+console.log(<span class="hljs-string">'音乐提供商 : '</span>+music.vender);
+console.log(<span class="hljs-string">'正在播放 : '</span>+music.playingMusic);
+console.log(<span class="hljs-string">'执行动作 : '</span> +music.information.message);
+console.log(<span class="hljs-string">'接口状态 : '</span> +music.information.status);
+console.log(<span class="hljs-string">'执行动作后歌曲 : '</span> +music.information.currentMusic);
+
+----------执行结果--------
+
+音乐提供商 : 网易云音乐
+正在播放 : see you again
+执行动作 : 下一曲
+接口状态 : 200|404
+执行动作后歌曲 : 一人我编程累
+<span class="copy-code-btn">复制代码</span></code></pre><p>这其实使我们经常使用的，不过这是面向过程的，不太符合我们的设计模式。我们用上篇学到的模式：<code>对象</code></p>
+<p>我们可以修改一下：</p>
+<pre><code class="hljs bash copyable" lang="bash">var WangyiMusicAction = <span class="hljs-keyword">function</span>(action){
+
+    this.vender = <span class="hljs-string">'网易云音乐'</span>;
+    this.playingMusic = <span class="hljs-string">'see you again'</span>
+
+}
+
+WangyiMusicAction.prototype = {
+    last : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+            this.information = {currentMusic:<span class="hljs-string">'Ich will'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'上一曲'</span>}
+        },
+
+    next : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+            this.information = {currentMusic:<span class="hljs-string">'一人我编程累'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'下一曲'</span>}
+        },
+
+    play : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+            this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'播放'</span>}
+        },
+
+    mute : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+            this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'静音'</span>}
+        }
+
+}
+
+var music = new WangyiMusicAction()
+music.next(); //执行下一曲动作
+console.log(<span class="hljs-string">'音乐提供商 : '</span>+music.vender);
+console.log(<span class="hljs-string">'正在播放 : '</span>+music.playingMusic);
+console.log(<span class="hljs-string">'执行动作 : '</span> +music.information.message);
+console.log(<span class="hljs-string">'接口状态 : '</span> +music.information.status);
+console.log(<span class="hljs-string">'执行动作后歌曲 : '</span> +music.information.currentMusic);
+音乐提供商 : 网易云音乐
+正在播放 : see you again
+执行动作 : 下一曲
+接口状态 : 200|400
+
+----------执行结果--------
+
+执行动作后歌曲 : 一人我编程累
+
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样就算是<code>面向对象</code>的了，虽然达到目的，但是上面所说的，但是这算是<code>Music</code>的网易云音乐实现版本、总不能再来一个<code>QQMusic</code>、<code>XiaMiMusic</code>吧？我们建立一个<code>Factory</code>工厂来管理所有的音乐：</p>
+<pre><code class="hljs bash copyable" lang="bash">
+var WangyiMusicAction = <span class="hljs-keyword">function</span>(action){
+
+    this.vender = <span class="hljs-string">'网易云音乐'</span>;
+    this.playingMusic = <span class="hljs-string">'see you again'</span>
+
+}
+
+//为网易音乐提供共有方法
+WangyiMusicAction.prototype = {
+    last : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'Ich will'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'上一曲'</span>}
+    },
+
+    next : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'一人我编程累'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'下一曲'</span>}
+    },
+
+    play : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'播放'</span>}
+    },
+
+    mute : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'静音'</span>}
+    }
+
+}
+
+
+var QQMusicAction = <span class="hljs-keyword">function</span>(action){
+
+    this.vender = <span class="hljs-string">'QQ音乐'</span>;
+    this.playingMusic = <span class="hljs-string">'其实我不low'</span>
+
+}
+
+//为QQ音乐提供共有方法
+QQMusicAction.prototype = {
+    last : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'Ich will'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'上一曲'</span>}
+    },
+
+    next : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'网易才low'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'下一曲'</span>}
+    },
+
+    play : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'播放'</span>}
+    },
+
+    mute : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'静音'</span>}
+    }
+
+}
+//音乐工厂
+var MusicFactory = <span class="hljs-keyword">function</span>(<span class="hljs-built_in">type</span>){
+    switch (<span class="hljs-built_in">type</span>){
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'qq'</span>:
+            <span class="hljs-built_in">return</span> new QQMusicAction();
+
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'wangyi'</span>:
+            <span class="hljs-built_in">return</span> new WangyiMusicAction()
+    }
+}
+
+
+var music = new MusicFactory(<span class="hljs-string">'qq'</span>)
+music.next(); //执行下一曲动作
+console.log(<span class="hljs-string">'音乐提供商 : '</span>+music.vender);
+console.log(<span class="hljs-string">'正在播放 : '</span>+music.playingMusic);
+console.log(<span class="hljs-string">'执行动作 : '</span> +music.information.message);
+console.log(<span class="hljs-string">'接口状态 : '</span> +music.information.status);
+console.log(<span class="hljs-string">'执行动作后歌曲 : '</span> +music.information.currentMusic);
+
+----------执行结果--------
+
+音乐提供商 : QQ音乐
+正在播放 : 其实我不low
+执行动作 : 下一曲
+接口状态 : 200|404
+执行动作后歌曲 : 网易才low
+
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样调用者需要用音乐接口，只需要记住<code>MusicFactory</code>就可以了，<code>MusicFactory</code>就像一个大工厂，对于<code>music</code>可以返回他要的一切。</p>
+<p>好，我们回过头来看一下：</p>
+<p><code>第一种方法</code>:是创建一个新的对象 o 对他来增强 属性 的功能来实现的.
+<code>第二种方法</code>:是实例化对象来创建的。
+<code>第二种方法</code>:如果他们继承同一个父类 <code>BaseMusic</code> 那么他们父类的原型方法是可以和它们公用的!
+<code>第一种方法</code>:我们内部 new 了一个新的个体，就不能与父类共用了.</p>
+<p>具体哪种还是看你需求的，不过我更倾向第二种，因为他扩展性高，需求多的时候我们甚至可以将通用的抽离出来放到父类BaseMusic中。</p>
+<p>在下面的继承中我运用了类式继承</p>
+<pre><code class="hljs bash copyable" lang="bash">ps:(大家可以看看构造函数继承和组合继承链接在最下面）
+<span class="copy-code-btn">复制代码</span></code></pre><pre><code class="hljs bash copyable" lang="bash">
+//基类（父类）music方法
+var BaseMusic = <span class="hljs-function"><span class="hljs-title">function</span></span>(){
+    this.playingMusic = <span class="hljs-string">'see you again'</span>
+}
+//实现通用方法
+BaseMusic.prototype = {
+    last : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'上一曲'</span>}
+    },
+
+    next : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'一人我编程累'</span>,status:<span class="hljs-string">'200|404'</span>,message:<span class="hljs-string">'下一曲'</span>}
+    },
+
+    play : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'播放'</span>}
+    },
+
+    mute : <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+        this.information = {currentMusic:<span class="hljs-string">'see you again'</span>,status:<span class="hljs-string">'200|500'</span>,message:<span class="hljs-string">'静音'</span>}
+    }
+}
+//网易云的不同于父类的构造方法
+var WangyiMusicAction = <span class="hljs-keyword">function</span>(action){
+
+    this.vender = <span class="hljs-string">'网易云音乐'</span>;
+
+}
+//这里通过prototype实现类继承
+WangyiMusicAction.prototype = new BaseMusic();//这些动作我都放在基类了，达到代码复用的目的
+ 
+//QQ
+var QQMusicAction = <span class="hljs-keyword">function</span>(action){
+
+    this.vender = <span class="hljs-string">'QQ音乐'</span>;
+    this.playingMusic = <span class="hljs-string">'其实我不low'</span>
+
+}
+QQMusicAction.prototype = new BaseMusic() //这些动作我都放在基类了，达到代码复用的目的
+
+//音乐工厂
+var MusicFactory = <span class="hljs-keyword">function</span>(<span class="hljs-built_in">type</span>){
+    switch (<span class="hljs-built_in">type</span>){
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'qq'</span>:
+            <span class="hljs-built_in">return</span> new QQMusicAction();
+
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'wangyi'</span>:
+            <span class="hljs-built_in">return</span> new WangyiMusicAction()
+    }
+}
+
+
+var music = new MusicFactory(<span class="hljs-string">'wangyi'</span>)
+music.next(); //执行下一曲动作
+console.log(<span class="hljs-string">'音乐提供商 : '</span>+music.vender);
+console.log(<span class="hljs-string">'正在播放 : '</span>+music.playingMusic);
+console.log(<span class="hljs-string">'执行动作 : '</span> +music.information.message);
+console.log(<span class="hljs-string">'接口状态 : '</span> +music.information.status);
+console.log(<span class="hljs-string">'执行动作后歌曲 : '</span> +music.information.currentMusic);
+
+----------执行结果--------
+
+音乐提供商 : 网易云音乐
+正在播放 : see you again
+执行动作 : 下一曲
+接口状态 : 200|404
+执行动作后歌曲 : 一人我编程累
+<span class="copy-code-btn">复制代码</span></code></pre><p>这样看起来是不是更好、更简洁呢？</p>
+<h2 class="heading" data-id="heading-2">创建者模式</h2>
+<ul>
+<li>工厂模式职责：我不管你想干啥，我只返回给你一个你想要的对象</li>
+<li>创建者模式职责：主要针对复杂业务的<code>解耦</code>，算是工厂的一种拆解、拼接。我可以将你的需求分解多个对象创建，更关心的是创建对象的过程。</li>
+</ul>
+<p>不复杂不能突显出他的魅力,举个稍微复杂栗子：</p>
+<p>我们公司是卖车的，用户下单要买车，这个车呢：</p>
+<pre><code class="hljs bash copyable" lang="bash">品牌：迈巴赫、林肯、宾利、特斯拉[如果不选品牌，默认特斯拉] 
+颜色：赤橙黄绿青蓝紫...[如果不选颜色，默认黄色]
+动力：燃油、电力、混合动力[如果不选动力，默认电力]
+购买人的一些备注信息[购买人可能会修改备注需要提供方法]
+针对购买人选择的车型返回对车型的简单描述[描述可以修改]
+
+<span class="copy-code-btn">复制代码</span></code></pre><p>最终根据用户选择来生成一个订单：
+想下这用工厂模式是不是要写很多的if else来返回这么一个Car的对象呢？</p>
+<p>我们先将  <code>车</code>  <code>购买人的动作</code>  <code>反馈</code> 分解为三个对象再在最后进行拼接 ：</p>
+<pre><code class="hljs bash copyable" lang="bash">//创建一个汽车
+var Car  = <span class="hljs-keyword">function</span>(param){
+    this.color = param &amp;&amp; param.color || <span class="hljs-string">'yellow'</span>;
+    this.brand = param &amp;&amp; param.brand || <span class="hljs-string">'Tesla'</span>;
+    this.power = param &amp;&amp; param.power || <span class="hljs-string">'electric'</span>;
+}
+//提供原型方法
+Car.prototype = {
+    getColor : <span class="hljs-function"><span class="hljs-title">function</span></span> () {
+        <span class="hljs-built_in">return</span> this.color;
+    },
+    getBrand : <span class="hljs-function"><span class="hljs-title">function</span></span> () {
+        <span class="hljs-built_in">return</span> this.brand;
+    },
+    getPower : <span class="hljs-function"><span class="hljs-title">function</span></span> () {
+        <span class="hljs-built_in">return</span> this.power;
+    }
+}
+
+//创建一个反馈
+var FeedBack = <span class="hljs-keyword">function</span>(brand){
+    var that = this;
+    (<span class="hljs-keyword">function</span>(brand,that){
+        switch (brand){
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'Tesla'</span>:
+                // that.brand = brand;
+                that.information = <span class="hljs-string">'特斯拉是好车'</span>
+                <span class="hljs-built_in">break</span>
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'Rolls'</span> :
+                that.information = <span class="hljs-string">'劳斯来时是好车'</span>
+        }
+    })(brand,that)
+}
+
+FeedBack.prototype.changeBrand = <span class="hljs-keyword">function</span> (information) {
+    this.information = information;
+}
+
+
+//创建一个顾客
+var Client = <span class="hljs-keyword">function</span>(name,message){
+    this.name = name;
+    this.message = message || <span class="hljs-string">'无留言'</span>;
+}
+//顾客修改备注
+Client.prototype.changeMessage = <span class="hljs-keyword">function</span>(message){
+    this.message = message;
+}
+//然后重点在这里！我们在这里将我们分解的拼接起来。
+var Order = <span class="hljs-keyword">function</span>(name){
+    var object = new Car();
+    object.client  = new Client(name);
+    object.feedBack = new FeedBack(object.brand);
+    <span class="hljs-built_in">return</span> object;
+}
+
+
+var orderCar = new Order(<span class="hljs-string">'Vendar-MH'</span>);
+console.log(<span class="hljs-string">'The'</span> + orderCar.client.name + <span class="hljs-string">'先生、下单一辆'</span> + orderCar.color + <span class="hljs-string">'的'</span> + orderCar.brand +<span class="hljs-string">' 留言内容 : '</span> +orderCar.client.message );
+orderCar.client.changeMessage(<span class="hljs-string">'请马上电话联系我'</span>)
+console.log(<span class="hljs-string">'The'</span> + orderCar.client.name + <span class="hljs-string">'先生、下单一辆'</span> + orderCar.color + <span class="hljs-string">'的'</span> + orderCar.brand +<span class="hljs-string">' 留言内容 : '</span> +orderCar.client.message );
+
+----------执行结果--------
+
+TheVendar-MH先生、下单一辆yellow的Tesla 留言内容 : 无留言
+TheVendar-MH先生、下单一辆yellow的Tesla 留言内容 : 请马上电话联系我
+
+<span class="copy-code-btn">复制代码</span></code></pre><p>好了,就算是关于这个订单的更加复杂的需求，或者修改需求，不管我们多少各功能在用，我们只要微微一笑，修改下<code>prototype</code>等实现就好了0.0</p>
+<p>如果您觉得还算不错可以关注我持续看我的文章，大概方向：<code>前后端语言设计模式</code>、<code>如何设计好一款框架</code>、<code>源码导读</code>、<code>技术实践</code>。</p>
+<ul>
+<li>青年才俊可以入群交流:<code>147255248</code></li>
+</ul>
+</div></article><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-box"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-title">关注下面的标签，发现更多相似文章</div><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="tagList" class="tag-list"><a data-v-f9ae5008="" href="https://juejin.im/tag/JavaScript" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">JavaScript</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E5%89%8D%E7%AB%AF" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/bac28828a49181c34110.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/bac28828a49181c34110.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">前端</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E5%90%8E%E7%AB%AF" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/d83da9d012ddb7ae85f4.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/d83da9d012ddb7ae85f4.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">后端</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E5%BC%80%E6%BA%90" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/553ecacd498946a9a6d9.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/553ecacd498946a9a6d9.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">开源</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/cca10b4907aaca2788dd.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/cca10b4907aaca2788dd.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">代码规范</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/95e6729d56b35272b0d6.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/95e6729d56b35272b0d6.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">设计模式</div></a></div></div><a data-v-f9ae5008="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" data-v-f6fdafdc=""><div data-v-f9ae5008="" class="footer-author-block"><div data-v-ccbf6674="" data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Person" class="author"><div itemprop="memberOf" itemscope="itemscope" itemtype="http://schema.org/Organization"></div><div data-v-ccbf6674="" class="author-info-block"><a data-v-ccbf6674="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-ccbf6674="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-ccbf6674="" class="author-info-box"><div data-v-ccbf6674="" class="profile-box"><a data-v-ccbf6674="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username ellipsis">庄文达</a><span data-v-ccbf6674="" class="position ellipsis">full-stack @ zinglabs</span></div><div data-v-ccbf6674="" class="meta-box"><a data-v-ccbf6674="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7/posts" target="_blank" rel="" class="posts"><span data-v-ccbf6674="" class="count post-count">发布了 16 篇专栏 · </span></a><span data-v-ccbf6674="" class="count">获得点赞 4,094 次 · </span><span data-v-ccbf6674="" class="count">文章被阅读 83,525 次</span></div></div><button data-v-3a6ba87a="" data-v-ccbf6674="" class="follow-button follow">关注</button></div></div></div></a><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="banner" class="article-banner"><a data-v-f9ae5008="" data-v-f6fdafdc="" st:name="link" st:state="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" class="banner-title" href="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" target="_blank">安装掘金浏览器插件</a><div data-v-f9ae5008="" data-v-f6fdafdc="" class="banner-content">打开新标签页发现好内容，掘金、GitHub、Dribbble、ProductHunt 等站点内容轻松获取。快来安装掘金浏览器插件获取高质量内容吧！</div></div><!----><!----><div data-v-6bc5fe54="" data-v-f9ae5008="" class="comment-list-box" id="comment-box" data-v-f6fdafdc="" manual="true"><div data-v-6bc5fe54="" class="title">评论</div><div data-v-0f4f171a="" data-v-6bc5fe54="" class="comment-form comment-form"><div data-v-0f4f171a="" class="avatar-box"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-0f4f171a="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></div><div data-v-0f4f171a="" class="form-box"><div data-v-0f4f171a="" class="input-box"><div data-v-0f4f171a="" contenteditable="true" spellcheck="false" placeholder="输入评论..." class="rich-input empty"><br data-v-0f4f171a=""></div><!----></div><!----></div></div><div data-v-2cad70f5="" data-v-6bc5fe54="" class="comment-list comment-list"><div data-v-3d504eeb="" data-v-2cad70f5="" class="image-viewer-box"><!----></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="583e27a261ff4b006b63771d" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/583e27a261ff4b006b63771d" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://leancloud-gold-cdn.xitu.io/gg8wEEJIiXvUoMTcnkreAIB?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/gg8wEEJIiXvUoMTcnkreAIB?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="583e27a261ff4b006b63771d" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/583e27a261ff4b006b63771d" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">文田心<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">咳咳咳，因为没有 java 基础，看设计模式的接口类、抽象类以及继承和具体实现，都快吐了。就少你这个以 js 为实例语言讲解了。很棒棒哦！清晰明了，欲罢不能。</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-05-01T07:46:06.155Z" title="Mon May 01 2017 15:46:06 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="583e27a261ff4b006b63771d" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/583e27a261ff4b006b63771d" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://leancloud-gold-cdn.xitu.io/gg8wEEJIiXvUoMTcnkreAIB?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/gg8wEEJIiXvUoMTcnkreAIB?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="583e27a261ff4b006b63771d" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/583e27a261ff4b006b63771d" target="_blank" rel="" class="username" data-v-14a78378="">文田心<!----></a></div><div data-v-63734c60="" class="position"></div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="583e27a261ff4b006b63771d" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/583e27a261ff4b006b63771d" target="_blank" rel="" class="username be-replied" data-v-14a78378="">文田心</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">哦对，最后实例化订单的时候，没有必要使用工厂构造函数，也没必要 new 吧，这里有 return object，new 的对象会被丢弃而且还有一些无用的操作。</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2017-05-01T07:55:45.947Z" title="Mon May 01 2017 15:55:45 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58361df961ff4b0061f68ed2" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58361df961ff4b0061f68ed2" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2016/11/29/1da1e9feab7ca2ebb904182af5a1b800?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2016/11/29/1da1e9feab7ca2ebb904182af5a1b800?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58361df961ff4b0061f68ed2" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58361df961ff4b0061f68ed2" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">他居然爱吃虫<!----></a></div><div data-v-419974fe="" class="position">前端工程师</div></div><div data-v-419974fe="" class="content">想问个问题，orderCar.brand 和 orderCar.getBrand()，前者是实例对象的属性，后者是实例对象指向的方法，但是他们都是输出品牌的，既然通过访问 orderCar.brand 也能的到值，为什么还要写 getBrand() 这个原型方法，是有其他的用意吗？</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-04-29T06:01:29.113Z" title="Sat Apr 29 2017 14:01:29 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username" data-v-14a78378="">庄文达<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">full-stack @ zinglabs</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="58361df961ff4b0061f68ed2" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/58361df961ff4b0061f68ed2" target="_blank" rel="" class="username be-replied" data-v-14a78378="">他居然爱吃虫</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">这里没啥其他的意思，因为 brand 我这里是共有的，如果是私有的你就拿不到了，也有另一个作用：对外提供一个 getBrand 的话可以让使用者不看你的源码就知道你提供了这个接口，如果 brand 有对应一些逻辑的话这样写比较好，我不会写那么具体，给你们一些想象空间。</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2017-05-01T11:39:47.647Z" title="Mon May 01 2017 19:39:47 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58361df961ff4b0061f68ed2" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58361df961ff4b0061f68ed2" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2016/11/29/1da1e9feab7ca2ebb904182af5a1b800?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2016/11/29/1da1e9feab7ca2ebb904182af5a1b800?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58361df961ff4b0061f68ed2" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58361df961ff4b0061f68ed2" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">他居然爱吃虫<!----></a></div><div data-v-419974fe="" class="position">前端工程师</div></div><div data-v-419974fe="" class="content">学习了，就是 js 敲的时候，对象。不会像 java 跳出有哪些方法和属性，没有提示，对象的方法和属性都搞混了</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-04-28T10:19:12.691Z" title="Fri Apr 28 2017 18:19:12 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username" data-v-14a78378="">庄文达<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">full-stack @ zinglabs</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="58361df961ff4b0061f68ed2" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/58361df961ff4b0061f68ed2" target="_blank" rel="" class="username be-replied" data-v-14a78378="">他居然爱吃虫</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">下载个 WebStorm 应该会有提示吧。这个和 idea 一个公司出的</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2017-04-28T10:31:44.699Z" title="Fri Apr 28 2017 18:31:44 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">庄文达<span data-v-419974fe="" class="author-badge-text">(作者)</span></a></div><div data-v-419974fe="" class="position">full-stack @ zinglabs</div></div><div data-v-419974fe="" class="content">谢谢关注<img class="emoji" draggable="false" alt="😄" src="assets/1553596474-796c8e0afbd3b48051655a0bd1d29ad7.svg"></div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-04-28T05:00:25.823Z" title="Fri Apr 28 2017 13:00:25 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5780f34ba633bd005b12b0e2" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5780f34ba633bd005b12b0e2" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2018/10/9/16659560182a7417?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2018/10/9/16659560182a7417?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5780f34ba633bd005b12b0e2" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5780f34ba633bd005b12b0e2" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">刘兮若Evllis<!----></a></div><div data-v-419974fe="" class="position">前端工程师 @ 圣承集团</div></div><div data-v-419974fe="" class="content">你终于来了, 感觉珊珊来迟啊, 想死你了, 继续关注. 你的文章很合我的口味. 通俗易懂. 嘿嘿. 谢谢啦!!!</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-04-28T04:56:55.996Z" title="Fri Apr 28 2017 12:56:55 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2017/7/28/923edf27d0d228043644697bc1f4c015?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5823d1a3a22b9d0067fde1f7" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5823d1a3a22b9d0067fde1f7" target="_blank" rel="" class="username" data-v-14a78378="">庄文达<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">full-stack @ zinglabs</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5780f34ba633bd005b12b0e2" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5780f34ba633bd005b12b0e2" target="_blank" rel="" class="username be-replied" data-v-14a78378="">刘兮若Evllis</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">O(∩_∩)O 谢谢</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2017-04-28T05:00:45.655Z" title="Fri Apr 28 2017 13:00:45 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58575178ac502e0067fa1f46" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/58575178ac502e0067fa1f46" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://mirror-gold-cdn.xitu.io/168e083aaca63dd85fe?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e083aaca63dd85fe?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="58575178ac502e0067fa1f46" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/58575178ac502e0067fa1f46" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">yangbibo<!----></a></div><div data-v-419974fe="" class="position">前端工程师 @ 星网信通</div></div><div data-v-419974fe="" class="content">还没习惯这种设计模式</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2017-04-28T02:53:48.412Z" title="Fri Apr 28 2017 10:53:48 GMT+0800 (中国标准时间)" class="time">1年前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div></div><div data-v-6bc5fe54="" class="fetch-more-comment">查看更多 &gt;</div></div></div></DIV></MAIN></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://juejin.im/post/59020f651b69e60058c1c743" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-26 18:34:34</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
