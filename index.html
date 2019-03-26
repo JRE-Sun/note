@@ -90,7 +90,7 @@
         .article-list {
             overflow: hidden;
             max-height: 0;
-            transition: .3s;
+            /*transition: .3s;*/
             padding-left: 30px;
             margin-top: 10px;
         }
@@ -177,29 +177,26 @@
                 },
                 init(sourceArray) {
                     let sourceList = {};
-                    sourceArray.forEach(n => {
+                    sourceArray    = sourceArray.map(n => {
                         let tempData = n.split('@');
-                        let cate     = tempData[2];
-                        let options  = {
+                        return {
+                            cate : tempData[2],
                             time : tempData[0],
                             date : this.formatDateTime(new Date(tempData[0] * 1000)),
                             title: tempData[1],
                             url  : `./${n}/index.html`,
                         };
+                    });
+                    sourceArray.sort((a, b) => {
+                        return b.time - a.time;
+                    });
+                    sourceArray.forEach(n => {
+                        let cate = n.cate;
                         if (typeof sourceList[cate] === 'undefined') {
                             this.cateIndexList.push(cate);
                             sourceList[cate] = [];
                         }
-                        sourceList[cate].push(options);
-                        tempData = null;
-                        cate     = null;
-                        options  = null;
-                    });
-
-                    Object.keys(sourceList).forEach(n => {
-                        sourceList[n] = sourceList[n].sort((a, b) => {
-                            return b.time - a.time;
-                        })
+                        sourceList[cate].push(n);
                     });
 
                     this.sourceList = sourceList;
