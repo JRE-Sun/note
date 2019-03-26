@@ -1,0 +1,949 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://juejin.im/post/5bf174396fb9a049ca36f13d -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>正则表达式详解及实战@正则</title>
+    
+<link rel="stylesheet" href="assets/1553640183-1f9e0f727e6a99422a0a1f6e2139bd56.css">
+
+<link rel="stylesheet" href="assets/1553640183-39cb236590c2d7f28116c42fb1c4858a.css">
+
+<link href="assets/1553640183-8fb9abf610d00a83db96fdbd8f6dda9e.css" rel="stylesheet">
+<style>
+body {
+        font-size: 16px;
+        line-height: 2;
+      }
+      a, button, input {
+        margin: 1rem 1.5rem;
+      }
+      img {
+        width: 0;
+        height: 0;
+      }
+      #juejin {
+        overflow-x: hidden;
+      }
+</style>
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(244, 245, 245) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="juejin" data-v-514f306c="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f6fdafdc="" data-v-f9ae5008="" data-v-514f306c="" class="view-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN data-v-f6fdafdc="" class="container main-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-f9ae5008="" data-v-f6fdafdc="" class="view column-view" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="main-area article-area shadow mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;"><article data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Article" class="article" data-v-f6fdafdc=""><div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"></div><div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"></div></div><div data-v-f9ae5008="" class="author-info-block"><a data-v-f9ae5008="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-f9ae5008="" data-src="https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-f9ae5008="" class="author-info-box"><a data-v-f9ae5008="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username ellipsis">jsliang</a><div data-v-f9ae5008="" class="meta-box"><time data-v-f9ae5008="" datetime="2018-11-18T14:29:42.832Z" title="Sun Nov 18 2018 22:29:42 GMT+0800 (中国标准时间)" class="time">2018年11月18日</time><span data-v-f9ae5008="" class="views-count">阅读 11232</span><!----></div></div><button data-v-3a6ba87a="" data-v-f9ae5008="" class="follow-button follow">关注</button></div><!----><h1 data-v-f9ae5008="" class="article-title">正则表达式详解及实战</h1><div data-v-f9ae5008="" data-id="5bf17756f265da612909c703" itemprop="articleBody" class="article-content"><blockquote>
+<p>Create by <strong>jsliang</strong> on <strong>2018-11-14 10:41:20</strong><br>
+Recently revised in <strong>2018-11-19 09:04:18</strong></p>
+</blockquote>
+<br>
+<p> <strong>Hello 小伙伴们，如果觉得本文还不错，记得给个 <strong>star</strong>，你们的 <strong>star</strong> 是我学习的动力！<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FLiangJunrong%2Fdocument-library%2Ftree%2Fmaster%2Fother-library%2FRegularExpression" rel="nofollow noopener noreferrer">GitHub 地址</a></strong></p>
+<br>
+<p> 正则表达式：正则，也叫做规则，让计算机能够读懂人类的规则。<br>
+ 正则表达式是繁琐的，越学你会觉得越发发狂。<br>
+ 但是，它又是强大的。正则在我眼里，就是作弊码，学会之后的应用可以大大提高你的开发效率。<br>
+ 所以，你可以老老实实打怪，但是你用了它会觉得编程更爽快。</p>
+<p> 综上，有了 <strong>jsliang</strong> 编写这篇文章来记录自己所学的冲动。<br>
+ 为此，也是灵感触发，<strong>jsliang</strong> 写了个 PC 小游戏（请用电脑打开网址）：</p>
+<ul>
+<li><strong><a target="_blank" href="https://link.juejin.im/?target=http%3A%2F%2Fplayregex.jsliang.top%2F" rel="nofollow noopener noreferrer">正则小游戏地址</a></strong></li>
+</ul>
+<p></p><figure><img class="lazyload inited loaded" data-src="assets/1553640183-b1a24d0e23fd9a405c449e81b8b7862e.gif" data-width="1026" data-height="732" src="assets/1553640183-b1a24d0e23fd9a405c449e81b8b7862e.gif"><figcaption></figcaption></figure><p></p>
+<br>
+<h1 class="heading" data-id="heading-0"><a id="chapter-one" name="chapter-one">一 目录</a></h1>
+<br>
+<p> <strong>不折腾的前端，和咸鱼有什么区别~</strong></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a id="catalog-chapter-one" name="catalog-chapter-one"></a><a href="#chapter-one">一 目录</a></td>
+</tr>
+<tr>
+<td><a id="catalog-chapter-two" name="catalog-chapter-two"></a><a href="#chapter-two">二 整合</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-two-one">2.1 常用正则</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-two-two">2.2 匹配规则</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-two-three">2.3 常用方法</a></td>
+</tr>
+<tr>
+<td><a id="catalog-chapter-three" name="catalog-chapter-three"></a><a href="#chapter-three">三 正则旅途</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-three-one">3.1 初识正则</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-three-two">3.2 正则解析</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-three-three">3.3 正则练习</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-three-four">3.4 渐入佳境：() 匹配子项</a></td>
+</tr>
+<tr>
+<td> <a href="#chapter-three-five">3.5 渐入佳境：[] 字符类</a></td>
+</tr>
+<tr>
+<td><a id="catalog-chapter-four" name="catalog-chapter-four"></a><a href="#chapter-four">四 回顾总结</a></td>
+</tr>
+<tr>
+<td><a id="catalog-chapter-five" name="catalog-chapter-five"></a><a href="#chapter-five">五 文章更正</a></td>
+</tr>
+</tbody>
+</table>
+<br>
+<h1 class="heading" data-id="heading-1"><a id="chapter-two" name="chapter-two">二 整合</a></h1>
+<blockquote>
+<p><a href="#catalog-chapter-two">目录</a></p>
+</blockquote>
+<br>
+<p> 本章节整理总结了所有的参考文献，方便日后快速回顾回忆。<br>
+ 如果你还没正式开始正则表达式，请快速浏览跳过本章节。</p>
+<p> 精选参考文献/视频/手册：</p>
+<ul>
+<li><a target="_blank" href="https://link.juejin.im/?target=http%3A%2F%2Fwww.runoob.com%2Fregexp%2Fregexp-tutorial.html" rel="nofollow noopener noreferrer">正则表达式-教程 | 菜鸟教程</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fc.runoob.com%2Ffront-end%2F854" rel="nofollow noopener noreferrer">正则表达式在线测试 | 菜鸟教程</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=http%3A%2F%2Ftool.oschina.net%2Fuploads%2Fapidocs%2Fjquery%2Fregexp.html" rel="nofollow noopener noreferrer">正则表达式手册 | 开源中国社区</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwww.imooc.com%2Flearn%2F350" rel="nofollow noopener noreferrer">鬼斧神工之正则表达式 | 慕课网</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzUxMzcxMzE5Ng%3D%3D%26mid%3D2247489641%26idx%3D1%26sn%3D5fd41822e46dc471ec551b7901e8f2e7%26chksm%3Df951ad2ace26243c7a5300a7e0a18cd51fba7f516815cc1ee037e80b873d503ebeefecb4fd74%26mpshare%3D1%26scene%3D1%26srcid%3D1008AuZ5aklTGmEXxuQUSgNm%23rd" rel="nofollow noopener noreferrer">正则表达式真的很 6，可惜你不会写 | 前端之巅</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fdotnet%2Fstandard%2Fbase-types%2Fregular-expression-language-quick-reference" rel="nofollow noopener noreferrer">正则表达式 - 快速参考 | Miscrosoft Docs</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=http%3A%2F%2Fwww.regexlab.com%2Fzh%2Fregref.htm" rel="nofollow noopener noreferrer">揭开正则表达式的神秘面纱 | 正则工作室</a></li>
+<li><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FJavaScript%2FGuide%2FRegular_Expressions" rel="nofollow noopener noreferrer">正则表达式 JavaScript | MDN</a></li>
+</ul>
+<br>
+<h2 class="heading" data-id="heading-2"><a id="chapter-two-one" name="chapter-two-one">2.1 常用正则表达式</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-two">目录</a></p>
+</blockquote>
+<br>
+<ol>
+<li><strong>验证姓名</strong></li>
+</ol>
+<ul>
+<li>2 到 9 位中文昵称：<code>^[\u4e00-\u9fa5]{2,9}$</code></li>
+</ul>
+<ol start="2">
+<li><strong>验证密码</strong></li>
+</ol>
+<ul>
+<li>只能是字母、数字和下划线，长度不限制：<code>^\w+$</code></li>
+<li>允许 小写字母 <code>a-z</code>、大写字母 <code>A-Z</code>、数字 <code>0-9</code>、下划线 <code>_</code>、 连接符 <code>-</code>，且长度在 6-18 位数：<code>/^[a-zA-Z0-9_-]{6,18}$/</code></li>
+<li>必须包含数字+小写字母+大写字母的密码，且长度在8-10位之间：<code>^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$</code></li>
+</ul>
+<ol start="3">
+<li><strong>验证 Email</strong></li>
+</ol>
+<ul>
+<li>允许有一个字符符合 [A-Za-z0-9_] 之后可以为 [A-Za-z0-9_-+.] + <code>@</code> + 允许有一个字符符合 [A-Za-z0-9_] 之后可以为 [A-Za-z0-9_-.] + <code>.</code> + 允许有一个字符符合 [A-Za-z0-9_] 之后可以有 [A-Za-z0-9_-.] 的邮箱：<code>^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$</code></li>
+</ul>
+<ol start="4">
+<li><strong>验证身份证</strong></li>
+</ol>
+<ul>
+<li>18 位身份证号，尾数是数字或者字母 X：<code>^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$</code></li>
+<li>15 或者 18 位身份证号，尾数可以是数字及 X 或者 x：<code>(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)</code></li>
+</ul>
+<ol start="5">
+<li><strong>验证手机号</strong></li>
+</ol>
+<ul>
+<li>以 1 开头，第二位数是 3/4/5/7/8 的 11 位手机号码：<code>^1[3,4,5,7,8,9]\d{9}$</code></li>
+<li>移动号码：<code>^134[0-8]\d{7}$|^(?:13[5-9]|147|15[0-27-9]|178|1703|1705|1706|18[2-478])\d{7,8}$</code></li>
+<li>电信号码：<code>^(?:133|153|1700|1701|1702|177|173|18[019])\d{7,8}$</code></li>
+<li>联通号码：<code>^(?:13[0-2]|145|15[56]|176|1704|1707|1708|1709|171|18[56])\d{7,8}|$</code></li>
+</ul>
+<br>
+<h2 class="heading" data-id="heading-3"><a id="chapter-two-two" name="chapter-two-two">2.2 匹配规则</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-two">目录</a></p>
+</blockquote>
+<br>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\</code></td>
+<td>将下一个字符标记为特殊字符、或原义字符、或向后引用、或八进制转义符。</td>
+<td><code>\n</code> 表示换行符、<code>\d</code> 匹配 [0-9] 的数字</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>匹配输入字符串的开始位置。</td>
+<td><code>^abc</code> 表示匹配有 abc 开头的字符串</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>匹配输入字符串的结束位置。</td>
+<td><code>^\d$</code> 表示匹配一个 [0-9] 的数字</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>匹配前面的子表达式零次或多次。</td>
+<td><code>zo*</code> 能匹配 <code>z</code> 或者 <code>zoo</code>。<code>*</code> 等价于 <code>{0,}</code>。</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>匹配前面的子表达式一次或多次。</td>
+<td><code>zo+</code> 能匹配 <code>zo</code> 或者 <code>zoo</code>，但不能匹配 <code>z</code>。<code>+</code> 等价于 <code>{1,}</code>。</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配前面的子表达式零次或一次。</td>
+<td><code>do(es)?</code> 可以匹配 <code>does</code> 或 <code>does</code> 中的 <code>do</code>。<code>?</code> 等价于 <code>{0,1}</code>。</td>
+</tr>
+<tr>
+<td><code>{n}</code></td>
+<td><code>n</code> 是一个非负整数。匹配确定的 n 次。</td>
+<td><code>o{2}</code> 不能匹配 <code>Bob</code> 中的 <code>o</code>，但是能匹配 <code>food</code> 中的两个 <code>o</code>。</td>
+</tr>
+<tr>
+<td><code>{n,}</code></td>
+<td><code>n</code> 是一个非负整数。至少匹配 n 次。</td>
+<td><code>o{2,}</code> 不能匹配 <code>Bob</code> 中的 <code>o</code>，但能匹配 <code>foooood</code> 中的所有 <code>o</code>。<code>o{1,}</code> 等价于 <code>o+</code>。<code>o{0,}</code> 则等价于 <code>o*</code>。</td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td>m 和 n 均为非负整数，其中 n &lt;= m。最少匹配 n 次且最多匹配 m 次。</td>
+<td>例如，<code>o{1,3}</code> 将匹配 <code>fooooood</code> 中的前三个 o。<code>o{0,1}</code> 等价于 <code>o?</code>。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>当该字符紧跟在任何一个其他限制符 <code>*</code>、<code>+</code>、<code>?</code>、<code>{n}</code>、<code>{n,}</code>、<code>{n,m}</code> 后面时（例如 <code>+?</code>），匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。</td>
+<td>对于字符串 <code>oooo</code>，<code>o+?</code> 将匹配单个 <code>o</code>，而 <code>o+</code> 将匹配所有 <code>o</code>。</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>匹配除 <code>\n</code> 之外的任何单个字符。<code>.</code> 是一个很强大的 <strong>元符号</strong>，请慎用。</td>
+<td>要匹配包括 <code>\n</code> 在内的任何字符，请使用 <code>(.|\n)</code> 的模式。要匹配小数点本身，请使用 <code>\.</code>。<code>a.e</code> 能匹配 <code>nave</code> 中的 <code>ave</code> 或者匹配 <code>water</code> 中的 <code>ate</code></td>
+</tr>
+<tr>
+<td><code>(子表达式)</code></td>
+<td>标记一个子表达式的开始和结束位置。</td>
+<td><code>(\w)\1</code> 能匹配 <code>deep</code> 中的 <code>ee</code></td>
+</tr>
+<tr>
+<td><code>(?:子表达式)</code></td>
+<td>匹配 <strong>z子表达式</strong> 但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符 <code>(|)</code> 来组合一个模式的各个部分是很有用。</td>
+<td><code>industr(?:y|ies)</code> 就是一个等同于 <code>industry|industries</code> 但更简略的正则表达式。</td>
+</tr>
+<tr>
+<td><code>(?=子表达式)</code></td>
+<td>一般用法：<code>××(?=子表达式)</code>，它的意思就是 <code>××</code> 后面的条件限制是 <code>?=</code> 后面的 <code>子表达式</code></td>
+<td><code>Windows(?=95|98|NT|2000)</code> 能匹配 <code>Windows2000</code> 中的 <code>Windows</code>，但不能匹配 <code>Windows3.1</code> 中的 <code>Windows</code>。<code>\w+(?=\.)</code> 能匹配 <code>He is. The dog ran. The sun is out.</code> 中的 <code>is</code>、<code>ran</code> 和 <code>out</code></td>
+</tr>
+<tr>
+<td><code>(?!子表达式)</code></td>
+<td>类似于 <code>(?=子表达式)</code>，表示不等于后面的 <code>子表达式</code>。</td>
+<td><code>Windows(?!95|98|NT|2000)</code> 能匹配 <code>Windows3.1</code> 中的 <code>Windows</code>，但不能匹配 <code>Windows2000</code> 中的 <code>Windows</code>。<code>\b(?!un)\w+\b</code> 能匹配 <code>unsure sure unity used</code> 中的 <code>sure</code> 和 <code>used</code></td>
+</tr>
+<tr>
+<td><code>(?&lt;=子表达式)</code></td>
+<td>同上。</td>
+<td><code>(?&lt;=95|98|NT|2000)Windows</code> 能匹配 <code>2000Windows</code> 中的 <code>Windows</code>，但不能匹配 <code>3.1Windows</code> 中的<code>Windows</code>。<code>(?&lt;=19)\d{2}\b</code> 能匹配 <code>1851 1999 1950 1905 2003</code> 中的 <code>99</code>、<code>50</code> 和 <code>05</code></td>
+</tr>
+<tr>
+<td><code>(?&lt;!子表达式)</code></td>
+<td>同上。</td>
+<td><code>(?&lt;!95|98|NT|2000)Windows</code> 能匹配 <code>3.1Windows</code> 中的 <code>Windows</code>，但不能匹配 <code>2000Windows</code> 中的 <code>Windows</code>。<code>\b(?!un)\w+\b</code> 能匹配 <code>unsure sure unity used</code> 中的 <code>sure</code> 和 <code>used</code></td>
+</tr>
+<tr>
+<td><code>x|y</code></td>
+<td>匹配 x 或者 y。</td>
+<td><code>z|food</code> 能匹配 <code>z</code> 或者 <code>food</code>。<code>(z|f)ood</code> 则匹配 <code>zood</code> 或 <code>food</code>。</td>
+</tr>
+<tr>
+<td><code>[xyz]</code></td>
+<td>字符集合。匹配所包含的任意一个字符。</td>
+<td><code>[abc]</code> 可以匹配 <code>plain</code> 中的 <code>a</code>。</td>
+</tr>
+<tr>
+<td><code>[^xyz]</code></td>
+<td>求反。匹配未包含的任意字符。</td>
+<td>例如，<code>[^abc]</code> 可以匹配 <code>plain</code> 中的 <code>p</code>。<code>[^aei]</code> 匹配 <code>reign</code> 中的 <code>r</code>、<code>g</code> 和 <code>n</code></td>
+</tr>
+<tr>
+<td><code>[a-z]</code></td>
+<td>字符范围。匹配指定范围内的任意字符。</td>
+<td><code>[a-z]</code> 可以匹配 <code>a</code> 到 <code>z</code> 范围内的任意小写字母字符。注意：<code>[A-Z]</code> 才匹配大写英文字母</td>
+</tr>
+<tr>
+<td><code>[^a-z]</code></td>
+<td>求反。匹配任何不在指定范围内的任意字符。</td>
+<td><code>[^a-z]</code> 可以匹配任何不在 <code>a</code> 到 <code>z</code> 范围内的任意字符。</td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>匹配一个单词边界，也就是指单词和空格间的位置。</td>
+<td><code>er\b</code> 可以匹配 <code>never</code> 中的 <code>er</code>，但不能匹配 <code>verb</code> 中的 <code>er</code>。</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>匹配非单词边界。</td>
+<td><code>er\B</code> 能匹配 <code>verb</code> 中的 <code>er</code>，但不能匹配 <code>never</code> 中的 <code>er</code>。</td>
+</tr>
+<tr>
+<td><code>\cx</code></td>
+<td>匹配由 x 指明的控制字符。</td>
+<td>例如，<code>\cM</code> 匹配一个 <code>Control-M</code> 或者回车符。<code>x</code> 的值必须为 <code>A-Z</code> 或 <code>a-z</code> 之一。否则，将 <code>c</code> 视为一个原义的 <code>c</code> 字符。</td>
+</tr>
+<tr>
+<td><code>\d</code></td>
+<td>匹配一个数字字符。等价于[0-9]。</td>
+<td><code>4 = IV</code> 中的 <code>4</code></td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>匹配一个非数字字符。等价于[^0-9]。</td>
+<td><code>4 = IV</code> 中的 <code></code>、<code>=</code>、<code></code>、<code>I</code> 和 <code>V</code></td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>匹配一个换页符。等价于\x0c和\cL。</td>
+<td><code>[\f]{2,}</code>	能匹配 <code>\f\f\f</code> 中的 <code>\f\f\f</code>。</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>匹配一个换行符。等价于\x0a和\cJ。</td>
+<td><code>\r\n(\w+)</code> 能匹配 <code>\r\nThese are\ntwo lines.</code> 中的 <code>\r\nThese</code></td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>匹配一个回车符。等价于\x0d和\cM。</td>
+<td><code>\r\n(\w+)</code> 能匹配 <code>\r\nThese are\ntwo lines.</code> 中的 <code>\r\nThese</code></td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</td>
+<td><code>\w\s</code> 能匹配 <code>ID A1.3</code> 中的 <code>D</code></td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</td>
+<td><code>\s\S</code> 能匹配 <code>int __ctr</code> 中的 <code>_</code></td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>匹配一个制表符。等价于\x09和\cI。</td>
+<td><code>(\w+)\t</code> 能 匹配 <code>item1\titem2\t</code> 中的 <code>item1\t</code> 和 <code>item2\t</code></td>
+</tr>
+<tr>
+<td><code>\v</code></td>
+<td>匹配一个垂直制表符。等价于\x0b和\cK。</td>
+<td><code>[\v]{2,}</code> 能匹配 <code>\v\v\v</code> 中的 <code>\v\v\v</code></td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>匹配包括下划线的任何单词字符。等价于 <code>[A-Za-z0-9_]</code>。</td>
+<td><code>ID A1.3</code> 中的 <code>I</code>、<code>D</code>、<code>A</code>、<code>1</code> 和 <code>3</code></td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td>匹配任何非单词字符。等价于 <code>[^A-Za-z0-9_]</code>。</td>
+<td><code>ID A1.3</code> 中的 <code></code>、<code>.</code>。</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h2 class="heading" data-id="heading-4"><a id="chapter-two-three" name="chapter-two-three">2.3 常用方法</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-two">目录</a></p>
+</blockquote>
+<br>
+<p> JavaScript 正则默认： 正则匹配成功就会结束，不会继续匹配。如果想查找全部，就要加标识 <code>g</code>（全局匹配）</p>
+<br>
+<ol>
+<li><code>test()</code></li>
+</ol>
+<p> <strong>规则</strong>：正则表达式搜索字符串指定的值，从而去匹配字符串。如果匹配成功就返回 <code>true</code>，如果匹配失败就返回 <code>false</code>。<br>
+ <strong>用法</strong>：<code>正则.test(字符串)</code><br>
+ <strong>案例</strong>：</p>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">"123abc"</span>;
+var re = /\D/; // 匹配非数字
+<span class="hljs-keyword">if</span>(re.test(str)) {
+  console.log(<span class="hljs-string">"不全是数字！"</span>);
+} <span class="hljs-keyword">else</span> {
+  console.log(<span class="hljs-string">"全是数字！"</span>);
+}
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console：<code>不全是数字</code></p>
+</blockquote>
+<br>
+<ol start="2">
+<li><code>search()</code></li>
+</ol>
+<p> <strong>规则</strong>：正则去匹配字符串，如果匹配成功，就返回匹配成功的位置，如果匹配失败就返回 <code>-1</code><br>
+ <strong>用法</strong>：<code>字符串.search(正则)</code><br>
+ <strong>案例</strong>：</p>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">"abcdef"</span>;
+var re1 = /d/i; // 3
+var re2 = /h/i; // -1
+console.log(str.search(re1));
+console.log(str.search(re2));
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console：<br>
+<code>3</code><br>
+<code>-1</code></p>
+</blockquote>
+<br>
+<ol start="3">
+<li><code>match()</code></li>
+</ol>
+<p> <strong>规则</strong>：正则去匹配字符串，如果匹配成功，就返回匹配成功的数组，如果匹配不成，就返回 <code>null</code><br>
+ <strong>用法</strong>：<code>字符串.match(正则)</code><br>
+ <strong>案例</strong>：</p>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">"123fadf321dfadf4fadf1"</span>; //(4)&nbsp;[<span class="hljs-string">"123"</span>, <span class="hljs-string">"321"</span>, <span class="hljs-string">"4"</span>, <span class="hljs-string">"1"</span>]
+var re = /\d+/g;
+console.log(str.match(re));
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console：<code>(4)&nbsp;["123", "321", "4", "1"]</code></p>
+</blockquote>
+<br>
+<ol start="4">
+<li><code>replace()</code></li>
+</ol>
+<p> <strong>规则</strong>：正则去匹配字符串，匹配成功的字符串去替换成新的字符串。函数的第一个参数，是匹配成功的字符；第二个参数：可以是字符串，也可以是一个回调函数。<br>
+ <strong>用法</strong>：<code>字符串.replace(正则,新的字符串)</code><br>
+ <strong>案例</strong>：</p>
+<ul>
+<li>简单案例</li>
+</ul>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">'aaa'</span>;
+var re = /a+/g;
+str = str.replace(re, <span class="hljs-string">"b"</span>);
+console.log(str); // b
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console：<code>b</code></p>
+</blockquote>
+<br>
+<ul>
+<li>敏感词过滤</li>
+</ul>
+<blockquote>
+<p>html 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">&lt;div class=<span class="hljs-string">"filtering-of-sensitive-words"</span>&gt;
+  &lt;h3&gt;敏感词过滤&lt;/h3&gt;
+  &lt;p&gt;替换前&lt;/p&gt;
+  &lt;textarea name=<span class="hljs-string">"before"</span> id=<span class="hljs-string">""</span> cols=<span class="hljs-string">"30"</span> rows=<span class="hljs-string">"10"</span>&gt;&lt;/textarea&gt;
+  &lt;input <span class="hljs-built_in">type</span>=<span class="hljs-string">"button"</span> value=<span class="hljs-string">"确定"</span> id=<span class="hljs-string">"input1"</span>&gt;
+  &lt;p&gt;替换后&lt;/p&gt;
+  &lt;textarea name=<span class="hljs-string">"after"</span> id=<span class="hljs-string">""</span> cols=<span class="hljs-string">"30"</span> rows=<span class="hljs-string">"10"</span>&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">window.onload = <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+  var aT = document.getElementsByTagName(<span class="hljs-string">"textarea"</span>);
+  var oInput = document.getElementById(<span class="hljs-string">"input1"</span>);
+
+  var re = /非诚|中国船|监视之下/g;
+
+  oInput.onclick = <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+    // 一律单个替换： aT[1].value = at[0].value.replace(re, <span class="hljs-string">"*"</span>);
+    // 多个替换：
+    aT[1].value = aT[0].value.replace(re, <span class="hljs-keyword">function</span>(str) {
+      var result = <span class="hljs-string">""</span>;
+      <span class="hljs-keyword">for</span>(var i=0; i&lt;str.length; i++) {
+        result += <span class="hljs-string">"*"</span>;
+      }
+      <span class="hljs-built_in">return</span> result;
+    });
+  }
+}
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console<br>
+替换前：<code>非诚勿扰在中国船的监视之下寸步难行</code><br>
+替换后：<code>**勿扰在***的****寸步难行</code></p>
+</blockquote>
+<br>
+<h1 class="heading" data-id="heading-5"><a id="chapter-three" name="chapter-three">三 正则旅途</a></h1>
+<blockquote>
+<p><a href="#catalog-chapter-three">目录</a></p>
+</blockquote>
+<br>
+<p> 什么是正则表达式？正则表达式：正则，也叫做规则，让计算机能够读懂人类的规则。<br>
+ 正则表达式都是用来操作字符串的。</p>
+<p> <strong>本文学习目标</strong>：</p>
+<ol>
+<li>通过小故事给小伙伴学习 JavaScript 的正则表达式</li>
+<li>让小伙伴能了解基本正则表达式的意思，并能自己写正则表达式</li>
+</ol>
+<br>
+<h2 class="heading" data-id="heading-6"><a id="chapter-three-one" name="chapter-three-one">3.1 初识正则</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-three">目录</a></p>
+</blockquote>
+<br>
+<p> 正则长咋样？怎么用？很简单，三行代码带你入门</p>
+<pre><code class="hljs bash copyable" lang="bash">var regex = /^\d+$/;
+var myNumber = <span class="hljs-string">'123'</span>;
+console.log(regex.test(myNumber)); // <span class="hljs-literal">true</span>
+<span class="copy-code-btn">复制代码</span></code></pre><p> 上面的正则，能验证字符串 <code>myNumber</code> 是不是纯数字组成，就这么简单，正则入门了！<br>
+ 但是，如果我要是敢就这么结束文章，我敢保证你们想拍死我！所以，我们通过一个表达式的故事来初识正则表达式：</p>
+<p> 某天，盗贼小白给了盗贼小黑一个盒子，盒子像俄罗斯套娃一样，有 3 层嵌套：</p>
+<p></p><figure><img class="lazyload inited loaded" data-src="assets/1553640183-2fa8e1f627db9fa31eb56400db4ce458" data-width="1200" data-height="800" src="assets/1553640183-2fa8e1f627db9fa31eb56400db4ce458"><figcaption></figcaption></figure><p></p>
+<p> 并且，他们约定了交易密码提取方式：小白将给小黑提供一串字符串，小黑只需要将字符串中的所有相连的数字找出来，然后把它们拼接成一个新数组，数组的第一项就是第一个盒子的密码，以此类推……</p>
+<blockquote>
+<p>"abc123def456hash789" -&gt; [123, 456, 789] - &gt; [外层盒子1密码, 中间层盒子2密码, 最内层盒子3密码]</p>
+</blockquote>
+<p> 现在假设盗贼小黑使用 JavaScript 进行常规查找：</p>
+<blockquote>
+<p>index.html</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="hljs-string">"en"</span>&gt;
+
+&lt;head&gt;
+  &lt;meta charset=<span class="hljs-string">"UTF-8"</span>&gt;
+  &lt;meta name=<span class="hljs-string">"viewport"</span> content=<span class="hljs-string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;
+  &lt;meta http-equiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"ie=edge"</span>&gt;
+  &lt;title&gt;正则表达式&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;p&gt;正则表达式 | &lt;b&gt;jsliang&lt;/b&gt; 学习记录&lt;/p&gt;
+
+  &lt;script&gt;
+    window.onload = <span class="hljs-function"><span class="hljs-title">function</span></span> () {
+      var str = <span class="hljs-string">"abc123def456hash789"</span>
+
+      <span class="hljs-keyword">function</span> findNum(str) {
+        var arr = [];
+        var tmp = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">for</span> (var i = 0; i &lt; str.length; i++) {
+          <span class="hljs-keyword">if</span> (str.charAt(i) &gt;= <span class="hljs-string">"0"</span> &amp;&amp; str.charAt(i) &lt;= <span class="hljs-string">"9"</span>) {
+            tmp += str.charAt(i);
+          } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">if</span> (tmp) {
+              arr.push(tmp);
+              tmp = <span class="hljs-string">""</span>;
+            }
+          }
+        }
+        <span class="hljs-keyword">if</span> (tmp) {
+          arr.push(tmp);
+          tmp = <span class="hljs-string">""</span>;
+        }
+        <span class="hljs-built_in">return</span> arr;
+      }
+      console.log(findNum(str));
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><br>
+<p> 写到这里，小黑觉得不妥，上面代码写得太麻烦太复杂了，于是决定使用正则表达式查找：</p>
+<blockquote>
+<p>index.html</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="hljs-string">"en"</span>&gt;
+
+&lt;head&gt;
+  &lt;meta charset=<span class="hljs-string">"UTF-8"</span>&gt;
+  &lt;meta name=<span class="hljs-string">"viewport"</span> content=<span class="hljs-string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;
+  &lt;meta http-equiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"ie=edge"</span>&gt;
+  &lt;title&gt;正则表达式&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;p&gt;正则表达式 | &lt;b&gt;jsliang&lt;/b&gt; 学习记录&lt;/p&gt;
+
+  &lt;script&gt;
+    window.onload = <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+      var str = <span class="hljs-string">"abc123def456hash789"</span>;
+      <span class="hljs-keyword">function</span> findNum(str) {
+        <span class="hljs-built_in">return</span> str.match(/\d+/g);
+      }
+      console.log(findNum(str));
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><br>
+<p> 小黑瞬间觉得自己很牛逼有木有？！只需要一行代码，就能解决字符串查找的时候用的一大串代码！</p>
+<p> 那么，讲到这里，小伙伴们应该对正则有了个简单的了解，称热打铁，Here we go~</p>
+<br>
+<h2 class="heading" data-id="heading-7"><a id="chapter-three-two" name="chapter-three-two">3.2 正则解析</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-three">目录</a></p>
+</blockquote>
+<br>
+<p> 在上文中，盗贼小黑通过使用 <code>str.match(/\d+/g)</code>，解决了获取箱子密码的问题。<br>
+ 那么，这串正则表达式是什么意思呢？我们先抛开这个，解析一串简单的：</p>
+<blockquote>
+<p><code>^[a-z0-9_-]{6,12}$</code></p>
+</blockquote>
+<p> 首先，<code>^</code> 表示匹配字符串的开始位置，结合后面的 <code>[a-z0-9_-]</code> 表示该字符串开头可以为 <code>a-z</code> 的字母，<code>0-9</code> 的数字，<code>_</code> 下划线，<code>-</code> 连接符。<br>
+ 然后，<code>[a-z]</code> 表示匹配 <code>a-z</code> 中任意单个字母；<code>[0-9]</code> 表示匹配 <code>0-9</code> 中任意单个数字；<code>[_]</code> 表示匹配下划线；<code>[-]</code> 表示匹配连接符 <code>-</code>。所以，将前面的连起来，<code>[a-z0-9_-]</code> 表示字符串可以包含<code>数字</code>、<code>字母</code>、<code>_</code>、<code>-</code> 这四种形式的字符串。<br>
+ 接着，<code>{6, 12}</code> 表示该字符串的长度为 <code>6-12</code> 位。<br>
+ 最后，<code>$</code> 表示结束标志，<code>^</code> 的相反。</p>
+<blockquote>
+<p><code>^</code> 与 <code>$</code> 同时使用时，表示精确匹配。</p>
+</blockquote>
+<p> 终上所述，小伙伴们应该猜测到了这个正则表达式的用途：<strong>校验用户名</strong>。该用户名只能包含字符、数字、下划线 <code>(_)</code> 和连接字符 <code>(-)</code>，并且用户名的长度最长为 12 位，最短为 6 位。</p>
+<p> 那么，它在 JavaScript 中要如何使用呢？我们通常用 <code>/正则表达式/</code> 两个斜杠来包裹我们要写的正则表达式：</p>
+<pre><code class="hljs bash copyable" lang="bash">var reg = /^[a-z0-9_-]{6,12}$/
+<span class="copy-code-btn">复制代码</span></code></pre><p> 看，这样就是一条规则了，如果你需要让他匹配一个字符串 <code>str</code>。那么，只需要在代码中使用 <code>test()</code> 测试方法：</p>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">'abc-cba_abc'</span>;
+var reg = /^[a-z0-9_-]{6,12}$/;
+console.log(reg.test(str)); // <span class="hljs-literal">true</span>
+<span class="copy-code-btn">复制代码</span></code></pre><p> 这样，我们就告诉了 JavaScript：<code>reg</code> 通过 <code>test()</code> 方法去测试 <code>str</code> 是否符合 <code>reg</code>的规则，如果符合则返回 <code>true</code>，如果不符合则返回 <code>false</code>。这里返回的是 <code>true</code>，因为我们的 <code>str</code> 是符合 <code>reg</code> 规则的。</p>
+<blockquote>
+<p><code>test()</code> 方法及其他好用的方法已经整合到 <a href="#chapter-two-three">【2.3 JS 正则方法】</a> 里面了，迫不及待的小伙伴们可点击链接先行查看。</p>
+</blockquote>
+<p> 下面贴出完整代码：</p>
+<blockquote>
+<p>index.html</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="hljs-string">"en"</span>&gt;
+
+&lt;head&gt;
+  &lt;meta charset=<span class="hljs-string">"UTF-8"</span>&gt;
+  &lt;meta name=<span class="hljs-string">"viewport"</span> content=<span class="hljs-string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;
+  &lt;meta http-equiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"ie=edge"</span>&gt;
+  &lt;title&gt;正则表达式&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;p&gt;正则表达式 | &lt;b&gt;jsliang&lt;/b&gt; 学习记录&lt;/p&gt;
+
+  &lt;script&gt;
+    window.onload = <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+      var str = <span class="hljs-string">'abc-cba_abc'</span>;
+      var reg = /^[a-z0-9_-]{6,12}$/;
+      console.log(reg.test(str)); // <span class="hljs-literal">true</span>
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><br>
+<h2 class="heading" data-id="heading-8"><a id="chapter-three-three" name="chapter-three-three">3.3 正则练习</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-three">目录</a></p>
+</blockquote>
+<br>
+<p> 通过上面的了解，小伙伴对正则表达式应该有了初始的了解，下面我们猜测一下，下面的 <code>Console 1 - Console 3</code>中， 哪些是 <code>true</code>，哪些是 <code>false</code>：</p>
+<blockquote>
+<p>index.html</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="hljs-string">"en"</span>&gt;
+
+&lt;head&gt;
+  &lt;meta charset=<span class="hljs-string">"UTF-8"</span>&gt;
+  &lt;meta name=<span class="hljs-string">"viewport"</span> content=<span class="hljs-string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"</span>&gt;
+  &lt;meta http-equiv=<span class="hljs-string">"X-UA-Compatible"</span> content=<span class="hljs-string">"ie=edge"</span>&gt;
+  &lt;title&gt;正则表达式&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;p&gt;正则表达式 | &lt;b&gt;jsliang&lt;/b&gt; 学习记录&lt;/p&gt;
+
+  &lt;script&gt;
+    window.onload = <span class="hljs-function"><span class="hljs-title">function</span></span>() {
+      var str = <span class="hljs-string">"Cheer for yourself"</span>;
+      var reg1 = /^Cheer/;
+      var reg2 = /yourself$/;
+      var reg3 = /<span class="hljs-keyword">for</span>/;
+      console.log(reg1.test(str));
+      console.log(reg2.test(str));
+      console.log(reg3.test(str));
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+<span class="copy-code-btn">复制代码</span></code></pre><br>
+<p> 答案是，这三个都返回 <code>true</code>。在这三个 <code>console.log()</code> 中：<br>
+ 第一个判断该字符串是否以 <code>Cheer</code> 开头；<br>
+ 第二个判断该字符串是否以 <code>yourself</code> 结尾；<br>
+ 第三个判断该字符串是否包含 <code>for</code>。<br>
+ 在日常工作中，经常利用该方法，判断用户输入的 <code>string</code> 里面是否包含某些文字，例如：<code>jsliang 是傻逼</code>，就需要判断替换为 <code>jsliang 是帅哥</code>，至于怎么替换敏感字，迫不及待的小伙伴们可前往 <a href="#chapter-two-three">【2.3 JS 正则方法】</a> 先行了解~</p>
+<br>
+<h2 class="heading" data-id="heading-9"><a id="chapter-three-four" name="chapter-three-four">3.4 渐入佳境：() 匹配子项</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-three">目录</a></p>
+</blockquote>
+<br>
+<p> 所谓匹配子项，其实就是我们的小括号 <code>()</code> 。它还有另外一个意思，叫分组操作。下面我们引用章节 <a href="#chapter-two-two">【2.2 正则表达式规则】</a> 中的定义：</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>释义</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(子表达式)</code></td>
+<td>标记一个子表达式的开始和结束位置。</td>
+<td><code>(\w)\1</code> 能匹配 <code>deep</code> 中的 <code>ee</code></td>
+</tr>
+</tbody>
+</table>
+<p> 如果光解释意思，小伙伴们可能稀里糊涂。所以我们先上代码：</p>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">"2018-11-28"</span>;
+var re = /(\d+)(-)/g;
+str = str.replace(re, <span class="hljs-keyword">function</span>(<span class="hljs-variable">$0</span>, <span class="hljs-variable">$1</span>, <span class="hljs-variable">$2</span>){
+  // 第一个参数：<span class="hljs-variable">$0</span>（母亲)
+  // 第二个参数：<span class="hljs-variable">$1</span>（第一个孩子）
+  // 第三个参数：<span class="hljs-variable">$2</span> (第二个孩子)
+  console.log(<span class="hljs-string">"<span class="hljs-variable">$0</span>："</span> + <span class="hljs-variable">$0</span>); // 2018- 以及 11-
+  console.log(<span class="hljs-string">"<span class="hljs-variable">$1</span>："</span> + <span class="hljs-variable">$1</span>); // 2018 以及 11
+  console.log(<span class="hljs-string">"<span class="hljs-variable">$2</span>："</span> + <span class="hljs-variable">$2</span>); // - 以及 -
+  <span class="hljs-built_in">return</span> <span class="hljs-variable">$1</span> + <span class="hljs-string">'.'</span>;
+});
+console.log(str); // 2018.11.28
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console：<br>
+<code>$0：2018-</code><br>
+<code>$1：2018</code><br>
+<code>$2：-</code><br>
+<code>$0：11-</code><br>
+<code>$1：11</code><br>
+<code>$2：-</code><br>
+<code>2018.11.28</code></p>
+</blockquote>
+<p> <strong>首先</strong>，我们解析下这段正则：</p>
+<ul>
+<li><code>/(\d+)/</code> 表示任意 1 个及以上的数字</li>
+<li><code>/(-)/</code> 表示匹配字符 <code>-</code></li>
+<li><code>g</code> 表示匹配一次以上</li>
+</ul>
+<p> 所以这段正则的意思就是匹配一次及以上的 <code>数字-</code> 形式的字符串。
+ <strong>然后</strong>，我们使用了 <code>replace()</code> 方法。我们观察 <code>Console</code> 打印出来的结果，可以看出：<code>$0</code> 即是我们的正则 <code>var re = /(\d+)(-)/g</code> 去匹配 <code>var str = "2018-11-28"</code> 所得到的结果，这里我们匹配成功了两次，即 <code>2018-</code> 及 <code>11-</code>；<code>$1</code> 即是我们的一个小括号 <code>(\d+)</code> 的匹配结果，所以结果为 <code>2018</code> 以及 <code>11</code>；<code>$2</code> 即是我们的第二个小括号 <code>(-)</code> 的匹配结果，所以结果为 <code>-</code> 以及 <code>-</code>。<br>
+ <strong>最后</strong>，我们做的事情就是，将 <code>$1</code> 加上 <code>.</code>，并返回最终结果给 <code>str</code>，即最终结果：<code>2018.11.28</code>。</p>
+<blockquote>
+<p>在这里提到了 <code>replace()</code> 方法，详情可了解：<a href="#chapter-two-three">点击前往</a></p>
+</blockquote>
+<br>
+<p> <strong>【Once again】</strong> 如果小伙伴们感觉还是不过瘾，那么我们再来一段：</p>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">"abc"</span>;
+var re = /(a)(b)(c)/;
+console.log(str.match(re));
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console<br>
+<code>(4)&nbsp;["abc", "a", "b", "c", index: 0, input: "abc", groups: undefined]</code></p>
+</blockquote>
+<p> 这里我们不做过多讲述，相信小伙伴们经过这两个案例，应该对 <code>()</code> 有了一定的了解。</p>
+<br>
+<h2 class="heading" data-id="heading-10"><a id="chapter-three-five" name="chapter-three-five">3.5 渐入佳境：[] 字符类</a></h2>
+<blockquote>
+<p><a href="#catalog-chapter-three">目录</a></p>
+</blockquote>
+<p> 何为字符类？<br>
+ 所谓字符类，就是一组类似的元素 <code>[]</code> 这样的中括号的整体，所代表一个字符。<br>
+ 话不多说，先上代码：</p>
+<blockquote>
+<p>js 代码片段</p>
+</blockquote>
+<pre><code class="hljs bash copyable" lang="bash">var str1 = <span class="hljs-string">"abcd"</span>;
+var re1 = /a[bcd]c/;
+console.log(re1.test(str1)); // <span class="hljs-literal">true</span>
+
+var str2 = <span class="hljs-string">"abc"</span>;
+var re2 = /a[^bcd]c/;
+console.log(re2.test(str2)); // <span class="hljs-literal">false</span>
+
+var str3 = <span class="hljs-string">"a.c"</span>;
+var re3 = /a[a-z0-9A-Z]c/;
+console.log(re3.test(str3));  // <span class="hljs-literal">false</span>
+<span class="copy-code-btn">复制代码</span></code></pre><blockquote>
+<p>Console<br>
+<code>true</code><br>
+<code>false</code><br>
+<code>false</code></p>
+</blockquote>
+<p> <strong>首先</strong>，我们先解析第一部分：</p>
+<ul>
+<li><code>/a/</code>：匹配字母 <code>a</code></li>
+<li><code>/[bcd]/</code>：匹配字母 <code>bcd</code> 中的一位</li>
+<li><code>/[d]</code>：匹配字母 <code>d</code></li>
+</ul>
+<p> 所以，可以看出，我们用 <code>re1</code> 来测试 <code>str1</code> 是否符合，它会返回 <code>true</code>。</p>
+<p> <strong>然后</strong>，我们解析第二部分：</p>
+<ul>
+<li><code>^</code> 如果写在 <code>[]</code> 里面的话，就代表排除的意思。在这里就代表着 <code>a</code> 和 <code>c</code> 中间不能是 <code>bcd</code> 中的任意一个</li>
+</ul>
+<p> 所以，可以看出，我们用 <code>re2</code> 来测试 <code>str1</code> 是否符合，它会返回 <code>false</code>。</p>
+<p> <strong>最后</strong>，我们解析第三部分：</p>
+<ul>
+<li><code>/[a-z0-9A-Z]/</code>：匹配小写字母 <code>a-z</code>，或者数字 <code>0-9</code>，或者大写字母 <code>A-Z</code>。即 <code>a</code> 与 <code>c</code> 之间只能是上面匹配地上的字符。</li>
+</ul>
+<p> 所以，可以看出，我们用 <code>re3</code> 来测试 <code>str3</code> 是否符合，它会返回 <code>false</code>。</p>
+<br>
+<h1 class="heading" data-id="heading-11"><a id="chapter-four" name="chapter-four">四 回顾总结</a></h1>
+<blockquote>
+<p><a href="#catalog-chapter-four">目录</a></p>
+</blockquote>
+<br>
+<p> 在第三章中，我们介绍了强大之处，介绍了它的使用方法，并通过小练习、<code>()</code> 以及 <code>[]</code> 的讲解，让小伙伴们更进一步了解在 JavaScript 中正则的使用……<br>
+ 但！<br>
+ 这是完结吗？！<br>
+ 不！<br>
+ 由于 <strong>jsliang</strong> 时间有限，没法一一给小伙伴们介绍正则的乐趣及工作中如何使用正则提高工作效率。<br>
+ 所以，在第二章 <a href="#chapter-two">【整合】</a> 中，<strong>jsliang</strong> 整合网上资源，记录了一些常用的正则工具，里面有很多东西，是在这篇文章中没有涉及的，有兴趣的小伙伴可以逐一尝试加深对正则的了解。</p>
+<p> <strong>————For the end————</strong><br>
+ 在编写这篇文章中，<strong>jsliang</strong> 玩性大发写下了下面的游戏（请用电脑查看）：</p>
+<ul>
+<li><strong>游戏地址</strong>：<a target="_blank" href="https://link.juejin.im/?target=http%3A%2F%2Fplayregex.jsliang.top%2F" rel="nofollow noopener noreferrer">天下第一武道会</a></li>
+<li><strong>代码地址</strong>：<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FLiangJunrong%2Fregex" rel="nofollow noopener noreferrer">github.com/LiangJunron…</a></li>
+</ul>
+<br>
+<h1 class="heading" data-id="heading-12"><a id="chapter-five" name="chapter-five">五 文章更正</a></h1>
+<blockquote>
+<p><a href="#catalog-chapter-five">目录</a></p>
+</blockquote>
+<br>
+<ol>
+<li>掘金评论 2018-11-20</li>
+</ol>
+<ul>
+<li><strong>类型</strong>：内容错误</li>
+<li><strong>反馈用户</strong>：<a target="_blank" href="https://juejin.im/user/5bee10b1f265da61776b8c1b" rel="">Kaelalv</a></li>
+<li><strong>反馈内容</strong>：3.2内容中对这段代码解析时：</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">var str = <span class="hljs-string">'abc-cba_abc'</span>; 
+var reg = /^[a-z0-9_-]{6,12}$/; 
+console.log(reg.test(str)); // <span class="hljs-literal">true</span> 
+<span class="copy-code-btn">复制代码</span></code></pre><p> 作者手误，打错：不符合则 返回 true；正确：不符合则 返回 false。</p>
+<ul>
+<li><strong>反馈处理</strong>：已更正，谢谢反馈</li>
+</ul>
+<br>
+<p> <strong>如果小伙伴们觉得本文还不错，记得 掘金 给个赞并去 GitHub 点个 <strong>star</strong>， 你们的 <strong>star</strong> 是我学习的动力！<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FLiangJunrong%2Fdocument-library%2Ftree%2Fmaster%2Fother-library%2FRegularExpression" rel="nofollow noopener noreferrer">GitHub 地址</a></strong></p>
+<br>
+<blockquote>
+<p><a href="https://link.juejin.im/?target=http%3A%2F%2Fcreativecommons.org%2Flicenses%2Fby-nc-sa%2F4.0%2F" rel="nofollow noopener noreferrer" target="_blank"><img style="border-width:0" alt="知识共享许可协议" class="lazyload inited loaded" data-src="assets/1553640183-a6d615cd91211985555d5f44eb08d240" data-width="88" data-height="31" src="assets/1553640183-a6d615cd91211985555d5f44eb08d240"></a><br><a><strong>jsliang</strong> 的文档库</a> 由 <a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FLiangJunrong%2Fdocument-library" target="_blank" rel="nofollow noopener noreferrer">梁峻荣</a> 采用 <a href="https://link.juejin.im/?target=http%3A%2F%2Fcreativecommons.org%2Flicenses%2Fby-nc-sa%2F4.0%2F" rel="nofollow noopener noreferrer" target="_blank">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a>进行许可。<br>基于<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FLiangJunrong%2Fdocument-library" target="_blank" rel="nofollow noopener noreferrer">github.om/LiangJunron…</a>上的作品创作。<br>本许可协议授权之外的使用权限可以从 <a href="https://link.juejin.im/?target=https%3A%2F%2Fcreativecommons.org%2Flicenses%2Fby-nc-sa%2F2.5%2Fcn%2F" target="_blank" rel="nofollow noopener noreferrer">creativecommons.org/licenses/by…</a> 处获得。</p>
+</blockquote>
+</div></article><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-box"><div data-v-f9ae5008="" data-v-f6fdafdc="" class="tag-list-title">关注下面的标签，发现更多相似文章</div><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="tagList" class="tag-list"><a data-v-f9ae5008="" href="https://juejin.im/tag/Vue.js" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/7b5c3eb591b671749fee.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/7b5c3eb591b671749fee.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">Vue.js</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/GitHub" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/0d614af263aa63aa6a77.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/0d614af263aa63aa6a77.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">GitHub</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/JavaScript" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/5d70fd6af940df373834.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">JavaScript</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E5%89%8D%E7%AB%AF" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/bac28828a49181c34110.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/bac28828a49181c34110.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">前端</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/ECMAScript%206" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/e384dbc6d1ab15f046cf.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/e384dbc6d1ab15f046cf.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">ECMAScript 6</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/jQuery" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/6e09f529abe330fc2392.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/6e09f529abe330fc2392.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">jQuery</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/a000ffae9cc85447cba4.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/a000ffae9cc85447cba4.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">正则表达式</div></a><a data-v-f9ae5008="" href="https://juejin.im/tag/%E6%B8%B8%E6%88%8F" target="_blank" rel="" st:name="tag" class="item" data-v-f6fdafdc=""><div data-v-5b957c59="" data-v-5f4c8686="" data-v-f9ae5008="" data-src="https://lc-gold-cdn.xitu.io/94311340ee4544f1c71b.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/94311340ee4544f1c71b.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-f9ae5008="" class="tag-title">游戏</div></a></div></div><a data-v-f9ae5008="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" data-v-f6fdafdc=""><div data-v-f9ae5008="" class="footer-author-block"><div data-v-ccbf6674="" data-v-f9ae5008="" itemscope="itemscope" itemtype="http://schema.org/Person" class="author"><div itemprop="memberOf" itemscope="itemscope" itemtype="http://schema.org/Organization"></div><div data-v-ccbf6674="" class="author-info-block"><a data-v-ccbf6674="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="avatar-link"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-ccbf6674="" data-src="https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-ccbf6674="" class="author-info-box"><div data-v-ccbf6674="" class="profile-box"><a data-v-ccbf6674="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username ellipsis">jsliang</a><span data-v-ccbf6674="" class="position ellipsis">高级前端切图仔 @ 广州</span></div><div data-v-ccbf6674="" class="meta-box"><a data-v-ccbf6674="" href="https://juejin.im/user/584613ba128fe10058b3cf68/posts" target="_blank" rel="" class="posts"><span data-v-ccbf6674="" class="count post-count">发布了 17 篇专栏 · </span></a><span data-v-ccbf6674="" class="count">获得点赞 6,282 次 · </span><span data-v-ccbf6674="" class="count">文章被阅读 221,573 次</span></div></div><button data-v-3a6ba87a="" data-v-ccbf6674="" class="follow-button follow">关注</button></div></div></div></a><div data-v-f9ae5008="" data-v-f6fdafdc="" st:block="banner" class="article-banner"><a data-v-f9ae5008="" data-v-f6fdafdc="" st:name="link" st:state="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" class="banner-title" href="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" target="_blank">安装掘金浏览器插件</a><div data-v-f9ae5008="" data-v-f6fdafdc="" class="banner-content">打开新标签页发现好内容，掘金、GitHub、Dribbble、ProductHunt 等站点内容轻松获取。快来安装掘金浏览器插件获取高质量内容吧！</div></div><!----><!----><div data-v-6bc5fe54="" data-v-f9ae5008="" class="comment-list-box" id="comment-box" data-v-f6fdafdc="" manual="true"><div data-v-6bc5fe54="" class="title">评论</div><div data-v-0f4f171a="" data-v-6bc5fe54="" class="comment-form comment-form"><div data-v-0f4f171a="" class="avatar-box"><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-0f4f171a="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></div><div data-v-0f4f171a="" class="form-box"><div data-v-0f4f171a="" class="input-box"><div data-v-0f4f171a="" contenteditable="true" spellcheck="false" placeholder="输入评论..." class="rich-input empty"><br data-v-0f4f171a=""></div><!----></div><!----></div></div><div data-v-2cad70f5="" data-v-6bc5fe54="" class="comment-list comment-list"><div data-v-3d504eeb="" data-v-2cad70f5="" class="image-viewer-box"><!----></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5b333d3ae51d4558ab7b44b2" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5b333d3ae51d4558ab7b44b2" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://mirror-gold-cdn.xitu.io/168e0916a0423b3a071?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e0916a0423b3a071?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5b333d3ae51d4558ab7b44b2" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5b333d3ae51d4558ab7b44b2" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">Gxinzai<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">还以为真的是个游戏，结果只是浪费感情。</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-03-04T08:21:39.850Z" title="Mon Mar 04 2019 16:21:39 GMT+0800 (中国标准时间)" class="time">22天前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5b0641fff265da0dbd7a512a" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5b0641fff265da0dbd7a512a" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://mirror-gold-cdn.xitu.io/168e09050d1ed9d5f7f?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e09050d1ed9d5f7f?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5b0641fff265da0dbd7a512a" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5b0641fff265da0dbd7a512a" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">建飞～学习是一种能力<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">非常好，学习了</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2019-01-23T07:44:20.287Z" title="Wed Jan 23 2019 15:44:20 GMT+0800 (中国标准时间)" class="time">2月前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="587879721b69e6006bd89013" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/587879721b69e6006bd89013" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2018/10/18/166871a7bf7dbe56?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2018/10/18/166871a7bf7dbe56?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="587879721b69e6006bd89013" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/587879721b69e6006bd89013" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">askybig<!----></a></div><div data-v-419974fe="" class="position">前端</div></div><div data-v-419974fe="" class="content">有点浅，应该补上回溯和原子组模拟</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2018-12-11T02:46:59.953Z" title="Tue Dec 11 2018 10:46:59 GMT+0800 (中国标准时间)" class="time">3月前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378="">jsliang<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">高级前端切图仔 @ 广州</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="587879721b69e6006bd89013" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/587879721b69e6006bd89013" target="_blank" rel="" class="username be-replied" data-v-14a78378="">askybig</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content"><img class="emoji" draggable="false" alt="😂" src="assets/1553640183-63c3261b86ccd07295b2fd4cadcaa8fc.svg">有时候深了用不上</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2018-12-26T01:21:55.801Z" title="Wed Dec 26 2018 09:21:55 GMT+0800 (中国标准时间)" class="time">3月前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5bf529b1f265da6172651c92" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5bf529b1f265da6172651c92" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://mirror-gold-cdn.xitu.io/168e0965a3cd425dc3d?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e0965a3cd425dc3d?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5bf529b1f265da6172651c92" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5bf529b1f265da6172651c92" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">段礼<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">正则表达式</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2018-12-09T11:06:14.969Z" title="Sun Dec 09 2018 19:06:14 GMT+0800 (中国标准时间)" class="time">3月前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5ad0d6f551882510fd400c42" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5ad0d6f551882510fd400c42" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://user-gold-cdn.xitu.io/2018/12/24/167de0b81ddb7188?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2018/12/24/167de0b81ddb7188?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5ad0d6f551882510fd400c42" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5ad0d6f551882510fd400c42" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">MiniTea<!----></a></div><div data-v-419974fe="" class="position">前端api调用者</div></div><div data-v-419974fe="" class="content">内容很实用，大赞，但这红字看得我头皮发麻</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2018-11-20T02:04:46.335Z" title="Tue Nov 20 2018 10:04:46 GMT+0800 (中国标准时间)" class="time">4月前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-419974fe="" class="action-title">1</span></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378="">jsliang<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">高级前端切图仔 @ 广州</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5ad0d6f551882510fd400c42" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5ad0d6f551882510fd400c42" target="_blank" rel="" class="username be-replied" data-v-14a78378="">MiniTea</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">小伙伴不习惯掘金的代码风格，可以去 GitHub  看的~，我文章都是先在 GitHub 写好，再发布到掘金的：<a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FLiangJunrong%2Fdocument-library%2Fblob%2Fmaster%2Fother-library%2FRegularExpression%2FREADME.md" class="parse-emoji-url" style="color: #027fff" title="https://github.com/LiangJunrong/document-library/blob/master/other-library/RegularExpression/README.md" target="_blank" rel="nofollow noopener noreferrer"><img alt="https://github.com/LiangJunrong/document-library/blob/master/other-library/RegularExpression/README.md" style="vertical-align: sub" draggable="false" src="assets/1553640183-e92a525a55685a511ea5664bd9a696a7.svg">网页链接</a></span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2018-11-20T02:06:49.994Z" title="Tue Nov 20 2018 10:06:49 GMT+0800 (中国标准时间)" class="time">4月前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-63734c60="" class="action-title">1</span></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-2cad70f5="" class="item"><div data-v-419974fe="" data-v-2cad70f5="" class="comment comment"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5bee10b1f265da61776b8c1b" class="user-popover-box popover"><!----><a data-v-419974fe="" href="https://juejin.im/user/5bee10b1f265da61776b8c1b" target="_blank" rel="" class="user-link" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-419974fe="" data-src="https://mirror-gold-cdn.xitu.io/168e096375aac3073f5?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e096375aac3073f5?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-419974fe="" class="content-box comment-divider-line"><div data-v-419974fe="" class="meta-box"><div data-v-14a78378="" data-v-419974fe="" st:block="userPopover" st:state="5bee10b1f265da61776b8c1b" class="user-popover-box"><!----><a data-v-419974fe="" href="https://juejin.im/user/5bee10b1f265da61776b8c1b" target="_blank" rel="" class="username ellipsis" data-v-14a78378="">Kaelalv<!----></a></div><div data-v-419974fe="" class="position"></div></div><div data-v-419974fe="" class="content">3.2内容中对这段代码解析时： var str = 'abc-cba_abc'; 
+var reg = /^[a-z0-9_-]{6,12}$/; 
+console.log(reg.test(str)); // true 
+作者手误，打错：不符合则 返回 true
+正确：不符合则 返回 false</div><div data-v-419974fe="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-419974fe="" class="reply-stat"><time data-v-419974fe="" datetime="2018-11-20T01:23:25.255Z" title="Tue Nov 20 2018 09:23:25 GMT+0800 (中国标准时间)" class="time">4月前</time><div data-v-419974fe="" class="action-box"><div data-v-419974fe="" class="like-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-419974fe="" class="comment-action action"><svg data-v-419974fe="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-419974fe="" fill="none" fill-rule="evenodd"><path data-v-419974fe="" d="M0 0h20v20H0z"></path> <path data-v-419974fe="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-419974fe="" class="action-title">回复</span></div></div></div><!----><div data-v-2140efbc="" data-v-419974fe="" class="sub-comment-list sub-comment-list"><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378="">jsliang<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">高级前端切图仔 @ 广州</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5bee10b1f265da61776b8c1b" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5bee10b1f265da61776b8c1b" target="_blank" rel="" class="username be-replied" data-v-14a78378="">Kaelalv</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">谢谢反馈，已更正</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2018-11-20T01:36:39.870Z" title="Tue Nov 20 2018 09:36:39 GMT+0800 (中国标准时间)" class="time">4月前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><div data-v-2140efbc="" class="item"><div data-v-63734c60="" data-v-2140efbc="" class="sub-comment sub-comment"><div data-v-63734c60="" class="sub-comment-content-row"><div data-v-63734c60="" class="sub-comment-content-box"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box popover"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378=""><div data-v-5b957c59="" data-v-b5e0fa26="" data-v-63734c60="" data-src="https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://leancloud-gold-cdn.xitu.io/GBwwQOuUmqYmWWnSp5EjY3HTouKn5fAd0Ly5XHkO?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-63734c60="" class="user-content-box"><div data-v-63734c60="" class="profie"><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="584613ba128fe10058b3cf68" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/584613ba128fe10058b3cf68" target="_blank" rel="" class="username" data-v-14a78378="">jsliang<span data-v-63734c60="" class="author-badge-text">(作者)</span></a></div><div data-v-63734c60="" class="position">高级前端切图仔 @ 广州</div></div><div data-v-63734c60="" class="content-box"><span data-v-63734c60=""> 回复 </span><div data-v-14a78378="" data-v-63734c60="" st:block="userPopover" st:state="5bee10b1f265da61776b8c1b" class="user-popover-box"><!----><a data-v-63734c60="" href="https://juejin.im/user/5bee10b1f265da61776b8c1b" target="_blank" rel="" class="username be-replied" data-v-14a78378="">Kaelalv</a></div><!----><span data-v-63734c60="">: </span><span data-v-63734c60="" class="content">已新增章节收纳小伙伴们的反馈及相应的修改</span></div><!----><!----><div data-v-63734c60="" class="limit-all-box"><!----></div><div data-v-63734c60="" class="sub-comment-stat-box"><time data-v-63734c60="" datetime="2018-11-20T01:37:20.786Z" title="Tue Nov 20 2018 09:37:20 GMT+0800 (中国标准时间)" class="time">4月前</time><div data-v-63734c60="" class="sub-comment-action-box"><div data-v-63734c60="" class="like-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-63734c60="" class="comment-action action"><svg data-v-63734c60="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-63734c60="" fill="none" fill-rule="evenodd"><path data-v-63734c60="" d="M0 0h20v20H0z"></path> <path data-v-63734c60="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-63734c60="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div></div><div data-v-6bc5fe54="" class="fetch-more-comment">查看更多 &gt;</div></div></div></DIV></MAIN></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://juejin.im/post/5bf174396fb9a049ca36f13d" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-27 06:43:03</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

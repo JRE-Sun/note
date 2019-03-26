@@ -1,0 +1,1322 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000012083511 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>另辟蹊径vue单页面多路由前进刷新后退不刷新@vue</title>
+    
+<link rel="stylesheet" href="assets/1553637283-04b7a1551b9ea68bcf94f9ecf05846d5.css">
+
+<link rel="stylesheet" href="assets/1553637283-1bfac5bfd1d0b194dacc6adc89cc954a.css">
+
+<link rel="stylesheet" href="assets/1553637283-c86b6210e40f2befcca430cc00577148.css">
+<style>
+
+html.cye-enabled.cye-nm:not(*:-webkit-full-screen) body,
+ html.cye-enabled.cye-nm:not(*:-webkit-full-screen) #cye-workaround-body {-webkit-filter:contrast(91%) brightness(84%) invert(1);}
+</style>
+<style>
+html.cye-enabled.cye-lm body{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm div{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm th{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm td{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm input[type=text]{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}html.cye-enabled.cye-lm textarea{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm select{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm ul{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+html.cye-enabled.cye-lm .cye-lm-tag,html.cye-enabled.cye-lm.cye-lm-tag{background-color:#cce8cf !important;border-color:rgb(51, 58, 51) !important;background-image:none !important;color:#000000  !important}
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000012083447" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li><a href="https://segmentfault.com/blog/bingyang519">冰扬</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="冰扬" data-userslug="bingyang519" data-useravatar="https://avatar-static.segmentfault.com/295/337/2953378134-599fd92eee246_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/bingyang519">
+                                                    <img class="avatar-40" src="assets/1553637283-4421393f3bab8da090f95c1b3764cd3f" alt="冰扬">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/bingyang519" class="mr5"><strong>冰扬</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1553637283-931d92cf7ef28749ea3dfbf0af6a2563.svg" class="mr5"><span style="color:#BF7158" class="mr10">961</span>
+
+                                                                                                发布于
+                                                <a href="https://segmentfault.com/blog/bingyang519">冰扬</a>
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                          <button type="button" class="btn btn-xs btn-success follow-article ml10" data-do="follow" data-type="blog" data-id="1200000012083447">关注专栏
+                                                       </button>
+                                                                                                                                                   </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2017-11-20 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000012083511">
+                                            <a href="https://segmentfault.com/a/1190000012083511"> 另辟蹊径：vue单页面，多路由，前进刷新，后退不刷新</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000012083511" data-license="cc">
+                    
+<blockquote><p>目的：vue-cli构建的vue单页面应用，某些特定的页面，实现前进刷新，后退不刷新，类似app般的用户体验。<br>注：　此处的刷新特指当进入此页面时，触发ajax请求，向服务器获取数据。不刷新特指当进入此页面时，不触发ajax请求，而是使用之前缓存的数据，以便减少服务器请求，用户体验更流畅。</p></blockquote>
+<h3 id="articleHeader0">项目需求：</h3>
+<p>任何技术的探索，都来自项目的需求。之前经手的一个项目是微信端商城，使用的是传统的mvc模式，利用的是jq+js，因此对于商城的项目需求比较熟悉。目前在学习vue，练手一个商城，遇到之前经常提及而无法很好解决的需求。有些页面需要前进刷新，后退不刷新。比如，从商城的【首页】--&gt;【详情页】--&gt;【订单提交页】，每次打开新页面都需要获取新数据，但是按下返回键后，就不需要再获取新数据了，而滚动条还保留在之前的位置。最常见的操作是从【首页】--&gt;【详情页】，然后在从【详情页】--&gt;【首页】，如此反复。<br>实例如图：<br><span class="img-wrap"><img data-src="/img/bVYPIY?w=377&amp;h=672" src="assets/1553637283-7aa4e0093e8c666189c44cc5ac802b4a" alt="首页" title="首页" style="cursor: pointer; display: inline;"></span><span class="img-wrap"><img data-src="/img/bVYPIn?w=381&amp;h=671" src="assets/1553637283-9c6aa424363368b44cd68a66a9c87d19" alt="详情页" title="详情页" style="cursor: pointer; display: inline;"></span><span class="img-wrap"><img data-src="/img/bVYPIw?w=374&amp;h=671" src="assets/1553637283-62815cf562dadb6b5001704f23921c86" alt="订单提交页" title="订单提交页" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader1">前人经验：</h3>
+<p>前人栽树，后人好乘凉。技术圈的分享一直都在蓬勃发展。遇到问题，我们可以尽情去搜索，去寻找大佬的足迹。针对上述需求，看到一个分享<a href="http://www.jianshu.com/p/0b0222954483" rel="nofollow noreferrer" target="_blank">vue-router 之 keep-alive</a>，比较符合我的需求，但是使用到我的项目上发现，稍微有点不适合。此分享技术要点，比较适合两个页面之前的跳转，返回。而我的页面是多个路由（2+）之间的跳转，返回。无奈，只能去自己探索发现。不过此技术要点给了我很好的启发，特此感谢作者。@ RoamIn</p>
+<h3 id="articleHeader2">实现思路：</h3>
+<p>注：demo中，index页面包含三个链接导航。page1--&gt;page2--&gt;page3.依次前进，每次前进到一个新页面都需要获取数据，而按下后退键后，从page3返回到page2，page2不再获取新数据，而是使用之前缓存的数据。从page2返回到page1时，page1不再获取新数据，而是使用之前的数据。所以，page1和page2需要缓存，page3不需要缓存。可以把page1想象成首页，page2想象成详情页，page3想象成订单提交页。这样方便理解。</p>
+<ul>
+<li>
+<h4>利用keep-alive 缓存需要缓存的页面</h4>
+<ul>
+<li>
+<p>在app.vue中改写router-view</p>
+<pre class="hljs xml"><code><span class="hljs-tag">&lt;<span class="hljs-name">keep-alive</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">router-view</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"$route.meta.keepAlive"</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 这里是会被缓存的视图组件，比如 page1,page2 --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">router-view</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">keep-alive</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">router-view</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"!$route.meta.keepAlive"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- 这里是不被缓存的视图组件，比如 page3 --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">router-view</span>&gt;</span></code></pre>
+</li>
+<li>
+<p>在router/index.js中添加<a href="https://router.vuejs.org/zh-cn/advanced/meta.html" rel="nofollow noreferrer" target="_blank">路由元信息</a>，设置需要缓存的页面</p>
+<pre class="hljs properties"><code><span class="hljs-attr">routes</span>: <span class="hljs-string">[{</span>
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'/',</span>
+        <span class="hljs-attr">name</span>: <span class="hljs-string">'index',</span>
+        <span class="hljs-attr">component</span>: <span class="hljs-string">index,</span>
+        <span class="hljs-attr">meta</span>: <span class="hljs-string">{</span>
+            <span class="hljs-attr">keepAlive</span>: <span class="hljs-string">false, //此组件不需要被缓存</span>
+        <span class="hljs-attr">}</span>
+    <span class="hljs-attr">},</span>
+    <span class="hljs-attr">{</span>
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'/page1',</span>
+        <span class="hljs-attr">name</span>: <span class="hljs-string">'page1',</span>
+        <span class="hljs-attr">component</span>: <span class="hljs-string">page1,</span>
+        <span class="hljs-attr">meta</span>: <span class="hljs-string">{</span>
+            <span class="hljs-attr">keepAlive</span>: <span class="hljs-string">true, //此组件需要被缓存</span>
+            
+        <span class="hljs-attr">}</span>
+    <span class="hljs-attr">},</span>
+    <span class="hljs-attr">{</span>
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'/page2',</span>
+        <span class="hljs-attr">name</span>: <span class="hljs-string">'page2',</span>
+        <span class="hljs-attr">component</span>: <span class="hljs-string">page2,</span>
+        <span class="hljs-attr">meta</span>: <span class="hljs-string">{</span>
+            <span class="hljs-attr">keepAlive</span>: <span class="hljs-string">true, // 此组件需要被缓存</span>
+           
+        <span class="hljs-attr">}</span>
+    <span class="hljs-attr">},</span>
+    <span class="hljs-attr">{</span>
+        <span class="hljs-attr">path</span>: <span class="hljs-string">'/page3',</span>
+        <span class="hljs-attr">name</span>: <span class="hljs-string">'page3',</span>
+        <span class="hljs-attr">component</span>: <span class="hljs-string">page3,</span>
+        <span class="hljs-attr">meta</span>: <span class="hljs-string">{</span>
+            <span class="hljs-attr">keepAlive</span>: <span class="hljs-string">false, // 此组件不需要被缓存</span>
+        <span class="hljs-attr">}</span>
+    <span class="hljs-attr">}</span>
+<span class="hljs-attr">]</span></code></pre>
+</li>
+<li>
+<p>钩子函数的执行顺序</p>
+<ul>
+<li><p>不使用keep-alive<br> beforeRouteEnter --&gt; created --&gt; mounted --&gt; destroyed</p></li>
+<li><p>使用keep-alive<br> beforeRouteEnter --&gt; created --&gt; mounted --&gt; activated --&gt; deactivated<br> 再次进入缓存的页面，只会触发beforeRouteEnter --&gt;activated --&gt; deactivated 。created和mounted不会再执行。我们可以利用不同的钩子函数，做不同的事。<strong>务必理解上述钩子函数的执行时机和执行顺序，本教程的核心就依赖于此钩子函数</strong><br><em>activated和deactivated是使用keep-alive后，vue中比较重要的两个钩子函数，建议详细了解下</em>。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h4>需缓存的页面的写法</h4>
+<p>注：demo中的page1和page2，这两个页面都需要缓存，思路一样，以下以page1为例，page2不再赘述。<br>示例文件：<em>components/page1.vue</em></p>
+<ul><li><p>data中初始化一个str字符串，存放从后台获取的数据</p></li></ul>
+<pre class="hljs kotlin"><code>     <span class="hljs-keyword">data</span>() {
+       <span class="hljs-keyword">return</span> {
+         msg: <span class="hljs-string">"我是第一个页面"</span>,
+         str: <span class="hljs-string">""</span>  <span class="hljs-comment">// 加载页面后执行获取数据的方法，插入到此</span>
+       };
+     }</code></pre>
+<ul><li><p>methods中创建一个方法，模拟从后台获取数据</p></li></ul>
+<pre class="hljs kotlin"><code>     methods: {
+       getData() {
+         <span class="hljs-comment">// getData方法，模拟从后台请求数据</span>
+         <span class="hljs-keyword">this</span>.str = <span class="hljs-string">"我是通过调用方法加载的数据。。。"</span>;
+       }
+     }</code></pre>
+<ul>
+<li>
+<p>修改router/index.js中的配置</p>
+<ul>
+<li><p>每次进入页面，我们都需要知晓是从哪个页面进来的，用以判断是否需要获取数据。以这个page1页面为例，当我们知晓是从page2过来的，我们就可以认为是用户操作了返回键，这时page1页面就不需要再获取新数据了，使用之前缓存的数据就可以了。如果是从别的页面过来的，我们就需要获取数据。</p></li>
+<li><p>我们可以通过<a href="https://router.vuejs.org/zh-cn/advanced/navigation-guards.html" rel="nofollow noreferrer" target="_blank">beforeRouteEnter</a>这个钩子函数中的from参数判断是从哪个页面过来的，这个参数执行时，组件实例还没创建，所有不能在data中定义变量。我们可以在路由中定义一个变量，用来判断。</p></li>
+<li><p>在router/index.js的meta中添加isBack变量，默认false</p></li>
+</ul>
+<pre class="hljs typescript"><code>     {
+          path: <span class="hljs-string">'/page1'</span>,
+          name: <span class="hljs-string">'page1'</span>,
+          component: page1,
+          meta: {
+              keepAlive: <span class="hljs-literal">true</span>, <span class="hljs-comment">//此组件需要被缓存</span>
+              isBack:<span class="hljs-literal">false</span>, <span class="hljs-comment">//用于判断上一个页面是哪个</span>
+          }
+      },
+      {
+          path: <span class="hljs-string">'/page2'</span>,
+          name: <span class="hljs-string">'page2'</span>,
+          component: page2,
+          meta: {
+              keepAlive: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 此组件需要被缓存</span>
+              isBack:<span class="hljs-literal">false</span>, <span class="hljs-comment">//用于判断上一个页面是哪个</span>
+          }
+      },</code></pre>
+</li>
+<li>
+<p>beforeRouteEnter中判断是从哪个页面过来的</p>
+<ul><li><p>判断是从哪个路由过来的，如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可</p></li></ul>
+<pre class="hljs typescript"><code>    beforeRouteEnter(to, <span class="hljs-keyword">from</span>, next) {
+      <span class="hljs-comment">// 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）</span>
+      <span class="hljs-comment">// 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html</span>
+      <span class="hljs-comment">// 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack</span>
+      <span class="hljs-comment">// 参考 https://router.vuejs.org/zh-cn/advanced/meta.html</span>
+      <span class="hljs-keyword">if</span>(<span class="hljs-keyword">from</span>.name==<span class="hljs-string">'page2'</span>){
+          to.meta.isBack=<span class="hljs-literal">true</span>;
+          <span class="hljs-comment">//判断是从哪个路由过来的，</span>
+          <span class="hljs-comment">//如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可</span>
+      }
+  
+      next();
+    },</code></pre>
+</li>
+<li>
+<p>activated中执行getData这个获取数据的方法</p>
+<ul><li>
+<p>因为这个页面需要缓存。只有第一次进入时才会执行created和mounted方法，再次进入就不执行了。而activated每次进入都执行，所以在这个钩子函数中获取数据。</p>
+<pre class="hljs kotlin"><code>activated() {
+  <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.$route.meta.isBack){
+    <span class="hljs-comment">// 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据</span>
+    <span class="hljs-keyword">this</span>.getData();
+  }
+  <span class="hljs-comment">// 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据</span>
+  <span class="hljs-keyword">this</span>.$route.meta.isBack=<span class="hljs-literal">false</span>
+
+},</code></pre>
+</li></ul>
+</li>
+<li>
+<p>这样就可以了？</p>
+<ul>
+<li><p>当这样设置完毕后，你执行起来，貌似是可以了。第一次进入page1，能获取新数据，从page2返回时，不再获取新数据了，而是使用之前缓存的数据。但这样还有一个问题，当用户从page1进入page2后，因为某种原因，手动刷新了page2的页面。这时再返回到page1，发现之前缓存的数据丢失了，而且也没有再重新获取。所以我们还需要再添加一个判断条件，当用户手动刷新页面后，再返回时就需要重新获取数据了。</p></li>
+<li><p>如何添加这个条件，判断用户是否刷新了页面呢？我们知道，当使用keep-alive后，只有第一次进入后会触发created钩子函数，再次进入就不再执行了。当用户刷新了页面，这个钩子函数就会又执行，所以，我们可以利用这个小技巧来做点文章。</p></li>
+<li>
+<p>data中定义变量isFirstEnter用来判断是否第一次进入，或是否刷新了页面，默认false</p>
+<pre class="hljs kotlin"><code>   <span class="hljs-keyword">data</span>() {
+     <span class="hljs-keyword">return</span> {
+       msg: <span class="hljs-string">"我是第一个页面"</span>,
+       str: <span class="hljs-string">""</span>,  <span class="hljs-comment">// 加载页面后执行获取数据的方法，插入到此</span>
+       isFirstEnter:<span class="hljs-literal">false</span> <span class="hljs-comment">// 是否第一次进入，默认false</span>
+     };
+   },</code></pre>
+</li>
+<li>
+<p>created中把isFirstEnter变为true，说明是第一次进入或刷新了页面</p>
+<pre class="hljs kotlin"><code>   created() {
+     <span class="hljs-keyword">this</span>.isFirstEnter=<span class="hljs-literal">true</span>;
+     <span class="hljs-comment">// 只有第一次进入或者刷新页面后才会执行此钩子函数</span>
+     <span class="hljs-comment">// 使用keep-alive后（2+次）进入不会再执行此钩子函数</span>
+   },</code></pre>
+</li>
+<li>
+<p>activated中增加判断条件</p>
+<pre class="hljs kotlin"><code>   activated() {
+     <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.$route.meta.isBack || <span class="hljs-keyword">this</span>.isFirstEnter){
+         <span class="hljs-comment">// 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据</span>
+         <span class="hljs-comment">// 如果isFirstEnter是true，表明是第一次进入此页面或用户刷新了页面，需获取新数据</span>
+         <span class="hljs-keyword">this</span>.str=<span class="hljs-string">''</span><span class="hljs-comment">// 把数据清空，可以稍微避免让用户看到之前缓存的数据</span>
+         <span class="hljs-keyword">this</span>.getData();
+     }
+     <span class="hljs-comment">// 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据</span>
+     <span class="hljs-keyword">this</span>.$route.meta.isBack=<span class="hljs-literal">false</span>
+     <span class="hljs-comment">// 恢复成默认的false，避免isBack一直是true，导致每次都获取新数据</span>
+     <span class="hljs-keyword">this</span>.isFirstEnter=<span class="hljs-literal">false</span>;
+ 
+   },</code></pre>
+</li>
+<li><p>这样应该就可以了</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h4>不需要缓存页面的写法</h4>
+<p>注：demo中的page3，这个页面不需要缓存，该怎么写就怎么写，不需要做特别的设置。</p>
+</li>
+</ul>
+<h3 id="articleHeader3">其它设置：</h3>
+<p>使用keep-alive后，可能有点小问题：第二个页面可能继承第一个页面的滚动条的高度。（在我项目中遇到的）<br>比如：page1向下滚动后，再进入page2，这时page2的滚动条可能是之前的高度，可能不会在顶部。</p>
+<ul>
+<li><p>解决方法一<br>每次离开记录滚动条的高度，再次进入时根据项目需要再恢复之前的高度，或者置顶。</p></li>
+<li>
+<p>解决方法二（推荐）<br>router/index.js中添加如下代码（如不理解，请看参考链接）<br>参考：<a href="https://router.vuejs.org/zh-cn/essentials/history-mode.html" rel="nofollow noreferrer" target="_blank">HTML5 History 模式</a>　　　　　<a href="https://router.vuejs.org/zh-cn/advanced/scroll-behavior.html" rel="nofollow noreferrer" target="_blank">滚动行为</a></p>
+<pre class="hljs kotlin"><code>  mode: <span class="hljs-string">'history'</span>,
+  scrollBehavior(to, from, savedPosition) {
+      <span class="hljs-keyword">if</span> (savedPosition) {
+          <span class="hljs-keyword">return</span> savedPosition
+      } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">return</span> {
+              x: <span class="hljs-number">0</span>,
+              y: <span class="hljs-number">0</span>
+          }
+      }
+  }</code></pre>
+</li>
+</ul>
+<h3 id="articleHeader4">疑问点：</h3>
+<p>在此次demo练习中，打印了一下钩子函数的执行顺序，发现一个疑问点(我对钩子函数理解也很浅显)：<br>从page1进入page2时，先执行了page2的beforeRouteEnter和created方法，然后才执行page1的deactivated方法。<br>所以我把这两个初始化设置，放在了activated里面，而没有放在deactivated中</p>
+<pre class="hljs kotlin"><code>    <span class="hljs-keyword">this</span>.$route.meta.isBack=<span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">this</span>.isFirstEnter=<span class="hljs-literal">false</span>;</code></pre>
+<p><span class="img-wrap"><img data-src="/img/bVYRj2?w=296&amp;h=244" src="assets/1553637283-a3aa8f8e2c95ecd6a3d77455d2b1bfd2" alt="钩子函数执行顺序" title="钩子函数执行顺序" style="cursor: pointer; display: inline;"></span></p>
+<h3 id="articleHeader5">结束语：</h3>
+<p>为了解决这个前进刷新后退不刷新问题，让我整整苦恼了一周时间，想了很多方法，也没能解决。最后综合各个大佬经验，试验了很多次，才归结出这个比较‘low’的方法。<br>目前，我也是vue小白，也在探索着前进，如果这个方法能解决你遇到的难题，我很高兴。如果你认为的确很low，求轻喷。<br>demo在下方的GitHub中，欢迎star。<br>也欢迎大家提供意见和建议，谢谢大家</p>
+<h2 id="articleHeader6"><a href="https://github.com/bingyang519/vueGoBack" rel="nofollow noreferrer" target="_blank">GitHub</a></h2>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1553637283-f34a74adc5c037a50738f95ba4954abd.svg" height="20"></a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000012083511" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="另辟蹊径：vue单页面，多路由，前进刷新，后退不刷新" data-url="https://segmentfault.com/a/1190000012083511?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5YRDv"><div class="widget-share-network sharer-0" style="display: block;"><ul class="sn-inline"><li data-network="weibo"><a href="javascript:void(0);" class="entypo-weibo icon-sn-weibo share-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至新浪微博">新浪微博</a></li><li data-network="wechart"><a href="javascript:void(0);" class="entypo-wechart icon-sn-weixin share-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至微信">微信</a></li><li data-network="twitter"><a href="javascript:void(0);" class="entypo-twitter icon-sn-twitter share-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Twitter">Twitter</a></li><li data-network="facebook"><a href="javascript:void(0);" class="entypo-facebook icon-sn-facebook share-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="分享至 Facebook">Facebook</a></li></ul></div><a type="button" class="btn btn-sm shareMore btn-sn-more" data-toggle="popover" data-placement="top" data-url="https://segmentfault.com/a/1190000012083511?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5YRDv"><span class="icon-sn-dotted" data-original-title="" title=""></span></a></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000012083511" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">117 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000012083511" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">263</span></button><br><button type="button" data-id="1190000012083511" class="btn btn-danger btn-lg mt15 article__reward-btn">
+                                    赞赏支持
+                                </button></div><div class="mt30 mb30 text-center article__reward-info"><span class="mr10">如果觉得我的文章对你有用，请随意赞赏</span></div>                
+                                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                
+                <div class="mb15 block">
+                    
+                </div>
+
+                                <div id="paradigm-article-related"><div class="recommend-post mb30"><ul class="widget-links"><li><a href="http://segmentfault.com/a/1190000015606826" title="Ajax 知识点的那些事" target="_blank">Ajax 知识点的那些事</a><span class="text-muted">辣手摧js</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li><li><a href="http://segmentfault.com/a/1190000012962470" title="vue通过路由实现页面刷新" target="_blank">vue通过路由实现页面刷新</a><span class="text-muted">陌上寒</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-router">vue-router</a></li><li><a href="http://segmentfault.com/a/1190000015493097" title="微信Webapp开发的各种变态路由需求及解决办法!" target="_blank">微信Webapp开发的各种变态路由需求及解决办法!</a><span class="text-muted">王小o</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/webapp">webapp</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0">微信公众平台</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/%E8%B7%AF%E7%94%B1">路由</a></li><li><a href="http://segmentfault.com/a/1190000013907916" title="前端学习之路之SPA(单页应用)设计原理" target="_blank">前端学习之路之SPA(单页应用)设计原理</a><span class="text-muted">前端小智</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/es6">es6</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-router">vue-router</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/spa">spa</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a></li><li><a href="http://segmentfault.com/a/1190000014141289" title="keep-alive结合vuex实现特定页面的前进刷新，后退不刷新" target="_blank">keep-alive结合vuex实现特定页面的前进刷新，后退不刷新</a><span class="text-muted">大风</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-cli">vue-cli</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-router">vue-router</a></li><li><a href="http://segmentfault.com/a/1190000014873482" title="vue keep-alive请求数据" target="_blank">vue keep-alive请求数据</a><span class="text-muted">乖摸摸头</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue-router">vue-router</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a></li><li><a href="http://segmentfault.com/a/1190000015348779" title="使用 nuxt+iview-admin+koa2 开发项目" target="_blank">使用 nuxt+iview-admin+koa2 开发项目</a><span class="text-muted">mydef</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/visual-studio-code">visual-studio-code</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/node.js">node.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/css">css</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/html">html</a></li><li><a href="http://segmentfault.com/a/1190000015123061" title="前端路由简介以及vue-router实现原理" target="_blank">前端路由简介以及vue-router实现原理</a><span class="text-muted">muwoo</span><a class="tag" taget="_blank" href="https://segmentfault.com/t/vue.js">vue.js</a><a class="tag" taget="_blank" href="https://segmentfault.com/t/javascript">javascript</a></li></ul></div></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000012083511" data-user-id="1030000009484911" data-author-id="1030000010853858 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">25 条评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+                <div class="comments-item" data-id="1050000012101044">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/yishideshengyin" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/yishideshengyin">遗失的声音</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年11月21日</span>
+                </div>
+
+                <div class="fmt mb10"><p>楼主辛苦</p></div>
+
+                <form action="/api/comment/1050000012101044/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000012111173">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/598220654" target="_blank"><img class="avatar-32 " src="assets/1553637283-524f928c8cb12db3537cd3dff2cd9d6e" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/598220654">Nicofh</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年11月22日</span>
+                </div>
+
+                <div class="fmt mb10"><p>如果前进很多页面？那就没个都要判断？？？</p></div>
+
+                <form action="/api/comment/1050000012111173/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000012114571">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>以我以上的这种解决办法，只能每个页面都要判断。暂时我还想不出比较好的解决方法，但是简单方法肯定还是有的，你也可以去探索探索，加油！</p></div>
+                                <form action="/api/comment/1050000012114571/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/bingyang519">
+                                            <strong>冰扬</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年11月22日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000012510707">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>好的，其实也很好技巧了。</p></div>
+                                <form action="/api/comment/1050000012510707/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/598220654">
+                                            <strong>Nicofh</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年12月20日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000012116407">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/yaoyi_596d85474cfdd" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/yaoyi_596d85474cfdd">姚毅</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年11月22日</span>
+                </div>
+
+                <div class="fmt mb10"><p>好是好  但是还是比较死板</p></div>
+
+                <form action="/api/comment/1050000012116407/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000012116499">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>嗯嗯，目前经验还不是很足，只能想到这样的方法。</p></div>
+                                <form action="/api/comment/1050000012116499/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/bingyang519">
+                                            <strong>冰扬</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年11月22日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000012135996">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/linjingying" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/linjingying">林静英</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年11月23日</span>
+                </div>
+
+                <div class="fmt mb10"><p>用子路由最简单，盖住父路由页面，返回时刷新滚动条啥的都不用判断了  ：)</p></div>
+
+                <form action="/api/comment/1050000012135996/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000012139569">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>不错的建议，谢谢。</p></div>
+                                <form action="/api/comment/1050000012139569/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/bingyang519">
+                                            <strong>冰扬</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  2017年11月24日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000012510758">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>就是嵌套子路由就不用判断是否退出是缓存，而进入就重新加载？ 不行吧，也需要楼主判断吧</p></div>
+                                <form action="/api/comment/1050000012510758/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/598220654">
+                                            <strong>Nicofh</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2017年12月20日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="reply-item" data-id="1050000013366249">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p><a href="https://segmentfault.com/u/598220654">@King</a> 要看在哪个生命周期做处理了，比如子路由返回父路由或者父路由不变子路由变化，父路由对应组件created 确实不会再执行一遍～</p></div>
+                                <form action="/api/comment/1050000013366249/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/linjingying">
+                                            <strong>林静英</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2018年02月25日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                                                <span class="reply-more"><span class="text-muted-plus-plus mr5 ml5">|</span>
+                        <a class="reply-more-btn" href="javascript:;">显示更多</a></span>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000012892239">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/zhiruochujian_5a1abbffdf2c3" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/zhiruochujian_5a1abbffdf2c3">只若初见</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年01月18日</span>
+                </div>
+
+                <div class="fmt mb10"><p>如何实现路由跳转下一页刷新，回退到下一页也刷新，获取id 跳转到指定的页面，就是a-&gt;b 然后b强制不能回退到a，如何实现</p></div>
+
+                <form action="/api/comment/1050000012892239/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000014527668">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/chongqingerbrand" target="_blank"><img class="avatar-32 " src="assets/1553637283-d85d39ecd241d67d9b6143128a43167c" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/chongqingerbrand">重庆崽儿Brand</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年04月22日</span>
+                </div>
+
+                <div class="fmt mb10"><p>手动点赞，最近正好有两个地方有这种需求，困扰了好久，终于解决了，3Q</p></div>
+
+                <form action="/api/comment/1050000014527668/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000014778151">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/supercat" target="_blank"><img class="avatar-32 " src="assets/1553637283-104536ff84f11cafbc03e30cd7ee4801" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/supercat">supercat</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年05月08日</span>
+                </div>
+
+                <div class="fmt mb10"><p>正好解决了我遇到的问题，十分感谢</p></div>
+
+                <form action="/api/comment/1050000014778151/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000015414052">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/shizhongduliaoya" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/shizhongduliaoya">是中毒了呀</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年06月28日</span>
+                </div>
+
+                <div class="fmt mb10"><p>很棒，先解决了！</p></div>
+
+                <form action="/api/comment/1050000015414052/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000016023276">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/beichengyinan" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/beichengyinan">北城以南</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年08月15日</span>
+                </div>
+
+                <div class="fmt mb10"><p>没个组件都加isFirstEnter的话 ，岂不是太繁琐，有其他解决方案吗</p></div>
+
+                <form action="/api/comment/1050000016023276/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000016505978">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/xiaolizihl" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/xiaolizihl">发帖要保护隐私hl</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年09月25日</span>
+                </div>
+
+                <div class="fmt mb10"><p>为什么不直接使用keepAlive做判断，而要多加个参数isBack ？</p></div>
+
+                <form action="/api/comment/1050000016505978/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000016588290">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/josey11" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/josey11">Josey11</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年10月03日</span>
+                </div>
+
+                <div class="fmt mb10"><p>我用vuex配合exclude和两个钩子路由，感觉比楼主还麻烦一点</p></div>
+
+                <form action="/api/comment/1050000016588290/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000017562245">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/zhengj" target="_blank"><img class="avatar-32 " src="assets/1553637283-a075a088c8068bd5a13d092897b6b6eb" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/zhengj">zhengj</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年12月29日</span>
+                </div>
+
+                <div class="fmt mb10"><p>基于vue-router 做了历史页面的dom缓存，效果感觉会更好点 <a href="https://github.com/ideacome-frontend/vue-router-dom-cache" rel="nofollow noreferrer" target="_blank">https://github.com/ideacome-f...</a></p></div>
+
+                <form action="/api/comment/1050000017562245/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000018470908">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>也没有例子</p></div>
+                                <form action="/api/comment/1050000018470908/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/jresun_591edccba5f78">
+                                            <strong>JreSun</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  3月12日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000018403673">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/lishuai_58d2522ee0b6f" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/lishuai_58d2522ee0b6f">李帅</a></strong>
+                    
+                    <span class="comments-date">  ·  3月6日</span>
+                </div>
+
+                <div class="fmt mb10"><p>page1是一个不同的电子手册列表页，page2是进去对应手册不同目录下的图片，点击图片进到page3图片的详情页，需要做的是page3返回page2缓存，其他不缓存，试了楼主的方法，但是切换page1中进入不同手册的page2保留的还是上一个手册的page2页面，搞了很久，泪崩</p></div>
+
+                <form action="/api/comment/1050000018403673/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000018407879">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>初步判断是你钩子函数用错了,或者某一步没弄对。【切换page进入不同手册的page2】你在page2中的，created和activated各打印下，看看进入的是哪个？ <br>PS：你最好在仔细看看博客内容哦，我觉得是你没理解其中的原理，多看几遍，等你明白原理后，你的问题就解决了，加油！</p></div>
+                                <form action="/api/comment/1050000018407879/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/bingyang519">
+                                            <strong>冰扬</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  3月6日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000018484539">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/aiwei_5acb0afe2b4dc" target="_blank"><img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/aiwei_5acb0afe2b4dc">哎呦喂</a></strong>
+                    
+                    <span class="comments-date">  ·  3月13日</span>
+                </div>
+
+                <div class="fmt mb10"><p>我这里有个需求是a-b-c，a-b的时候b刷新，b-c的时候b缓存，c-b的时候b也缓存，b页面是两种状态，一种是电影列表，一种是电视剧的列表，但是我用了楼主的方法之后，如果第一次点击了电影，缓存之后，第二次点击剧集的时候页面会有电影的数据，这个残留的电影数据是请求回来的。相反的我第一次点击电视剧缓存之后，再点击电影那么页面会残留一次电视剧的请求。楼主有什么好点的建议？</p></div>
+
+                <form action="/api/comment/1050000018484539/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1553637283-02f3a8501cc3cda2fcd3970e7a8ce26d.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000012083511/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000012083511" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-03-27 05:54:43</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
