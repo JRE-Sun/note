@@ -1,0 +1,2057 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://www.jianshu.com/p/b90bd277b94f -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>如何优雅处理前端的异常@异常</title>
+    
+<link rel="stylesheet" media="all" href="assets/1556074753-34918638541125894ba681717141b104.css">
+
+<link rel="stylesheet" media="all" href="assets/1556074753-fbcb688f3d4d0fa54410c8b7058b2285.css">
+
+<link rel="stylesheet" class="simpread-fs-style" href="assets/1556074753-86bd3854ceee8e03a35e10a1ed75970d.css">
+
+<link rel="stylesheet" class="simpread-fs-style" href="assets/1556074753-64ad313999cac464794b0a85eaac6156.css">
+<style>
+
+</style>
+<style>
+
+:root .container > a.mid-wrapper,
+:root .main[style="border:#7D8C8E solid 1px;height: 23px;"],
+:root .tooltip > #tp,
+:root .content > a > .topline
+{ display: none !important; }
+</style>
+<style>
+@charset "UTF-8";.image-package .image-container{position:relative;z-index:2;background-color:#eee;-webkit-transition:background-color .1s linear;-o-transition:background-color .1s linear;transition:background-color .1s linear;margin:0 auto}body.reader-night-mode .image-package .image-container{background-color:#545454}.image-package .image-container-fill{z-index:1}.image-package .image-container .image-view{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.image-package .image-container .image-view-error:after{content:"图片获取失败，请点击重试";position:absolute;top:50%;left:50%;width:100%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);color:#888;font-size:14px}.image-package .image-container .image-view img.image-loading{opacity:.3}.image-package .image-container .image-view img{-webkit-transition:all .15s linear;-o-transition:all .15s linear;transition:all .15s linear;z-index:2;opacity:1}
+</style>
+<style>
+fieldset[disabled] .multiselect {
+  pointer-events: none;
+}
+
+.multiselect__spinner {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 48px;
+  height: 35px;
+  background: #fff;
+  display: block;
+}
+
+.multiselect__spinner:after,
+.multiselect__spinner:before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border-color: #41b883 transparent transparent;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 0 0 0 1px transparent;
+}
+
+.multiselect__spinner:before {
+  animation: a 2.4s cubic-bezier(.41,.26,.2,.62);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__spinner:after {
+  animation: a 2.4s cubic-bezier(.51,.09,.21,.8);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__loading-enter-active,
+.multiselect__loading-leave-active {
+  transition: opacity .4s ease-in-out;
+  opacity: 1;
+}
+
+.multiselect__loading-enter,
+.multiselect__loading-leave-active {
+  opacity: 0;
+}
+
+.multiselect,
+.multiselect__input,
+.multiselect__single {
+  font-family: inherit;
+  font-size: 14px;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+.multiselect {
+  box-sizing: content-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  text-align: left;
+  color: #35495e;
+}
+
+.multiselect * {
+  box-sizing: border-box;
+}
+
+.multiselect:focus {
+  outline: none;
+}
+
+.multiselect--disabled {
+  opacity: .6;
+}
+
+.multiselect--active {
+  z-index: 1;
+}
+
+.multiselect--active:not(.multiselect--above) .multiselect__current,
+.multiselect--active:not(.multiselect--above) .multiselect__input,
+.multiselect--active:not(.multiselect--above) .multiselect__tags {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.multiselect--active .multiselect__select {
+  transform: rotate(180deg);
+}
+
+.multiselect--above.multiselect--active .multiselect__current,
+.multiselect--above.multiselect--active .multiselect__input,
+.multiselect--above.multiselect--active .multiselect__tags {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.multiselect__input,
+.multiselect__single {
+  position: relative;
+  display: inline-block;
+  min-height: 20px;
+  line-height: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0 0 5px;
+  width: 100%;
+  transition: border .1s ease;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  vertical-align: top;
+}
+
+.multiselect__tag~.multiselect__input,
+.multiselect__tag~.multiselect__single {
+  width: auto;
+}
+
+.multiselect__input:hover,
+.multiselect__single:hover {
+  border-color: #cfcfcf;
+}
+
+.multiselect__input:focus,
+.multiselect__single:focus {
+  border-color: #a8a8a8;
+  outline: none;
+}
+
+.multiselect__single {
+  padding-left: 6px;
+  margin-bottom: 8px;
+}
+
+.multiselect__tags-wrap {
+  display: inline;
+}
+
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 8px 40px 0 8px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+}
+
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 4px 26px 4px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: #fff;
+  line-height: 1;
+  background: #41b883;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+.multiselect__tag-icon {
+  cursor: pointer;
+  margin-left: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: 700;
+  font-style: normal;
+  width: 22px;
+  text-align: center;
+  line-height: 22px;
+  transition: all .2s ease;
+  border-radius: 5px;
+}
+
+.multiselect__tag-icon:after {
+  content: "\D7";
+  color: #266d4d;
+  font-size: 14px;
+}
+
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+  background: #369a6e;
+}
+
+.multiselect__tag-icon:focus:after,
+.multiselect__tag-icon:hover:after {
+  color: #fff;
+}
+
+.multiselect__current {
+  min-height: 40px;
+  overflow: hidden;
+  padding: 8px 12px 0;
+  padding-right: 30px;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+}
+
+.multiselect__current,
+.multiselect__select {
+  line-height: 16px;
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.multiselect__select {
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  right: 1px;
+  top: 1px;
+  padding: 4px 8px;
+  text-align: center;
+  transition: transform .2s ease;
+}
+
+.multiselect__select:before {
+  position: relative;
+  right: 0;
+  top: 65%;
+  color: #999;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #999 transparent transparent;
+  content: "";
+}
+
+.multiselect__placeholder {
+  color: #adadad;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+}
+
+.multiselect--active .multiselect__placeholder {
+  display: none;
+}
+
+.multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: #fff;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.multiselect__content {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-width: 100%;
+  vertical-align: top;
+}
+
+.multiselect--above .multiselect__content-wrapper {
+  bottom: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: none;
+  border-top: 1px solid #e8e8e8;
+}
+
+.multiselect__content::webkit-scrollbar {
+  display: none;
+}
+
+.multiselect__element {
+  display: block;
+}
+
+.multiselect__option {
+  display: block;
+  padding: 12px;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.multiselect__option:after {
+  top: 0;
+  right: 0;
+  position: absolute;
+  line-height: 40px;
+  padding-right: 12px;
+  padding-left: 20px;
+}
+
+.multiselect__option--highlight {
+  background: #41b883;
+  outline: none;
+  color: #fff;
+}
+
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #41b883;
+  color: #fff;
+}
+
+.multiselect__option--selected {
+  background: #f3f3f3;
+  color: #35495e;
+  font-weight: 700;
+}
+
+.multiselect__option--selected:after {
+  content: attr(data-selected);
+  color: silver;
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+  background: #ff6a6a;
+  color: #fff;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+  background: #ff6a6a;
+  content: attr(data-deselect);
+  color: #fff;
+}
+
+.multiselect--disabled {
+  background: #ededed;
+  pointer-events: none;
+}
+
+.multiselect--disabled .multiselect__current,
+.multiselect--disabled .multiselect__select,
+.multiselect__option--disabled {
+  background: #ededed;
+  color: #a6a6a6;
+}
+
+.multiselect__option--disabled {
+  cursor: text;
+  pointer-events: none;
+}
+
+.multiselect__option--disabled.multiselect__option--highlight {
+  background: #dedede!important;
+}
+
+.multiselect-enter-active,
+.multiselect-leave-active {
+  transition: all .15s ease;
+}
+
+.multiselect-enter,
+.multiselect-leave-active {
+  opacity: 0;
+}
+
+.multiselect__strong {
+  margin-bottom: 8px;
+  line-height: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+[dir=rtl] .multiselect {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__select {
+  right: auto;
+  left: 1px;
+}
+
+[dir=rtl] .multiselect__tags {
+  padding: 8px 8px 0 40px;
+}
+
+[dir=rtl] .multiselect__content {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__option:after {
+  right: auto;
+  left: 0;
+}
+
+[dir=rtl] .multiselect__clear {
+  right: auto;
+  left: 12px;
+}
+
+[dir=rtl] .multiselect__spinner {
+  right: auto;
+  left: 1px;
+}
+
+@keyframes a {
+  0% {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(2turn);
+  }
+}
+</style>
+<style>
+
+#free-reward-panel .reward-users-modal main {
+  padding: 0;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.reward-note-modal .v-modal {
+  width: 620px;
+  text-align: center;
+}
+.reward-note-modal .v-modal form {
+    margin: 0 auto 25px auto;
+    padding: 0 40px;
+}
+.reward-note-modal .v-modal .reward-intro {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.reward-note-modal .v-modal .reward-intro .avatar {
+      cursor: default !important;
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      display: inline-block;
+}
+.reward-note-modal .v-modal .reward-intro .intro {
+      margin-right: 5px;
+      font-weight: bold;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .reward-intro i {
+      color: #EA6F5A;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs {
+    margin: 25px 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group {
+      margin: 0 -5px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input {
+        display: none;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input:checked + .option {
+        color: #EA6F5A;
+        border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-text {
+        opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-amount-input {
+        opacity: 1;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option {
+        position: relative;
+        margin: 0 5px 15px;
+        width: 156px;
+        height: 56px;
+        line-height: 54px;
+        border: 1px solid #E6E6E6;
+        border-radius: 4px;
+        font-weight: normal;
+        color: #999999;
+        cursor: pointer;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option i {
+          font-size: 16px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .amount {
+          font-size: 28px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .piece {
+          font-size: 13px;
+          vertical-align: sub;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input {
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          width: 100%;
+          opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input i {
+            position: absolute;
+            top: 0;
+            left: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input .piece {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+            height: 54px;
+            line-height: 54px;
+            border: none;
+            font-size: 28px;
+            text-align: center;
+            background: transparent;
+            -moz-appearance: textfield;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-outer-spin-button, .reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-inner-spin-button {
+              -webkit-appearance: none !important;
+}
+.reward-note-modal .v-modal .main-inputs .message {
+      padding: 15px 20px;
+      margin-bottom: 0;
+      font-size: 14px;
+      border: 1px solid #E6E6E6;
+      color: #333333;
+      border-radius: 4px;
+      background-color: rgba(180, 180, 180, 0.1);
+}
+.reward-note-modal .v-modal .main-inputs .message textarea {
+        width: 100%;
+        height: 44px;
+        padding: 0;
+        margin: 0;
+        resize: none;
+        background: none !important;
+        border: none !important;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-box-shadow: none;
+                box-shadow: none;
+}
+.reward-note-modal .v-modal .main-inputs .message textarea:focus {
+          outline: none;
+}
+.reward-note-modal .v-modal .reward-info .amount {
+    font-size: 28px;
+    font-weight: bold;
+    color: #EA6F5A;
+}
+.reward-note-modal .v-modal .reward-info .pay-method {
+    font-size: 14px;
+}
+.reward-note-modal .v-modal .reward-info .pay-method a {
+      color: #3194D0;
+}
+.reward-note-modal .v-modal .choose-pay {
+    margin: 0 -5px;
+}
+.reward-note-modal .v-modal .choose-pay input {
+      display: none;
+}
+.reward-note-modal .v-modal .choose-pay input:checked + .option {
+      color: #EA6F5A;
+      border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .choose-pay .option {
+      margin: 20px 5px 10px;
+      width: 156px;
+      height: 56px;
+      line-height: 54px;
+      text-align: center;
+      border: 1px solid #E6E6E6;
+      border-radius: 4px;
+      cursor: pointer;
+}
+.reward-note-modal .v-modal .choose-pay .option img {
+        height: 30px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.alipay, .reward-note-modal .v-modal .choose-pay .option img.night.alipay {
+        min-width: 85px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.wechat, .reward-note-modal .v-modal .choose-pay .option img.night.wechat {
+        min-width: 112px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.night {
+        display: none;
+}
+body.reader-night-mode .reward-note-modal .v-modal .choose-pay .option img.night {
+        display: inline-block;
+}
+body.reader-night-mode .reward-note-modal .v-modal .choose-pay .option img.day {
+        display: none;
+}
+.reward-note-modal .v-modal .choose-pay .tooltip {
+      width: 230px;
+}
+.reward-note-modal .v-modal .modal-footer {
+    padding: 0 15px 20px;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+.reward-note-modal .v-modal .modal-footer .btn {
+      padding: 8px 45px;
+      font-size: 24px;
+}
+.reward-note-modal .v-modal .btn-pay {
+    padding: 8px 25px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #F5A623;
+}
+.weixin-pay, .success-pay {
+  text-align: center;
+}
+.weixin-pay .v-modal, .success-pay .v-modal {
+    width: 350px;
+}
+.weixin-pay .ic-successed, .success-pay .ic-successed {
+    font-size: 60px;
+    color: #3db922;
+}
+.weixin-pay h2, .weixin-pay h3, .success-pay h2, .success-pay h3 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+.weixin-pay h2, .success-pay h2 {
+    margin: 0 0 40px 0;
+    font-size: 24px;
+}
+.weixin-pay .bind-text, .success-pay .bind-text {
+    position: relative;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #999999;
+}
+.weixin-pay .bind-text:before, .weixin-pay .bind-text:after, .success-pay .bind-text:before, .success-pay .bind-text:after {
+      content: "";
+      border-top: 1px solid #999;
+      display: block;
+      position: absolute;
+      width: 40px;
+      top: 8px;
+}
+.weixin-pay .bind-text:before, .success-pay .bind-text:before {
+      left: 30px;
+}
+.weixin-pay .bind-text:after, .success-pay .bind-text:after {
+      right: 30px;
+}
+.weixin-pay .share-bind, .success-pay .share-bind {
+    display: block;
+    margin-bottom: 30px;
+}
+.weixin-pay .share-bind i, .success-pay .share-bind i {
+      margin-right: 4px;
+      font-size: 22px;
+      vertical-align: middle;
+}
+.weixin-pay .share-bind.wechat i, .success-pay .share-bind.wechat i {
+      color: #00BB29;
+}
+.weixin-pay .share-bind.weibo i, .success-pay .share-bind.weibo i {
+      color: #E05244;
+}
+.weixin-pay .wx-qr-code, .success-pay .wx-qr-code {
+    display: inline-block;
+}
+.weixin-pay .wx-qr-code img, .success-pay .wx-qr-code img {
+      margin: 0 auto;
+      padding: 10px;
+      width: 200px;
+      background-color: #ffffff;
+}
+.weixin-pay .pay-amount, .success-pay .pay-amount {
+    margin: 20px 0;
+    color: #787878;
+}
+.weixin-pay .pay-amount span, .success-pay .pay-amount span {
+      color: #F5A623;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.v-modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: transparent;
+}
+.v-modal-wrap.modal-leave-active {
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+.v-modal-wrap.modal-enter-active .v-modal-mask, .v-modal-wrap.modal-leave-active .v-modal-mask {
+    opacity: 0;
+}
+.v-modal-wrap.modal-enter-active .v-modal, .v-modal-wrap.modal-leave-active .v-modal {
+    -webkit-transform: translate(-50%, -70%);
+        -ms-transform: translate(-50%, -70%);
+            transform: translate(-50%, -70%);
+    opacity: 0;
+}
+.v-modal-wrap .v-modal-mask {
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    opacity: 1;
+}
+.v-modal-wrap .v-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    -o-transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+    opacity: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    overflow: hidden;
+}
+.v-modal-wrap .v-modal > header:before, .v-modal-wrap .v-modal > header:after, .v-modal-wrap .v-modal > main:before, .v-modal-wrap .v-modal > main:after, .v-modal-wrap .v-modal > footer:before, .v-modal-wrap .v-modal > footer:after {
+      content: '';
+      clear: both;
+      display: table;
+}
+.v-modal-wrap .v-modal > header {
+      padding: 20px;
+      border-bottom: 1px solid #F0F0F0;
+}
+.v-modal-wrap .v-modal > header h4 {
+        margin: 0;
+        color: #333;
+        text-align: left;
+}
+.v-modal-wrap .v-modal .close {
+      position: absolute;
+      right: 16px;
+      top: 20px;
+      font-size: 26px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.8);
+}
+.v-modal-wrap .v-modal .close:hover {
+        color: #000000;
+}
+.v-modal-wrap .v-modal > main {
+      padding: 20px 20px 20px 20px;
+      font-size: 15px;
+      color: #333;
+      -webkit-box-flex: 1;
+      -webkit-flex-grow: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+}
+.v-modal-wrap .v-modal > footer {
+      padding: 20px;
+      background-color: #fff;
+}
+.v-modal-wrap .v-modal > footer button {
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        border: 0;
+        float: right;
+}
+.v-modal-wrap .v-modal > footer button:focus {
+          outline: 0;
+}
+.v-modal-wrap .v-modal > footer .submit {
+        padding: 4px 12px;
+        border: 1px solid;
+        border-radius: 20px;
+}
+.v-modal-wrap .v-modal > footer .cancel {
+        margin-top: 5px;
+}
+.v-modal-wrap .v-modal > footer .cancel:hover {
+          color: #333333;
+}
+.reader-night-mode .v-modal-wrap .v-modal-mask {
+  background-color: rgba(63, 63, 63, 0.7);
+}
+.reader-night-mode .v-modal-wrap .v-modal {
+  background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal header {
+    border-color: #2F2F2F;
+}
+.reader-night-mode .v-modal-wrap .v-modal header h4 {
+      color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close:hover {
+      color: #ffffff;
+}
+.reader-night-mode .v-modal-wrap .v-modal main {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer {
+    background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer .cancel:hover {
+      color: #C8C8C8;
+}
+
+</style>
+<style>
+
+.nqzzJ71pC-jOnJKAfdtr6_0 {
+  float: right;
+  height: 55px;
+  padding: 15px 0px;
+  margin: 0 15px;
+}
+._3tScN0zmSdGLaUAH4SxTbM_0 {
+    width: 100%;
+    height: 100%;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._3f806byixOPpOPWnx8HiQP_0 {
+    height: 25px;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._2MIQ6sBppQZAKea91We0qf_0 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 1000;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 {
+    position: fixed;
+    left: -webkit-calc( 50% - 190px);
+    left: calc( 50% - 190px);
+    top: -webkit-calc( 50% - 300px);
+    top: calc( 50% - 300px);
+    width: 380px;
+    height: 425px;
+    background-color: #fff;
+    padding: 40px 72px 0;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    z-index: 1000;
+    text-align: center;
+}
+body.reader-night-mode .nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 {
+      background-color: #3f3f3f;
+      color: #c8c8c8;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 h4 {
+      margin: 0;
+      line-height: 25px;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 h4 span {
+        color: #e9634c;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 img {
+      width: 190px;
+      height: 190px;
+      margin: 12px 0 8px 0;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 p {
+      font-size: 14px;
+      line-height: 20px;
+      margin: 0;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 ._2WUz9DZJO5DIC_O5sD1kac_0 {
+      background-color: #e9634c;
+      color: #fff;
+      margin: 25px auto 0;
+      width: 190px;
+      height: 40px;
+      border-radius: 20px;
+      line-height: 40px;
+      font-size: 14px;
+      cursor: pointer;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.youdao-fixed-ad {
+  display: block;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border: 1px solid black;
+}
+.youdao-fixed-ad .img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.youdao-fixed-ad .ad-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    font-size: 12px;
+    padding: 2px 5px 0 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+}
+.qingteng-ads {
+  border: 1px solid #e8e8e8;
+  width: 180px;
+}
+
+</style>
+<style>
+
+.yuxi-fixed-ad {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+.yuxi-fixed-ad .img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("");
+}
+.yuxi-fixed-ad .ad-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    font-size: 12px;
+    padding: 2px 5px 0 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.like[data-v-6ddd02c6] {
+  display: inline-block;
+}
+.like .like-group[data-v-6ddd02c6] {
+    position: relative;
+    padding: 13px 0 15px 0;
+    font-size: 0;
+    border: 1px solid #EA6F5A;
+    border-radius: 40px;
+}
+.like .like-group[data-v-6ddd02c6]:hover {
+      background-color: rgba(236, 97, 73, 0.05);
+}
+.like .like-group .btn-like[data-v-6ddd02c6] {
+      display: inline-block;
+      font-size: 19px;
+}
+.like .like-group .btn-like[data-v-6ddd02c6]:before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        top: 2px;
+        width: 50px;
+        height: 50px;
+        background-image: url("");
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: 1000px 50px;
+}
+.like .like-group .btn-like a[data-v-6ddd02c6] {
+        position: relative;
+        padding: 18px 30px 18px 55px;
+        color: #EA6F5A;
+}
+.like .like-group .modal-wrap[data-v-6ddd02c6] {
+      font-size: 18px;
+      border-left: 1px solid rgba(236, 97, 73, 0.4);
+      display: inline-block;
+      margin-left: -15px;
+}
+.like .like-group .modal-wrap a[data-v-6ddd02c6] {
+        color: #EA6F5A;
+        padding: 18px 26px 18px 18px;
+}
+.like .like-group.like-animation[data-v-6ddd02c6], .like .like-group.active[data-v-6ddd02c6] {
+      background-color: #EA6F5A;
+}
+.like .like-group.like-animation .btn-like a[data-v-6ddd02c6], .like .like-group.active .btn-like a[data-v-6ddd02c6] {
+        color: white;
+}
+.like .like-group.like-animation .modal-wrap[data-v-6ddd02c6], .like .like-group.active .modal-wrap[data-v-6ddd02c6] {
+        border-left: 1px solid white;
+}
+.like .like-group.like-animation .modal-wrap a[data-v-6ddd02c6], .like .like-group.active .modal-wrap a[data-v-6ddd02c6] {
+          color: white;
+}
+.like .like-group.like-animation .btn-like[data-v-6ddd02c6]:before {
+      -webkit-animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+              animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+      background-position: right;
+}
+@-webkit-keyframes likeBlast {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+@keyframes likeBlast-data-v-6ddd02c6 {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+.like .like-group.active .btn-like[data-v-6ddd02c6]:before {
+      background-position: right;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.main {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 0 30px 0;
+  width: 620px;
+}
+.main .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.main .collection-settings {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    font-size: 13px;
+    color: #A0A0A0;
+}
+.main .collection-settings span {
+      padding-left: 4px;
+}
+.main .include-collection {
+    width: 100%;
+    padding-top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.main .include-collection .item {
+      display: inline-block;
+      margin: 0 12px 12px 0;
+      min-height: 32px;
+      background-color: white;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      vertical-align: top;
+      overflow: hidden;
+}
+.main .include-collection .item img {
+        width: 32px;
+        height: 32px;
+}
+.main .include-collection .item .name {
+        display: inline-block;
+        padding: 0 10px;
+        font-size: 14px;
+}
+.main .include-collection .add-collection-wrap {
+      margin: 0 12px 12px 0;
+}
+.main .include-collection .add-collection {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+}
+.main .include-collection .add-collection i {
+        margin-right: 4px;
+        color: #969696;
+}
+.main .recommend-note a {
+    position: relative;
+    margin: 20px 2px 0 0;
+    width: 200px;
+    height: 160px;
+    display: inline-block;
+}
+.main .recommend-note a:after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 160px;
+      border-radius: 0 0 4px 4px;
+      -webkit-box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+              box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
+      z-index: 1;
+}
+.main .recommend-note .name {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+.main .recommend-note .author {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.main .recommend-note .avatar {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.main .recommend-note .avatar img {
+      border-radius: 50%;
+}
+.main .recommend-note .author-name {
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: -1px;
+}
+.main .show-more {
+    margin: 0 12px 12px 0;
+    font-size: 14px;
+    color: #A0A0A0;
+}
+
+</style>
+<style>
+.simpread-theme-root{font-size:62.5%!important}sr-rd-content,sr-rd-desc,sr-rd-title{width:100%}sr-rd-title{text-rendering:optimizelegibility;margin:1em 0 .5em}sr-rd-content{text-align:left;word-break:break-word}sr-rd-desc{text-align:left;line-height:2.4;margin:0 0 1.2em}sr-rd-content,sr-rd-content div,sr-rd-content p{font-size:25.6px;font-size:1.6rem;line-height:1.6}sr-rd-content div,sr-rd-content p{display:block;float:inherit}sr-rd-content div,sr-rd-content p,sr-rd-content pre,sr-rd-content sr-blockquote{margin:0 0 1.2em;word-break:break-word}sr-rd-content a{padding:0 5px;vertical-align:baseline;vertical-align:initial}sr-rd-content a,sr-rd-content a:link{color:inherit;font-size:medium;font-weight:inherit;border:none}sr-rd-content a:hover{background:transparent}sr-rd-content img{margin:10px;padding:5px;background:#fff;border:1px solid #bbb;box-shadow:1px 1px 3px #d4d4d4}sr-rd-content sr-blockquote{display:block;position:relative;padding:15px 25px;text-align:left;line-height:inherit}sr-rd-content sr-blockquote:before{position:absolute}sr-rd-content sr-blockquote *{margin:0;font-size:inherit}sr-rd-content table{width:100%;margin:0 0 1.2em;word-break:keep-all;word-break:normal;overflow:auto;border:none}sr-rd-content table td,sr-rd-content table th{border:none}sr-rd-content ol,sr-rd-content ul{margin:0;padding:0}sr-rd-content ul{margin:0 0 1.2em;margin-left:1.3em;padding:0;list-style:disc}sr-rd-content ol{list-style:decimal;margin-left:1.3em}sr-rd-content ol li,sr-rd-content ul li{font-size:inherit;list-style:disc;margin:0 0 1.2em}sr-rd-content ol li *,sr-rd-content ul li *{margin:0;text-align:left;text-align:initial}sr-rd-content li ol,sr-rd-content li ul{margin-bottom:.8em;margin-left:2em}sr-rd-content li ul{list-style:circle}sr-rd-content pre{font-family:Consolas,Monaco,Andale Mono,Source Code Pro,Liberation Mono,Courier,monospace;display:block;padding:15px;line-height:1.5;word-break:break-all;word-wrap:break-word;white-space:pre;overflow:auto}sr-rd-content pre,sr-rd-content pre *,sr-rd-content pre div{font-size:17.6px;font-size:1.1rem}sr-rd-content li pre code,sr-rd-content p pre code,sr-rd-content pre{background-color:transparent;border:none}sr-rd-content pre code{margin:0;padding:0}sr-rd-content pre code,sr-rd-content pre code *{font-size:17.6px;font-size:1.1rem}sr-rd-content li code,sr-rd-content p code{margin:0 4px;padding:2px 4px;font-size:17.6px;font-size:1.1rem}.sr-rd-content-img{width:90%;height:auto}.sr-rd-content-img-load{width:48px;height:48px;margin:0;padding:0;border-style:none;border-width:0;background-repeat:no-repeat;background-image:url(data:image/gif;base64,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)}.sr-rd-content-center{text-align:center;display:-webkit-box;-webkit-box-align:center;-webkit-box-pack:center;-webkit-box-orient:vertical}.sr-rd-content-nobeautify{margin:0;padding:0;border:0;box-shadow:0 0 0}sr-rd-mult{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin:0 0 16px;padding:16px 0 24px;width:100%;min-width:840.72px;background-color:#fafafa;border-radius:2px;box-shadow:0 1px 5px rgba(0,0,0,.16)}sr-rd-mult:hover{-webkit-transition:all .45s 0ms;transition:all .45s 0ms;box-shadow:1px 1px 8px rgba(0,0,0,.16)}sr-rd-mult sr-rd-mult-content{padding:0 16px;overflow:auto}sr-rd-mult sr-rd-mult-avatar,sr-rd-mult sr-rd-mult-content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}sr-rd-mult sr-rd-mult-avatar{-webkit-box-align:center;-ms-flex-align:center;align-items:center}sr-rd-mult sr-rd-mult-avatar span{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;max-width:75px;overflow:hidden;text-overflow:ellipsis;text-align:left;font-size:16px;font-size:1rem}sr-rd-mult sr-rd-mult-avatar img{margin-bottom:0;max-width:50px;max-height:50px;width:50px;height:50px;border-radius:50%}sr-rd-mult sr-rd-mult-avatar .sr-rd-content-center{margin:0}sr-page{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%}
+</style>
+<style>
+sr-rd-theme-github{}
+</style>
+<style>
+sr-rd-theme-newsprint{}
+</style>
+<style>
+sr-rd-theme-gothic{display:none}sr-rd-content h1{line-height:64px;line-height:4rem;margin:64px 0 28px;margin:4rem 0 1.75rem;padding:20px 30px}sr-rd-content h1,sr-rd-content h2{font-weight:400;text-align:center;text-transform:uppercase}sr-rd-content h2{line-height:48px;line-height:3rem;margin:48px 0 31px;margin:3rem 0 1.9375rem;padding:0 30px}sr-rd-content h3,sr-rd-content h4,sr-rd-content h5{font-weight:400}sr-rd-content h6{font-weight:700}sr-rd-content h1{font-size:57.6px;font-size:3.6rem}sr-rd-content h2{font-size:51.2px;font-size:3.2rem}sr-rd-content h3{font-size:40px;font-size:2.5rem}sr-rd-content h4{font-size:35.2px;font-size:2.2rem}sr-rd-content h5{font-size:30.4px;font-size:1.9rem}sr-rd-content h6{font-size:27.2px;font-size:1.7rem}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{margin-top:1.2em;margin-bottom:.6em;color:#111}sr-rd-content ol,sr-rd-content ul{list-style-type:disc;margin-left:3em}sr-rd-content ol ol,sr-rd-content ul ol{list-style-type:lower-roman}sr-rd-content ol ol ol,sr-rd-content ol ul ol,sr-rd-content ul ol ol,sr-rd-content ul ul ol{list-style-type:lower-alpha}sr-rd-content table{margin-bottom:20px}sr-rd-content table td,sr-rd-content table th{padding:8px;line-height:20px;line-height:1.25rem;vertical-align:top;border-top:1px solid #ddd}sr-rd-content table th{font-weight:700}sr-rd-content table thead th{vertical-align:bottom}sr-rd-content table caption+thead tr:first-child td,sr-rd-content table caption+thead tr:first-child th,sr-rd-content table colgroup+thead tr:first-child td,sr-rd-content table colgroup+thead tr:first-child th,sr-rd-content table thead:first-child tr:first-child td,sr-rd-content table thead:first-child tr:first-child th{border-top:0}sr-rd-content table tbody+tbody{border-top:2px solid #ddd}sr-rd-content sr-blockquote{margin:0 0 17.777px;margin:0 0 1.11111rem;padding:8px 17.777px 0 16.888px;padding:.5rem 1.11111rem 0 1.05556rem;border-left:1px solid gray}sr-rd-content sr-blockquote,sr-rd-content sr-blockquote p{line-height:2;color:#6f6f6f}.simpread-theme-root{background:#fcfcfc;color:#333}sr-rd-title{font-weight:400;line-height:64px;line-height:4rem;text-align:center;text-transform:uppercase;color:#111;font-size:51.2px;font-size:3.2rem}sr-rd-desc{margin:0 0 17.777px;margin:0 0 1.11111rem;padding:8px 17.777px 0 16.888px;padding:.5rem 1.11111rem 0 1.05556rem;font-size:32px;font-size:2rem;line-height:2;color:#6f6f6f;border-left:1px solid gray}sr-rd-content{font-weight:400;color:#333}sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#333}sr-rd-content a,sr-rd-content a:link{color:#900;text-decoration:none}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#900;text-decoration:underline}sr-rd-content li code,sr-rd-content p code,sr-rd-content pre{background-color:transparent;border:1px solid #ccc}sr-rd-mult{background-color:#f2f2f2}
+</style>
+<style>
+sr-rd-theme-engwrite{}
+</style>
+<style>
+sr-rd-theme-octopress{}
+</style>
+<style>
+sr-rd-theme-pixyii{}
+</style>
+<style>
+sr-rd-theme-monospace{}
+</style>
+<style>
+sr-rd-theme-night{}
+</style>
+<style>
+sr-rd-theme-dark{}
+</style>
+<style>
+/*!
+ * Waves v0.7.5
+ * http://fian.my.id/Waves
+ * 
+ * Copyright 2014-2016 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
+ * https://github.com/fians/Waves/blob/master/LICENSE
+ */.md-waves-effect{position:relative;cursor:pointer;display:inline-block;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}.md-waves-effect .md-waves-ripple{position:absolute;border-radius:50%;width:100px;height:100px;margin-top:-50px;margin-left:-50px;opacity:0;background:rgba(0,0,0,.2);background:-webkit-radial-gradient(rgba(0,0,0,.2) 0,rgba(0,0,0,.3) 40%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 60%,hsla(0,0%,100%,0) 70%);background:radial-gradient(rgba(0,0,0,.2) 0,rgba(0,0,0,.3) 40%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 60%,hsla(0,0%,100%,0) 70%);-webkit-transition:all .5s ease-out;transition:all .5s ease-out;-webkit-transition-property:-webkit-transform,opacity;-webkit-transition-property:opacity,-webkit-transform;transition-property:opacity,-webkit-transform;transition-property:transform,opacity;transition-property:transform,opacity,-webkit-transform;-webkit-transform:scale(0) translate(0);transform:scale(0) translate(0);pointer-events:none}.md-waves-effect.md-waves-light .md-waves-ripple{background:hsla(0,0%,100%,.4);background:-webkit-radial-gradient(hsla(0,0%,100%,.2) 0,hsla(0,0%,100%,.3) 40%,hsla(0,0%,100%,.4) 50%,hsla(0,0%,100%,.5) 60%,hsla(0,0%,100%,0) 70%);background:radial-gradient(hsla(0,0%,100%,.2) 0,hsla(0,0%,100%,.3) 40%,hsla(0,0%,100%,.4) 50%,hsla(0,0%,100%,.5) 60%,hsla(0,0%,100%,0) 70%)}.md-waves-effect.md-waves-classic .md-waves-ripple{background:rgba(0,0,0,.2)}.md-waves-effect.md-waves-classic.md-waves-light .md-waves-ripple{background:hsla(0,0%,100%,.4)}.md-waves-notransition{-webkit-transition:none!important;transition:none!important}.md-waves-button,.md-waves-circle{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-mask-image:-webkit-radial-gradient(circle,#fff 100%,#000 0)}.md-waves-button,.md-waves-button-input,.md-waves-button:hover,.md-waves-button:visited{white-space:nowrap;vertical-align:middle;cursor:pointer;border:none;outline:none;color:inherit;background-color:transparent;font-size:1em;line-height:1em;text-align:center;text-decoration:none;z-index:1}.md-waves-button{padding:.85em 1.1em;border-radius:.2em}.md-waves-button-input{margin:0;padding:.85em 1.1em}.md-waves-input-wrapper{border-radius:.2em;vertical-align:bottom}.md-waves-input-wrapper.md-waves-button{padding:0}.md-waves-input-wrapper .md-waves-button-input{position:relative;top:0;left:0;z-index:1}.md-waves-circle{text-align:center;width:2.5em;height:2.5em;line-height:2.5em;border-radius:50%}.md-waves-float{-webkit-mask-image:none;box-shadow:0 1px 1.5px 1px rgba(0,0,0,.12);-webkit-transition:all .3s;transition:all .3s}.md-waves-float:active{box-shadow:0 8px 20px 1px rgba(0,0,0,.3)}.md-waves-block{display:block}
+</style>
+<style>
+.simpread-font{font:300 16px/1.8 -apple-system,PingFang SC,Microsoft Yahei,Lantinghei SC,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;color:#333;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}.simpread-hidden{display:none}.simpread-focus-root{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background-color:hsla(0,0%,92%,.9);z-index:2147483645;opacity:0;-webkit-transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms;transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms}.simpread-focus-highlight{position:relative;box-shadow:0 0 0 20px #fff;background-color:#fff;overflow:visible;z-index:2147483646}.sr-controlbar-bg sr-rd-crlbar,.sr-controlbar-bg sr-rd-crlbar fab{z-index:2147483647}.simpread-read-root{display:-webkit-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;margin:0;top:-1000px;left:0;width:100%;z-index:2147483646;overflow-x:hidden;opacity:0;-webkit-transition:all 1s cubic-bezier(.23,1,.32,1) .1s;transition:all 1s cubic-bezier(.23,1,.32,1) .1s}.simpread-read-root-show{top:0}.simpread-read-root-hide{top:1000px}sr-read{display:-webkit-flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;margin:20px 20%;min-width:400px;min-height:400px;text-align:center}read-process{position:fixed;top:0;left:0;height:3px;width:100%;background-color:#64b5f6;-webkit-transition:width 2s;transition:width 2s;z-index:20000}sr-rd-content-error{display:block;position:relative;margin:0;margin-bottom:30px;padding:25px;background-color:rgba(0,0,0,.05)}sr-rd-footer{-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column;font-size:14px}sr-rd-footer,sr-rd-footer-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal}sr-rd-footer-group{-webkit-box-orient:horizontal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}sr-rd-footer-line{width:100%;border-top:1px solid #e0e0e0}sr-rd-footer-text{min-width:150px}sr-rd-footer-copywrite{margin:10px 0 20px;color:inherit}sr-rd-footer-copywrite a,sr-rd-footer-copywrite a:link{margin:0;padding:0;color:inherit;background-color:transparent;font-size:inherit!important;line-height:normal;text-decoration:none;vertical-align:baseline;vertical-align:initial;border:none!important;box-sizing:border-box}sr-rd-footer-copywrite a:focus,sr-rd-footer-copywrite a:hover,sr-rd-footer a:active{color:inherit;text-decoration:underline}sr-rd-crlbar.controlbar{position:fixed;right:0;bottom:0;width:100px;height:100%;opacity:0;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}sr-rd-crlbar.controlbar:hover{opacity:1}@media (max-height:620px){fab{zoom:.8}}@media (max-height:783px){dialog-gp dialog-content{max-height:580px}dialog-gp dialog-footer{border-top:1px solid #e0e0e0}}.simpread-highlight-selector{background-color:#fafafa;outline:3px dashed #1976d2;opacity:.8;cursor:pointer;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}toc-bg{position:fixed;left:0;top:0;width:200px;height:500px;font-size:medium}toc-bg:hover{z-index:3}.toc-bg-hidden{opacity:0;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}.toc-bg-hidden:hover{opacity:1;z-index:3}toc *{all:unset}toc{position:fixed;left:0;top:100px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;padding:10px;max-width:200px;max-height:500px;overflow-x:hidden;cursor:pointer;border:1px solid hsla(0,0%,62%,.22);-webkit-transition:width 1.5s;transition:width 1.5s}toc,toc outline{-webkit-box-orient:vertical}toc outline{position:relative;display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;text-overflow:ellipsis;margin:2px 0;min-height:21px;line-height:21px;text-align:left}toc outline a,toc outline a:active,toc outline a:focus,toc outline a:visited{color:inherit;font-size:11px;text-decoration:none!important}toc outline a:hover{font-weight:700!important;text-decoration:underline!important}toc outline a.toc-outline-theme-dark,toc outline a.toc-outline-theme-night{color:#fff!important}.toc-level-h2{padding-left:10px}.toc-level-h3{padding-left:25px}.toc-level-h4{padding-left:35px}.toc-outline-active{background-color:#f44336}toc outline active{position:absolute;right:0;top:0;bottom:0;padding:0 0 0 3px}sr-kbd{background:-webkit-gradient(linear,0 0,0 100%,from(#fff785),to(#ffc542));border:1px solid #e3be23;-o-border-image:none;border-image:none;-o-border-image:initial;border-image:initial;position:absolute;left:0;padding:1px 3px 0;font-size:11px!important;font-weight:700;box-shadow:0 3px 7px 0 rgba(0,0,0,.3);overflow:hidden;border-radius:3px}.sr-kbd-a{position:relative}kbd-mapping{position:fixed;left:5px;bottom:5px;-ms-flex-direction:column;flex-direction:column;width:500px;height:550px;background-color:#fff;border:1px solid hsla(0,0%,62%,.22);box-shadow:0 2px 5px rgba(0,0,0,.26);border-radius:3px}kbd-mapping,kbd-maps{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal}kbd-maps{-ms-flex-flow:column wrap;flex-flow:column wrap}kbd-mapping kbd-map-title{margin:5px 0;font-size:14px;font-weight:700}kbd-maps-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}kbd-maps-title{margin:5px 0;padding-left:53px;font-size:12px;font-weight:700}kbd-map kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fafbfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5}kbd-map kbd-name{display:inline-block;text-align:right;width:50px}kbd-map kbd-desc{padding-left:3px}
+</style>
+<style>
+sr-opt-focus,sr-opt-read{-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column}sr-opt-focus,sr-opt-gp,sr-opt-read{display:-webkit-flex;-webkit-box-direction:normal;width:100%}sr-opt-gp{position:relative;-webkit-box-orient:horizontal;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;margin-bottom:25px;font-size:15px}sr-opt-gp sr-opt-label{display:block;position:absolute;margin:-8px 0 0;font-size:14px;font-weight:700;color:rgba(0,137,123,.8);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;-webkit-transform:scale(.75) translateY(-8px);transform:scale(.75) translateY(-8px);-webkit-transform-origin:left top 0;transform-origin:left top 0}sr-opt-themes{display:-webkit-flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%;margin:8px 0 17px;padding:0}sr-opt-theme{width:40px;height:20px;cursor:pointer;list-style:none;border-radius:3px;border:1px solid #212121;box-sizing:border-box;opacity:1;-webkit-transition:all opacity .5s cubic-bezier(.23,1,.32,1) 1s 0ms;transition:all opacity .5s cubic-bezier(.23,1,.32,1) 1s 0ms}sr-opt-theme:hover{opacity:.2;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}sr-opt-theme:not(:first-child){margin-left:5px}sr-opt-theme[sr-type=active]{box-shadow:0 3px 3px 0 rgba(0,0,0,.14),0 2px 20px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.7)}
+</style>
+<style>
+notify-gp{font:300 14px -apple-system,PingFang SC,Microsoft Yahei,Lantinghei SC,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;display:-webkit-flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end;position:fixed;top:0;right:0;margin:0 15px 0 0;padding:0;text-transform:none;pointer-events:none}notify-gp notify{display:-webkit-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin:0;margin-top:15px;padding:14px 24px;min-width:288px;max-width:568px;height:48px;max-height:48px;color:hsla(0,0%,100%,.7);background-color:#323232;box-sizing:border-box;border-radius:4px;pointer-events:auto;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0);-webkit-transform-origin:left top 0;transform-origin:left top 0;-webkit-transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;transition:transform .45s cubic-bezier(.23,1,.32,1) 0ms,opacity 1s cubic-bezier(.23,1,.32,1) 0ms;transition:transform .45s cubic-bezier(.23,1,.32,1) 0ms,opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;box-shadow:0 1px 3px 0 rgba(60,64,67,.302),0 4px 8px 3px rgba(60,64,67,.149)}notify-gp notify-title{font-size:13px;font-weight:700}notify-gp notify-content{display:block;font-size:14px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}notify-gp notify-content a,notify-gp notify-content a:active,notify-gp notify-content a:link,notify-gp notify-content a:visited{margin:inherit;padding-bottom:5px;color:#fff;font-size:inherit;text-decoration:none;-webkit-transition:color .5s;transition:color .5s}notify-gp notify-content a:hover{margin:0;margin:initial;padding:0;padding:initial;color:inherit;font-size:inherit;text-decoration:none}notify-gp notify-i{display:none;margin:0 10px 0 0;width:24px;height:24px;background-position:50%;background-repeat:no-repeat}notify-gp notify-action,notify-gp notify-cancel{display:none;margin:0 0 0 24px;max-width:80px;min-width:56px;color:#8ab4f8;font-weight:500;font-size:inherit;text-transform:uppercase;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}notify-gp notify-cancel{margin:0}notify-gp notify-a{display:block;position:absolute;top:5px;right:5px;cursor:pointer}notify-gp notify-a notify-span{display:block;width:16px;height:16px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABpFBMVEUAAADl5eXj4+NSVFRTVVVaXFxLTU1hY2NdX18pLCwhJCSdnp5sbm6HiYmjpKSDhYX///+rrKytrq6XmJgzNTUoKyt3eXlydHRlZ2dbXV1ucHB4enrv7++KjIyIiort7e1oamosLy8aHR0VGBgUFxcbHh4rLi5oamprbGwgIyMKDQ0KDQ0iJSVjZWWfoaEkJiYICwsLDg4KDQ0MDw8iJSWMjo41ODgMDw8JDAw2OTkvMTELDg4LDg4xMzM1NzcJDAwLDg40NjYeISEHCgoeISFkZmYtLy8yNDRvcXEWGRkHCgoaHR3///8RFBQHCgohJCShoqLIyMgaHR0HCgoZGxv4+PgRFBQLDg4xMzOWl5eam5ssLi4bHh7///8fIiIJDAwwMzNzdHQXGhoeISFlZmYsLi4KDQ0gIiI6PDwOEREuMDAXGhoHCgodHx8pLCwNEBA1ODj///8nKSkICwsICwsJDAwnKSnZ2dl9fn4pKysNDw8OEREpLCxyc3ORkpIzNTUjJSUVGBgUFxcgIyM5PDyanJwEBwcDBwcDBgYFCAgGCQn///+5RDDmAAAAhnRSTlMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQUFAQU+i7S0jkAGEYrw8Y8SBIn++Pr3jQQ67fx8dvX6iWr27z+B/YsOcoMPdPiEAaL7iAgEcfWsA6D7iAkGcawDef2LDnOFD3T4gTLnfHb6iWrqNQJ4+ff7fQILd+ToewsCLHWZmXUwAyFsKwcAAAABYktHRBCVsg0sAAAAzElEQVQY02NgwAoYZWTl5JngXGYFRSVlFVU1dRYIn1VDU6sNCLR1dNlAfHY9fQNDw/YOI2MDE1MOoACnmbmFpZW1ja2dvYMjFwMDN4NTp7OLq5u7h6dXpzcDDwOvj29bm59/QGBQcFtbSCgfA79AWFtHeERkVLR1W1tMrCCDEENcZ3xCYlJySmpaZzqDMAODSEamRVZ2cE5unn1+gSjQFrHCIqNir7a2nJLSsnJxkEMkKiqrutrauqpraiUhTpWqq29obGpuaZVmIAYAAO06McffKEk8AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDEzLTA0LTAzVDE3OjE4OjAzKzA4OjAwRdgB9wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxMS0wNS0xOFQyMDowMTowMCswODowMB0r3XkAAABNdEVYdHNvZnR3YXJlAEltYWdlTWFnaWNrIDYuOC44LTcgUTE2IHg4Nl82NCAyMDE0LTAyLTI4IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3JnWaRffwAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpIZWlnaHQAMTI4Q3xBgAAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAAxMjjQjRHdAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADEzMDU3MjAwNjArP9HVAAAAE3RFWHRUaHVtYjo6U2l6ZQAxLjAzS0JCZtQvXwAAAFx0RVh0VGh1bWI6OlVSSQBmaWxlOi8vL2hvbWUvZnRwLzE1MjAvZWFzeWljb24uY24vZWFzeWljb24uY24vY2RuLWltZy5lYXN5aWNvbi5jbi9wbmcvMTcvMTc4Ni5wbmcRsze7AAAAAElFTkSuQmCC)}notify-gp notify-i.holdon{display:block;margin:0 0 0 24px;width:20px;height:20px;background-image:url("");cursor:pointer}notify-gp .notify-show{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1)}notify-gp .notify-hide{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}notify-gp .notify-success{color:rgba(118,255,3,.8)}notify-gp .notify-warning{color:#ffee58}notify-gp .notify-error{color:#ef5350}notify-gp .notify-modal{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;height:auto;max-height:200px;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}notify-gp .notify-modal .notify-modal-content{margin-top:5px;font-size:13px;white-space:normal}notify-gp .notify-modal .notify-modal-content a{margin:0;padding:0;color:inherit;font-size:inherit;text-decoration:underline;cursor:pointer}notify-gp .notify-modal .notify-modal-content a:active,notify-gp .notify-modal .notify-modal-content a:focus,notify-gp .notify-modal .notify-modal-content a:hover,notify-gp .notify-modal .notify-modal-content a:visited{color:inherit}notify-gp .notify-snackbar{position:fixed;bottom:0;left:50%;margin-bottom:5px;-webkit-transform-origin:left bottom 0;transform-origin:left bottom 0}.notify-position-lt-corner{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;margin:0 0 0 15px;left:0;right:auto}.notify-position-lb-corner{margin:0 0 15px 15px;right:auto;left:0}.notify-position-lb-corner,.notify-position-rb-corner{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-flow:column-reverse wrap-reverse;flex-flow:column-reverse wrap-reverse;top:auto;bottom:0}.notify-position-rb-corner{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;margin:0 15px 15px 0;left:auto;right:0}
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+sr-rd-content *, sr-rd-content p, sr-rd-content div {}
+</style>
+<style>
+sr-rd-content pre code, sr-rd-content pre code * {}
+</style>
+<style>
+sr-rd-desc {}
+</style>
+<style>
+sr-rd-content pre {}
+</style>
+<style>
+sr-rd-title {}
+</style>
+<style>
+
+</style>
+<style>
+sr-plugin-lightbox-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    background-color: rgb(119, 119, 119, 0.7);
+    z-index: 2147483646;
+}
+
+sr-plugin-lightbox {
+   text-align: center;
+}
+
+sr-plugin-lightbox img {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    border: 10px solid #fff;
+    box-shadow: none;
+    cursor: pointer;
+}
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.recommend-note {
+  margin-bottom: 20px;
+}
+.recommend-note .meta, .recommend-note .list {
+    width: 620px;
+    margin: 0 auto;
+}
+.recommend-note .meta .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.recommend-note .meta .title .more {
+      float: right;
+      font-size: 14px;
+      color: #A0A0A0;
+}
+.recommend-note .list {
+    margin-top: 20px;
+}
+.recommend-note .list .note {
+      display: block;
+      margin-bottom: 25px;
+      padding: 0 0 25px 0;
+      border-bottom: 1px solid #DDDDDD;
+}
+.recommend-note .list .note.have-img {
+        min-height: 136px;
+}
+.recommend-note .list .note.have-img.no-user .description {
+          -webkit-line-clamp: 3;
+}
+.recommend-note .list .note .cover {
+        float: right;
+        margin: -5px 0 0 15px;
+        width: 150px;
+        height: 120px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 6px;
+}
+.recommend-note .list .note .title {
+        display: inherit;
+        margin-bottom: 4px;
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: bold;
+        color: #333333;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
+}
+.recommend-note .list .note .title:hover {
+          text-decoration: underline;
+}
+.recommend-note .list .note .title:visited {
+          color: #999999;
+}
+.recommend-note .list .note .description {
+        margin-bottom: 12px;
+        font-size: 13px;
+        line-height: 23px;
+        color: #333333;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+}
+.recommend-note .list .note .author .avatar {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-right: 3px;
+        border-radius: 50%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        vertical-align: middle;
+}
+.recommend-note .list .note .author .name {
+        font-size: 13px;
+        color: #333333;
+        vertical-align: middle;
+}
+
+</style>
+<style>
+
+#featured-comment-list {
+  margin-top: 30px;
+  margin-bottom: -15px;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.pc-bind-phone-modal .modal-content, .pc-bind-phone-modal .modal-body {
+  overflow: visible;
+}
+.pc-bind-phone-modal .modal-body {
+  padding-top: 14px;
+}
+.pc-bind-phone-modal .dropdown-menu {
+  max-height: 300px;
+  overflow: auto;
+}
+.pc-bind-phone-modal .dropdown-menu .tag {
+    background-color: #efefef;
+    color: #4A4A4A;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 25px;
+    font-size: 12px;
+}
+.pc-bind-phone-modal .tips {
+  color: #999999;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  margin-bottom: 14px;
+}
+.pc-bind-phone-modal .tips a {
+    color: #3194D0;
+}
+.reader-night-mode .pc-bind-phone-modal .dropdown-menu .tag {
+  background-color: #2F2F2F;
+  color: #999999;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.youdao-recommended-ad {
+  position: relative;
+  display: block;
+}
+.youdao-recommended-ad .img {
+    display: block;
+    float: right;
+    width: 150px;
+    height: 120px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: RGB(241, 243, 244);
+    border-radius: 6px;
+    margin: -5px 0 0 15px;
+}
+body.reader-night-mode .youdao-recommended-ad .img {
+      background-color: #4f4f4f;
+}
+.youdao-recommended-ad .info {
+    overflow: hidden;
+}
+.youdao-recommended-ad .info .title {
+      display: block;
+      color: #333;
+      line-height: 27px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: -4px;
+      cursor: pointer;
+}
+body.reader-night-mode .youdao-recommended-ad .info .title {
+        color: #969696;
+}
+.youdao-recommended-ad .info .intro {
+      display: block;
+      font-size: 13px;
+      color: #999;
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 24px;
+      max-height: 48px;
+      -webkit-box-sizing: content-box;
+              box-sizing: content-box;
+      white-space: normal;
+}
+.youdao-recommended-ad .info .ad-badge {
+      position: absolute;
+      left: 0;
+      top: 95px;
+      display: block;
+      width: 38px;
+      height: 18px;
+      line-height: 16px;
+      text-align: center;
+      border-radius: 2px;
+      border: solid 1px #999999;
+      color: #999999;
+      font-size: 12px;
+}
+
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        box-sizing: content-box;
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        max-width: 700px;
+        padding: 15px 15px 80px 15px;
+      }
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important; min-height: 100%; height: auto;" id="" class="reader-black-font">
+    <div class="mx-wc-main">
+      <DIV class="note" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="post" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="article mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <h1 class="title">如何优雅处理前端的异常？</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="https://www.jianshu.com/u/96882b22d12f">
+            <img src="assets/1556074753-cab071be320cd9a57b62615238134843.png" alt="96">
+</a>          <div class="info">
+            <span class="name"><a href="https://www.jianshu.com/u/96882b22d12f">勿忘巛心安</a></span>
+            <!-- 关注用户按钮 -->
+            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 简书钻 -->
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time">2019.04.17 21:56</span>
+              <span class="wordage">字数 2498</span>
+            <span class="views-count">阅读 0</span><span class="comments-count">评论 0</span><span class="likes-count">喜欢 0</span></div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+
+        <!-- 文章内容 -->
+        <div data-note-content="" class="show-content">
+          <div class="show-content-free">
+            <p>前端一直是距离用户最近的一层，随着产品的日益完善，我们会更加注重用户体验，而前端异常却如鲠在喉，甚是烦人。</p>
+<h2>一、为什么要处理异常？</h2>
+<p>异常是不可控的，会影响最终的呈现结果，但是我们有充分的理由去做这样的事情。</p>
+<ol>
+<li>增强用户体验；</li>
+<li>远程定位问题；</li>
+<li>未雨绸缪，及早发现问题；</li>
+<li>无法复线问题，尤其是移动端，机型，系统都是问题；</li>
+<li>完善的前端方案，前端监控系统；</li>
+</ol>
+<p>对于 JS 而言，我们面对的仅仅只是异常，异常的出现不会直接导致 JS 引擎崩溃，最多只会使当前执行的任务终止。</p>
+<h2>二、需要处理哪些异常？</h2>
+<p>对于前端来说，我们可做的异常捕获还真不少。总结一下，大概如下：</p>
+<ul>
+<li>JS 语法错误、代码异常</li>
+<li>AJAX 请求异常</li>
+<li>静态资源加载异常</li>
+<li>Promise 异常</li>
+<li>Iframe 异常</li>
+<li>跨域 Script error</li>
+<li>崩溃和卡顿</li>
+</ul>
+<p>下面我会针对每种具体情况来说明如何处理这些异常。</p>
+<h2>三、Try-Catch 的误区</h2>
+<p>try-catch 只能捕获到同步的运行时错误，对语法和异步错误却无能为力，捕获不到。</p>
+<h3>1. 同步运行时错误：</h3>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 536px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 44.67%;"></div>
+<div class="image-view" data-width="1200" data-height="536"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-f477d0b65f7102c6.png" data-original-width="1200" data-original-height="536" data-original-format="image/png" data-original-filesize="201651" style="cursor: zoom-in;" class="" src="assets/1556074753-3595c540fcd505d279e4a80fb89128c3.png"></div>
+</div>
+
+</div>
+<p>输出：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 178px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 11.01%;"></div>
+<div class="image-view" data-width="1616" data-height="178"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-eeb081f653337ee6.png" data-original-width="1616" data-original-height="178" data-original-format="image/png" data-original-filesize="69182" style="cursor: zoom-in;" class="" src="assets/1556074753-085b077e01bc31b4bbf0460bcf957fe9.png"></div>
+</div>
+
+</div>
+<h3>2. 不能捕获到语法错误，我们修改一下代码，删掉一个单引号</h3>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 514px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 31.89%;"></div>
+<div class="image-view" data-width="1612" data-height="514"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-e9caec52cb9e8026.png" data-original-width="1612" data-original-height="514" data-original-format="image/png" data-original-filesize="207739" style="cursor: zoom-in;" class="" src="assets/1556074753-68d6d11b0df6639c7abb132b59ccec03.png"></div>
+</div>
+
+</div>
+<p>输出：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 122px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 7.5200000000000005%;"></div>
+<div class="image-view" data-width="1622" data-height="122"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-1bf80607f48c3039.png" data-original-width="1622" data-original-height="122" data-original-format="image/png" data-original-filesize="113533" style="cursor: zoom-in;" class="" src="assets/1556074753-7243a87415631ac313d7ef7029a0ecfe.png"></div>
+</div>
+
+</div>
+<p>不过语法错误在我们开发阶段就可以看到，应该不会顺利上到线上环境。</p>
+<h3>3.异步错误：</h3>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 548px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 45.51%;"></div>
+<div class="image-view" data-width="1204" data-height="548"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-5c4618b99a457cd1.png" data-original-width="1204" data-original-height="548" data-original-format="image/png" data-original-filesize="234247" style="cursor: zoom-in;" class="" src="assets/1556074753-0027b24d19be8efd9475a28a84927eaf.png"></div>
+</div>
+
+</div>
+<p>可以看看日志：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 156px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 9.56%;"></div>
+<div class="image-view" data-width="1632" data-height="156"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-0389408bdbc8e0c5.png" data-original-width="1632" data-original-height="156" data-original-format="image/png" data-original-filesize="159495" style="cursor: zoom-in;" class="" src="assets/1556074753-9fa7180b664a1ca72dd4fa1662bc4718.png"></div>
+</div>
+
+</div>
+<p>并没有捕获到异常，这是需要我们特别注意的地方。</p>
+<h3>4. window.onerror 不是万能的</h3>
+<p>当 JS 运行时错误发生时，window 会触发一个 ErrorEvent 接口的 error 事件，并执行 window.onerror()。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 550px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 35.620000000000005%;"></div>
+<div class="image-view" data-width="1544" data-height="550"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-58195408f2778890.png" data-original-width="1544" data-original-height="550" data-original-format="image/png" data-original-filesize="358430" style="cursor: zoom-in;" class="" src="assets/1556074753-0f84340e29a49492caa61e993fd19c63.png"></div>
+</div>
+
+</div>
+<p>首先试试同步运行时错误</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 526px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 33.0%;"></div>
+<div class="image-view" data-width="1594" data-height="526"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-7f22be8401adb894.png" data-original-width="1594" data-original-height="526" data-original-format="image/png" data-original-filesize="394094" style="cursor: zoom-in;" class="" src="assets/1556074753-061c64d612186108662e9d273af702ff.png"></div>
+</div>
+
+</div>
+<p>可以看到，我们捕获到了异常：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 462px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 29.69%;"></div>
+<div class="image-view" data-width="1556" data-height="462"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-5667738b5f69a5f9.png" data-original-width="1556" data-original-height="462" data-original-format="image/png" data-original-filesize="404870" style="cursor: zoom-in;" class="" src="assets/1556074753-b7c4998c48a4077a3b07aec6e457f11e.png"></div>
+</div>
+
+</div>
+<p>再试试语法错误呢？</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 278px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 17.68%;"></div>
+<div class="image-view" data-width="1572" data-height="278"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-e68d7223058df419.png" data-original-width="1572" data-original-height="278" data-original-format="image/png" data-original-filesize="201636" style="cursor: zoom-in;" class="" src="assets/1556074753-8233d03a77c839ec448af334639e9bcd.png"></div>
+</div>
+
+</div>
+<p>控制台打印出了这样的异常：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 174px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 10.27%;"></div>
+<div class="image-view" data-width="1694" data-height="174"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-ef62cdac9adbe0fe.png" data-original-width="1694" data-original-height="174" data-original-format="image/png" data-original-filesize="98466" style="cursor: zoom-in;" class="" src="assets/1556074753-898bfe7aec7397bc8ee797f718626181.png"></div>
+</div>
+
+</div>
+<p>竟然没有捕获到语法错误？</p>
+<p>怀着忐忑的心，我们最后来试试异步运行时错误：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 394px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 24.529999999999998%;"></div>
+<div class="image-view" data-width="1606" data-height="394"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-52da1006b9c43623.png" data-original-width="1606" data-original-height="394" data-original-format="image/png" data-original-filesize="226339" style="cursor: zoom-in;" class="" src="assets/1556074753-060c3526568cd6fef96fa52a0c7af2b4.png"></div>
+</div>
+
+</div>
+<p>控制台输出了：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 268px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 15.76%;"></div>
+<div class="image-view" data-width="1700" data-height="268"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-908454315b2737ad.png" data-original-width="1700" data-original-height="268" data-original-format="image/png" data-original-filesize="218995" style="cursor: zoom-in;" class="" src="assets/1556074753-c098f8fd996bc7f3b31a33a5159b13a6.png"></div>
+</div>
+
+</div>
+<p>接着，我们试试网络请求异常的情况：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 428px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 25.03%;"></div>
+<div class="image-view" data-width="1710" data-height="428"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-7453a12746d63788.png" data-original-width="1710" data-original-height="428" data-original-format="image/png" data-original-filesize="245813" style="cursor: zoom-in;" class="" src="assets/1556074753-5107d7268e89d56f6dfd3571252d01bb.png"></div>
+</div>
+
+</div>
+<p>我们发现，不论是静态资源异常，或者接口异常，错误都无法捕获到。</p>
+<p><strong>补充一点：window.onerror 函数只有在返回 true 的时候，异常才不会向上抛出，否则即使是知道异常的发生控制台还是会显示 Uncaught Error: xxxxx</strong></p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 442px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 24.8%;"></div>
+<div class="image-view" data-width="1782" data-height="442"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-8886f111ad86c063.png" data-original-width="1782" data-original-height="442" data-original-format="image/png" data-original-filesize="249076" style="cursor: zoom-in;" class="" src="assets/1556074753-886432efc5cd3d955ac3d97c4d05918d.png"></div>
+</div>
+
+</div>
+<p>控制台就不会再有这样的错误了：</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 254px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 15.8%;"></div>
+<div class="image-view" data-width="1608" data-height="254"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-3abd098da0e9f53b.png" data-original-width="1608" data-original-height="254" data-original-format="image/png" data-original-filesize="166763" style="cursor: zoom-in;" class="" src="assets/1556074753-cfa4e6035a61e0ea60ee7544e2e71463.png"></div>
+</div>
+
+</div>
+<p><strong>需要注意：</strong></p>
+<ul>
+<li>onerror 最好写在所有 JS 脚本的前面，否则有可能捕获不到错误；</li>
+<li>onerror 无法捕获语法错误；</li>
+</ul>
+<p>到这里基本就清晰了：在实际的使用过程中，onerror 主要是来捕获预料之外的错误，而 try-catch 则是用来在可预见情况下监控特定的错误，两者结合使用更加高效。</p>
+<p>问题又来了，捕获不到静态资源加载异常怎么办？</p>
+<h4>window.addEventListener</h4>
+<p>当一项资源（如图片或脚本）加载失败，加载资源的元素会触发一个 Event 接口的 error 事件，并执行该元素上的 onerror() 处理函数。这些 error 事件不会向上冒泡到 window ，不过（至少在 Firefox 中）能被单一的 window.addEventListener 捕获。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 323px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 46.129999999999995%;"></div>
+<div class="image-view" data-width="1630" data-height="752"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-d8832a10d3ff93fe.png" data-original-width="1630" data-original-height="752" data-original-format="image/png" data-original-filesize="383229" style="cursor: zoom-in;" class="" src="assets/1556074753-4250bb7752f75a6e3e51514991fd09af.png"></div>
+</div>
+
+</div>
+<p>控制台输出：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 124px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 7.51%;"></div>
+<div class="image-view" data-width="1652" data-height="124"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-d03fb2e9c8468d55.png" data-original-width="1652" data-original-height="124" data-original-format="image/png" data-original-filesize="63622" style="cursor: zoom-in;" class="" src="assets/1556074753-b3669a34e39702c2fdd64312baf93f14.png"></div>
+</div>
+
+</div>
+<p>由于网络请求异常不会事件冒泡，因此必须在捕获阶段将其捕捉到才行，但是这种方式虽然可以捕捉到网络请求的异常，但是无法判断 HTTP 的状态是 404 还是其他比如 500 等等，所以还需要配合服务端日志才进行排查分析才可以。</p>
+<p><strong>需要注意:</strong></p>
+<ul>
+<li>不同浏览器下返回的 error 对象可能不同，需要注意兼容处理。</li>
+<li>需要注意避免 addEventListener 重复监听。</li>
+</ul>
+<h2>二、Promise Catch</h2>
+<p>在 promise 中使用 catch 可以非常方便的捕获到异步 error ，这个很简单。没有写 catch 的 Promise 中抛出的错误无法被 onerror 或 try-catch 捕获到，所以我们务必要在 Promise 中不要忘记写 catch 处理抛出的异常。</p>
+<p><strong>解决方案</strong>： 为了防止有漏掉的 Promise 异常，建议在全局增加一个对 unhandledrejection 的监听，用来全局监听Uncaught Promise Error。使用方式：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 336px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 20.560000000000002%;"></div>
+<div class="image-view" data-width="1634" data-height="336"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-e9b743409194dc61.png" data-original-width="1634" data-original-height="336" data-original-format="image/png" data-original-filesize="143056" style="cursor: zoom-in;" class="" src="assets/1556074753-e51a34b2b0fe0ed6053819b4dc08e48f.png"></div>
+</div>
+
+</div>
+<p>我们继续来尝试一下：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 578px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 35.86%;"></div>
+<div class="image-view" data-width="1612" data-height="578"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-28f044d462a01caf.png" data-original-width="1612" data-original-height="578" data-original-format="image/png" data-original-filesize="324813" style="cursor: zoom-in;" class="" src="assets/1556074753-4181020362d1cdba9bcee1e21fc6aa24.png"></div>
+</div>
+
+</div>
+<p>那如果对 Promise 不进行 catch 呢？</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 532px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 33.129999999999995%;"></div>
+<div class="image-view" data-width="1606" data-height="532"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-1cefa012d1abaef6.png" data-original-width="1606" data-original-height="532" data-original-format="image/png" data-original-filesize="354942" style="cursor: zoom-in;" class="" src="assets/1556074753-952d5d888e9dc28e3af792467602faf5.png"></div>
+</div>
+
+</div>
+<p>嗯，事实证明，也是会被正常捕获到的。</p>
+<p>所以，正如我们上面所说，为了防止有漏掉的 Promise 异常，建议在全局增加一个对 unhandledrejection 的监听，用来全局监听 Uncaught Promise Error。</p>
+<p>补充一点：如果去掉控制台的异常显示，需要加上：</p>
+<br>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 140px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 13.489999999999998%;"></div>
+<div class="image-view" data-width="1038" data-height="140"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-e097b0de5fc29de8.png" data-original-width="1038" data-original-height="140" data-original-format="image/png" data-original-filesize="64705" style="cursor: zoom-in;" class="" src="assets/1556074753-5533f9eb1f4f0c34c4243f7f74fd7444.png"></div>
+</div>
+
+</div>
+<h2>三、VUE errorHandler</h2>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 462px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 29.880000000000003%;"></div>
+<div class="image-view" data-width="1546" data-height="462"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-9d834f7a63b9920f.png" data-original-width="1546" data-original-height="462" data-original-format="image/png" data-original-filesize="343984" style="cursor: zoom-in;" class="" src="assets/1556074753-fb7c3db54e8eb1d49c8b0b47d43d97e2.png"></div>
+</div>
+
+</div>
+<h2>四、React 异常捕获</h2>
+<p>React 16 提供了一个内置函数 componentDidCatch，使用它可以非常简单的获取到 react 下的错误信息。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 406px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 28.43%;"></div>
+<div class="image-view" data-width="1428" data-height="406"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-2ab39c5bf4f8871d.png" data-original-width="1428" data-original-height="406" data-original-format="image/png" data-original-filesize="159055" style="cursor: zoom-in;" class="" src="assets/1556074753-b37c4edd7dd988b080b8bf8a2e657acd.png"></div>
+</div>
+
+</div>
+<p>UI 的某部分引起的 JS 错误不应该破坏整个程序，为了帮 React 的使用者解决这个问题，React 16 介绍了一种关于错误边界（error boundary)的新观念。</p>
+<p><strong>需要注意的是： error boundaries 并不会捕捉下面这些错误。</strong></p>
+<ol>
+<li>事件处理器</li>
+<li>异步代码</li>
+<li>服务端的渲染代码</li>
+<li>在 error boundaries 区域内的错误</li>
+</ol>
+<p>我们来举一个小例子，在下面这个 componentDIdCatch(error,info) 里的类会变成一个 error boundary：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 475px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 67.83%;"></div>
+<div class="image-view" data-width="1610" data-height="1092"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-e3832442b780e508.png" data-original-width="1610" data-original-height="1092" data-original-format="image/png" data-original-filesize="647385" style="cursor: zoom-in;" class="" src="assets/1556074753-6c871500904286853ec2bbf5c9b9bcf9.png"></div>
+</div>
+
+</div>
+<p>然后我们像使用普通组件那样使用它：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 256px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 21.02%;"></div>
+<div class="image-view" data-width="1218" data-height="256"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-6aea6250cf814dd4.png" data-original-width="1218" data-original-height="256" data-original-format="image/png" data-original-filesize="107811" style="cursor: zoom-in;" class="" src="assets/1556074753-19f0c04cebc0655259af2aa3326ee83b.png"></div>
+</div>
+
+</div>
+<p>componentDidCatch() 方法像 JS 的 catch{} 模块一样工作，但是对于组件，只有 class 类型的组件(class component )可以成为一个 error boundaries 。</p>
+<p>实际上，大多数情况下我们可以在整个程序中定义一个 error boundary 组件，之后就可以一直使用它了！</p>
+<h2>五、iframe 异常</h2>
+<p>对于 iframe 的异常捕获，我们还得借力 window.onerror：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 246px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 15.61%;"></div>
+<div class="image-view" data-width="1576" data-height="246"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-aa99da60b57bce14.png" data-original-width="1576" data-original-height="246" data-original-format="image/png" data-original-filesize="181225" style="cursor: zoom-in;" class="" src="assets/1556074753-07d077d289456257d4d1b3e5e65ab0b5.png"></div>
+</div>
+
+</div>
+<p>一个简单的例子可能如下：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 334px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 20.47%;"></div>
+<div class="image-view" data-width="1632" data-height="334"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-e178451fad5d4cb0.png" data-original-width="1632" data-original-height="334" data-original-format="image/png" data-original-filesize="268791" style="cursor: zoom-in;" class="" src="assets/1556074753-2a01cf6d547c02a38fda418b03d55b0a.png"></div>
+</div>
+
+</div>
+<h2>六、Script error</h2>
+<p>一般情况，如果出现 Script error 这样的错误，基本上可以确定是出现了跨域问题。这时候，是不会有其他太多辅助信息的，但是解决思路无非如下：</p>
+<p>跨源资源共享机制( CORS )：我们为 script 标签添加 crossOrigin 属性。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 172px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 10.51%;"></div>
+<div class="image-view" data-width="1636" data-height="172"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-744275b291bab28a.png" data-original-width="1636" data-original-height="172" data-original-format="image/png" data-original-filesize="100076" style="cursor: zoom-in;" class="" src="assets/1556074753-2f3404e1c023384651a3f6c3b6c27fd8.png"></div>
+</div>
+
+</div>
+<p>或者动态去添加 js 脚本：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 280px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 18.37%;"></div>
+<div class="image-view" data-width="1524" data-height="280"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-60f0279494c487bb.png" data-original-width="1524" data-original-height="280" data-original-format="image/png" data-original-filesize="246615" style="cursor: zoom-in;" class="" src="assets/1556074753-10d1b58b4becbf2783f722ee9afb42a0.png"></div>
+</div>
+
+</div>
+<p><strong>特别注意，服务器端需要设置：Access-Control-Allow-Origin</strong></p>
+<p>此外，我们也可以试试这个-解决 Script Error 的另类思路：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 654px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 40.77%;"></div>
+<div class="image-view" data-width="1604" data-height="654"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-eba261f4eddeafdb.png" data-original-width="1604" data-original-height="654" data-original-format="image/png" data-original-filesize="406863" style="cursor: zoom-in;" class="" src="assets/1556074753-31ef83dffc34ce0393b90e3f5a350af9.png"></div>
+</div>
+
+</div>
+<p>简单解释一下：</p>
+<p>改写了 EventTarget 的 addEventListener 方法；</p>
+<p>对传入的 listener 进行包装，返回包装过的 listener，对其执行进行 try-catch；</p>
+<p>浏览器不会对 try-catch 起来的异常进行跨域拦截，所以 catch 到的时候，是有堆栈信息的；</p>
+<p>重新 throw 出来异常的时候，执行的是同域代码，所以 window.onerror 捕获的时候不会丢失堆栈信息；</p>
+<p>利用包装 addEventListener，我们还可以达到「扩展堆栈」的效果：</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 600px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 38.66%;"></div>
+<div class="image-view" data-width="1552" data-height="600"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-cfd05e39d771b410.png" data-original-width="1552" data-original-height="600" data-original-format="image/png" data-original-filesize="410242" style="cursor: zoom-in;" class="" src="assets/1556074753-1dd9de86e0930ec1b35941d93edac18b.png"></div>
+</div>
+
+</div>
+<h2>七、崩溃和卡顿</h2>
+<p>卡顿也就是网页暂时响应比较慢， JS 可能无法及时执行。但崩溃就不一样了，网页都崩溃了，JS 都不运行了，还有什么办法可以监控网页的崩溃，并将网页崩溃上报呢？</p>
+<p>崩溃和卡顿也是不可忽视的，也许会导致你的用户流失。</p>
+<p>利用 window 对象的 load 和 beforeunload 事件实现了网页崩溃的监控。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 348px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 49.62%;"></div>
+<div class="image-view" data-width="1588" data-height="788"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-0418f2805a37c9e6.png" data-original-width="1588" data-original-height="788" data-original-format="image/png" data-original-filesize="641228" style="cursor: zoom-in;" class="" src="assets/1556074753-836c2c8f049cf362ac1673f7fc13c1d0.png"></div>
+</div>
+
+</div>
+<p>基于以下原因，我们可以使用 Service Worker 来实现网页崩溃的监控：</p>
+<ul>
+<li>Service Worker 有自己独立的工作线程，与网页区分开，网页崩溃了，Service Worker 一般情况下不会崩溃；</li>
+<li>Service Worker 生命周期一般要比网页还要长，可以用来监控网页的状态；</li>
+<li>网页可以通过 navigator.serviceWorker.controller.postMessage API 向掌管自己的 SW 发送消息。</li>
+</ul>
+<h2>八、错误上报</h2>
+<h3>1. 通过 Ajax 发送数据:</h3>
+<p>因为 Ajax 请求本身也有可能会发生异常，而且有可能会引发跨域问题，一般情况下更推荐使用动态创建 img 标签的形式进行上报。</p>
+<h3>2.动态创建 img 标签的形式:</h3>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 322px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 20.25%;"></div>
+<div class="image-view" data-width="1590" data-height="322"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-5d92d9bdbd9e6dd7.png" data-original-width="1590" data-original-height="322" data-original-format="image/png" data-original-filesize="224423" style="cursor: zoom-in;" class="" src="assets/1556074753-b798048a479117b0c4d275d9dfaddef8.png"></div>
+</div>
+
+</div>
+<p>收集异常信息量太多，怎么办？实际中，我们不得不考虑这样一种情况：如果你的网站访问量很大，那么一个必然的错误发送的信息就有很多条，这时候，我们需要设置采集率，从而减缓服务器的压力:</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 478px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 38.550000000000004%;"></div>
+<div class="image-view" data-width="1240" data-height="478"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-373d0963cf081097.png" data-original-width="1240" data-original-height="478" data-original-format="image/png" data-original-filesize="203836" style="cursor: zoom-in;" class="" src="assets/1556074753-6c724bcfdc763cf0be59d561eb7b13af.png"></div>
+</div>
+
+</div>
+<p>采集率应该通过实际情况来设定，随机数，或者某些用户特征都是不错的选择。</p>
+<h2>九、总结</h2>
+<p>回到我们开头提出的那个问题，如何优雅的处理异常呢？</p>
+<ol>
+<li>可疑区域增加 Try-Catch</li>
+<li>全局监控 JS 异常 window.onerror</li>
+<li>全局监控静态资源异常 window.addEventListener</li>
+<li>捕获没有 Catch 的 Promise 异常：unhandledrejection</li>
+<li>VUE errorHandler 和 React componentDidCatch</li>
+<li>监控网页崩溃：window 对象的 load 和 beforeunload</li>
+<li>跨域 crossOrigin 解决</li>
+</ol>
+<p>其实很简单，采用组合方案，分类型的去捕获异常，这样基本 80%-90% 的问题都化于无形。</p>
+<blockquote>
+<p>作者：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsegmentfault.com%2Fu%2Fcodingxiaojiejie" target="_blank" rel="nofollow"><strong>coding小姐姐</strong></a><br>
+原文链接：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000018754274" target="_blank" rel="nofollow">https://segmentfault.com/a/1190000018754274</a></p>
+</blockquote>
+
+          </div>
+        </div>
+    </div></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://www.jianshu.com/p/b90bd277b94f" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-04-24 10:59:13</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
