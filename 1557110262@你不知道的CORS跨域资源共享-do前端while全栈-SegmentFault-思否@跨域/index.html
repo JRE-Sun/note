@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000018464348 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>你不知道的CORS跨域资源共享 - do前端while全栈 - SegmentFault 思否@跨域</title>
+    
+<link rel="stylesheet" href="assets/1557110262-d93dfe41d61c032962760b7f2b5e1b74.css">
+
+<link rel="stylesheet" href="assets/1557110262-3db965f65c56a94afd3a806557d16bb2.css">
+
+<link rel="stylesheet" href="assets/1557110262-fe8c784f5b2de0229ae4bb897cfc9cc9.css">
+<style>
+
+</style>
+<style>
+
+:root .topbanner,
+:root .container > a.mid-wrapper,
+:root .container > .ads,
+:root .main[style="border:#7D8C8E solid 1px;height: 23px;"]
+{ display: none !important; }
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000013483387" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li><a href="https://segmentfault.com/blog/hui01">do前端while全栈</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="keywords" data-userslug="liwenhui" data-useravatar="https://avatar-static.segmentfault.com/363/317/3633176399-5b06962c0d805_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/liwenhui">
+                                                    <img class="avatar-40" src="assets/1557110262-400d0a6063f9d5a6629d5d19a16c0010" alt="keywords">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/liwenhui" class="mr5"><strong>keywords</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1557110262-11fdf5240214594165785493ac6e2381.svg" class="mr5"><span style="color:#BF7158" class="mr10">3.8k</span>
+
+                                                                                                发布于
+                                                <a href="https://segmentfault.com/blog/hui01">do前端while全栈</a>
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                          <button type="button" class="btn btn-xs btn-success follow-article ml10" data-do="follow" data-type="blog" data-id="1200000013483387">关注专栏
+                                                       </button>
+                                                                                                                                                   </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2019-03-11 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000018464348">
+                                            <a href="https://segmentfault.com/a/1190000018464348"> 你不知道的CORS跨域资源共享</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000018464348" data-license="cc">
+                    
+<h3>了解下同源策略</h3>
+<ul>
+<li>
+<strong>源（origin）</strong>*：就是协议、域名和端口号；</li>
+<li>
+<strong>同源：</strong> 就是源相同，即协议、域名和端口<strong>完全相同</strong>；</li>
+<li>
+<strong>同源策略：</strong>同源策略是浏览器的一个安全功能，不同源的客户端脚本在没有明确授权的情况下，不能读写对方资源；</li>
+<li>
+<p><strong>同源策略的分类：</strong></p>
+<ol>
+<li>
+<strong>DOM 同源策略</strong>：即针对于DOM，禁止对不同源页面的<code>DOM</code>进行操作;如不同域名的 iframe 是限制互相访问。</li>
+<li>
+<strong>XMLHttpRequest 同源策略：</strong>禁止使用 XHR 对象向不同源的服务器地址发起 HTTP 请求。</li>
+</ol>
+</li>
+<li>
+<p><strong>不受同源策略限制：</strong></p>
+<ol>
+<li>页面中的链接，重定向以及<strong>表单提交</strong>(因为表单提交，数据提交到action域后，本身页面就和其没有关系了，不会管请求结果，后面操作都交给了action里面的域)是不会受到同源策略限制的。</li>
+<li>资源的引入不受限制，但是js不能读写加载的内容：如嵌入到页面中的<code>&lt;script src="..."&gt;&lt;/script&gt;，&lt;img&gt;，&lt;link&gt;，&lt;iframe&gt;</code>等</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3>为什么要跨域限制</h3>
+<ul>
+<li>
+<strong>如果没有 DOM 同源策略：</strong>那么就没有啥<code>xss</code>的研究了，因为你的网站将不是你的网站，而是大家的，谁都可以写个代码操作你的网站界面</li>
+<li>
+<p><strong>如果没有XMLHttpRequest 同源策略，那么就可以很轻易的进行CSRF（跨站请求伪造）攻击：</strong></p>
+<ol>
+<li>用户登录了自己的网站页面 <code>a.com</code>,cookie中添加了用户标识。</li>
+<li>用户浏览了恶意页面 <code>b.com</code>，执行了页面中的恶意 AJAX 请求代码。</li>
+<li>
+<code>b.com</code> 向 <code>a.com</code>发起 AJAX HTTP 请求，请求会默认把 <code>a.com</code>对应<code>cookie</code>也同时发送过去。</li>
+<li>
+<code>a.com</code>从发送的 cookie 中提取用户标识，验证用户无误，response 中返回请求数据;数据就泄露了。而且由于Ajax在后台执行，这一过程用户是无法感知的。</li>
+</ol>
+</li>
+<li>（附）有了XMLHttpRequest 同源策略就可以限制CSRF攻击？<strong>别忘了还有不受同源策略的：表单提交和资源引入</strong>，（安全问题下期在研究）</li>
+</ul>
+<hr>
+<h3>跨域决解方案</h3>
+<ol>
+<li>
+<p>JSONP 跨域：借鉴于 script 标签不受浏览器同源策略的影响，允许跨域引用资源；因此可以通过动态创建 script 标签，然后利用 src 属性进行跨域；</p>
+<ul><li>缺点：</li></ul>
+<ol>
+<li>所有网站都可以拿到数据，存在安全性问题，需要网站双方商议基础token的身份验证。</li>
+<li>只能是GET，不能POST。</li>
+<li>可能被注入恶意代码，篡改页面内容，可以采用字符串过滤来规避此问题。</li>
+</ol>
+</li>
+<li>服务器代理：浏览器有跨域限制，但是服务器不存在跨域问题，所以可以由服务器请求所要域的资源再返回给客户端。</li>
+<li>document.domain、window.name 、location.hash：借助于iframe决解DOM同源策略</li>
+<li>postMessage：决解DOM同源策略，新方案</li>
+<li>CORS（跨域资源共享）：这里讲的重点</li>
+</ol>
+<h3>CORS（跨域资源共享）</h3>
+<ul><li>HTML5 提供的标准跨域解决方案，是一个由浏览器共同遵循的一套控制策略，通过HTTP的Header来进行交互；主要通过后端来设置CORS配置项。</li></ul>
+<h4>CORS简单使用</h4>
+<ul>
+<li>之前说得CORS跨域，嗯嗯，后端设置<code>Access-Control-Allow-Origin：*|[或具体的域名]</code>就好了；</li>
+<li>第一次尝试：</li>
+</ul>
+<pre><code>app.use(async(ctx,next) =&gt; {
+    ctx.set({
+        "Access-Control-Allow-Origin": "http://localhost:8088"
+})</code></pre>
+<ul><li>发现有些请求可以成功，但是有些还是会报错：</li></ul>
+<p><span class="img-wrap"><img data-src="/img/bVbpB0b?w=2874&amp;h=324" src="assets/1557110262-86c1e575a35bce7cd7d0ab0df8854a00.svg" alt="clipboard.png" title="clipboard.png"></span></p>
+<ul>
+<li>请求被同源策略阻止，预请求的响应没有通过检查：http返回的不是ok?</li>
+<li>并且发现发送的是<code>OPTIONS</code>请求:</li>
+</ul>
+<p><span class="img-wrap"><img data-src="/img/bVbpB0B?w=1618&amp;h=754" src="assets/1557110262-86c1e575a35bce7cd7d0ab0df8854a00.svg" alt="clipboard.png" title="clipboard.png"></span></p>
+<ul><li>发现：<strong>CORS规范将请求分为两种类型，一种是简单请求，另外一种是带预检的非简单请求</strong>
+</li></ul>
+<hr>
+<h4>简单请求和非简单请求</h4>
+<ul>
+<li>
+<p>浏览器发送跨域请求判断方式：</p>
+<ul>
+<li>浏览器在发送跨域请求的时候，会先判断下是简单请求还是非简单请求，如果是<strong>简单请求</strong>，就先执行服务端程序，然后浏览器才会判断是否跨域；</li>
+<li>而对于<strong>非简单请求</strong>，浏览器会在发送实际请求之前先发送一个OPTIONS的HTTP请求来判断服务器是否能接受该跨域请求；如果不能接受的话，浏览器会直接阻止接下来实际请求的发生。</li>
+</ul>
+</li>
+<li><strong>什么是简单请求</strong></li>
+</ul>
+<ol>
+<li>
+<p>请求方法是如下之一：</p>
+<ul>
+<li>GET</li>
+<li>HEAD</li>
+<li>POST</li>
+</ul>
+</li>
+<li>
+<p>所有的Header都只包含如下列表中（没有自定义header）：</p>
+<ul>
+<li>Cache-Control</li>
+<li>Content-Language</li>
+<li>Content-Type</li>
+<li>Expires</li>
+<li>Last-Modified</li>
+<li>Pragma</li>
+</ul>
+</li>
+</ol>
+<ul><li><strong>除此之外都是非简单请求</strong></li></ul>
+<h4>CORS非简单请求配置须知</h4>
+<ul>
+<li>正如上图报错显示，对于非简单请求，浏览器会先发送options预检，预检通过后才会发送真是的请求；</li>
+<li>发送options预检请求将关于接下来的真实请求的信息给服务器：</li>
+</ul>
+<pre><code>Origin：请求的源域信息
+Access-Control-Request-Method：接下来的请求类型，如POST、GET等
+Access-Control-Request-Headers：接下来的请求中包含的用户显式设置的Header列表</code></pre>
+<ul><li>服务器端收到请求之后，会根据附带的信息来判断是否允许该跨域请求，通过Header返回信息：</li></ul>
+<pre><code>Access-Control-Allow-Origin：允许跨域的Origin列表
+Access-Control-Allow-Methods：允许跨域的方法列表
+Access-Control-Allow-Headers：允许跨域的Header列表,防止遗漏Header，因此建议没有特殊需求的情况下设置为*
+Access-Control-Expose-Headers：允许暴露给JavaScript代码的Header列表
+Access-Control-Max-Age：最大的浏览器预检请求缓存时间，单位为s</code></pre>
+<hr>
+<h4>CORS完整配置</h4>
+<ol><li><strong>koa配置CORS跨域资源共享中间件：</strong></li></ol>
+<pre><code>const cors = (origin) =&gt; {
+    return async (ctx, next) =&gt; {
+        ctx.set({
+            "Access-Control-Allow-Origin": origin, //允许的源
+        })
+        // 预检请求
+        if (ctx.request.method == "OPTIONS") {
+            ctx.set({
+                'Access-Control-Allow-Methods': 'OPTIONS,HEAD,DELETE,GET,PUT,POST', //支持跨域的方法
+                'Access-Control-Allow-Headers': '*', //允许的头
+                'Access-Control-Max-Age':10000, // 预检请求缓存时间
+                // 如果服务器设置Access-Control-Allow-Credentials为true，那么就不能再设置Access-Control-Allow-Origin为*,必须用具体的域名
+                'Access-Control-Allow-Credentials':true // 跨域请求携带身份信息(Credential，例如Cookie或者HTTP认证信息)
+            });
+            ctx.send(null, '预检请求')
+        } else {
+            // 真实请求
+            await next()
+        }
+    }
+}
+
+export default cors</code></pre>
+<ul><li>现在不管是简单请求还是非简单请求都可以跨域访问啦～</li></ul>
+<h4>跨域时如何处理cookie</h4>
+<ul>
+<li>
+<p>cookie：</p>
+<ul>
+<li>我们知道http时无状态的，所以在维持用户状态时，我们一般会使用cookie；</li>
+<li>cookie每次<strong>同源</strong>请求都会携带；但是跨域时cookie是不会进行携带发送的；</li>
+</ul>
+</li>
+<li>
+<p>问题：</p>
+<ul><li>由于cookie对于不同源是不能进行操作的；这就导致，服务器无法进行cookie设置，浏览器也没法携带给服务器（场景：用户登录进行登录操作后，发现响应中有<code>set-cookie</code>但是，浏览器cookie并没有相应的cookie）</li></ul>
+</li>
+<li>
+<p><strong>决解：</strong></p>
+<ol>
+<li>浏览器请求设置withCredentials为true即可让该跨域请求携带 Cookie；使用axios配置<code>axios.defaults.withCredentials = true</code>
+</li>
+<li>服务器设置<code>Access-Control-Allow-Credentials=true</code>允许跨域请求携带 Cookie</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<strong>“积跬步、行千里”</strong>—— 持续更新中~，喜欢的话留下个赞和关注哦！</blockquote>
+<ul><li>
+<p>往期经典好文：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000018451014">服务器（CentOS)安装配置mongodb</a></li>
+<li><a href="https://segmentfault.com/a/1190000018433489">Koa日志中间件封装开发（log4js）</a></li>
+<li><a href="https://segmentfault.com/a/1190000015676846">团队合作必备的Git操作</a></li>
+<li><a href="https://segmentfault.com/a/1190000018439311">使用pm2部署node生产环境</a></li>
+</ul>
+</li></ul>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1557110262-873c9dc7cb09de973561aca118e591a4.svg" height="20"></a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000018464348" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="你不知道的CORS跨域资源共享" data-url="https://segmentfault.com/a/1190000018464348?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5bpDAe"></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000018464348" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">118 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000018464348" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">94</span></button><br><button type="button" data-id="1190000018464348" class="btn btn-danger btn-lg mt15 article__reward-btn">
+                                    赞赏支持
+                                </button></div><div class="mt30 mb30 text-center article__reward-info"><span class="mr10">如果觉得我的文章对你有用，请随意赞赏</span></div>                
+                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                                <div id="paradigm-article-related"></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000018464348" data-user-id="1030000009484911" data-author-id="1030000011913584 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">3 条评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+                <div class="comments-item" data-id="1050000018514737">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/rendaozhongnian" target="_blank"><img class="avatar-32 " src="assets/1557110262-727c137aa28b6012494b35b59a23e5a0" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/rendaozhongnian">人到中年</a></strong>
+                    
+                    <span class="comments-date">  ·  3月15日</span>
+                </div>
+
+                <div class="fmt mb10"><p>如果没有 DOM 同源策略：那么就没有啥xss的研究了，因为你的网站将不是你的网站，而是大家的，谁都可以写个代码操作你的网站界面<br>这句话什么意思</p></div>
+
+                <form action="/api/comment/1050000018514737/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000018515557">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>如果两个页面同源，JavaScript可以操作彼此的dom，就相当于我们在开发网站时，不同路由页面的相互操作；而如果没有DOM同源策略，那么所有的网站就相当于都是现在一个网站的不同路由页面了（混乱的一锅汤了，整个Web都是一个项目）；有点抽象，举个例子具体化：iframe，（没有DOM同源策略的话）看到了一个不错的网站A，如何变成自己的？iframe引入，自己啥布局都不需要，只要写个JS修改下该网站DOM结构，比如登录本来可能是&lt;form action="XXX/a"&gt;,自己用JS改为&lt;form action="自己的接口"&gt;就是这么简单；再具体的可以想象下cookie，</p></div>
+                                <form action="/api/comment/1050000018515557/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/liwenhui">
+                                            <strong>keywords</strong>
+                                        </a> 
+                                        <span class="comments-isAuthor ">
+                                            作者
+                                        </span> 
+                                        <span class="text-muted-plus">  ·  3月15日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000018656050">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/rocky191" target="_blank"><img class="avatar-32 " src="assets/1557110262-f0a6a4c8087099c1e1580f4f8667db3f.png" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/rocky191">rocky191</a></strong>
+                    
+                    <span class="comments-date">  ·  3月26日</span>
+                </div>
+
+                <div class="fmt mb10"><p>想起来有一次别人问有没有处理过options请求</p></div>
+
+                <form action="/api/comment/1050000018656050/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1557110262-f0a6a4c8087099c1e1580f4f8667db3f.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000018464348/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000018464348" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 10:37:42</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

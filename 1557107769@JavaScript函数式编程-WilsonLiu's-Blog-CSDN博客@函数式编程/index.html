@@ -1,0 +1,1213 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://blog.csdn.net/liusheng95/article/details/53445202 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JavaScript函数式编程 - WilsonLiu's Blog - CSDN博客@函数式编程</title>
+    
+<link rel="stylesheet" href="assets/1557107769-9831f5cf1e9c387f88a1ea6f9825cf58.css">
+
+<link rel="stylesheet" href="assets/1557107769-7054c9a7bf20e7a4762de89feb3928a5.css">
+
+<link rel="stylesheet" href="assets/1557107769-3ee558b18d32cf19bc5f15c8f3dc942f.css">
+
+<link rel="stylesheet" type="text/css" href="assets/1557107769-287aed634bc19f202db333bc0533e7da.css">
+
+<link rel="stylesheet" class="simpread-fs-style" href="assets/1557107769-86bd3854ceee8e03a35e10a1ed75970d.css">
+
+<link rel="stylesheet" class="simpread-fs-style" href="assets/1557107769-64ad313999cac464794b0a85eaac6156.css">
+
+<link rel="stylesheet" href="assets/1557107769-f5d764629eb4ab8e3132c472f1fe7f49.css">
+
+<link rel="stylesheet" href="assets/1557107769-8afce11d00f7bc88a8191ad66e945525.css">
+
+<link href="assets/1557107769-47e7ddc9e1c45ba790d4476fa588d265.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/1557107769-d59c8fbcb4e99f490e1b848904625eb0.css">
+
+<link rel="stylesheet" href="assets/1557107769-5e49103610a4507dfceec6a81e7ab40f.css">
+
+<link rel="stylesheet" href="assets/1557107769-186b0d2f06ccc88e64f41fdb5cf32ed8.css">
+
+<link rel="stylesheet" href="assets/1557107769-5d588e322ad8d49b5f2cdad29f9344e9.css">
+
+<link href="assets/1557107769-707064ce5456264570e22d85da458e5e.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="assets/1557107769-ce2a7a7a13b3b2aae540a44424b01c4b.css">
+
+<link rel="stylesheet" href="assets/1557107769-f8c63a7d45544992aac43ae63368a982.css">
+<style>
+.login-box{position: fixed;display: none;left: 50%;top: 50%;z-index: 10000;-webkit-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);-o-transform: translate(-50%, -50%);-moz-transform: translate(-50%, -50%);transform: translate(-50%, -50%);background-color: #fff;}.login-mark{position: fixed;top: 0;left: 0;z-index: 9999;background-color: rgba(0, 0, 0, 0.5);width: 100%;height: 100%;display: none;}
+</style>
+<style>
+
+:root a[href="//gitbook.cn/new/gitchat/activity?utm_source=csdnblog1"],
+:root .right-item[data-track-click*="http"]:not([data-track-click*=".csdn."]),
+:root .recommend-item-box[data-track-click*="http"]:not([data-track-click*=".csdn."]),
+:root .recommend-ad-box,
+:root .float-left > div[id^="dmp_ad_"],
+:root .csdn-tracking-statistics[style="height:250px;"],
+:root .box.hot,
+:root .advert-bg,
+:root .ad_class,
+:root .AD,
+:root #layerd,
+:root #kp_box_58,
+:root #kp_box_476,
+:root #asideCustom65392991,
+:root #asideCustom36733263,
+:root #article_content > link + a,
+:root #ad_pop,
+:root #Topic_Top,
+:root .topbanner
+{ display: none !important; }
+</style>
+<style>
+
+</style>
+<style>
+
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    
+</style>
+<style>
+pre{position: relative}pre:hover .hljs-button{display: block}.hljs-button{display: none;position: absolute;right: 4px;top: 4px;font-size: 12px;color: #4d4d4d;background-color: white;padding: 2px 8px;margin: 8px;border-radius: 4px;cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);}.hljs-button:after{content: attr(data-title)}
+</style>
+<style>
+.hljs-ln{border-collapse:collapse}            .hljs-ln td{padding:0}            .hljs-ln-n{text-align: right;padding-right: 8px;}            .hljs-ln-n:before{content:attr(data-line-number)}
+</style>
+<style>
+.recommend-box ._4paradigm_box.T3 a .content-box{margin-left:0} .recommend-box ._4paradigm_box.T3 a .content-box h4{vertical-align:top}.recommend-box ._4paradigm_box.p4courset3_target {padding:0}.recommend-box ._4paradigm_box._paradigm_T_ads_render {padding:0} .recommend-box ._4paradigm_box._paradigm_T_ads_render a {width:100%;display:inline-block} ._4paradigm_box._paradigm_T_ads_render a:hover .text-truncate{color:#ca0c16}
+</style>
+<style>
+@media screen and (max-width: 1320px) {._paradigm_T_ads_render #iframeu3738747_0{width: 730px !important;}}@media screen and (min-width: 1320px) {._paradigm_T_ads_render #iframeu3738747_0{width: 850px !important;}}@media (min-width: 1650px) {._paradigm_T_ads_render #iframeu3738747_0{width: 960px !important;}}@media screen and (max-width: 1200px) {._paradigm_T_ads_render #iframeu3738747_0{width: 730px !important;}}@media (min-width: 1440px) and (max-width: 1535px) {._paradigm_T_ads_render #iframeu3738747_0{width: 960px !important;}}
+</style>
+<style>
+.recommend-box ._4paradigm_box.T3 a .content-box{margin-left:0} .recommend-box ._4paradigm_box.T3 a .content-box h4{vertical-align:top}.recommend-box ._4paradigm_box.p4courset3_target {padding:0}.recommend-box ._4paradigm_box._paradigm_T_ads_render {padding:0} .recommend-box ._4paradigm_box._paradigm_T_ads_render a {width:100%;display:inline-block} ._4paradigm_box._paradigm_T_ads_render a:hover .text-truncate{color:#ca0c16}
+</style>
+<style>
+.recommend-box ._4paradigm_box.T3 a .content-box{margin-left:0} .recommend-box ._4paradigm_box.T3 a .content-box h4{vertical-align:top}.recommend-box ._4paradigm_box.p4courset3_target {padding:0}.recommend-box ._4paradigm_box._paradigm_T_ads_render {padding:0} .recommend-box ._4paradigm_box._paradigm_T_ads_render a {width:100%;display:inline-block} ._4paradigm_box._paradigm_T_ads_render a:hover .text-truncate{color:#ca0c16}
+</style>
+<style>
+
+:root *[bw0vjwb][hidden] { display: none !important; }
+</style>
+<style>
+.simpread-theme-root{font-size:62.5%!important}sr-rd-content,sr-rd-desc,sr-rd-title{width:100%}sr-rd-title{text-rendering:optimizelegibility;margin:1em 0 .5em}sr-rd-content{text-align:left;word-break:break-word}sr-rd-desc{text-align:left;line-height:2.4;margin:0 0 1.2em}sr-rd-content,sr-rd-content div,sr-rd-content p{font-size:25.6px;font-size:1.6rem;line-height:1.6}sr-rd-content div,sr-rd-content p{display:block;float:inherit}sr-rd-content div,sr-rd-content p,sr-rd-content pre,sr-rd-content sr-blockquote{margin:0 0 1.2em;word-break:break-word}sr-rd-content a{padding:0 5px;vertical-align:baseline;vertical-align:initial}sr-rd-content a,sr-rd-content a:link{color:inherit;font-size:medium;font-weight:inherit;border:none}sr-rd-content a:hover{background:transparent}sr-rd-content img{margin:10px;padding:5px;background:#fff;border:1px solid #bbb;box-shadow:1px 1px 3px #d4d4d4}sr-rd-content sr-blockquote{display:block;position:relative;padding:15px 25px;text-align:left;line-height:inherit}sr-rd-content sr-blockquote:before{position:absolute}sr-rd-content sr-blockquote *{margin:0;font-size:inherit}sr-rd-content table{width:100%;margin:0 0 1.2em;word-break:keep-all;word-break:normal;overflow:auto;border:none}sr-rd-content table td,sr-rd-content table th{border:none}sr-rd-content ol,sr-rd-content ul{margin:0;padding:0}sr-rd-content ul{margin:0 0 1.2em;margin-left:1.3em;padding:0;list-style:disc}sr-rd-content ol{list-style:decimal;margin-left:1.3em}sr-rd-content ol li,sr-rd-content ul li{font-size:inherit;list-style:disc;margin:0 0 1.2em}sr-rd-content ol li *,sr-rd-content ul li *{margin:0;text-align:left;text-align:initial}sr-rd-content li ol,sr-rd-content li ul{margin-bottom:.8em;margin-left:2em}sr-rd-content li ul{list-style:circle}sr-rd-content pre{font-family:Consolas,Monaco,Andale Mono,Source Code Pro,Liberation Mono,Courier,monospace;display:block;padding:15px;line-height:1.5;word-break:break-all;word-wrap:break-word;white-space:pre;overflow:auto}sr-rd-content pre,sr-rd-content pre *,sr-rd-content pre div{font-size:17.6px;font-size:1.1rem}sr-rd-content li pre code,sr-rd-content p pre code,sr-rd-content pre{background-color:transparent;border:none}sr-rd-content pre code{margin:0;padding:0}sr-rd-content pre code,sr-rd-content pre code *{font-size:17.6px;font-size:1.1rem}sr-rd-content li code,sr-rd-content p code{margin:0 4px;padding:2px 4px;font-size:17.6px;font-size:1.1rem}.sr-rd-content-img{width:90%;height:auto}.sr-rd-content-img-load{width:48px;height:48px;margin:0;padding:0;border-style:none;border-width:0;background-repeat:no-repeat;background-image:url(data:image/gif;base64,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)}.sr-rd-content-center{text-align:center;display:-webkit-box;-webkit-box-align:center;-webkit-box-pack:center;-webkit-box-orient:vertical}.sr-rd-content-nobeautify{margin:0;padding:0;border:0;box-shadow:0 0 0}sr-rd-mult{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin:0 0 16px;padding:16px 0 24px;width:100%;min-width:840.72px;background-color:#fafafa;border-radius:2px;box-shadow:0 1px 5px rgba(0,0,0,.16)}sr-rd-mult:hover{-webkit-transition:all .45s 0ms;transition:all .45s 0ms;box-shadow:1px 1px 8px rgba(0,0,0,.16)}sr-rd-mult sr-rd-mult-content{padding:0 16px;overflow:auto}sr-rd-mult sr-rd-mult-avatar,sr-rd-mult sr-rd-mult-content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}sr-rd-mult sr-rd-mult-avatar{-webkit-box-align:center;-ms-flex-align:center;align-items:center}sr-rd-mult sr-rd-mult-avatar span{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;max-width:75px;overflow:hidden;text-overflow:ellipsis;text-align:left;font-size:16px;font-size:1rem}sr-rd-mult sr-rd-mult-avatar img{margin-bottom:0;max-width:50px;max-height:50px;width:50px;height:50px;border-radius:50%}sr-rd-mult sr-rd-mult-avatar .sr-rd-content-center{margin:0}sr-page{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%}
+</style>
+<style>
+sr-rd-theme-github{}
+</style>
+<style>
+sr-rd-theme-newsprint{}
+</style>
+<style>
+sr-rd-theme-gothic{display:none}sr-rd-content h1{line-height:64px;line-height:4rem;margin:64px 0 28px;margin:4rem 0 1.75rem;padding:20px 30px}sr-rd-content h1,sr-rd-content h2{font-weight:400;text-align:center;text-transform:uppercase}sr-rd-content h2{line-height:48px;line-height:3rem;margin:48px 0 31px;margin:3rem 0 1.9375rem;padding:0 30px}sr-rd-content h3,sr-rd-content h4,sr-rd-content h5{font-weight:400}sr-rd-content h6{font-weight:700}sr-rd-content h1{font-size:57.6px;font-size:3.6rem}sr-rd-content h2{font-size:51.2px;font-size:3.2rem}sr-rd-content h3{font-size:40px;font-size:2.5rem}sr-rd-content h4{font-size:35.2px;font-size:2.2rem}sr-rd-content h5{font-size:30.4px;font-size:1.9rem}sr-rd-content h6{font-size:27.2px;font-size:1.7rem}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{margin-top:1.2em;margin-bottom:.6em;color:#111}sr-rd-content ol,sr-rd-content ul{list-style-type:disc;margin-left:3em}sr-rd-content ol ol,sr-rd-content ul ol{list-style-type:lower-roman}sr-rd-content ol ol ol,sr-rd-content ol ul ol,sr-rd-content ul ol ol,sr-rd-content ul ul ol{list-style-type:lower-alpha}sr-rd-content table{margin-bottom:20px}sr-rd-content table td,sr-rd-content table th{padding:8px;line-height:20px;line-height:1.25rem;vertical-align:top;border-top:1px solid #ddd}sr-rd-content table th{font-weight:700}sr-rd-content table thead th{vertical-align:bottom}sr-rd-content table caption+thead tr:first-child td,sr-rd-content table caption+thead tr:first-child th,sr-rd-content table colgroup+thead tr:first-child td,sr-rd-content table colgroup+thead tr:first-child th,sr-rd-content table thead:first-child tr:first-child td,sr-rd-content table thead:first-child tr:first-child th{border-top:0}sr-rd-content table tbody+tbody{border-top:2px solid #ddd}sr-rd-content sr-blockquote{margin:0 0 17.777px;margin:0 0 1.11111rem;padding:8px 17.777px 0 16.888px;padding:.5rem 1.11111rem 0 1.05556rem;border-left:1px solid gray}sr-rd-content sr-blockquote,sr-rd-content sr-blockquote p{line-height:2;color:#6f6f6f}.simpread-theme-root{background:#fcfcfc;color:#333}sr-rd-title{font-weight:400;line-height:64px;line-height:4rem;text-align:center;text-transform:uppercase;color:#111;font-size:51.2px;font-size:3.2rem}sr-rd-desc{margin:0 0 17.777px;margin:0 0 1.11111rem;padding:8px 17.777px 0 16.888px;padding:.5rem 1.11111rem 0 1.05556rem;font-size:32px;font-size:2rem;line-height:2;color:#6f6f6f;border-left:1px solid gray}sr-rd-content{font-weight:400;color:#333}sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#333}sr-rd-content a,sr-rd-content a:link{color:#900;text-decoration:none}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#900;text-decoration:underline}sr-rd-content li code,sr-rd-content p code,sr-rd-content pre{background-color:transparent;border:1px solid #ccc}sr-rd-mult{background-color:#f2f2f2}
+</style>
+<style>
+sr-rd-theme-engwrite{}
+</style>
+<style>
+sr-rd-theme-octopress{}
+</style>
+<style>
+sr-rd-theme-pixyii{}
+</style>
+<style>
+sr-rd-theme-monospace{}
+</style>
+<style>
+sr-rd-theme-night{}
+</style>
+<style>
+sr-rd-theme-dark{}
+</style>
+<style>
+/*!
+ * Waves v0.7.5
+ * http://fian.my.id/Waves
+ * 
+ * Copyright 2014-2016 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
+ * https://github.com/fians/Waves/blob/master/LICENSE
+ */.md-waves-effect{position:relative;cursor:pointer;display:inline-block;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}.md-waves-effect .md-waves-ripple{position:absolute;border-radius:50%;width:100px;height:100px;margin-top:-50px;margin-left:-50px;opacity:0;background:rgba(0,0,0,.2);background:-webkit-radial-gradient(rgba(0,0,0,.2) 0,rgba(0,0,0,.3) 40%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 60%,hsla(0,0%,100%,0) 70%);background:radial-gradient(rgba(0,0,0,.2) 0,rgba(0,0,0,.3) 40%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 60%,hsla(0,0%,100%,0) 70%);-webkit-transition:all .5s ease-out;transition:all .5s ease-out;-webkit-transition-property:-webkit-transform,opacity;-webkit-transition-property:opacity,-webkit-transform;transition-property:opacity,-webkit-transform;transition-property:transform,opacity;transition-property:transform,opacity,-webkit-transform;-webkit-transform:scale(0) translate(0);transform:scale(0) translate(0);pointer-events:none}.md-waves-effect.md-waves-light .md-waves-ripple{background:hsla(0,0%,100%,.4);background:-webkit-radial-gradient(hsla(0,0%,100%,.2) 0,hsla(0,0%,100%,.3) 40%,hsla(0,0%,100%,.4) 50%,hsla(0,0%,100%,.5) 60%,hsla(0,0%,100%,0) 70%);background:radial-gradient(hsla(0,0%,100%,.2) 0,hsla(0,0%,100%,.3) 40%,hsla(0,0%,100%,.4) 50%,hsla(0,0%,100%,.5) 60%,hsla(0,0%,100%,0) 70%)}.md-waves-effect.md-waves-classic .md-waves-ripple{background:rgba(0,0,0,.2)}.md-waves-effect.md-waves-classic.md-waves-light .md-waves-ripple{background:hsla(0,0%,100%,.4)}.md-waves-notransition{-webkit-transition:none!important;transition:none!important}.md-waves-button,.md-waves-circle{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-mask-image:-webkit-radial-gradient(circle,#fff 100%,#000 0)}.md-waves-button,.md-waves-button-input,.md-waves-button:hover,.md-waves-button:visited{white-space:nowrap;vertical-align:middle;cursor:pointer;border:none;outline:none;color:inherit;background-color:transparent;font-size:1em;line-height:1em;text-align:center;text-decoration:none;z-index:1}.md-waves-button{padding:.85em 1.1em;border-radius:.2em}.md-waves-button-input{margin:0;padding:.85em 1.1em}.md-waves-input-wrapper{border-radius:.2em;vertical-align:bottom}.md-waves-input-wrapper.md-waves-button{padding:0}.md-waves-input-wrapper .md-waves-button-input{position:relative;top:0;left:0;z-index:1}.md-waves-circle{text-align:center;width:2.5em;height:2.5em;line-height:2.5em;border-radius:50%}.md-waves-float{-webkit-mask-image:none;box-shadow:0 1px 1.5px 1px rgba(0,0,0,.12);-webkit-transition:all .3s;transition:all .3s}.md-waves-float:active{box-shadow:0 8px 20px 1px rgba(0,0,0,.3)}.md-waves-block{display:block}
+</style>
+<style>
+.simpread-font{font:300 16px/1.8 -apple-system,PingFang SC,Microsoft Yahei,Lantinghei SC,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;color:#333;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}.simpread-hidden{display:none}.simpread-focus-root{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background-color:hsla(0,0%,92%,.9);z-index:2147483645;opacity:0;-webkit-transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms;transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms}.simpread-focus-highlight{position:relative;box-shadow:0 0 0 20px #fff;background-color:#fff;overflow:visible;z-index:2147483646}.sr-controlbar-bg sr-rd-crlbar,.sr-controlbar-bg sr-rd-crlbar fab{z-index:2147483647}.simpread-read-root{display:-webkit-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;margin:0;top:-1000px;left:0;width:100%;z-index:2147483646;overflow-x:hidden;opacity:0;-webkit-transition:all 1s cubic-bezier(.23,1,.32,1) .1s;transition:all 1s cubic-bezier(.23,1,.32,1) .1s}.simpread-read-root-show{top:0}.simpread-read-root-hide{top:1000px}sr-read{display:-webkit-flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;margin:20px 20%;min-width:400px;min-height:400px;text-align:center}read-process{position:fixed;top:0;left:0;height:3px;width:100%;background-color:#64b5f6;-webkit-transition:width 2s;transition:width 2s;z-index:20000}sr-rd-content-error{display:block;position:relative;margin:0;margin-bottom:30px;padding:25px;background-color:rgba(0,0,0,.05)}sr-rd-footer{-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column;font-size:14px}sr-rd-footer,sr-rd-footer-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal}sr-rd-footer-group{-webkit-box-orient:horizontal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}sr-rd-footer-line{width:100%;border-top:1px solid #e0e0e0}sr-rd-footer-text{min-width:150px}sr-rd-footer-copywrite{margin:10px 0 20px;color:inherit}sr-rd-footer-copywrite a,sr-rd-footer-copywrite a:link{margin:0;padding:0;color:inherit;background-color:transparent;font-size:inherit!important;line-height:normal;text-decoration:none;vertical-align:baseline;vertical-align:initial;border:none!important;box-sizing:border-box}sr-rd-footer-copywrite a:focus,sr-rd-footer-copywrite a:hover,sr-rd-footer a:active{color:inherit;text-decoration:underline}sr-rd-crlbar.controlbar{position:fixed;right:0;bottom:0;width:100px;height:100%;opacity:0;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}sr-rd-crlbar.controlbar:hover{opacity:1}@media (max-height:620px){fab{zoom:.8}}@media (max-height:783px){dialog-gp dialog-content{max-height:580px}dialog-gp dialog-footer{border-top:1px solid #e0e0e0}}.simpread-highlight-selector{background-color:#fafafa;outline:3px dashed #1976d2;opacity:.8;cursor:pointer;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}toc-bg{position:fixed;left:0;top:0;width:200px;height:500px;font-size:medium}toc-bg:hover{z-index:3}.toc-bg-hidden{opacity:0;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}.toc-bg-hidden:hover{opacity:1;z-index:3}toc *{all:unset}toc{position:fixed;left:0;top:100px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;padding:10px;max-width:200px;max-height:500px;overflow-x:hidden;cursor:pointer;border:1px solid hsla(0,0%,62%,.22);-webkit-transition:width 1.5s;transition:width 1.5s}toc,toc outline{-webkit-box-orient:vertical}toc outline{position:relative;display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;text-overflow:ellipsis;margin:2px 0;min-height:21px;line-height:21px;text-align:left}toc outline a,toc outline a:active,toc outline a:focus,toc outline a:visited{color:inherit;font-size:11px;text-decoration:none!important}toc outline a:hover{font-weight:700!important;text-decoration:underline!important}toc outline a.toc-outline-theme-dark,toc outline a.toc-outline-theme-night{color:#fff!important}.toc-level-h2{padding-left:10px}.toc-level-h3{padding-left:25px}.toc-level-h4{padding-left:35px}.toc-outline-active{background-color:#f44336}toc outline active{position:absolute;right:0;top:0;bottom:0;padding:0 0 0 3px}sr-kbd{background:-webkit-gradient(linear,0 0,0 100%,from(#fff785),to(#ffc542));border:1px solid #e3be23;-o-border-image:none;border-image:none;-o-border-image:initial;border-image:initial;position:absolute;left:0;padding:1px 3px 0;font-size:11px!important;font-weight:700;box-shadow:0 3px 7px 0 rgba(0,0,0,.3);overflow:hidden;border-radius:3px}.sr-kbd-a{position:relative}kbd-mapping{position:fixed;left:5px;bottom:5px;-ms-flex-direction:column;flex-direction:column;width:500px;height:550px;background-color:#fff;border:1px solid hsla(0,0%,62%,.22);box-shadow:0 2px 5px rgba(0,0,0,.26);border-radius:3px}kbd-mapping,kbd-maps{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal}kbd-maps{-ms-flex-flow:column wrap;flex-flow:column wrap}kbd-mapping kbd-map-title{margin:5px 0;font-size:14px;font-weight:700}kbd-maps-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}kbd-maps-title{margin:5px 0;padding-left:53px;font-size:12px;font-weight:700}kbd-map kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fafbfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5}kbd-map kbd-name{display:inline-block;text-align:right;width:50px}kbd-map kbd-desc{padding-left:3px}
+</style>
+<style>
+sr-opt-focus,sr-opt-read{-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column}sr-opt-focus,sr-opt-gp,sr-opt-read{display:-webkit-flex;-webkit-box-direction:normal;width:100%}sr-opt-gp{position:relative;-webkit-box-orient:horizontal;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;margin-bottom:25px;font-size:15px}sr-opt-gp sr-opt-label{display:block;position:absolute;margin:-8px 0 0;font-size:14px;font-weight:700;color:rgba(0,137,123,.8);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;-webkit-transform:scale(.75) translateY(-8px);transform:scale(.75) translateY(-8px);-webkit-transform-origin:left top 0;transform-origin:left top 0}sr-opt-themes{display:-webkit-flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%;margin:8px 0 17px;padding:0}sr-opt-theme{width:40px;height:20px;cursor:pointer;list-style:none;border-radius:3px;border:1px solid #212121;box-sizing:border-box;opacity:1;-webkit-transition:all opacity .5s cubic-bezier(.23,1,.32,1) 1s 0ms;transition:all opacity .5s cubic-bezier(.23,1,.32,1) 1s 0ms}sr-opt-theme:hover{opacity:.2;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}sr-opt-theme:not(:first-child){margin-left:5px}sr-opt-theme[sr-type=active]{box-shadow:0 3px 3px 0 rgba(0,0,0,.14),0 2px 20px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.7)}
+</style>
+<style>
+notify-gp{font:300 14px -apple-system,PingFang SC,Microsoft Yahei,Lantinghei SC,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;display:-webkit-flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end;position:fixed;top:0;right:0;margin:0 15px 0 0;padding:0;text-transform:none;pointer-events:none}notify-gp notify{display:-webkit-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin:0;margin-top:15px;padding:14px 24px;min-width:288px;max-width:568px;height:48px;max-height:48px;color:hsla(0,0%,100%,.7);background-color:#323232;box-sizing:border-box;border-radius:4px;pointer-events:auto;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0);-webkit-transform-origin:left top 0;transform-origin:left top 0;-webkit-transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;transition:transform .45s cubic-bezier(.23,1,.32,1) 0ms,opacity 1s cubic-bezier(.23,1,.32,1) 0ms;transition:transform .45s cubic-bezier(.23,1,.32,1) 0ms,opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;box-shadow:0 1px 3px 0 rgba(60,64,67,.302),0 4px 8px 3px rgba(60,64,67,.149)}notify-gp notify-title{font-size:13px;font-weight:700}notify-gp notify-content{display:block;font-size:14px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}notify-gp notify-content a,notify-gp notify-content a:active,notify-gp notify-content a:link,notify-gp notify-content a:visited{margin:inherit;padding-bottom:5px;color:#fff;font-size:inherit;text-decoration:none;-webkit-transition:color .5s;transition:color .5s}notify-gp notify-content a:hover{margin:0;margin:initial;padding:0;padding:initial;color:inherit;font-size:inherit;text-decoration:none}notify-gp notify-i{display:none;margin:0 10px 0 0;width:24px;height:24px;background-position:50%;background-repeat:no-repeat}notify-gp notify-action,notify-gp notify-cancel{display:none;margin:0 0 0 24px;max-width:80px;min-width:56px;color:#8ab4f8;font-weight:500;font-size:inherit;text-transform:uppercase;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}notify-gp notify-cancel{margin:0}notify-gp notify-a{display:block;position:absolute;top:5px;right:5px;cursor:pointer}notify-gp notify-a notify-span{display:block;width:16px;height:16px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABpFBMVEUAAADl5eXj4+NSVFRTVVVaXFxLTU1hY2NdX18pLCwhJCSdnp5sbm6HiYmjpKSDhYX///+rrKytrq6XmJgzNTUoKyt3eXlydHRlZ2dbXV1ucHB4enrv7++KjIyIiort7e1oamosLy8aHR0VGBgUFxcbHh4rLi5oamprbGwgIyMKDQ0KDQ0iJSVjZWWfoaEkJiYICwsLDg4KDQ0MDw8iJSWMjo41ODgMDw8JDAw2OTkvMTELDg4LDg4xMzM1NzcJDAwLDg40NjYeISEHCgoeISFkZmYtLy8yNDRvcXEWGRkHCgoaHR3///8RFBQHCgohJCShoqLIyMgaHR0HCgoZGxv4+PgRFBQLDg4xMzOWl5eam5ssLi4bHh7///8fIiIJDAwwMzNzdHQXGhoeISFlZmYsLi4KDQ0gIiI6PDwOEREuMDAXGhoHCgodHx8pLCwNEBA1ODj///8nKSkICwsICwsJDAwnKSnZ2dl9fn4pKysNDw8OEREpLCxyc3ORkpIzNTUjJSUVGBgUFxcgIyM5PDyanJwEBwcDBwcDBgYFCAgGCQn///+5RDDmAAAAhnRSTlMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQUFAQU+i7S0jkAGEYrw8Y8SBIn++Pr3jQQ67fx8dvX6iWr27z+B/YsOcoMPdPiEAaL7iAgEcfWsA6D7iAkGcawDef2LDnOFD3T4gTLnfHb6iWrqNQJ4+ff7fQILd+ToewsCLHWZmXUwAyFsKwcAAAABYktHRBCVsg0sAAAAzElEQVQY02NgwAoYZWTl5JngXGYFRSVlFVU1dRYIn1VDU6sNCLR1dNlAfHY9fQNDw/YOI2MDE1MOoACnmbmFpZW1ja2dvYMjFwMDN4NTp7OLq5u7h6dXpzcDDwOvj29bm59/QGBQcFtbSCgfA79AWFtHeERkVLR1W1tMrCCDEENcZ3xCYlJySmpaZzqDMAODSEamRVZ2cE5unn1+gSjQFrHCIqNir7a2nJLSsnJxkEMkKiqrutrauqpraiUhTpWqq29obGpuaZVmIAYAAO06McffKEk8AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDEzLTA0LTAzVDE3OjE4OjAzKzA4OjAwRdgB9wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxMS0wNS0xOFQyMDowMTowMCswODowMB0r3XkAAABNdEVYdHNvZnR3YXJlAEltYWdlTWFnaWNrIDYuOC44LTcgUTE2IHg4Nl82NCAyMDE0LTAyLTI4IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3JnWaRffwAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpIZWlnaHQAMTI4Q3xBgAAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAAxMjjQjRHdAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADEzMDU3MjAwNjArP9HVAAAAE3RFWHRUaHVtYjo6U2l6ZQAxLjAzS0JCZtQvXwAAAFx0RVh0VGh1bWI6OlVSSQBmaWxlOi8vL2hvbWUvZnRwLzE1MjAvZWFzeWljb24uY24vZWFzeWljb24uY24vY2RuLWltZy5lYXN5aWNvbi5jbi9wbmcvMTcvMTc4Ni5wbmcRsze7AAAAAElFTkSuQmCC)}notify-gp notify-i.holdon{display:block;margin:0 0 0 24px;width:20px;height:20px;background-image:url("");cursor:pointer}notify-gp .notify-show{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1)}notify-gp .notify-hide{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}notify-gp .notify-success{color:rgba(118,255,3,.8)}notify-gp .notify-warning{color:#ffee58}notify-gp .notify-error{color:#ef5350}notify-gp .notify-modal{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;height:auto;max-height:200px;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}notify-gp .notify-modal .notify-modal-content{margin-top:5px;font-size:13px;white-space:normal}notify-gp .notify-modal .notify-modal-content a{margin:0;padding:0;color:inherit;font-size:inherit;text-decoration:underline;cursor:pointer}notify-gp .notify-modal .notify-modal-content a:active,notify-gp .notify-modal .notify-modal-content a:focus,notify-gp .notify-modal .notify-modal-content a:hover,notify-gp .notify-modal .notify-modal-content a:visited{color:inherit}notify-gp .notify-snackbar{position:fixed;bottom:0;left:50%;margin-bottom:5px;-webkit-transform-origin:left bottom 0;transform-origin:left bottom 0}.notify-position-lt-corner{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;margin:0 0 0 15px;left:0;right:auto}.notify-position-lb-corner{margin:0 0 15px 15px;right:auto;left:0}.notify-position-lb-corner,.notify-position-rb-corner{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-flow:column-reverse wrap-reverse;flex-flow:column-reverse wrap-reverse;top:auto;bottom:0}.notify-position-rb-corner{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;margin:0 15px 15px 0;left:auto;right:0}
+</style>
+<style>
+
+:root .container > a.mid-wrapper,
+:root .content > a > .topline,
+:root .adsbygoogle,
+:root #adContent
+{ display: none !important; }
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+sr-rd-content *, sr-rd-content p, sr-rd-content div {}
+</style>
+<style>
+sr-rd-content pre code, sr-rd-content pre code * {}
+</style>
+<style>
+sr-rd-desc {}
+</style>
+<style>
+sr-rd-content pre {}
+</style>
+<style>
+sr-rd-title {}
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+
+</style>
+<style>
+sr-plugin-lightbox-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    background-color: rgb(119, 119, 119, 0.7);
+    z-index: 2147483646;
+}
+
+sr-plugin-lightbox {
+   text-align: center;
+}
+
+sr-plugin-lightbox img {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    border: 10px solid #fff;
+    box-shadow: none;
+    cursor: pointer;
+}
+</style>
+<style>
+.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+
+</style>
+<style>
+#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+
+</style>
+<style>
+.MathJax_Preview .MJXf-math {color: inherit!important}
+
+</style>
+<style>
+.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+
+</style>
+<style>
+#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+
+</style>
+<style>
+.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+
+</style>
+<style>
+.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+.imgViewDom{display:none;position:fixed;top:0;left:0;height:100%;width:100%;z-index:99999999;background: rgba(255, 255, 255,0.8);overflow: auto;display:-webkit-box;-webkit-box-align:center;-webkit-box-pack:center;display:-moz-box;-moz-box-align:center;-moz-box-pack:center;display:-o-box;-o-box-align:center;-o-box-pack:center;display:-ms-box;-ms-box-align:center;-ms-box-pack:center; display:box;box-align:center;box-pack:center;}.imgViewDom img{cursor: zoom-out;}
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(245, 246, 247) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="nodata">
+    <div class="mx-wc-main">
+      <DIV class="container clearfix" id="mainBox" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="blog-content-box mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+	<div class="article-header-box">
+		<div class="article-header">
+			<div class="article-title-box">
+				<span class="article-type type-1 float-left">原</span>				<h1 class="title-article">JavaScript函数式编程</h1>
+			</div>
+			<div class="article-info-box">
+				<div class="article-bar-top">
+																									<span class="time">2016年12月03日 15:58:03</span>
+					<a class="follow-nickName" href="https://me.csdn.net/liusheng95" target="_blank">WilsonLiu95</a>
+						<span class="read-count">阅读数：1494</span>
+						
+																															</div>
+				<div class="operating">
+									</div>
+			</div>
+		</div>
+	</div>
+	<article class="baidu_pl">
+		<div id="article_content" class="article_content clearfix csdn-tracking-statistics" data-pid="blog" data-mod="popu_307" data-dsm="post">
+								<div class="article-copyright">
+                  					<svg class="icon" title="CSDN认证原创" aria-hidden="true" style="width:53px; height: 18px; vertical-align: -4px;">
+							<use xlink:href="#CSDN_Cert"></use>
+					</svg>
+                  					
+					版权声明：致力于做一个有故事的人。小时候听爸爸说他的故事，长大了去创造自己的故事；当爸爸后有故事可讲；老了以后有故事可以回味。个人博客地址http://blog.wilsonliu.cn					https://blog.csdn.net/liusheng95/article/details/53445202				</div>
+								
+        								            <div id="content_views" class="markdown_views">
+							<!-- flowchart 箭头图标 勿删 -->
+							
+							<h1 id="javascript函数式编程"><a name="t0"></a>JavaScript函数式编程</h1>
+
+<h2 id="摘要"><a name="t1"></a>摘要</h2>
+
+<p>以往经常看到”函数式编程“这一名词，却始终没有花时间去学习，暑期实习结束之后一直忙于边养老边减肥，<strong>81天成功瘦身30斤+</strong> ，开始回归正常的学习生活。 <br>
+便在看《JavaScript函数式编程》这本书，以系统了解函数式编程的知识。本文试图尽可能系统的描述JavaScript函数式编程。当然认识暂时停留于本书介绍的程度，如有错误之处，还请指正。</p>
+
+<p>注：本书采用的函数式库Underscore。一下部分代码运行时，需引入Underscore。</p>
+
+
+
+<h2 id="函数式编程简介"><a name="t2"></a>函数式编程简介</h2>
+
+<p>我们用一句话来直白的描述函数式编程：</p>
+
+<blockquote>
+  <p>函数式编程通过使用函数来将值转换成抽象单元，接着用于构建软件系统。</p>
+</blockquote>
+
+<p>概括的来说，函数式编程包括以下技术 <br>
+- 确定抽象，并为其构建函数 <br>
+- 利用已有的函数来构建更为复杂的抽象 <br>
+- 通过将现有的函数传给其他函数来构建更加复杂的抽象</p>
+
+<p>注：JavaScript并不仅限于函数式编程语言，以下是另外3种常用的编程方式。 <br>
+- 命令式编程： 通过详细描述行为的编程方式 <br>
+- 基于原型的面向对象编程： 基于原型对象及其实例的编程方式 <br>
+- 元编程：对JavaScript执行模型数据进行编写和操作的编程方式</p>
+
+
+
+<h2 id="函数式编程的一些特性"><a name="t3"></a>函数式编程的一些特性</h2>
+
+
+
+<h3 id="纯函数"><a name="t4"></a>纯函数</h3>
+
+<p>纯函数坚持以下属性（坚持纯度的标准不仅将有助于使程序更容易测试，也更容易推理。） <br>
+- 其结果只能从它的参数的值来计算 <br>
+- 不能依赖于能被外部操作改变的数据 <br>
+- 不能改变外部状态</p>
+
+
+
+<h3 id="不变性-没有副作用"><a name="t5"></a>不变性 —— 没有副作用</h3>
+
+<p>所谓”副作用”（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。 <br>
+函数式编程强调没有”副作用”，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p>
+
+
+
+<h3 id="不修改状态"><a name="t6"></a>不修改状态</h3>
+
+<p>上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。在其他类型的语言中，变量往往用来保存”状态”（state）。不修改变量，意味着状态不能保存在变量中。 <br>
+函数式编程使用参数保存状态，最好的例子就是递归。下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的”状态”。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs applescript has-numbering" onclick="mdcp.signin(event)">function <span class="hljs-property">reverse</span>(<span class="hljs-type">string</span>) {
+　　　　<span class="hljs-keyword">if</span>(<span class="hljs-type">string</span>.<span class="hljs-property">length</span> == <span class="hljs-number">0</span>) {
+<span class="hljs-command">　　　　　　return</span> <span class="hljs-type">string</span>;
+　　　　} <span class="hljs-keyword">else</span> {
+<span class="hljs-command">　　　　　　return</span> <span class="hljs-property">reverse</span>(<span class="hljs-type">string</span>.substring(<span class="hljs-number">1</span>, <span class="hljs-type">string</span>.<span class="hljs-property">length</span>)) + <span class="hljs-type">string</span>.substring(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+　　　　}
+　　}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li></ul></pre>
+
+
+
+<h3 id="函数是一等公民"><a name="t7"></a>函数是一等公民</h3>
+
+<p>“一等”这个术语通常用来描述值。当函数被看作“一等公民”时，那它就可以去任何值可以去的地方，很少有限制。比如数字在Javascript里就是一等公民，同程 <br>
+作为一等公民的函数就会拥有类似数字的性质。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-keyword">var</span> fortytwo = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-keyword">return</span> <span class="hljs-number">42</span>} <span class="hljs-comment">// 函数与数字一样可以存储为变量</span>
+<span class="hljs-keyword">var</span> fortytwo = [<span class="hljs-number">32</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-keyword">return</span> <span class="hljs-number">42</span>}] <span class="hljs-comment">// 函数与数字一样可以存储为数组的一个元素</span>
+<span class="hljs-keyword">var</span> fortytwo = {number: <span class="hljs-number">32</span>, fun: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-keyword">return</span> <span class="hljs-number">42</span>}} <span class="hljs-comment">// 函数与数字一样可以作为对象的成员变量</span>
+<span class="hljs-number">32</span> + (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-keyword">return</span> <span class="hljs-number">42</span>}) () <span class="hljs-comment">// 函数与数字一样可以在使用时直接创建出来</span>
+
+<span class="hljs-comment">// 函数与数字一样可以被传递给另一个函数</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">weirdAdd</span><span class="hljs-params">(n, f)</span>{</span> <span class="hljs-keyword">return</span> n + f()}
+weirdAdd(<span class="hljs-number">32</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-keyword">return</span> <span class="hljs-number">42</span>})
+
+<span class="hljs-comment">// 函数与数字一样可以被另一个函数返回</span>
+<span class="hljs-keyword">return</span> <span class="hljs-number">32</span>;
+<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span><span class="hljs-keyword">return</span> <span class="hljs-number">42</span>}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li></ul></pre>
+
+
+
+<h2 id="applicative编程"><a name="t8"></a>Applicative编程</h2>
+
+<p>Applicative编程是特殊函数式编程的一种形式。Applicative编程的三个典型例子是<code>map,reduce,filter</code></p>
+
+<blockquote>
+  <p>函数A作为参数提供给函数B。 (即定义一个函数，让它接收一个函数，然后调用它)</p>
+</blockquote>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)">_.find([<span class="hljs-string">"a"</span>,<span class="hljs-string">"b"</span>,<span class="hljs-number">3</span>,<span class="hljs-string">"d"</span>], _.isNumber) <span class="hljs-comment">// _.find与_.isNumber都是Underscore中的方法</span>
+
+<span class="hljs-comment">// 自行实现一个Applicative函数</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exam</span><span class="hljs-params">(fun, coll)</span> {</span>
+  <span class="hljs-keyword">return</span> fun(coll);
+}
+<span class="hljs-comment">// 调用</span>
+exam(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+    <span class="hljs-keyword">return</span> e.join(<span class="hljs-string">","</span>)
+}, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>])
+<span class="hljs-comment">// 结果 ”1,2,3“</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li></ul></pre>
+
+
+
+<h2 id="高阶函数"><a name="t9"></a>高阶函数</h2>
+
+<p>定义:一个高阶函数应该可以执行以下至少一项操作。 <br>
+- 以一个函数作为参数 <br>
+- 返回一个函数作为结果</p>
+
+
+
+<h3 id="以其他函数为参数的函数"><a name="t10"></a>以其他函数为参数的函数</h3>
+
+
+
+<h4 id="关于传递函数的思考-maxfinderbest">关于传递函数的思考： max，finder，best</h4>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">// max是一个高阶函数</span>
+<span class="hljs-keyword">var</span> people = [{name: <span class="hljs-string">"Fred"</span>, age: <span class="hljs-number">65</span>}, {name: <span class="hljs-string">"Lucy"</span>, age: <span class="hljs-number">36</span>}];
+_.max(people, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(p)</span> {</span> <span class="hljs-keyword">return</span> p.age }); 
+<span class="hljs-comment">//=&gt; {name: "Fred", age: 65}</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li></ul></pre>
+
+<p>但是，在某些方面这个函数是受限的，并不是真正的函数式。具体来说，对于<code>_.max</code>而言,比较总是需要通过大于运算符（&gt;）来完成。</p>
+
+<p>不过，我们可以创建一个新的函数finder。它接收两个函数：一个用来生成可比较的值，而另一个用来比较两个值并返回当中的”最佳“值。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">finder</span><span class="hljs-params">(valueFun, bestFun, coll)</span> {</span>
+  <span class="hljs-keyword">return</span> _.reduce(coll, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(best, current)</span> {</span>
+    <span class="hljs-keyword">var</span> bestValue = valueFun(best);
+    <span class="hljs-keyword">var</span> currentValue = valueFun(current);
+
+    <span class="hljs-keyword">return</span> (bestValue === bestFun(bestValue, currentValue)) ? best : current;
+  });
+}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li></ul></pre>
+
+<p>在任何情况下，我们现在都可以用<code>finder</code>来找到不同类型的”最佳“值：</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)">finder(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span><span class="hljs-keyword">return</span> e.age}, <span class="hljs-built_in">Math</span>.max, people) 
+<span class="hljs-comment">// =&gt; {name: ”Fred", age: 65}</span>
+
+finder(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span><span class="hljs-keyword">return</span> e.name}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y)</span>{</span>
+    <span class="hljs-keyword">return</span> (x.charAt((<span class="hljs-number">0</span>) === <span class="hljs-string">"L"</span>) ? x : y),people}) <span class="hljs-comment">// 偏好首字母为L的人</span>
+<span class="hljs-comment">// =&gt; {name:"Lucy", age: 36}</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li></ul></pre>
+
+<p><strong>缩减一点</strong> <br>
+函数<code>finder</code>短小精悍，并且能按照我们预期来工作，但为了满足最大程度的灵活性，它重复了一些逻辑。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs cs has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">//  在 finder函数中</span>
+<span class="hljs-keyword">return</span> (bestValue === bestFun(bestValue, currentValue)) ? best : current;
+<span class="hljs-comment">// 在输入的函数参数中</span>
+<span class="hljs-keyword">return</span> (x.charAt((<span class="hljs-number">0</span>) === <span class="hljs-string">"L"</span>) ? x : y</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li></ul></pre>
+
+<p>你会发现上述两者的逻辑是完全相同的。finder的实现可以根据以下两个假设来缩减。 <br>
+- 如果第一个参数比第二个参数“更好”，比较最佳值的函数返回为true <br>
+- 比较最佳值的函数知道如何“分解”它的参数</p>
+
+<p>在以上假设的基础下，我们可以实现一个更简洁的best函数。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">best</span><span class="hljs-params">(fun, coll)</span> {</span>
+  <span class="hljs-keyword">return</span> _.reduce(coll, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, y)</span> {</span>
+    <span class="hljs-keyword">return</span> fun(x, y) ? x : y;
+  });
+}
+
+best(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x,y)</span> {</span> <span class="hljs-keyword">return</span> x &gt; y }, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]);
+<span class="hljs-comment">//=&gt; 5</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li></ul></pre>
+
+
+
+<h4 id="关于传递函数的更多思考重复反复和条件迭代">关于传递函数的更多思考：重复，反复和条件迭代</h4>
+
+<p>首先，从一个简单的函数<code>repeat</code>开始。它以一个数字和一个值为参数，将该值进行多次复制，并放入一个数组中：</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs lua has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">repeat</span><span class="hljs-params">(times, VALUE)</span></span> {
+  <span class="hljs-keyword">return</span> _.map(_.range(times), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span> { <span class="hljs-keyword">return</span> VALUE; });
+}
+
+<span class="hljs-keyword">repeat</span>(<span class="hljs-number">4</span>, <span class="hljs-string">"Major"</span>);
+//=&gt; [<span class="hljs-string">"Major"</span>, <span class="hljs-string">"Major"</span>, <span class="hljs-string">"Major"</span>, <span class="hljs-string">"Major"</span>]</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li></ul></pre>
+
+<p><strong>使用函数，而不是值</strong> <br>
+通过将参数从值替换为函数，打开了一个充满可能性的世界。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">repeatedly</span><span class="hljs-params">(times, fun)</span> {</span>
+  <span class="hljs-keyword">return</span> _.map(_.range(times), fun);
+}
+
+repeatedly(<span class="hljs-number">3</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor((<span class="hljs-built_in">Math</span>.random()*<span class="hljs-number">10</span>)+<span class="hljs-number">1</span>);
+});
+<span class="hljs-comment">//=&gt; [1, 3, 8]</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li></ul></pre>
+
+<p><strong>再次强调，“使用函数，而不是值”</strong> <br>
+我们常常会知道函数应该被调用多少次，但有时候也知道什么时候推出并不取决于“次数”，而是条件！因此我可以定义另一个名为<code>iterateUntil</code>的函数。 <br>
+<code>iterateUntil</code>接收2个参数，一个用来执行一些动作，另一个用来进行结果检查。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">iterateUntil</span><span class="hljs-params">(fun, check, init)</span> {</span>
+  <span class="hljs-keyword">var</span> ret = [];
+  <span class="hljs-keyword">var</span> result = fun(init);
+
+  <span class="hljs-keyword">while</span> (check(result)) {
+    ret.push(result);
+    result = fun(result);
+  }
+
+  <span class="hljs-keyword">return</span> ret;
+};</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li></ul></pre>
+
+
+
+<h3 id="返回其他函数的函数"><a name="t11"></a>返回其他函数的函数</h3>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs lua has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">invoker</span> <span class="hljs-params">(NAME, METHOD)</span></span> { // 接收一个方法，并在任何给定的对象上调用它
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target /* args ... */)</span></span> {
+    <span class="hljs-keyword">if</span> (!existy(target)) fail(<span class="hljs-string">"Must provide a target"</span>);
+
+    var targetMethod = target[NAME];
+    var args = _.rest(arguments);
+
+    <span class="hljs-keyword">return</span> doWhen((existy(targetMethod) &amp;&amp; METHOD === targetMethod), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span> {
+      <span class="hljs-keyword">return</span> targetMethod.apply(target, args);
+    });
+  };
+};
+
+var rev = invoker(<span class="hljs-string">'reverse'</span>, Array.prototype.reverse);
+
+_.map(<span class="hljs-string">[[1,2,3]]</span>, rev);
+//=&gt; <span class="hljs-string">[[3,2,1]]</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li></ul></pre>
+
+<p><strong>高阶函数捕获参数</strong> <br>
+高阶函数的参数是用来“配置”返回函数的行为的。对于<code>makeAdder</code>而言，它的参数配置了其返回函数每次添加数值的大小</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeAdder</span><span class="hljs-params">(CAPTURED)</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(free)</span> {</span>
+    <span class="hljs-keyword">return</span> free + CAPTURED;
+  };
+}
+<span class="hljs-keyword">var</span> add10 = makeAdder(<span class="hljs-number">10</span>);
+
+add10(<span class="hljs-number">32</span>);
+<span class="hljs-comment">//=&gt; 42</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li></ul></pre>
+
+<p><strong>捕获变量的好处</strong> <br>
+用闭包来捕获增加值，并用作后缀。（但这样并不具有引用透明）</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeUniqueStringFunction</span><span class="hljs-params">(start)</span> {</span>
+  <span class="hljs-keyword">var</span> COUNTER = start;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(prefix)</span> {</span>
+    <span class="hljs-keyword">return</span> [prefix, COUNTER++].join(<span class="hljs-string">''</span>);
+  }
+};
+<span class="hljs-keyword">var</span> uniqueString = makeUniqueStringFunction(<span class="hljs-number">0</span>);
+
+uniqueString(<span class="hljs-string">"dari"</span>);
+<span class="hljs-comment">//=&gt; "dari0"</span>
+
+uniqueString(<span class="hljs-string">"dari"</span>);
+<span class="hljs-comment">//=&gt; "dari1"</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li></ul></pre>
+
+
+
+<h2 id="由函数构建函数"><a name="t12"></a>由函数构建函数</h2>
+
+
+
+<h3 id="函数式组合的精华"><a name="t13"></a>函数式组合的精华</h3>
+
+<blockquote>
+  <p>精华：使用现有的零部件来建立新的行为，这些新行为同样也成为了已有的零部件。</p>
+</blockquote>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">// 接收一个或多个函数，然后不断尝试依次调用这些函数的方法，直到返回一个非`undefined`的值</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dispatch</span><span class="hljs-params">(<span class="hljs-comment">/* funs */</span>)</span> {</span>
+  <span class="hljs-keyword">var</span> funs = _.toArray(<span class="hljs-built_in">arguments</span>);
+  <span class="hljs-keyword">var</span> size = funs.length;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target <span class="hljs-comment">/*, args */</span>)</span> {</span>
+    <span class="hljs-keyword">var</span> ret = <span class="hljs-literal">undefined</span>;
+    <span class="hljs-keyword">var</span> args = _.rest(<span class="hljs-built_in">arguments</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> funIndex = <span class="hljs-number">0</span>; funIndex &lt; size; funIndex++) {
+      <span class="hljs-keyword">var</span> fun = funs[funIndex];
+      ret = fun.apply(fun, construct(target, args));
+
+      <span class="hljs-keyword">if</span> (existy(ret)) <span class="hljs-keyword">return</span> ret;
+    }
+
+    <span class="hljs-keyword">return</span> ret;
+  };
+}
+
+<span class="hljs-keyword">var</span> str = dispatch(invoker(<span class="hljs-string">'toString'</span>, <span class="hljs-built_in">Array</span>.prototype.toString),
+invoker(<span class="hljs-string">'toString'</span>, <span class="hljs-built_in">String</span>.prototype.toString));
+
+str(<span class="hljs-string">"a"</span>);
+<span class="hljs-comment">//=&gt; "a"</span>
+
+str(_.range(<span class="hljs-number">10</span>));
+<span class="hljs-comment">//=&gt; "0,1,2,3,4,5,6,7,8,9"</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li><li style="color: rgb(153, 153, 153);">22</li><li style="color: rgb(153, 153, 153);">23</li><li style="color: rgb(153, 153, 153);">24</li><li style="color: rgb(153, 153, 153);">25</li><li style="color: rgb(153, 153, 153);">26</li><li style="color: rgb(153, 153, 153);">27</li><li style="color: rgb(153, 153, 153);">28</li></ul></pre>
+
+<p>在这里，我们想做的只是返回一个遍历函数数组，并<code>apply</code>给一个目标对象的函数，返回第一个存在的值。<code>dispatch</code>满足了多态JavaScript <br>
+函数的定义。这样简化了委托具体方法的任务。例如，在underscore的实现中，你经常会看到许多不同的函数重复这样的模式。 <br>
+1. 确保目标的存在 <br>
+2. 检查是否有原生版本，如果是则使用它 <br>
+3. 如果没有，那么做一些实现这些行为的具体任务。 <br>
+    - 做特定类型的任务（如适用） <br>
+    - 做特定参数的任务（如适用） <br>
+    - 做特定个参数的任务（如适用）</p>
+
+<p>同样的模式也体现在<code>Underscore</code>的函数<code>_.map()</code>的实现中：</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs perl has-numbering" onclick="mdcp.signin(event)">  <span class="hljs-number">_</span>.<span class="hljs-keyword">map</span> = <span class="hljs-number">_</span>.collect = function(obj, iteratee, context) {
+    iteratee = cb(iteratee, context);
+    var <span class="hljs-keyword">keys</span> = !isArrayLike(obj) &amp;&amp; <span class="hljs-number">_</span>.<span class="hljs-keyword">keys</span>(obj),
+        <span class="hljs-keyword">length</span> = (<span class="hljs-keyword">keys</span> || obj).<span class="hljs-keyword">length</span>,
+        results = Array(<span class="hljs-keyword">length</span>);
+    <span class="hljs-keyword">for</span> (var <span class="hljs-keyword">index</span> = <span class="hljs-number">0</span>; <span class="hljs-keyword">index</span> &lt; <span class="hljs-keyword">length</span>; <span class="hljs-keyword">index</span>++) {
+      var currentKey = <span class="hljs-keyword">keys</span> ? <span class="hljs-keyword">keys</span>[<span class="hljs-keyword">index</span>] : <span class="hljs-keyword">index</span>;
+      results[<span class="hljs-keyword">index</span>] = iteratee(obj[currentKey], currentKey, obj);
+    }
+    <span class="hljs-keyword">return</span> results;
+  };</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li></ul></pre>
+
+<p>使用<code>dispatch</code>可以简化一些这方面的代码，并且更容易扩展。想象一下，你正在写一个可以为数组和字符串类型生成字符描述的 <br>
+函数。使用dispatch则可以优雅的实现：</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs rust has-numbering" onclick="mdcp.signin(event)">var <span class="hljs-keyword">str</span> = dispatch(invoker(<span class="hljs-string">'toString'</span>, Array.prototype.toString),
+invoker(<span class="hljs-string">'toString'</span>, String.prototype.toString));
+
+<span class="hljs-keyword">str</span>(<span class="hljs-string">"a"</span>);
+<span class="hljs-comment">//=&gt; "a"</span>
+
+<span class="hljs-keyword">str</span>(<span class="hljs-number">_</span>.range(<span class="hljs-number">10</span>));
+<span class="hljs-comment">//=&gt; "0,1,2,3,4,5,6,7,8,9"</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li></ul></pre>
+
+
+
+<h3 id="柯里化-curring"><a name="t14"></a>柯里化 Curring</h3>
+
+<blockquote>
+  <p>柯里化函数为每一个逻辑参数返回一个新函数。</p>
+</blockquote>
+
+<p><img src="assets/1557107769-7a5a212d78eb645c121364a0deb71648.JPG" alt="柯里化图形描述" title=""></p>
+
+<p>例如：</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">// 除法</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">divide</span><span class="hljs-params">(n,d)</span>{</span>
+  <span class="hljs-keyword">return</span> n/d;
+}
+
+<span class="hljs-comment">// 手动柯里化</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">curryDivide</span><span class="hljs-params">(n)</span> {</span> 
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(d)</span> {</span>
+    <span class="hljs-keyword">return</span> n/d;
+  };
+}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li></ul></pre>
+
+<p><code>curryDivide</code>是手动柯里化函数，也就是说，我显示地返回对应参数数量的函数。</p>
+
+<p><strong>自动柯里化参数</strong>  </p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">// 接收一个函数，并返回一个只接受一个参数的函数。</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">curry</span><span class="hljs-params">(fun)</span> {</span> <span class="hljs-comment">// 柯里化一个参数，虽然似乎没什么用</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arg)</span> {</span>
+    <span class="hljs-keyword">return</span> fun(arg);
+  };
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">curry2</span><span class="hljs-params">(fun)</span> {</span> <span class="hljs-comment">// 柯里化两个参数</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(secondArg)</span> {</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(firstArg)</span> {</span>
+        <span class="hljs-keyword">return</span> fun(firstArg, secondArg);
+    };
+  };
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">curry3</span><span class="hljs-params">(fun)</span> {</span> <span class="hljs-comment">// 柯里化三个参数</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(last)</span> {</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(middle)</span> {</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(first)</span> {</span>
+        <span class="hljs-keyword">return</span> fun(first, middle, last);
+      };
+    };
+  };
+};</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li><li style="color: rgb(153, 153, 153);">22</li><li style="color: rgb(153, 153, 153);">23</li></ul></pre>
+
+<p>curry2函数接受一个函数并将其柯里化成两个深层参数的函数。可以用它来实现先前定义的除法函数。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs delphi has-numbering" onclick="mdcp.signin(event)"><span class="hljs-keyword">var</span> divide10 = curry2(<span class="hljs-keyword">div</span>)(<span class="hljs-number">10</span>) 
+
+divide10(<span class="hljs-number">50</span>)
+<span class="hljs-comment">// =&gt; 5</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li></ul></pre>
+
+<p>柯里化函数有利于指定JavaScript函数行为，并将现有函数“组合”为新函数。并且使用柯里化比较容易产生流利的函数式API。</p>
+
+
+
+<h3 id="部分应用"><a name="t15"></a>部分应用</h3>
+
+<p>柯里化函数逐渐返回消耗参数的函数，直到所有参数都耗尽。然而，部分应用函数是一个“部分“执行，等待接收剩余的参数立即执行的函数。</p>
+
+<p><img src="assets/1557107769-c4ab34ed49dadf163a33d8932582bd72.JPG" alt="部分应用" title=""></p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">// 部分应用一个或两个已知的参数</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">partial1</span><span class="hljs-params">(fun, arg1)</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-comment">/* args */</span>)</span> {</span>
+    <span class="hljs-keyword">var</span> args = construct(arg1, <span class="hljs-built_in">arguments</span>); <span class="hljs-comment">// construct为拼接数组，在此代码略去</span>
+    <span class="hljs-keyword">return</span> fun.apply(fun, args);
+  };
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">partial2</span><span class="hljs-params">(fun, arg1, arg2)</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-comment">/* args */</span>)</span> {</span>
+    <span class="hljs-keyword">var</span> args = cat([arg1, arg2], <span class="hljs-built_in">arguments</span>); <span class="hljs-comment">// cat也为拼接数组，在此代码略去</span>
+    <span class="hljs-keyword">return</span> fun.apply(fun, args);
+  };
+}
+
+<span class="hljs-comment">// 部分应用任意数量的参数</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">partial</span><span class="hljs-params">(fun <span class="hljs-comment">/*, pargs */</span>)</span> {</span>
+  <span class="hljs-keyword">var</span> pargs = _.rest(<span class="hljs-built_in">arguments</span>);
+
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(<span class="hljs-comment">/* arguments */</span>)</span> {</span>
+    <span class="hljs-keyword">var</span> args = cat(pargs, _.toArray(<span class="hljs-built_in">arguments</span>));
+    <span class="hljs-keyword">return</span> fun.apply(fun, args);
+  };
+}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li><li style="color: rgb(153, 153, 153);">22</li><li style="color: rgb(153, 153, 153);">23</li><li style="color: rgb(153, 153, 153);">24</li></ul></pre>
+
+
+
+<h3 id="通过组合端至端的拼接函数"><a name="t16"></a>通过组合端至端的拼接函数</h3>
+
+<p>一种理想化的函数式程序是向函数流水线的一端输送的一块数据，从另一端输出一个全新的数据块。 <br>
+<code>!_.isString(name)</code> <br>
+这个流水线由<code>_.isString</code>和<code>!</code>组成 <br>
+- <code>_.isString</code>接收一个对象，并返回一个布尔值 <br>
+- <code>!</code>接收一个布尔值，并返回一个布尔值</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-comment">// 通过组合多个函数及其数据转换建立新的函数</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isntString</span><span class="hljs-params">(str)</span>{</span>
+<span class="hljs-keyword">return</span> !_.isString(str)
+}
+
+isntString(<span class="hljs-number">1</span>)
+<span class="hljs-comment">// =&gt; true</span>
+
+<span class="hljs-comment">// 还可以使用Underscore的_.compose函数实现同样的功能</span>
+<span class="hljs-comment">// _.compose函数从右往左执行。即最右边函数的结果会被送入其左侧的函数，一个接一个</span>
+<span class="hljs-keyword">var</span> isntString = _.compose(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> {</span> <span class="hljs-keyword">return</span> !x }, _.isString);
+
+isntString([]);
+<span class="hljs-comment">//=&gt; true</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li></ul></pre>
+
+
+
+<h2 id="递归"><a name="t17"></a>递归</h2>
+
+<p>理解递归对理解函数式编程来说非常重要，原因有三。 <br>
+- 递归的解决方案包括使用对一个普通问题子集的单一抽象的使用 <br>
+- 递归可以隐藏可变状态 <br>
+- 递归是一种实现懒惰和无限大结构的方法</p>
+
+
+
+<h3 id="自吸收函数"><a name="t18"></a>自吸收函数</h3>
+
+<p>在编写自递归函数时，规则如下 <br>
+- 知道什么时候停止 <br>
+- 决定怎样算一个步骤 <br>
+- 把问题分解成一个步骤和一个较小的问题</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myLength</span><span class="hljs-params">(ary)</span> {</span>
+  <span class="hljs-keyword">if</span> (_.isEmpty(ary)) <span class="hljs-comment">// _.isEmpty何时停止 </span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-comment">// 进行一个步骤 1+ ；</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + myLength(_.rest(ary)); <span class="hljs-comment">// 小一些的问题 _.rest(ary)   </span>
+}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li></ul></pre>
+
+<p><strong>尾递归</strong> <br>
+尾递归与一般自递归的明显区别是，”一个步骤“和”缩小的问题“中的元素都要进行递归调用。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tcLength</span><span class="hljs-params">(ary, n)</span> {</span>
+  <span class="hljs-keyword">var</span> l = n ? n : <span class="hljs-number">0</span>;
+
+  <span class="hljs-keyword">if</span> (_.isEmpty(ary))
+    <span class="hljs-keyword">return</span> l;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> tcLength(_.rest(ary), l + <span class="hljs-number">1</span>);
+}
+
+tcLength(_.range(<span class="hljs-number">10</span>));
+<span class="hljs-comment">//=&gt; 10</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li></ul></pre>
+
+
+
+<h3 id="相互关联函数"><a name="t19"></a>相互关联函数</h3>
+
+<p>两个或多个函数相互调用被称为相互递归。下面看一个例子，用谓词函数来检查偶数和奇数：</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">evenSteven</span><span class="hljs-params">(n)</span> {</span>
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> oddJohn(<span class="hljs-built_in">Math</span>.abs(n) - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">oddJohn</span><span class="hljs-params">(n)</span> {</span>
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> evenSteven(<span class="hljs-built_in">Math</span>.abs(n) - <span class="hljs-number">1</span>);
+}
+<span class="hljs-comment">// 相互递归调用来回反弹彼此之间递减某个绝对的值，知道一方或另一方达到0</span>
+evenSteven(<span class="hljs-number">4</span>)
+<span class="hljs-comment">//  =&gt; true</span>
+oddJohn(<span class="hljs-number">11</span>)
+<span class="hljs-comment">// =&gt;true</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li></ul></pre>
+
+
+
+<h3 id="对递归的改进"><a name="t20"></a>对递归的改进</h3>
+
+<p>尽管递归技术上是可行的，但是因为JavaScript引擎没有优化递归调用，因此，在使用或写递归函数时，可能会碰到如下错误</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs scss has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function">evenSteven(<span class="hljs-number">10000</span>)</span> 
+<span class="hljs-comment">// 栈溢出</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li></ul></pre>
+
+<p>递归应该被看作一个底层操作，应该尽可能地避免（很容易造成栈溢出）。普通的共识是，首先是要函数组合，仅当需要的时才使用递归和蹦床。</p>
+
+<blockquote>
+  <p>蹦床（tramponline）:使用蹦床展平调用，而不是深度嵌套的递归调用。</p>
+</blockquote>
+
+<p>首先，看看如何手动修复<code>evenOline</code>和<code>oddOline</code>使得递归调用不会溢出。一个办法是返回一个函数，它包装调用，而不是直接直接调用。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">evenOline</span><span class="hljs-params">(n)</span> {</span>
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> partial1(oddOline, <span class="hljs-built_in">Math</span>.abs(n) - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">oddOline</span><span class="hljs-params">(n)</span> {</span>
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> partial1(evenOline, <span class="hljs-built_in">Math</span>.abs(n) - <span class="hljs-number">1</span>);
+}
+
+oddOline(<span class="hljs-number">3</span>)()() <span class="hljs-comment">// 返回的只是一个函数调用</span>
+<span class="hljs-comment">// =&gt; function(){return evenOline(Math.abs(n) - 1)}</span>
+oddOline(<span class="hljs-number">3</span>)()()() <span class="hljs-comment">// 将函数调用执行</span>
+<span class="hljs-comment">// =&gt; true</span>
+oddOline(<span class="hljs-number">10000</span>)()()()... <span class="hljs-comment">// 10000个()去执行返回的函数调用</span>
+<span class="hljs-comment">// =&gt; true</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li></ul></pre>
+
+<p>当然，我们不能直接向用户暴露这个API，可以提高另外一个函数<code>trampoline</code>，从程序执行来进行扁平化处理。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trampoline</span><span class="hljs-params">(fun <span class="hljs-comment">/*, args */</span>)</span> {</span> <span class="hljs-comment">// 不断调用函数的返回值，知道它不是一个函数为止</span>
+  <span class="hljs-keyword">var</span> result = fun.apply(fun, _.rest(<span class="hljs-built_in">arguments</span>));
+
+  <span class="hljs-keyword">while</span> (_.isFunction(result)) {
+    result = result();
+  }
+
+  <span class="hljs-keyword">return</span> result;
+}
+
+trampoline(oddOline, <span class="hljs-number">10000</span>)
+<span class="hljs-comment">// false</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li></ul></pre>
+
+<p>由于调用链的间接性，使用蹦床增加了相互递归函数的一些开销。然而满总比溢出要好。同样，你可能不希望强迫用户使用<code>trampoline</code>，只是为了避免堆栈溢出。我们可以进一步隐藏其外观。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isEvenSafe</span><span class="hljs-params">(n)</span> {</span>
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> trampoline(partial1(oddOline, <span class="hljs-built_in">Math</span>.abs(n) - <span class="hljs-number">1</span>));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isOddSafe</span><span class="hljs-params">(n)</span> {</span>
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span> trampoline(partial1(evenOline, <span class="hljs-built_in">Math</span>.abs(n) - <span class="hljs-number">1</span>));
+}</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li></ul></pre>
+
+
+
+<h2 id="基于流的编程"><a name="t21"></a>基于流的编程</h2>
+
+
+
+<h3 id="链接"><a name="t22"></a>链接</h3>
+
+<p>使用jQuery等库经常会使用链接，链接可以让我们的代码更加简洁，如下是链接的实现示例。 <br>
+链接方法的原理在于。每个链接的方法都返回统一的宿主对象引用。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPerson</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">var</span> firstName = <span class="hljs-string">""</span>;
+  <span class="hljs-keyword">var</span> age = <span class="hljs-number">0</span>;
+
+  <span class="hljs-keyword">return</span> {
+    setFirstName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fn)</span> {</span>
+      firstName = fn;
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    },
+    setAge: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span> {</span>
+      age = a;
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    },
+    toString: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">return</span> [firstName, lastName, age].join(<span class="hljs-string">' '</span>);
+    }
+  };
+}
+
+createPerson()
+  .setFirstName(<span class="hljs-string">"Mike"</span>)
+  .setAge(<span class="hljs-number">108</span>)
+  .toString();
+
+<span class="hljs-comment">//=&gt; "Mike 108"</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li><li style="color: rgb(153, 153, 153);">22</li><li style="color: rgb(153, 153, 153);">23</li><li style="color: rgb(153, 153, 153);">24</li><li style="color: rgb(153, 153, 153);">25</li></ul></pre>
+
+<p><strong>惰性链</strong></p>
+
+<p>上述链接是直接执行，然而我们也可以实行惰性链，即使其先缓存待执行的函数，等到调用执行函数时一起执行。 <br>
+封装了一些行为的函数通常被称为<code>thunk</code>，存储在<code>_calls</code>中的<code>thunk</code>期待将作为接受<code>force</code>方法调用的对象的中间目标。</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LazyChain</span><span class="hljs-params">(obj)</span> {</span>
+  <span class="hljs-keyword">this</span>._calls  = []; <span class="hljs-comment">// 用于缓存待执行函数的数组 thunk</span>
+  <span class="hljs-keyword">this</span>._target = obj; <span class="hljs-comment">// 目标对象</span>
+}
+
+LazyChain.prototype.invoke = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName <span class="hljs-comment">/*, args */</span>)</span> {</span> <span class="hljs-comment">// 将函数压入的方法</span>
+  <span class="hljs-keyword">var</span> args = _.rest(<span class="hljs-built_in">arguments</span>);
+
+  <span class="hljs-keyword">this</span>._calls.push(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target)</span> {</span>
+    <span class="hljs-keyword">var</span> meth = target[methodName];
+
+    <span class="hljs-keyword">return</span> meth.apply(target, args);
+  });
+
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};
+
+LazyChain.prototype.force = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> <span class="hljs-comment">// 强制执行this._calls中的函数</span>
+  <span class="hljs-keyword">return</span> _.reduce(<span class="hljs-keyword">this</span>._calls, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target, thunk)</span> {</span>
+    <span class="hljs-keyword">return</span> thunk(target);
+  }, <span class="hljs-keyword">this</span>._target);
+};
+<span class="hljs-comment">// 使用，直到force方法被调用才将 concat, sort,join执行</span>
+<span class="hljs-keyword">new</span> LazyChain([<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>])
+    .invoke(<span class="hljs-string">'concat'</span>, [<span class="hljs-number">8</span>,<span class="hljs-number">5</span>,<span class="hljs-number">7</span>,<span class="hljs-number">6</span>])
+    .invoke(<span class="hljs-string">'sort'</span>)
+    .invoke(<span class="hljs-string">'join'</span>,<span class="hljs-string">' '</span>)
+    .force();
+
+<span class="hljs-comment">// =&gt; "1 2 3 4 5 6 7 8"</span>
+</code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li><li style="color: rgb(153, 153, 153);">22</li><li style="color: rgb(153, 153, 153);">23</li><li style="color: rgb(153, 153, 153);">24</li><li style="color: rgb(153, 153, 153);">25</li><li style="color: rgb(153, 153, 153);">26</li><li style="color: rgb(153, 153, 153);">27</li><li style="color: rgb(153, 153, 153);">28</li><li style="color: rgb(153, 153, 153);">29</li><li style="color: rgb(153, 153, 153);">30</li><li style="color: rgb(153, 153, 153);">31</li></ul></pre>
+
+
+
+<h3 id="管道"><a name="t23"></a>管道</h3>
+
+<p>链接模式有利于给对象的方法调用创建流程的API，但是对于函数式API则未必。 <br>
+方法连接有各种各样的缺点，包括紧耦合对象的set和get逻辑。主要问题是，函数链经常会做调用之间改变传递的共同引用。函数式API重点在操作值而不是引用。 <br>
+一下是管道的具体实现</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs javascript has-numbering" onclick="mdcp.signin(event)"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pipeline</span><span class="hljs-params">(seed <span class="hljs-comment">/*, args */</span>)</span> {</span>
+  <span class="hljs-keyword">return</span> _.reduce(_.rest(<span class="hljs-built_in">arguments</span>),
+                  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(l,r)</span> {</span> <span class="hljs-keyword">return</span> r(l); },
+                  seed);
+};
+pipeline(<span class="hljs-number">42</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span>{</span><span class="hljs-keyword">return</span> -n},<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span>{</span><span class="hljs-keyword">return</span> n+<span class="hljs-number">1</span>})
+<span class="hljs-comment">// =&gt; -41</span></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li></ul></pre>
+
+
+
+<h2 id="写在最后"><a name="t24"></a>写在最后</h2>
+
+<p>本文更多的是对《JavaScript函数式编程》一书的摘要，并透过一段段代码试图阐述函数式编程的思想。 <br>
+希望以后的工作中能够吸取函数式编程的好，并慢慢对其加深理解。从书中获取知识，最终还是要落于实践中去的。 <br>
+同时，希望能够通过这篇文章帮助不了解函数式编程的小伙伴建立系统的认识。</p>            </div>
+						
+                      </div>
+	</article>
+</div></MAIN></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://blog.csdn.net/liusheng95/article/details/53445202" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 09:56:09</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

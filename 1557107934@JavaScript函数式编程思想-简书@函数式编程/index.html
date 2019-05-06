@@ -1,0 +1,1581 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://www.jianshu.com/p/01cbebd9655d -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JavaScript函数式编程思想 - 简书@函数式编程</title>
+    
+<link rel="stylesheet" media="all" href="assets/1557107934-34918638541125894ba681717141b104.css">
+
+<link rel="stylesheet" media="all" href="assets/1557107934-fbcb688f3d4d0fa54410c8b7058b2285.css">
+<style>
+
+</style>
+<style>
+
+:root .topbanner,
+:root .container > a.mid-wrapper
+{ display: none !important; }
+</style>
+<style>
+@charset "UTF-8";.image-package .image-container{position:relative;z-index:2;background-color:#eee;-webkit-transition:background-color .1s linear;-o-transition:background-color .1s linear;transition:background-color .1s linear;margin:0 auto}body.reader-night-mode .image-package .image-container{background-color:#545454}.image-package .image-container-fill{z-index:1}.image-package .image-container .image-view{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.image-package .image-container .image-view-error:after{content:"图片获取失败，请点击重试";position:absolute;top:50%;left:50%;width:100%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);color:#888;font-size:14px}.image-package .image-container .image-view img.image-loading{opacity:.3}.image-package .image-container .image-view img{-webkit-transition:all .15s linear;-o-transition:all .15s linear;transition:all .15s linear;z-index:2;opacity:1}
+</style>
+<style>
+fieldset[disabled] .multiselect {
+  pointer-events: none;
+}
+
+.multiselect__spinner {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 48px;
+  height: 35px;
+  background: #fff;
+  display: block;
+}
+
+.multiselect__spinner:after,
+.multiselect__spinner:before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border-color: #41b883 transparent transparent;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 0 0 0 1px transparent;
+}
+
+.multiselect__spinner:before {
+  animation: a 2.4s cubic-bezier(.41,.26,.2,.62);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__spinner:after {
+  animation: a 2.4s cubic-bezier(.51,.09,.21,.8);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__loading-enter-active,
+.multiselect__loading-leave-active {
+  transition: opacity .4s ease-in-out;
+  opacity: 1;
+}
+
+.multiselect__loading-enter,
+.multiselect__loading-leave-active {
+  opacity: 0;
+}
+
+.multiselect,
+.multiselect__input,
+.multiselect__single {
+  font-family: inherit;
+  font-size: 14px;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+.multiselect {
+  box-sizing: content-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  text-align: left;
+  color: #35495e;
+}
+
+.multiselect * {
+  box-sizing: border-box;
+}
+
+.multiselect:focus {
+  outline: none;
+}
+
+.multiselect--disabled {
+  opacity: .6;
+}
+
+.multiselect--active {
+  z-index: 1;
+}
+
+.multiselect--active:not(.multiselect--above) .multiselect__current,
+.multiselect--active:not(.multiselect--above) .multiselect__input,
+.multiselect--active:not(.multiselect--above) .multiselect__tags {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.multiselect--active .multiselect__select {
+  transform: rotate(180deg);
+}
+
+.multiselect--above.multiselect--active .multiselect__current,
+.multiselect--above.multiselect--active .multiselect__input,
+.multiselect--above.multiselect--active .multiselect__tags {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.multiselect__input,
+.multiselect__single {
+  position: relative;
+  display: inline-block;
+  min-height: 20px;
+  line-height: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0 0 5px;
+  width: 100%;
+  transition: border .1s ease;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  vertical-align: top;
+}
+
+.multiselect__tag~.multiselect__input,
+.multiselect__tag~.multiselect__single {
+  width: auto;
+}
+
+.multiselect__input:hover,
+.multiselect__single:hover {
+  border-color: #cfcfcf;
+}
+
+.multiselect__input:focus,
+.multiselect__single:focus {
+  border-color: #a8a8a8;
+  outline: none;
+}
+
+.multiselect__single {
+  padding-left: 6px;
+  margin-bottom: 8px;
+}
+
+.multiselect__tags-wrap {
+  display: inline;
+}
+
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 8px 40px 0 8px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+}
+
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 4px 26px 4px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: #fff;
+  line-height: 1;
+  background: #41b883;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+.multiselect__tag-icon {
+  cursor: pointer;
+  margin-left: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: 700;
+  font-style: normal;
+  width: 22px;
+  text-align: center;
+  line-height: 22px;
+  transition: all .2s ease;
+  border-radius: 5px;
+}
+
+.multiselect__tag-icon:after {
+  content: "\D7";
+  color: #266d4d;
+  font-size: 14px;
+}
+
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+  background: #369a6e;
+}
+
+.multiselect__tag-icon:focus:after,
+.multiselect__tag-icon:hover:after {
+  color: #fff;
+}
+
+.multiselect__current {
+  min-height: 40px;
+  overflow: hidden;
+  padding: 8px 12px 0;
+  padding-right: 30px;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+}
+
+.multiselect__current,
+.multiselect__select {
+  line-height: 16px;
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.multiselect__select {
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  right: 1px;
+  top: 1px;
+  padding: 4px 8px;
+  text-align: center;
+  transition: transform .2s ease;
+}
+
+.multiselect__select:before {
+  position: relative;
+  right: 0;
+  top: 65%;
+  color: #999;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #999 transparent transparent;
+  content: "";
+}
+
+.multiselect__placeholder {
+  color: #adadad;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+}
+
+.multiselect--active .multiselect__placeholder {
+  display: none;
+}
+
+.multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: #fff;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.multiselect__content {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-width: 100%;
+  vertical-align: top;
+}
+
+.multiselect--above .multiselect__content-wrapper {
+  bottom: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: none;
+  border-top: 1px solid #e8e8e8;
+}
+
+.multiselect__content::webkit-scrollbar {
+  display: none;
+}
+
+.multiselect__element {
+  display: block;
+}
+
+.multiselect__option {
+  display: block;
+  padding: 12px;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.multiselect__option:after {
+  top: 0;
+  right: 0;
+  position: absolute;
+  line-height: 40px;
+  padding-right: 12px;
+  padding-left: 20px;
+}
+
+.multiselect__option--highlight {
+  background: #41b883;
+  outline: none;
+  color: #fff;
+}
+
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #41b883;
+  color: #fff;
+}
+
+.multiselect__option--selected {
+  background: #f3f3f3;
+  color: #35495e;
+  font-weight: 700;
+}
+
+.multiselect__option--selected:after {
+  content: attr(data-selected);
+  color: silver;
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+  background: #ff6a6a;
+  color: #fff;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+  background: #ff6a6a;
+  content: attr(data-deselect);
+  color: #fff;
+}
+
+.multiselect--disabled {
+  background: #ededed;
+  pointer-events: none;
+}
+
+.multiselect--disabled .multiselect__current,
+.multiselect--disabled .multiselect__select,
+.multiselect__option--disabled {
+  background: #ededed;
+  color: #a6a6a6;
+}
+
+.multiselect__option--disabled {
+  cursor: text;
+  pointer-events: none;
+}
+
+.multiselect__option--disabled.multiselect__option--highlight {
+  background: #dedede!important;
+}
+
+.multiselect-enter-active,
+.multiselect-leave-active {
+  transition: all .15s ease;
+}
+
+.multiselect-enter,
+.multiselect-leave-active {
+  opacity: 0;
+}
+
+.multiselect__strong {
+  margin-bottom: 8px;
+  line-height: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+[dir=rtl] .multiselect {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__select {
+  right: auto;
+  left: 1px;
+}
+
+[dir=rtl] .multiselect__tags {
+  padding: 8px 8px 0 40px;
+}
+
+[dir=rtl] .multiselect__content {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__option:after {
+  right: auto;
+  left: 0;
+}
+
+[dir=rtl] .multiselect__clear {
+  right: auto;
+  left: 12px;
+}
+
+[dir=rtl] .multiselect__spinner {
+  right: auto;
+  left: 1px;
+}
+
+@keyframes a {
+  0% {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(2turn);
+  }
+}
+</style>
+<style>
+
+#free-reward-panel .reward-users-modal main {
+  padding: 0;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.reward-note-modal .v-modal {
+  width: 620px;
+  text-align: center;
+}
+.reward-note-modal .v-modal form {
+    margin: 0 auto 25px auto;
+    padding: 0 40px;
+}
+.reward-note-modal .v-modal .reward-intro {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.reward-note-modal .v-modal .reward-intro .avatar {
+      cursor: default !important;
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      display: inline-block;
+}
+.reward-note-modal .v-modal .reward-intro .intro {
+      margin-right: 5px;
+      font-weight: bold;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .reward-intro i {
+      color: #EA6F5A;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs {
+    margin: 25px 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group {
+      margin: 0 -5px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input {
+        display: none;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input:checked + .option {
+        color: #EA6F5A;
+        border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-text {
+        opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-amount-input {
+        opacity: 1;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option {
+        position: relative;
+        margin: 0 5px 15px;
+        width: 156px;
+        height: 56px;
+        line-height: 54px;
+        border: 1px solid #E6E6E6;
+        border-radius: 4px;
+        font-weight: normal;
+        color: #999999;
+        cursor: pointer;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option i {
+          font-size: 16px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .amount {
+          font-size: 28px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .piece {
+          font-size: 13px;
+          vertical-align: sub;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input {
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          width: 100%;
+          opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input i {
+            position: absolute;
+            top: 0;
+            left: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input .piece {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+            height: 54px;
+            line-height: 54px;
+            border: none;
+            font-size: 28px;
+            text-align: center;
+            background: transparent;
+            -moz-appearance: textfield;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-outer-spin-button, .reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-inner-spin-button {
+              -webkit-appearance: none !important;
+}
+.reward-note-modal .v-modal .main-inputs .message {
+      padding: 15px 20px;
+      margin-bottom: 0;
+      font-size: 14px;
+      border: 1px solid #E6E6E6;
+      color: #333333;
+      border-radius: 4px;
+      background-color: rgba(180, 180, 180, 0.1);
+}
+.reward-note-modal .v-modal .main-inputs .message textarea {
+        width: 100%;
+        height: 44px;
+        padding: 0;
+        margin: 0;
+        resize: none;
+        background: none !important;
+        border: none !important;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-box-shadow: none;
+                box-shadow: none;
+}
+.reward-note-modal .v-modal .main-inputs .message textarea:focus {
+          outline: none;
+}
+.reward-note-modal .v-modal .reward-info .amount {
+    font-size: 28px;
+    font-weight: bold;
+    color: #EA6F5A;
+}
+.reward-note-modal .v-modal .reward-info .pay-method {
+    font-size: 14px;
+}
+.reward-note-modal .v-modal .reward-info .pay-method a {
+      color: #3194D0;
+}
+.reward-note-modal .v-modal .choose-pay {
+    margin: 0 -5px;
+}
+.reward-note-modal .v-modal .choose-pay input {
+      display: none;
+}
+.reward-note-modal .v-modal .choose-pay input:checked + .option {
+      color: #EA6F5A;
+      border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .choose-pay .option {
+      margin: 20px 5px 10px;
+      width: 156px;
+      height: 56px;
+      line-height: 54px;
+      text-align: center;
+      border: 1px solid #E6E6E6;
+      border-radius: 4px;
+      cursor: pointer;
+}
+.reward-note-modal .v-modal .choose-pay .option img {
+        height: 30px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.alipay, .reward-note-modal .v-modal .choose-pay .option img.night.alipay {
+        min-width: 85px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.wechat, .reward-note-modal .v-modal .choose-pay .option img.night.wechat {
+        min-width: 112px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.night {
+        display: none;
+}
+body.reader-night-mode .reward-note-modal .v-modal .choose-pay .option img.night {
+        display: inline-block;
+}
+body.reader-night-mode .reward-note-modal .v-modal .choose-pay .option img.day {
+        display: none;
+}
+.reward-note-modal .v-modal .choose-pay .tooltip {
+      width: 230px;
+}
+.reward-note-modal .v-modal .modal-footer {
+    padding: 0 15px 20px;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+.reward-note-modal .v-modal .modal-footer .btn {
+      padding: 8px 45px;
+      font-size: 24px;
+}
+.reward-note-modal .v-modal .btn-pay {
+    padding: 8px 25px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #F5A623;
+}
+.weixin-pay, .success-pay {
+  text-align: center;
+}
+.weixin-pay .v-modal, .success-pay .v-modal {
+    width: 350px;
+}
+.weixin-pay .ic-successed, .success-pay .ic-successed {
+    font-size: 60px;
+    color: #3db922;
+}
+.weixin-pay h2, .weixin-pay h3, .success-pay h2, .success-pay h3 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+.weixin-pay h2, .success-pay h2 {
+    margin: 0 0 40px 0;
+    font-size: 24px;
+}
+.weixin-pay .bind-text, .success-pay .bind-text {
+    position: relative;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #999999;
+}
+.weixin-pay .bind-text:before, .weixin-pay .bind-text:after, .success-pay .bind-text:before, .success-pay .bind-text:after {
+      content: "";
+      border-top: 1px solid #999;
+      display: block;
+      position: absolute;
+      width: 40px;
+      top: 8px;
+}
+.weixin-pay .bind-text:before, .success-pay .bind-text:before {
+      left: 30px;
+}
+.weixin-pay .bind-text:after, .success-pay .bind-text:after {
+      right: 30px;
+}
+.weixin-pay .share-bind, .success-pay .share-bind {
+    display: block;
+    margin-bottom: 30px;
+}
+.weixin-pay .share-bind i, .success-pay .share-bind i {
+      margin-right: 4px;
+      font-size: 22px;
+      vertical-align: middle;
+}
+.weixin-pay .share-bind.wechat i, .success-pay .share-bind.wechat i {
+      color: #00BB29;
+}
+.weixin-pay .share-bind.weibo i, .success-pay .share-bind.weibo i {
+      color: #E05244;
+}
+.weixin-pay .wx-qr-code, .success-pay .wx-qr-code {
+    display: inline-block;
+}
+.weixin-pay .wx-qr-code img, .success-pay .wx-qr-code img {
+      margin: 0 auto;
+      padding: 10px;
+      width: 200px;
+      background-color: #ffffff;
+}
+.weixin-pay .pay-amount, .success-pay .pay-amount {
+    margin: 20px 0;
+    color: #787878;
+}
+.weixin-pay .pay-amount span, .success-pay .pay-amount span {
+      color: #F5A623;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.v-modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: transparent;
+}
+.v-modal-wrap.modal-leave-active {
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+.v-modal-wrap.modal-enter-active .v-modal-mask, .v-modal-wrap.modal-leave-active .v-modal-mask {
+    opacity: 0;
+}
+.v-modal-wrap.modal-enter-active .v-modal, .v-modal-wrap.modal-leave-active .v-modal {
+    -webkit-transform: translate(-50%, -70%);
+        -ms-transform: translate(-50%, -70%);
+            transform: translate(-50%, -70%);
+    opacity: 0;
+}
+.v-modal-wrap .v-modal-mask {
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    opacity: 1;
+}
+.v-modal-wrap .v-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    -o-transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+    opacity: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    overflow: hidden;
+}
+.v-modal-wrap .v-modal > header:before, .v-modal-wrap .v-modal > header:after, .v-modal-wrap .v-modal > main:before, .v-modal-wrap .v-modal > main:after, .v-modal-wrap .v-modal > footer:before, .v-modal-wrap .v-modal > footer:after {
+      content: '';
+      clear: both;
+      display: table;
+}
+.v-modal-wrap .v-modal > header {
+      padding: 20px;
+      border-bottom: 1px solid #F0F0F0;
+}
+.v-modal-wrap .v-modal > header h4 {
+        margin: 0;
+        color: #333;
+        text-align: left;
+}
+.v-modal-wrap .v-modal .close {
+      position: absolute;
+      right: 16px;
+      top: 20px;
+      font-size: 26px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.8);
+}
+.v-modal-wrap .v-modal .close:hover {
+        color: #000000;
+}
+.v-modal-wrap .v-modal > main {
+      padding: 20px 20px 20px 20px;
+      font-size: 15px;
+      color: #333;
+      -webkit-box-flex: 1;
+      -webkit-flex-grow: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+}
+.v-modal-wrap .v-modal > footer {
+      padding: 20px;
+      background-color: #fff;
+}
+.v-modal-wrap .v-modal > footer button {
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        border: 0;
+        float: right;
+}
+.v-modal-wrap .v-modal > footer button:focus {
+          outline: 0;
+}
+.v-modal-wrap .v-modal > footer .submit {
+        padding: 4px 12px;
+        border: 1px solid;
+        border-radius: 20px;
+}
+.v-modal-wrap .v-modal > footer .cancel {
+        margin-top: 5px;
+}
+.v-modal-wrap .v-modal > footer .cancel:hover {
+          color: #333333;
+}
+.reader-night-mode .v-modal-wrap .v-modal-mask {
+  background-color: rgba(63, 63, 63, 0.7);
+}
+.reader-night-mode .v-modal-wrap .v-modal {
+  background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal header {
+    border-color: #2F2F2F;
+}
+.reader-night-mode .v-modal-wrap .v-modal header h4 {
+      color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close:hover {
+      color: #ffffff;
+}
+.reader-night-mode .v-modal-wrap .v-modal main {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer {
+    background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer .cancel:hover {
+      color: #C8C8C8;
+}
+
+</style>
+<style>
+
+.nqzzJ71pC-jOnJKAfdtr6_0 {
+  float: right;
+  height: 55px;
+  padding: 15px 0px;
+  margin: 0 15px;
+}
+._3tScN0zmSdGLaUAH4SxTbM_0 {
+    width: 100%;
+    height: 100%;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._3f806byixOPpOPWnx8HiQP_0 {
+    height: 25px;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._2MIQ6sBppQZAKea91We0qf_0 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 1000;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 {
+    position: fixed;
+    left: -webkit-calc( 50% - 190px);
+    left: calc( 50% - 190px);
+    top: -webkit-calc( 50% - 300px);
+    top: calc( 50% - 300px);
+    width: 380px;
+    height: 425px;
+    background-color: #fff;
+    padding: 40px 72px 0;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    z-index: 1000;
+    text-align: center;
+}
+body.reader-night-mode .nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 {
+      background-color: #3f3f3f;
+      color: #c8c8c8;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 h4 {
+      margin: 0;
+      line-height: 25px;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 h4 span {
+        color: #e9634c;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 img {
+      width: 190px;
+      height: 190px;
+      margin: 12px 0 8px 0;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 p {
+      font-size: 14px;
+      line-height: 20px;
+      margin: 0;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 ._2WUz9DZJO5DIC_O5sD1kac_0 {
+      background-color: #e9634c;
+      color: #fff;
+      margin: 25px auto 0;
+      width: 190px;
+      height: 40px;
+      border-radius: 20px;
+      line-height: 40px;
+      font-size: 14px;
+      cursor: pointer;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.youdao-fixed-ad {
+  display: block;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border: 1px solid black;
+}
+.youdao-fixed-ad .img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.youdao-fixed-ad .ad-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    font-size: 12px;
+    padding: 2px 5px 0 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+}
+.qingteng-ads {
+  border: 1px solid #e8e8e8;
+  width: 180px;
+}
+
+</style>
+<style>
+
+.yuxi-fixed-ad {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+.yuxi-fixed-ad .img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("");
+}
+.yuxi-fixed-ad .ad-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    font-size: 12px;
+    padding: 2px 5px 0 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.like[data-v-6ddd02c6] {
+  display: inline-block;
+}
+.like .like-group[data-v-6ddd02c6] {
+    position: relative;
+    padding: 13px 0 15px 0;
+    font-size: 0;
+    border: 1px solid #EA6F5A;
+    border-radius: 40px;
+}
+.like .like-group[data-v-6ddd02c6]:hover {
+      background-color: rgba(236, 97, 73, 0.05);
+}
+.like .like-group .btn-like[data-v-6ddd02c6] {
+      display: inline-block;
+      font-size: 19px;
+}
+.like .like-group .btn-like[data-v-6ddd02c6]:before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        top: 2px;
+        width: 50px;
+        height: 50px;
+        background-image: url("");
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: 1000px 50px;
+}
+.like .like-group .btn-like a[data-v-6ddd02c6] {
+        position: relative;
+        padding: 18px 30px 18px 55px;
+        color: #EA6F5A;
+}
+.like .like-group .modal-wrap[data-v-6ddd02c6] {
+      font-size: 18px;
+      border-left: 1px solid rgba(236, 97, 73, 0.4);
+      display: inline-block;
+      margin-left: -15px;
+}
+.like .like-group .modal-wrap a[data-v-6ddd02c6] {
+        color: #EA6F5A;
+        padding: 18px 26px 18px 18px;
+}
+.like .like-group.like-animation[data-v-6ddd02c6], .like .like-group.active[data-v-6ddd02c6] {
+      background-color: #EA6F5A;
+}
+.like .like-group.like-animation .btn-like a[data-v-6ddd02c6], .like .like-group.active .btn-like a[data-v-6ddd02c6] {
+        color: white;
+}
+.like .like-group.like-animation .modal-wrap[data-v-6ddd02c6], .like .like-group.active .modal-wrap[data-v-6ddd02c6] {
+        border-left: 1px solid white;
+}
+.like .like-group.like-animation .modal-wrap a[data-v-6ddd02c6], .like .like-group.active .modal-wrap a[data-v-6ddd02c6] {
+          color: white;
+}
+.like .like-group.like-animation .btn-like[data-v-6ddd02c6]:before {
+      -webkit-animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+              animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+      background-position: right;
+}
+@-webkit-keyframes likeBlast {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+@keyframes likeBlast-data-v-6ddd02c6 {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+.like .like-group.active .btn-like[data-v-6ddd02c6]:before {
+      background-position: right;
+}
+
+</style>
+<style>
+
+@charset "UTF-8";
+ 
+.main {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 0 30px 0;
+  width: 620px;
+}
+.main .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.main .collection-settings {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    font-size: 13px;
+    color: #A0A0A0;
+}
+.main .collection-settings span {
+      padding-left: 4px;
+}
+.main .include-collection {
+    width: 100%;
+    padding-top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.main .include-collection .item {
+      display: inline-block;
+      margin: 0 12px 12px 0;
+      min-height: 32px;
+      background-color: white;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      vertical-align: top;
+      overflow: hidden;
+}
+.main .include-collection .item img {
+        width: 32px;
+        height: 32px;
+}
+.main .include-collection .item .name {
+        display: inline-block;
+        padding: 0 10px;
+        font-size: 14px;
+}
+.main .include-collection .add-collection-wrap {
+      margin: 0 12px 12px 0;
+}
+.main .include-collection .add-collection {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+}
+.main .include-collection .add-collection i {
+        margin-right: 4px;
+        color: #969696;
+}
+.main .recommend-note a {
+    position: relative;
+    margin: 20px 2px 0 0;
+    width: 200px;
+    height: 160px;
+    display: inline-block;
+}
+.main .recommend-note a:after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 160px;
+      border-radius: 0 0 4px 4px;
+      -webkit-box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+              box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
+      z-index: 1;
+}
+.main .recommend-note .name {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+.main .recommend-note .author {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.main .recommend-note .avatar {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.main .recommend-note .avatar img {
+      border-radius: 50%;
+}
+.main .recommend-note .author-name {
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: -1px;
+}
+.main .show-more {
+    margin: 0 12px 12px 0;
+    font-size: 14px;
+    color: #A0A0A0;
+}
+
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+
+:root .main[style="border:#7D8C8E solid 1px;height: 23px;"]
+{ display: none !important; }
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="reader-black-font">
+    <div class="mx-wc-main">
+      <DIV class="note" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="post" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="article mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <h1 class="title">JavaScript函数式编程思想</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="https://www.jianshu.com/u/96882b22d12f">
+            <img src="assets/1557107934-cab071be320cd9a57b62615238134843.png" alt="96">
+</a>          <div class="info">
+            <span class="name"><a href="https://www.jianshu.com/u/96882b22d12f">勿忘巛心安</a></span>
+            <!-- 关注用户按钮 -->
+            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 简书钻 -->
+                <span class="jsd-meta">
+                  <i class="iconfont ic-paid1"></i> 0.1
+                </span>
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于 2019.01.29 09:51">2019.01.23 10:12*</span>
+              <span class="wordage">字数 3110</span>
+            <span class="views-count">阅读 212</span><span class="comments-count">评论 0</span><span class="likes-count">喜欢 3</span></div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+
+        <!-- 文章内容 -->
+        <div data-note-content="" class="show-content">
+          <div class="show-content-free">
+            <blockquote>
+<p>欢迎访问<a href="http://www.taoweng.site/" target="_blank" rel="nofollow">个人网站</a></p>
+</blockquote>
+<p>最开始接触函数式编程的时候是在小米工作的时候，那个时候看老大以前写的代码各种 compose，然后一些 ramda 的一些工具函数，看着很吃力，然后极力吐槽函数式编程，现在回想起来，那个时候的自己真的是见识短浅，只想说,'真香'。</p>
+<p>最近在研究函数式编程，真的是在学习的过程中感觉自己的思维提升了很多，抽象能力大大的提高了，让我深深的感受到了函数式编程的魅力。所以我打算后面用 5 到 8 篇的篇幅，详细的介绍一下函数式编程的思想，基础、如何设计、测试等。</p>
+<p>今天这篇文章主要介绍函数式编程的思想。</p>
+<ul>
+<li>函数式编程有用吗？</li>
+<li>什么是函数式编程？</li>
+<li>函数式编程的优点。</li>
+</ul>
+<blockquote>
+<p>面向对象编程(OOP)通过封装变化使得代码更易理解。<br>
+函数式编程(FP)通过最小化变化使得代码更易理解。<br>
+-- Michacel Feathers（Twitter）</p>
+</blockquote>
+<p>总所周知 JavaScript 是一种拥有很多共享状态的动态语言，慢慢的，代码就会积累足够的复杂性，变得笨拙难以维护。面向对象设计能帮我们在一定程度上解决这个问题，但是还不够。</p>
+<p>由于有很多的状态，所以处理数据流和变化的传递显得尤为重要，不知道你们知道<strong>响应式编程</strong>与否，这种编程范式有助于处理 JavaScript 的异步或者事件响应。总之，当我们在设计应用程序的时候，我们应该考虑是否遵守了以下的设计原则。</p>
+<ul>
+<li>可扩展性--我是否需要不断地重构代码来支持额外的功能？</li>
+<li>易模块化--如果我更改了一个文件，另一个文件是否会受到影响？</li>
+<li>可重用性--是否有很多重复的代码？</li>
+<li>可测性--给这些函数添加单元测试是否让我纠结？</li>
+<li>易推理性--我写的代码是否非结构化严重并难以推理？</li>
+</ul>
+<p>我这能这么跟你说，一旦你学会了函数式编程，这些问题迎刃而解，本来函数式编程就是这个思想，一旦你掌握了函数式，然后你再学习响应式编程那就比较容易懂了，这是我亲身体会的。我之前在学 Rxjs 的时候是真的痛苦，说实话，Rxjs 是我学过最难的库了，没有之一。在经历过痛苦的一两个月之后，有些东西还是不能融会贯通，知道我最近研究函数式编程，才觉得是理所当然。毫无夸张，我也尽量在后面的文章中给大家介绍一下 Rxjs，这个话题我也在公司分享过。</p>
+<h2>什么是函数式编程？</h2>
+<p>简单来说，函数式编程是一种强调以函数使用为主的软件开发风格。看到这句我想你还是一脸懵逼，不知道函数式编程是啥，不要着急，看到最后我相信你会明白的。</p>
+<p>还有一点你要记住，函数式编程的目的是使用函数来<strong>抽象作用在数据之上的控制流和操作</strong>，从而在系统中<strong>消除副作用</strong>并<strong>减少对状态的改变。</strong></p>
+<p>下面我们通过例子来简单的演示一下函数式编程的魅力。</p>
+<p>现在的需求就是输出在网页上输出 <code>“Hello World”</code>。</p>
+<p>可能初学者会这么写。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'#msg'</span>).innerHTML = <span class="hljs-string">'&lt;h1&gt;Hello World&lt;/h1&gt;'</span>
+</code></pre>
+<p>这个程序很简单，但是所有代码都是死的，不能重用，如果想改变消息的格式、内容等就需要重写整个表达式，所以可能有经验的前端开发者会这么写。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">printMessage</span>(<span class="hljs-params">elementId, format, message</span>) </span>{
+    <span class="hljs-built_in">document</span>.querySelector(elementId).innerHTML = <span class="hljs-string">`&lt;<span class="hljs-subst">${format}</span>&gt;<span class="hljs-subst">${message}</span>&lt;/<span class="hljs-subst">${format}</span>&gt;`</span>
+}
+
+printMessage(<span class="hljs-string">'msg'</span>, <span class="hljs-string">'h1'</span>, <span class="hljs-string">'Hello World'</span>)
+</code></pre>
+<p>这样确实有所改进，但是任然不是一段可重用的代码，如果是要将文本写入文件，不是非 HTML，或者我想重复的显示 <code>Hello World</code>。</p>
+<p>那么作为一个函数式开发者会怎么写这段代码呢？</p>
+<pre class="hljs php"><code class="php"><span class="hljs-keyword">const</span> printMessage = compose(addToDom(<span class="hljs-string">'msg'</span>), h1, <span class="hljs-keyword">echo</span>)
+
+printMessage(<span class="hljs-string">'Hello World'</span>)
+</code></pre>
+<p>解释一下这段代码，其中的 <code>h1</code> 和 <code>echo</code> 都是函数，<code>addToDom</code> 很明显也能看出它是函数，那么我们为什么要写成这样呢？看起来多了很多函数一样。</p>
+<p>其实我们是讲程序分解为一些更可重用、更可靠且更易于理解的部分，然后再将他们组合起来，形成一个更易推理的程序整体，这是我们前面谈到的基本原则。</p>
+<blockquote>
+<p>compose 简单解释一下，他会让函数从最后一个参数顺序执行到第一个参数，compose 的每个参数都是函数，不明白的可以查一下，在 redux 的中间件部分这个函数式精华。</p>
+</blockquote>
+<p>可以看到我们是将一个任务拆分成多个最小颗粒的函数，然后通过组合的方式来完成我们的任务，这跟我们组件化的思想很类似，将整个页面拆分成若干个组件，然后拼装起来完成我们的整个页面。在函数式编程里面，组合是一个非常非常非常重要的思想。</p>
+<p>好，我们现在再改变一下需求，现在我们需要将文本重复三遍，打印到控制台。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">var</span> printMessaage = compose(<span class="hljs-built_in">console</span>.log, repeat(<span class="hljs-number">3</span>), echo)
+
+printMessage(‘Hello World’)
+</code></pre>
+<p>可以看到我们更改了需求并没有去修改内部逻辑，只是重组了一下函数而已。</p>
+<p>可以看到函数式编程在开发中具有声明模式。为了充分理解函数式编程，我们先来看下几个基本概念。</p>
+<ul>
+<li>声明式编程</li>
+<li>纯函数</li>
+<li>引用透明</li>
+<li>不可变性</li>
+</ul>
+<h3>声明式编程</h3>
+<p>函数式编程属于声明是编程范式：这种范式会<strong>描述一系列的操作</strong>，但并不会<strong>暴露它们是如何实现的</strong>或是<strong>数据流如何传过它们</strong>。</p>
+<p>我们所熟知的 SQL 语句就是一种很典型的声明式编程，它由一个个<strong>描述</strong>查询结果应该是什么样的断言组成，对数据检索的内部机制进行了<strong>抽象</strong>。</p>
+<p>我们再来看一组代码再来对比一下命令式编程和声明式编程。</p>
+<pre class="hljs cpp"><code class="cpp"><span class="hljs-comment">// 命令式方式</span>
+var <span class="hljs-built_in">array</span> = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+<span class="hljs-keyword">for</span>(let i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">array</span>.length; i++) {
+    <span class="hljs-built_in">array</span>[i] = Math.<span class="hljs-built_in">pow</span>(<span class="hljs-built_in">array</span>[i], <span class="hljs-number">2</span>)
+}
+
+<span class="hljs-built_in">array</span>; <span class="hljs-comment">// [0, 1, 4, 9]</span>
+
+<span class="hljs-comment">// 声明式方式</span>
+[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>].<span class="hljs-built_in">map</span>(num =&gt; Math.<span class="hljs-built_in">pow</span>(num, <span class="hljs-number">2</span>))
+</code></pre>
+<p>可以看到命令式很具体的告诉计算机如何执行某个任务。</p>
+<p>而声明式是将程序的<strong>描述与求值</strong>分离开来。它关注如何用各种<strong>表达式</strong>来描述程序逻辑，而不一定要指明其控制流或状态关系的变化。</p>
+<p>为什么我们要去掉代码循环呢？循环是一种重要的命令控制结构，但很难重用，并且很难插入其他操作中。而函数式编程旨在尽可能的提高代码的无状态性和不变性。要做到这一点，就要学会使用<strong>无副作用</strong>的函数--也称纯函数</p>
+<h3>纯函数</h3>
+<p>纯函数指<strong>没有副作用</strong>的函数。相同的输入有相同的输出，就跟我们上学的函数一样。</p>
+<p>常常这些情况会产生副作用。</p>
+<ul>
+<li>改变一个全局的变量、属性或数据结构</li>
+<li>改变一个函数参数的原始值</li>
+<li>处理用户输入</li>
+<li>抛出一个异常</li>
+<li>屏幕打印或记录日志</li>
+<li>查询 HTML 文档，浏览器的 Cookie 或访问数据库</li>
+</ul>
+<p>举一个简单的例子</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">increment</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> ++counter;
+}
+</code></pre>
+<p>这个函数就是不纯的，它读取了外部的变量，可能会觉得这段代码没有什么问题，但是我们要知道这种依赖外部变量来进行的计算，计算结果很难预测，你也有可能在其他地方修改了 counter 的值，导致你 increment 出来的值不是你预期的。</p>
+<p>对于纯函数有以下性质：</p>
+<ul>
+<li>仅取决于提供的输入，而不依赖于任何在函数求值或调用间隔时可能变化的隐藏状态和外部状态。</li>
+<li>不会造成超出作用域的变化，例如修改全局变量或引用传递的参数。</li>
+</ul>
+<p>但是在我们平时的开发中，有一些副作用是难以避免的，与外部的存储系统或 DOM 交互等，但是我们可以通过将其从主逻辑中分离出来，使他们易于管理。</p>
+<p>现在我们有一个小需求：通过 id 找到学生的记录并渲染在浏览器(在写程序的时候要想到可能也会写到控制台，数据库或者文件，所以要想如何让自己的代码能重用)中。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-comment">// 命令式代码</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showStudent</span>(<span class="hljs-params">id</span>) </span>{
+    <span class="hljs-comment">// 这里假如是同步查询</span>
+    <span class="hljs-keyword">var</span> student = db.get(id)
+    <span class="hljs-keyword">if</span>(student !== <span class="hljs-literal">null</span>) {
+          <span class="hljs-comment">// 读取外部的 elementId</span>
+          <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">`<span class="hljs-subst">${elementId}</span>`</span>).innerHTML = <span class="hljs-string">`<span class="hljs-subst">${student.id}</span>,<span class="hljs-subst">${student.name}</span>,<span class="hljs-subst">${student.lastname}</span>`</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'not found'</span>)
+    }
+}
+
+showStudent(<span class="hljs-string">'666'</span>)
+
+<span class="hljs-comment">// 函数式代码</span>
+
+<span class="hljs-comment">// 通过 find 函数找到学生</span>
+<span class="hljs-keyword">var</span> find = curry(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, id</span>) </span>{
+    <span class="hljs-keyword">var</span> obj = db.get(id)
+    <span class="hljs-keyword">if</span>(obj === <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'not fount'</span>)
+    }
+    
+    <span class="hljs-keyword">return</span> obj
+})
+
+<span class="hljs-comment">// 将学生对象 format</span>
+<span class="hljs-keyword">var</span> csv = <span class="hljs-function">(<span class="hljs-params">student</span>) =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${student.id}</span>,<span class="hljs-subst">${student.name}</span>,<span class="hljs-subst">${student.lastname}</span>`</span>
+
+<span class="hljs-comment">// 在屏幕上显示</span>
+<span class="hljs-keyword">var</span> append = curry(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elementId, info</span>) </span>{
+    <span class="hljs-built_in">document</span>.querySelector(elementId).innerHTML = info
+})
+
+<span class="hljs-keyword">var</span> showStudent = compose(append(<span class="hljs-string">'#student-info'</span>), csv, find(db))
+
+showStudent(<span class="hljs-string">'666'</span>)
+</code></pre>
+<p>如果看不懂 curry (柯里化)的先不着急，这是一个对于新手来说比较难理解的一个概念，在函数式编程里面起着至关重要的作用。</p>
+<p>可以看到函数式代码通过较少这些函数的长度，将 showStudent 编写为小函数的组合。这个程序还不够完美，但是已经可以展现出相比于命令式的很多优势了。</p>
+<ul>
+<li>灵活。有三个可重用的组件</li>
+<li>声明式的风格，给高阶步骤提供了一个清晰视图，增强了代码的可读性</li>
+<li>另外是将纯函数与不纯的行为分离出来。</li>
+</ul>
+<p>我们看到纯函数的输出结果是一致的，可预测的，相同的输入会有相同的返回值，这个其实也被称为<strong>引用透明</strong>。</p>
+<h3>引用透明</h3>
+<p>引用透明是定义一个纯函数较为正确的方法。纯度在这个意义上表面一个函数的参数和返回值之间映射的纯的关系。如果一个函数对于相同的输入始终产生相同的结果，那么我们就说它是<strong>引用透明</strong>。</p>
+<p>这个概念很容易理解，简单的举两个例子就行了。</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-comment">// 非引用透明</span>
+<span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">increment</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> ++counter
+}
+
+<span class="hljs-comment">// 引用透明</span>
+<span class="hljs-keyword">var</span> increment = <span class="hljs-function">(<span class="hljs-params">counter</span>) =&gt;</span> counter + <span class="hljs-number">1</span>
+</code></pre>
+<blockquote>
+<p>其实对于箭头函数在函数式编程里面有一个高大上的名字，叫 lambda 表达式，对于这种匿名函数在学术上就是叫 lambda 表达式，现在在 Java 里面也是支持的。</p>
+</blockquote>
+<h3>不可变数据</h3>
+<p>不可变数据是指那些创建后不能更改的数据。与许多其他语言一样，JavaScript 里有一些基本类型(String,Number 等)从本质上是不可变的，但是对象就是在任意的地方可变。</p>
+<p>考虑一个简单的数组排序代码：</p>
+<pre class="hljs javascript"><code class="javascript"><span class="hljs-keyword">var</span> sortDesc = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arr</span>) </span>{
+    <span class="hljs-keyword">return</span> arr.sort(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{
+        <span class="hljs-keyword">return</span> a - b
+    })
+}
+
+<span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>]
+sortDesc(arr) <span class="hljs-comment">// [1, 2, 3]</span>
+arr <span class="hljs-comment">// [1, 2, 3]</span>
+</code></pre>
+<p>这段代码看似没什么问题，但是会导致在排序的过程中会产生副作用，修改了原始引用，可以看到原始的 arr 变成了 <code>[1, 2, 3]</code>。这是一个语言缺陷，后面会介绍如何克服。</p>
+<h2>总结</h2>
+<ul>
+<li>使用纯函数的代码绝不会更改或破坏全局状态，有助于提高代码的可测试性和可维护性</li>
+<li>函数式编程采用声明式的风格，易于推理，提高代码的可读性。</li>
+<li>函数式编程将函数视为积木，通过一等高阶函数来提高代码的模块化和可重用性。</li>
+<li>可以利用响应式编程组合各个函数来降低事件驱动程序的复杂性(这点后面可能会单独拿一篇来进行讲解)。</li>
+</ul>
+<blockquote>
+<p>内容来至于《JavaScript函数式编程指南》</p>
+</blockquote>
+<p>欢迎关注个人公众号【前端桃园】。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 344px; max-height: 344px;">
+<div class="image-container-fill" style="padding-bottom: 100.0%;"></div>
+<div class="image-view" data-width="344" data-height="344"><img data-original-src="//upload-images.jianshu.io/upload_images/2974893-eb103d5ee6393473" data-original-width="344" data-original-height="344" data-original-format="image/jpeg" data-original-filesize="8203" style="cursor: zoom-in;" class="image-loading"></div>
+</div>
+<div class="image-caption">image</div>
+</div>
+
+          </div>
+        </div>
+    </div></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://www.jianshu.com/p/01cbebd9655d" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 09:58:54</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

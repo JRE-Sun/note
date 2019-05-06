@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000012685766 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>十行代码实现高仿Promise - 前端学习指南@原理</title>
+    
+<link rel="stylesheet" href="assets/1557110200-d93dfe41d61c032962760b7f2b5e1b74.css">
+
+<link rel="stylesheet" href="assets/1557110200-3db965f65c56a94afd3a806557d16bb2.css">
+
+<link rel="stylesheet" href="assets/1557110200-fe8c784f5b2de0229ae4bb897cfc9cc9.css">
+<style>
+
+</style>
+<style>
+
+:root .topbanner,
+:root .container > a.mid-wrapper,
+:root .container > .ads,
+:root .main[style="border:#7D8C8E solid 1px;height: 23px;"]
+{ display: none !important; }
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000012390889" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="container mt15" style="position:relativedisplay: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="row" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV class="col-xs-12 col-md-9 main " style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="article fmt article__content mx-wc-selected-elem" data-id="1190000012685766" data-license="nd" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+                    
+<p>本文为<a href="https://jirengu.com/" rel="nofollow noreferrer">饥人谷讲师若愚</a>原创文章，首发于 <a href="https://zhuanlan.zhihu.com/study-fe" rel="nofollow noreferrer">前端学习指南</a>。</p>
+<h3>问题</h3>
+<p>假设我们有一个需求：1. 获取用户所在的城市；2. 根据城市获取天气；3. 根据天气获取出行建议。那我们的代码应该是这样的</p>
+<pre><code>getCity(url1, function(){
+  getWeather(url2, function(weather){
+    getSuggestion(url3, function(suggestion){
+      console.log(suggestion)
+    })
+  })
+})</code></pre>
+<p>这就是典型的异步 callback 『回调地狱』，代码层层嵌套可读性很差。关于异步的解决方式可参考这篇文章 <a href="https://segmentfault.com/a/1190000012571381">Node.js异步漫谈</a></p>
+<p>使用 Promise 是解决上述问题的一种方式，这里我们不去讲如何去使用内置的 Promise，而是带大家手把手写一个 Promise。</p>
+<h3>思路</h3>
+<p>我们希望有一个工具，能让我们使用下面的的写法来实现上述功能</p>
+<pre><code>promise.then(getCity)
+    .then(getWeather)
+    .then(getSuggestion)</code></pre>
+<p>整理下思路：</p>
+<ol>
+<li>Tool 是一个对象</li>
+<li>Tool 有 then 这个方法</li>
+<li>执行 then 方法返回的应该还是 Tool 对象</li>
+</ol>
+<pre><code>function Promise(){}
+Promise.prototype.then = function(fn){
+  //todo...
+  return this
+}
+var promise = new Promise()</code></pre>
+<p>那如何实现异步操作序列执行呢？关键思路如下：</p>
+<p>在 promise 对象内容维护一个数组，当执行 promise.then(getCity) .then(getWeather) .then(getSuggestion) 时把这几个函数依次放入数组中。注意此时这些函数并没有执行。</p>
+<p>执行promise.resolve()时，会从数组中拿出一个函数去执行。函数执行的过程中在异步操作的结果到来后会再次自动调用 promise.resolve()，触发下一个函数的取出并执行，下一个函数结果到来后再次自动调用promise.resolve() ......，这样就实现了异步链式执行。和原子弹爆炸原理类似。</p>
+<p>所以需要对原来的异步函数做一点小小的改动，在数据到来的地方，加一个promise.resolve，用于启动后续函数的执行</p>
+<pre><code>function getCity(){
+  var xhr = new XMLHttpRequest()
+  xhr.open(url, 'get', true)
+  xhr.onload = function(){
+    if (this.status == 200) {
+      promise.resolve(xhr.responseText)  //注意这里的promise.resolve
+    }
+  }
+  xhr.send()
+}</code></pre>
+<p>现在我们就能实现一个简易的 Promise 了，这里我们先暂不考虑特殊情况：</p>
+<pre><code>function Promise(){
+  this.callbacks = []
+}
+Promise.prototype.then = function(fn){
+  this.callbacks.push(fn)  //调用 then 时把函数放入数组
+  return this              //返回当前对象供链式调用
+}
+Promise.prototype.resolve = function(data){
+  var fn = this.callbacks.shift()  //当调用resolve时拿出一个函数
+  fn&amp;&amp;fn(data)                     //执行这个函数，并且把resolve的参数做参数
+}
+
+
+var promise = new Promise()
+
+promise.then(getCity)
+    .then(getWeather)
+    .then(getSuggestion)
+
+promise.resolve()  //启动
+
+function getCity(){
+  setTimeout(function(){
+    promise.resolve('杭州')
+  }, 1000)
+}
+function getWeather(city){
+  setTimeout(function(){
+    promise.resolve(city + ' 晴天')
+  }, 1000)
+}
+function getSuggestion(weather){
+  setTimeout(function(){
+    console.log(weather + ' 天气不错，可携女友与狗出行')
+  }, 1000)
+}</code></pre>
+<p>当然，如果觉得promise.resolve 单独启动一次看起来不舒服，也可以这样执行</p>
+<pre><code>getCity()
+  .then(getWeather)
+  .then(getSuggestion)
+
+function getCity(){
+  setTimeout(function(){
+    promise.resolve('杭州')
+  }, 1000)
+  return promise   //注意这里
+}</code></pre>
+<h3>实现</h3>
+<p>到此为止我们已经写了一个简单的 Promise，甚至能满足很大一部分使用需求。但有个问题，每次异步操作可能存在失败的情况，而上面的代码并没有异步函数的失败处理。下面考虑异步的失败处理，原理和上面类似，可以阅读代码动手做个测试</p>
+<pre><code>class Promise {
+    constructor (){
+      this.callbacks = []
+      this.oncatch = null
+    }
+
+    reject(result){
+      this.complete('reject', result)
+    }
+
+    resolve(result){
+      this.complete('resolve', result)
+    }
+
+    complete(type, result){
+      if(type==='reject' &amp;&amp; this.oncatch){
+        this.callbacks = []
+        this.oncatch(result)
+      }else if(this.callbacks[0]) { 
+        var handlerObj = this.callbacks.shift()
+        if(handlerObj[type]){
+          handlerObj[type](result)
+        }
+      }
+    }
+
+    then(onsuccess, onfail){
+      this.callbacks.push({
+        resolve: onsuccess,
+        reject: onfail
+      })
+      return this
+    }
+
+    catch(onfail){
+      this.oncatch = onfail
+      return this
+    }
+  }
+
+  var promise = new Promise()
+  fn1().then(fn2, onfn1error)
+       .then(fn3, onfn2error)
+       .catch(onerror)
+
+  function fn1(){
+    setTimeout(function(){
+      if(Math.random()&gt;0.5){
+        promise.resolve('杭州')
+      }else{
+        promise.reject('fn1 error')
+      }
+    })
+    return promise
+  }</code></pre>
+<h3>总结</h3>
+<p>现在我们已经手写了一个 Promise， 当然和浏览器内置对象Promise原理有些差异， 但至少『达到』类似的目的了</p>
+<p>加微信号: astak10或者长按识别下方二维码进入前端技术交流群 ，暗号：写代码啦</p>
+<p>每日一题，每周资源推荐，精彩博客推荐，工作、笔试、面试经验交流解答，免费直播课，群友轻分享... ，数不尽的福利免费送</p>
+<p><span class="img-wrap"><img data-src="/img/remote/1460000012605904?w=200&amp;h=200" src="assets/1557110200-86c1e575a35bce7cd7d0ab0df8854a00.svg" alt="" title=""></span></p>
+
+                </div></DIV></DIV></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000012685766" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 10:36:40</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://segmentfault.com/a/1190000009624849 -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>同源策略与JS跨域（JSONP , CORS） - 一只瓦罐 - SegmentFault 思否@跨域</title>
+    
+<link rel="stylesheet" href="assets/1557110278-d93dfe41d61c032962760b7f2b5e1b74.css">
+
+<link rel="stylesheet" href="assets/1557110278-3db965f65c56a94afd3a806557d16bb2.css">
+
+<link rel="stylesheet" href="assets/1557110278-fe8c784f5b2de0229ae4bb897cfc9cc9.css">
+<style>
+
+</style>
+<style>
+
+:root .topbanner,
+:root .container > a.mid-wrapper,
+:root .container > .ads,
+:root .main[style="border:#7D8C8E solid 1px;height: 23px;"]
+{ display: none !important; }
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+
+                                    @media (max-width: 1200px) {
+                                        .trialCenter-wrapper {
+                                            display: none !important;
+                                        }
+                                    }
+                                
+</style>
+<style>
+
+                    .job-recommend-area a:not(:last-of-type) {margin-bottom:10px; display: block}
+                    .job-recommend-area a:hover {text-decoration: none;}
+                
+</style>
+<style>
+
+                    .job-recommend {margin-bottom: 30px;}
+                    .job-title {
+                        font-size: 14px;
+                        color: #017E66;
+                        font-weight: 500;
+                        background: #BFE6D7;
+                        margin: 0;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        text-align: center;
+                    }
+                    .job-recommend-area {
+                      padding: 13px;
+                      border: 3px solid #EBF7F3;
+                      border-top: none;
+                    }
+                    
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(255, 255, 255) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="blog-post ">
+    <div class="mx-wc-main">
+      <DIV class="wrap" data-blogid="1200000008082751" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div class="container mt15 mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+        <div class="row">
+            <div class="col-xs-12 col-md-9 main ">
+                                <ol class="breadcrumb mb15">
+                    <li><a href="https://segmentfault.com/blogs">专栏</a></li>
+                                        <li><a href="https://segmentfault.com/blog/yizhiwaguan">一只瓦罐</a></li>
+                                        <li class="active">文章详情</li>
+                </ol>
+                                <div class="post-topheader custom- pt0">
+                    <div class="mb20">
+                        <div class="block-for-right-border">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+
+                                    <div class="post-topheader__info" data-username="一只瓦罐" data-userslug="yizhiwaguan" data-useravatar="https://avatar-static.segmentfault.com/111/256/1112569820-5875f6dd442d6_big64">
+
+
+                                        <div class="article__author clearfix">
+                                            <div class="article__authorleft">
+                                                <a href="https://segmentfault.com/u/yizhiwaguan">
+                                                    <img class="avatar-40" src="assets/1557110278-88d41859994a8b56c1be8e9ba7fa189c" alt="一只瓦罐">
+                                                </a>
+                                            </div>
+                                            <div class="article__authorright">
+                                                <div class="article__authormeta">
+                                                <a href="https://segmentfault.com/u/yizhiwaguan" class="mr5"><strong>一只瓦罐</strong></a>
+                                        
+                                                
+                                                                                                <img src="assets/1557110278-11fdf5240214594165785493ac6e2381.svg" class="mr5"><span style="color:#BF7158" class="mr10">810</span>
+
+                                                                                                发布于
+                                                <a href="https://segmentfault.com/blog/yizhiwaguan">一只瓦罐</a>
+                                                
+                                                
+                                                <span class="hidden-xs">
+                                                                                                                                                          <button type="button" class="btn btn-xs btn-success follow-article ml10" data-do="follow" data-type="blog" data-id="1200000008082751">关注专栏
+                                                       </button>
+                                                                                                                                                   </span>
+                                                </div>
+                                                
+                                                <span style="display: block">
+                                                    2017-06-01 发布
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <h1 class="h1 post-topheader__info--title" id="articleTitle" data-id="1190000009624849">
+                                            <a href="https://segmentfault.com/a/1190000009624849"> 同源策略与JS跨域（JSONP ,  CORS）</a>
+                                        </h1>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end .post-topheader -->
+
+                <div class="visible-lg">
+                    
+                </div>
+
+                
+                <div class="article fmt article__content" data-id="1190000009624849" data-license="cc">
+                    
+<p>本文按照政治问答题必备套路分为以下3个部分：</p>
+<ol>
+<li>为什么要跨域？</li>
+<li>跨域是什么？</li>
+<li>如何实现跨域？</li>
+</ol>
+<h1>Section1、为什么要跨域？</h1>
+<p>自古以来（1995年起），为了用户的信息安全，浏览器就引入了同源策略。那么同源策略是如何保证用户的信息安全的呢？</p>
+<p>栗子1：如果没有同源策略，你打开了你的银行账户页面A，又打开了另一个不相关的页面B，这时候如果B是恶意网站，B可以通过Javascript轻松访问和修改A页面中的内容。</p>
+<p>栗子2：现在我们广泛的使用cookie来维护用户的登录状态，而如果没有同源策略，这些cookie信息就会泄露，其他网站就可以冒充这个登录用户。</p>
+<p>由此可以看出，同源策略确实是必不可少的，那么它会带来哪些限制呢？</p>
+<p>1、Cookie、LocalStorage和IndexDB无法读取。<br>2、DOM无法获得。<br>3、AJAX请求不能发送。</p>
+<p>有时候我们需要突破上述限制，就需要用跨域的方法来解决。</p>
+<h1>Section2、跨域是什么？</h1>
+<p>什么叫做不同的域？比如：</p>
+<p><a href="http://www.a.com/" rel="nofollow noreferrer">http://www.a.com</a>:8000/a.js<br>协议（http）、域名（www.a.com）、端口（8000）三者中有一个不同就叫不同的域。</p>
+<p>跨域就是不同的域间相互访问时使用某些方法来突破上述限制。</p>
+<p>【注意：协议或者端口的不同，只能通过后台来解决。】</p>
+<h1>Section3、怎么跨域？</h1>
+<h2>一、解决Section1中提到的1、2两点限制：</h2>
+<p>1.Cookie、LocalStorage和IndexDB无法读取。<br>2.DOM无法获得。</p>
+<h3>方法1、通过document.domain跨子域</h3>
+<p>【适用范围：（1）两个域只是子域不同；（2）只适用于<b>iframe窗口与父窗口之间</b>互相获取cookie和DOM节点，不能突破LocalStorage和IndexDB的限制。】</p>
+<p>当两个不同的域只是子域不同时，可以通过把document.domain设置为他们共同的父域来解决。</p>
+<p>栗子：</p>
+<p>A: <a href="http://www.example.com/a.html" rel="nofollow noreferrer">http://www.example.com/a.html</a><br>B: <a href="http://example.com/b.html" rel="nofollow noreferrer">http://example.com/b.html</a><br>当A、B想要获取对方的<b>cookie或者DOM节点</b>时，可以设置:</p>
+<pre><code>document.domain='example.com';</code></pre>
+<p>来解决。</p>
+<p>这时A网页通过脚本设置:</p>
+<pre><code>document.cookie = "testA=hello";
+
+</code></pre>
+<p>B网页就可以拿到这个cookie：</p>
+<pre><code>var aCookie = document.cookie;
+
+</code></pre>
+<h3>方法2、通过window.name跨域</h3>
+<p>【适用范围：（1）可以是两个完全不同源的域；（2）同一个窗口内：即同一个标签页内先后打开的窗口。】</p>
+<p>pre-condition：</p>
+<p>window.name属性有个特征：即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的。</p>
+<p>基于这个思想，我们可以在某个页面设置好 window.name 的值，然后在本标签页内跳转到另外一个域下的页面。在这个页面中就可以获取到我们刚刚设置的 window.name 了。</p>
+<p>结合iframe还有更高级的用法：</p>
+<p>父窗口先打开一个与自己不同源的子窗口，在这个子窗口里设置：</p>
+<pre><code>window.name = data;
+</code></pre>
+<p>然后让子窗口跳转到一个与父窗口同域的网址：</p>
+<pre><code>location='http://www.parent.com/a.html';
+</code></pre>
+<p>这时，因为同域并且同一窗口window.name是不变的，所以父窗口可以获取到子窗口下的window.name。</p>
+<pre><code>var data = document.getElementById('myFrame').contentWindow.name;
+</code></pre>
+<p>优点：window.name容量很大，可以放置非常长的字符串；缺点：必须监听子窗口window.name属性的变化，影响网页性能。</p>
+<h3>方法3、使用HTML5的window.postMessage跨域</h3>
+<p>window.postMessage(message,targetOrigin) 方法是html5新引进的特性，可以使用它来向其它的window对象发送消息，无论这个window对象是属于同源或不同源，目前IE8+、FireFox、Chrome、Opera等浏览器都已经支持window.postMessage方法。</p>
+<p><b>otherWindow.postMessage(message, targetOrigin);</b></p>
+<p><b>otherWindow:</b>接受消息页面的window的引用。可以是页面中iframe的contentWindow属性；window.open的返回值；通过name或下标从window.frames取到的值。<br><b>message:</b>所要发送的数据，string类型。<br><b>targetOrigin:</b>用于限制otherWindow，*表示不做限制。</p>
+<h3>栗子1：</h3>
+<p>在父页面中嵌入子页面，通过postMessage发送数据。<br>parent.com/index.html中的代码：</p>
+<pre><code>&lt;iframe id="ifr" src="child.com/index.html"&gt;&lt;/iframe&gt;
+&lt;script type="text/javascript"&gt;
+window.onload = function() {
+    var ifr = document.getElementById('ifr');
+    var targetOrigin = 'http://child.com'; 
+    // 若写成'http://child.com/c/proxy.html'效果一样
+    // 若写成'http://c.com'就不会执行postMessage了
+    ifr.contentWindow.postMessage('I was there!', targetOrigin);
+};
+&lt;/script&gt;
+</code></pre>
+<p>在子页面中通过message事件监听父页面发送来的消息并显示。<br>child.com/index.html中的代码：</p>
+<pre><code>&lt;script type="text/javascript"&gt;
+window.addEventListener('message', function(event){
+    // 通过origin属性判断消息来源地址
+    if (event.origin == 'http://parent.com') {
+        alert(event.data);    // 弹出"I was there!"
+        alert(event.source);  
+        // 对parent.com、index.html中window对象的引用
+        // 但由于同源策略，这里event.source不可以访问window对象
+    }
+}, false);
+&lt;/script&gt;
+</code></pre>
+<h3>栗子2：</h3>
+<p>假设在a.html里嵌套个</p>
+<pre><code>&lt;iframe src="http://www.child.com/b.html" frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
+<p>在这两个页面里互相通信</p>
+<p>a.html</p>
+<pre><code>window.onload = function() {
+    window.addEventListener("message", function(e) {
+        alert(e.data);
+    });
+
+    window.frames[0].postMessage("b data", "http://www.child.com/b.html");
+}</code></pre>
+<p>b.html</p>
+<pre><code>window.onload = function() {
+    window.addEventListener("message", function(e) {
+        alert(e.data);
+    });
+    window.parent.postMessage("a data", "http://www.parent.com/a.html");
+}</code></pre>
+<p>这样打开a页面，首先监听到了b.html通过postMessage传来的消息，就先弹出 a data，然后a通过postMessage传递消息给子页面b.html，这时会弹出 b data。</p>
+<h2>二、解决第3点限制：</h2>
+<p>3）AJAX请求不能发送。</p>
+<h3>方法4、通过JSONP跨域</h3>
+<p>【适用范围：（1）可以是两个完全不同源的域；（2）只支持HTTP请求中的GET方式；（3）老式浏览器全部支持；（4）需要服务端支持】</p>
+<p>JSONP(JSON with Padding)是资料格式JSON的一种使用模式，可以让网页从别的网域要资料。</p>
+<p>由于浏览器的同源策略，在网页端出现了这个“跨域”的问题，然而我们发现，所有的 src 属性并没有受到相关的限制，比如 img / script 等。</p>
+<p>JSONP 的原理就要从 script 说起。script 可以引用其他域的脚本文件，比如这样：</p>
+<pre><code>a.html
+...
+&lt;script&gt;
+    function callback(data) {
+        console.log(data.url)
+    }
+&lt;/script&gt;
+&lt;script src='b.js'&gt;&lt;/script&gt;
+...
+
+b.js
+callback({url: 'http://www.rccoder.net'})</code></pre>
+<p>这就类似于JSONP的原理了。</p>
+<p>JSONP的基本思想是：先在网页上添加一个script标签，设置这个script标签的src属性用于向服务器请求JSON数据 ，需要注意的是，src属性的查询字符串一定要加一个callback参数，用来指定回调函数的名字 。而这个函数是在资源加载之前就已经在前端定义好的，这个函数接受一个参数并利用这个参数做一些事情。向服务器请求后，服务器会将JSON数据放在一个指定名字的回调函数里作为其参数传回来。这时，因为函数已经在前端定义好了，所以会直接调用。</p>
+<p>一个栗子：</p>
+<pre><code>function addScriptTag(src) {
+    var script = document.createElement('script');
+    script.setAttribute("type","text/javascript");
+    script.src = src;
+    document.body.appendChild(script);
+}
+
+window.onload = function () {
+    addScriptTag('http://example.com/ip?callback=foo');//请求服务器数据并规定回调函数为foo
+}
+
+function foo(data) {
+    console.log('Your public IP address is: ' + data.ip);
+};</code></pre>
+<p>向服务器example.com请求数据，这时服务器会先生成JSON数据，这里是{"ip": "8.8.8.8"}，然后以JS语法的方式生成一个函数，函数名就是传递上来的callback参数的值，最后将数据放在函数的参数中返回：</p>
+<pre><code>foo({
+    "ip": "8.8.8.8"
+});</code></pre>
+<p>客户端解析script标签，执行返回的JS代码，调用函数。</p>
+<h3>方法5、通过CORS跨域</h3>
+<p>【适用范围：（1）可以是两个完全不同源的域；（2）支持所有类型的HTTP请求；（3）被绝大多数现代浏览器支持，老式浏览器不支持；（4）需要服务端支持】</p>
+<p>对于前端开发者来说，跨域的CORS通信与同源的AJAX通信没有差别，代码完全一样。因此，实现CORS通信的关键是服务器。<b>只要服务器实现了CORS接口，就可以跨源通信。</b></p>
+<p>浏览器将CORS请求分成两类：简单请求（simple request）和非简单请求（not-so-simple request）。</p>
+<p>只要同时满足以下两大条件，就属于简单请求。</p>
+<pre><code>（1) 请求方法是以下三种方法之一：
+HEAD
+GET
+POST
+（2）HTTP的头信息不超出以下几种字段：
+Accept
+Accept-Language
+Content-Language
+Last-Event-ID
+Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
+</code></pre>
+<p>凡是不同时满足上面两个条件，就属于非简单请求。<br>浏览器对这两种请求的处理，是不一样的。</p>
+<h4>简单请求：</h4>
+<p>下面是一次跨源AJAX请求，浏览器发现它是简单请求，就会直接在头信息中加一个origin字段：</p>
+<pre><code>GET /cors HTTP/1.1
+Origin: http://api.bob.com
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...</code></pre>
+<p>服务器收到这条请求，如果这个origin指定的源在许可范围内，那么服务器返回的头信息中会包含Access-Control-Allow-Origin字段，值与origin的值相同，以及其他几个相关字段：</p>
+<pre><code>Access-Control-Allow-Origin: http://api.bob.com
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: FooBar</code></pre>
+<p><b>Access-Control-Allow-Origin: </b>该字段是必须的。要么与origin相同，要么为*<br><b>Access-Control-Allow-Credentials: </b>该字段可选。设为true表示服务器允许发送cookie<br><b>Access-Control-Expose-Headers: </b>该字段可选。CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个基本字段：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma。如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。上面的例子指定，getResponseHeader('FooBar')可以返回FooBar字段的值。</p>
+<p>想要发送cookie，这里还有两点需要额外注意：</p>
+<p>1）开发者必须在AJAX请求中打开withCredentials属性。</p>
+<pre><code>var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;</code></pre>
+<p>否则即使服务器允许，客户端也不会发送。</p>
+<p>2）Access-Control-Allow-Origin不能设为星号，必须指定明确的、与请求网页一致的域名。同时，Cookie依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨源）原网页代码中的document.cookie也无法读取服务器域名下的Cookie。</p>
+<h4>非简单请求：</h4>
+<p>1.预检请求：</p>
+<p>非简单请求会在正式通信前加一次预检（preflight）请求。作用是浏览器先询问服务器当前网页所在域名是否在服务器的许可名单中，以及可以使用哪些HTTP方法以及头信息字段。只有得到肯定答复，浏览器才会发送XMLHttpRequest，否则报错。</p>
+<p>一个栗子：</p>
+<pre><code>var url = 'http://api.alice.com/cors';
+var xhr = new XMLHttpRequest();
+xhr.open('PUT', url, true);
+xhr.setRequestHeader('X-Custom-Header', 'value');
+xhr.send();
+</code></pre>
+<p>HTTP请求方法为PUT，并发送一个自定义头信息"X-Custom-Header"，浏览器发现这是一个非简单请求，就会自动发送一个预检请求，预检请求的HTTP头信息如下：</p>
+<pre><code>OPTIONS /cors HTTP/1.1
+Origin: http://api.bob.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: X-Custom-Header
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...</code></pre>
+<p>请求方法是OPTIONS，表示这个请求是用来询问的，头信息中的关键信息有3个：</p>
+<p>（1）表示请求来自哪个源</p>
+<pre><code>Origin: http://api.bob.com</code></pre>
+<p>（2）列出浏览器的CORS请求会用到哪些HTTP方法</p>
+<pre><code>
+Access-Control-Request-Method: PUT
+</code></pre>
+<p>（3）指定浏览器CORS请求会额外发送的头信息字段</p>
+<pre><code>Access-Control-Request-Headers: X-Custom-Header
+</code></pre>
+<p>2.预检请求的回应（有两种情况：A允许、B不允许）</p>
+<p>A.服务器允许这次跨域请求</p>
+<pre><code>HTTP/1.1 200 OK
+Date: Mon, 01 Dec 2008 01:15:39 GMT
+Server: Apache/2.0.61 (Unix)
+Access-Control-Allow-Origin: http://api.bob.com
+Access-Control-Allow-Methods: GET, POST, PUT
+Access-Control-Allow-Headers: X-Custom-Header
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Content-Length: 0
+Keep-Alive: timeout=2, max=100
+Connection: Keep-Alive
+Content-Type: text/plain
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1728000
+</code></pre>
+<p>服务器返回中要注意的字段：</p>
+<p>（1）服务器同意的跨域请求源：</p>
+<pre><code>Access-Control-Allow-Origin: http://api.bob.com</code></pre>
+<p>（2）服务器支持的所有跨域请求的方法：</p>
+<pre><code> Access-Control-Allow-Methods: GET, POST, PUT   </code></pre>
+<p>（3）表明服务器支持的所有头信息字段：</p>
+<pre><code>Access-Control-Allow-Headers: X-Custom-Header</code></pre>
+<p>（4）指定本次预检请求的有效期，单位为秒，即允许请求该条回应在有效期之前都不用再发送预检请求：</p>
+<pre><code>Access-Control-Max-Age: 1728000
+</code></pre>
+<p>B.服务器不允许这次跨域请求<br>即origin指定的源不在许可范围内，服务器会返回一个正常的HTTP回应。但是头信息中没有包含Access-Control-Allow-Origin字段，就知道出错了，从而抛出一个错误，被XMLHttpRequest的onerror回调函数捕获。但是要注意的是，这种HTTP回应的状态码很有可能是200，所以无法通过状态码识别这种错误。</p>
+<p>3.正式请求<br>过了预检请求，非简单请求的正式请求就与简单请求一样了。</p>
+<h4>参考资料</h4>
+<ol>
+<li>《Javascript高级程序设计》 P582</li>
+<li>《Javascript权威指南》 P668 22.3 跨域消息传递</li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" rel="nofollow noreferrer">http://www.ruanyifeng.com/blo...</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" rel="nofollow noreferrer">http://www.ruanyifeng.com/blo...</a></li>
+<li><a href="https://segmentfault.com/a/1190000000718840">https://segmentfault.com/a/11...</a></li>
+<li><a href="https://segmentfault.com/a/1190000003642057#articleHeader3">https://segmentfault.com/a/11...</a></li>
+<li><a href="https://segmentfault.com/a/1190000003882126">https://segmentfault.com/a/11...</a></li>
+<li><a href="http://www.cnblogs.com/rainman/archive/2011/02/20/1959325.html#m5" rel="nofollow noreferrer">http://www.cnblogs.com/rainma...</a></li>
+</ol>
+
+                </div>
+                                                
+                <div class="clearfix mt10">
+                    <ul class="article-operation list-inline pull-left mt15"><li><a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/"><img class="mb5" src="assets/1557110278-873c9dc7cb09de973561aca118e591a4.svg" height="20"></a></li><li class="dropdown js__content-ops hidden-xs" data-module="article" data-id="1190000009624849" data-typetext="文章"><a href="javascript:void(0);" class="dropdown-toggle text-muted" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li></ul>
+                    <div class="pull-right mt-10 hidden-xs">
+                        <div class="widget-share__full" data-text="同源策略与JS跨域（JSONP ,  CORS）" data-url="https://segmentfault.com/a/1190000009624849?share_user=1030000009484911" data-shorturl="http://sfau.lt/b5Ox1F"></div>
+
+
+                    </div>
+                </div>
+                <div class="mt10 text-center mb30"><button type="button" id="mainLike" data-id="1190000009624849" class="btn btn-success btn-lg mr15 "><span id="mainLikeText">赞</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;
+                                <span id="mainLikeNum">9 </span></button><button type="button" id="mainBookmark" data-type="article" data-id="1190000009624849" class="btn btn-default btn-lg "><span id="mainBookmarkText">收藏</span>&nbsp;&nbsp;<span class="seprator">|</span>&nbsp;&nbsp;<span id="mainBookmarkNum">54</span></button></div>                
+                
+
+                <h4 class="pt20 mb15 mt0 border-top">你可能感兴趣的</h4>
+
+                                <div id="paradigm-article-related"></div>
+
+                
+        <div class="comments--news comments--default comments--article 
+    " data-id="1190000009624849" data-user-id="1030000009484911" data-author-id="1030000002706555 " data-is-admin="false" id="goToReplyArea">
+                    <div class="mb10 clearfix">
+                <strong class="comments-stat pull-left mr10">3 条评论</strong>
+
+                                                    <div class="btn-group btn-group-xs pull-right comments-sort btn-group-menu" role="menu">
+                        <a href="javascript:;" class="btn btn-default active" data-sort="default">默认排序</a>
+                        <a href="javascript:;" class="btn btn-default" data-sort="desc">时间排序</a>
+                    </div>
+                            </div>
+                <div class="comments-container">
+                                <div class="comments-list">
+                <div class="comments-item" data-id="1050000009743246">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/geosmart" target="_blank"><img class="avatar-32 " src="assets/1557110278-22e430c1f0faf39487ea5cf8b82db792" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/geosmart">geosmart</a></strong>
+                    
+                    <span class="comments-date">  ·  2017年06月12日</span>
+                </div>
+
+                <div class="fmt mb10"><p>细致好文</p></div>
+
+                <form action="/api/comment/1050000009743246/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                
+
+
+            </div>
+        </div>
+                <div class="comments-item" data-id="1050000013234991">
+            <div class="pull-left">
+                <a href="https://segmentfault.com/u/huolang_5a14e07d2f2ff" target="_blank"><img class="avatar-32 " src="assets/1557110278-f4d318f207d40ca0e7b0ae29f72d02ef" alt=""></a>
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    
+                    <strong><a target="_blank" href="https://segmentfault.com/u/huolang_5a14e07d2f2ff">火狼</a></strong>
+                    
+                    <span class="comments-date">  ·  2018年02月09日</span>
+                </div>
+
+                <div class="fmt mb10"><p>这应该是我见过最全面,最详细的一篇关于跨域的分析,点赞</p></div>
+
+                <form action="/api/comment/1050000013234991/edit">
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+
+                <p class="comment-ops not-reply">
+                    <span class="comments-zan ">
+                        <i class="fa fa-thumbs-up mr4" aria-hidden="true"></i>
+                        <span class="comments-zan-text">赞</span>
+                        <span class="comments-zan-value"></span>
+                    </span>
+                    
+                    <span class="ml15 comments-reply-btn">回复</span>
+
+                    
+                </p>
+
+                <div class="reply-list ">
+
+                    
+                        <div class="reply-item" data-id="1050000013235552">
+                            <span class="pull-left comment-ops " style="position:absolute;">
+                                <span class="mr20 comments-zan ">
+                                    
+                                    
+                                </span>
+                            </span>
+
+                            <div class="reply-content-block">
+                                <div class="reply-content"><p>如果加上web scokets跨域就更完善啦</p></div>
+                                <form action="/api/comment/1050000013235552/edit">
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                </form>
+                                <div class="comment-func inline-block">
+                                    
+
+                                    
+
+                                    <span class="comment-meta inline-block">
+                                        <span> — </span>
+                                        <a target="_blank" href="https://segmentfault.com/u/huolang_5a14e07d2f2ff">
+                                            <strong>火狼</strong>
+                                        </a> 
+                                         
+                                        <span class="text-muted-plus">  ·  2018年02月09日</span>
+                                                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="reply-item reply-item--ops" data-obj="obj">
+                        <a class="reply-inner-btn" href="javascript:;">添加回复</a>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+            </div>
+    
+        
+    
+
+                                    <div class="comments-box" id="goToReplyEditor">
+                <div class="pull-left">
+                    <img class="avatar-32 " src="assets/1557110278-f0a6a4c8087099c1e1580f4f8667db3f.png" alt="">
+                </div>
+                <div class="comments-box-content">
+                    <form action="/api/article/1190000009624849/comments/add">
+                        <div class="form-group mb0">
+                            <textarea name="text" rows="3" class="form-control" placeholder="文明社会，理性评论"></textarea>
+                            <div class="mt15 text-right">
+                                
+                                <button class=" btn btn-primary" type="button">发布评论</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                                                        </div>
+    </div>
+
+
+                
+                
+
+            </div><!-- /.main -->
+
+
+            <!-- /.side -->
+        </div>
+    </div></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://segmentfault.com/a/1190000009624849" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 10:37:58</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

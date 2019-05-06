@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: https://juejin.im/post/5c8e5e4951882545c109ae9c -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>让虚拟DOM和DOM-diff不再成为你的绊脚石 - 掘金@vue</title>
+    
+<link rel="stylesheet" href="assets/1557109737-1f9e0f727e6a99422a0a1f6e2139bd56.css">
+
+<link rel="stylesheet" href="assets/1557109737-39cb236590c2d7f28116c42fb1c4858a.css">
+
+<link href="assets/1557109737-883defa5388981e6f49116c12e7b8a2a.css" rel="stylesheet">
+<style>
+body {
+        font-size: 16px;
+        line-height: 2;
+      }
+      a, button, input {
+        margin: 1rem 1.5rem;
+      }
+      img {
+        width: 0;
+        height: 0;
+      }
+      #juejin {
+        overflow-x: hidden;
+      }
+</style>
+<style>
+
+</style>
+<style>
+
+:root .sidebar-bd-entry,
+:root .topbanner,
+:root .container > a.mid-wrapper,
+:root .content > a > .topline
+{ display: none !important; }
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(244, 245, 245) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #464646 !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="juejin" data-v-514f306c="" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-4b868639="" data-v-4a12c3f3="" data-v-514f306c="" class="view-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><MAIN data-v-4b868639="" class="container main-container" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV data-v-4a12c3f3="" data-v-4b868639="" class="view column-view" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div data-v-4a12c3f3="" data-v-4b868639="" class="main-area article-area shadow mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;"><article data-v-4a12c3f3="" itemscope="itemscope" itemtype="http://schema.org/Article" class="article" data-v-4b868639=""><div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"></div><div itemprop="publisher" itemscope="itemscope" itemtype="http://schema.org/Organization"><div itemprop="logo" itemscope="itemscope" itemtype="https://schema.org/ImageObject"></div></div><div data-v-4a12c3f3="" class="author-info-block"><a data-v-4a12c3f3="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="avatar-link"><div data-v-acf63380="" data-v-37d9a154="" data-v-4a12c3f3="" data-src="https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-4a12c3f3="" class="author-info-box"><a data-v-4a12c3f3="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="username ellipsis">chenhongdong</a><div data-v-4a12c3f3="" class="meta-box"><time data-v-4a12c3f3="" datetime="2019-03-25T02:03:30.945Z" title="Mon Mar 25 2019 10:03:30 GMT+0800 (中国标准时间)" class="time">2019年03月25日</time><span data-v-4a12c3f3="" class="views-count">阅读 11171</span><!----></div></div><button data-v-2fe230ac="" data-v-4a12c3f3="" class="follow-button follow">关注</button></div><div data-v-acf63380="" data-v-21eddaa6="" data-v-4a12c3f3="" data-src="https://user-gold-cdn.xitu.io/2019/3/25/169b296058910187?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1" class="lazy thumb article-hero loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2019/3/25/169b296058910187?imageView2/1/w/1304/h/734/q/85/format/webp/interlace/1&quot;); background-size: cover;"></div><h1 data-v-4a12c3f3="" class="article-title">让虚拟DOM和DOM-diff不再成为你的绊脚石</h1><div data-v-4a12c3f3="" data-id="5c9836f26fb9a070ac66aebb" itemprop="articleBody" class="article-content"><h2 class="heading" data-id="heading-0">Keep Moving</h2>
+<p>时至今日，前端对于知识的考量是越来越有水平了，逼格高大上了</p>
+<p>各类框架大家已经可以说无论是工作还是日常中都已经或多或少的使用过了</p>
+<p>曾经听说很多人被问到过虚拟DOM和DOM-diff算法是如何实现的，有没有研究过？</p>
+<p>想必问出此问题的也是高手高手之高高手了，很多人都半开玩笑的说：“面试造航母，工作拧螺丝”</p>
+<p>那么，话不多说了，今天就让我们也来一起研究研究这个东东</p>
+<p>好饭不怕晚，沉淀下来收收心！我们虽然走的慢，但是却从未停下脚步</p>
+<h2 class="heading" data-id="heading-1">神奇的虚拟DOM</h2>
+<p>首先神奇不神奇的我们先不去关注，先来简单说说何为虚拟DOM</p>
+<p><strong>虚拟DOM</strong>简而言之就是，用JS去按照DOM结构来实现的树形结构对象，你也可以叫做<strong>DOM对象</strong></p>
+<p>好了，一句话就把这么伟大的东西给解释了，那么不再耽误时间了，赶紧进入主环节吧</p>
+<p>当然，这里还有整个项目的<a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fchenhongdong%2Farticle%2Ftree%2Fdevelop%2F%25E8%2599%259A%25E6%258B%259Fdom%2Fdom-diff" rel="nofollow noopener noreferrer">地址</a>方便查看</p>
+<h3 class="heading" data-id="heading-2">实现一下虚拟DOM</h3>
+<p>在亲自上阵之前，我们让粮草先行，先发个图，来看一下整个目录结构是什么样子的
+</p><figure><img class="lazyload inited loaded" data-src="assets/1557109737-095a923e41c910461e35af1507e189cd" data-width="324" data-height="331" src="assets/1557109737-095a923e41c910461e35af1507e189cd"><figcaption></figcaption></figure>
+这个目录结构是用<strong>create-react-app脚手架</strong>直接生成的，也是为了方便编译调试<p></p>
+<pre><code class="hljs bash copyable" lang="bash">// 全局安装
+npm i create-react-app -g
+// 生成项目
+create-react-app dom-diff
+// 进入项目目录
+<span class="hljs-built_in">cd</span> dom-diff
+// 编译
+npm run start
+<span class="copy-code-btn">复制代码</span></code></pre><p>现在我们开始正式写吧，从创建虚拟DOM及渲染DOM起步吧</p>
+<h4 class="heading" data-id="heading-3">创建虚拟DOM</h4>
+<p>在element.js文件中要实现如何创建虚拟DOM以及将创建出来的虚拟DOM渲染成真实的DOM</p>
+<p>首先实现一下如何创建虚拟DOM，看代码：</p>
+<pre><code class="hljs bash copyable" lang="bash">// element.js
+
+// 虚拟DOM元素的类，构建实例对象，用来描述DOM
+class Element {
+    constructor(<span class="hljs-built_in">type</span>, props, children) {
+        this.type = <span class="hljs-built_in">type</span>;
+        this.props = props;
+        this.children = children;
+    }
+}
+// 创建虚拟DOM，返回虚拟节点(object)
+<span class="hljs-keyword">function</span> createElement(<span class="hljs-built_in">type</span>, props, children) {
+    <span class="hljs-built_in">return</span> new Element(<span class="hljs-built_in">type</span>, props, children);
+}
+
+<span class="hljs-built_in">export</span> {
+    Element,
+    createElement
+}
+<span class="copy-code-btn">复制代码</span></code></pre><p>写好了方法，我们就从index.js文件入手来看看是否成功吧</p>
+<h4 class="heading" data-id="heading-4">调用createElement方法</h4>
+<p>在主入口文件里，我们主要做的操作就是来创建一个DOM对象，渲染DOM以及通过diff后去打补丁更新DOM，不啰嗦了，直接看代码：</p>
+<pre><code class="hljs bash copyable" lang="bash">// index.js
+
+// 首先引入对应的方法来创建虚拟DOM
+import { createElement } from <span class="hljs-string">'./element'</span>;
+
+<span class="hljs-built_in">let</span> virtualDom = createElement(<span class="hljs-string">'ul'</span>, {class: <span class="hljs-string">'list'</span>}, [
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'周杰伦'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'林俊杰'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'王力宏'</span>])
+]);
+
+console.log(virtualDom);
+<span class="copy-code-btn">复制代码</span></code></pre><p>createElement方法也是vue和react用来创建虚拟DOM的方法，我们也叫这个名字，方便记忆。接收三个参数，分别是<strong>type</strong>，<strong>props</strong>和<strong>children</strong></p>
+<ul>
+<li>参数分析
+<ul>
+<li>type: 指定元素的标签类型，如'li', 'div', 'a'等</li>
+<li>props: 表示指定元素身上的属性，如class, style, 自定义属性等</li>
+<li>children: 表示指定元素是否有子节点，参数以数组的形式传入</li>
+</ul>
+</li>
+</ul>
+<p>下面来看一下打印出来的虚拟DOM，如下图
+</p><figure><img class="lazyload inited loaded" data-src="assets/1557109737-f21bf0e9402bed5fa5c20ac3b5bd7d30" data-width="665" data-height="352" src="assets/1557109737-f21bf0e9402bed5fa5c20ac3b5bd7d30"><figcaption></figcaption></figure>
+到目前为止，已经轻而易举的实现了创建虚拟DOM。那么，接下来进行下一步，将其渲染为真实的DOM，别犹豫，继续回到element.js文件中<p></p>
+<h4 class="heading" data-id="heading-5">渲染虚拟DOM</h4>
+<pre><code class="hljs bash copyable" lang="bash">// element.js
+
+class Element {
+    // 省略
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">createElement</span></span>() {
+    // 省略
+}
+
+// render方法可以将虚拟DOM转化成真实DOM
+<span class="hljs-keyword">function</span> render(domObj) {
+    // 根据<span class="hljs-built_in">type</span>类型来创建对应的元素
+    <span class="hljs-built_in">let</span> el = document.createElement(domObj.type);
+    
+    // 再去遍历props属性对象，然后给创建的元素el设置属性
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">let</span> key <span class="hljs-keyword">in</span> domObj.props) {
+        // 设置属性的方法
+        <span class="hljs-built_in">set</span>Attr(el, key, domObj.props[key]);
+    }
+    
+    // 遍历子节点
+    // 如果是虚拟DOM，就继续递归渲染
+    // 不是就代表是文本节点，直接创建
+    domObj.children.forEach(child =&gt; {
+        child = (child instanceof Element) ? render(child) : document.createTextNode(child);
+        // 添加到对应元素内
+        el.appendChild(child);
+    });
+
+    <span class="hljs-built_in">return</span> el;
+}
+
+// 设置属性
+<span class="hljs-keyword">function</span> <span class="hljs-built_in">set</span>Attr(node, key, value) {
+    switch(key) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'value'</span>:
+            // node是一个input或者textarea就直接设置其value即可
+            <span class="hljs-keyword">if</span> (node.tagName.toLowerCase() === <span class="hljs-string">'input'</span> ||
+                node.tagName.toLowerCase() === <span class="hljs-string">'textarea'</span>) {
+                node.value = value;
+            } <span class="hljs-keyword">else</span> {
+                node.setAttribute(key, value);
+            }
+            <span class="hljs-built_in">break</span>;
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'style'</span>:
+            // 直接赋值行内样式
+            node.style.cssText = value;
+            <span class="hljs-built_in">break</span>;
+        default:
+            node.setAttribute(key, value);
+            <span class="hljs-built_in">break</span>;
+    }
+}
+
+// 将元素插入到页面内
+<span class="hljs-keyword">function</span> renderDom(el, target) {
+    target.appendChild(el);
+}
+
+<span class="hljs-built_in">export</span> {
+    Element,
+    createElement,
+    render,
+    <span class="hljs-built_in">set</span>Attr,
+    renderDom
+};
+<span class="copy-code-btn">复制代码</span></code></pre><p>既然写完了，那就赶快来看看成果吧</p>
+<h4 class="heading" data-id="heading-6">调用render方法</h4>
+<p>再次回到index.js文件中，修改为如下代码</p>
+<pre><code class="hljs bash copyable" lang="bash">// index.js
+
+// 引入createElement、render和renderDom方法
+import { createElement, render, renderDom } from <span class="hljs-string">'./element'</span>;
+
+<span class="hljs-built_in">let</span> virtualDom = createElement(<span class="hljs-string">'ul'</span>, {class: <span class="hljs-string">'list'</span>}, [
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'周杰伦'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'林俊杰'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'王力宏'</span>])
+]);
+
+console.log(virtualDom);
+
+// +++
+<span class="hljs-built_in">let</span> el = render(virtualDom); // 渲染虚拟DOM得到真实的DOM结构
+console.log(el);
+// 直接将DOM添加到页面内
+renderDom(el, document.getElementById(<span class="hljs-string">'root'</span>));
+// +++
+<span class="copy-code-btn">复制代码</span></code></pre><p>通过调用render方法转为真实DOM，并调用renderDom方法直接将DOM添加到了页面内</p>
+<p>下图为打印后的结果：
+</p><figure><img class="lazyload inited loaded" data-src="assets/1557109737-b963ca44048a25bb1129659f25c8aa5c" data-width="658" data-height="154" src="assets/1557109737-b963ca44048a25bb1129659f25c8aa5c"><figcaption></figcaption></figure>
+截止目前，我们已经实现了虚拟DOM并进行了渲染真实DOM到页面中。那么接下来我们就有请DOM-diff隆重登场，来看一下这大有来头的diff算法是如何发光发热的吧！<p></p>
+<h2 class="heading" data-id="heading-7">DOM-diff闪亮登场</h2>
+<p>说到DOM-diff那一定要清楚其存在的意义，给定任意两棵树，采用<strong>先序深度优先遍历</strong>的算法找到最少的转换步骤</p>
+<p>DOM-diff比较两个虚拟DOM的区别，也就是在比较两个对象的区别。</p>
+<p><strong>作用：</strong> 根据两个虚拟对象创建出补丁，描述改变的内容，将这个补丁用来更新DOM</p>
+<p>已经了解到DOM-diff是干嘛的了，那就没什么好说的了，继续往下写吧</p>
+<pre><code class="hljs bash copyable" lang="bash">// diff.js
+
+<span class="hljs-keyword">function</span> diff(oldTree, newTree) {
+    // 声明变量patches用来存放补丁的对象
+    <span class="hljs-built_in">let</span> patches = {};
+    // 第一次比较应该是树的第0个索引
+    <span class="hljs-built_in">let</span> index = 0;
+    // 递归树 比较后的结果放到补丁里
+    walk(oldTree, newTree, index, patches);
+
+    <span class="hljs-built_in">return</span> patches;
+}
+
+<span class="hljs-keyword">function</span> walk(oldNode, newNode, index, patches) {
+    // 每个元素都有一个补丁
+    <span class="hljs-built_in">let</span> current = [];
+
+    <span class="hljs-keyword">if</span> (!newNode) { // rule1
+        current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'REMOVE'</span>, index });
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isString(oldNode) &amp;&amp; isString(newNode)) {
+        // 判断文本是否一致
+        <span class="hljs-keyword">if</span> (oldNode !== newNode) {
+            current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'TEXT'</span>, text: newNode });
+        }
+
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldNode.type === newNode.type) {
+        // 比较属性是否有更改
+        <span class="hljs-built_in">let</span> attr = diffAttr(oldNode.props, newNode.props);
+        <span class="hljs-keyword">if</span> (Object.keys(attr).length &gt; 0) {
+            current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'ATTR'</span>, attr });
+        }
+        // 如果有子节点，遍历子节点
+        diffChildren(oldNode.children, newNode.children, patches);
+    } <span class="hljs-keyword">else</span> {    // 说明节点被替换了
+        current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'REPLACE'</span>, newNode});
+    }
+    
+    // 当前元素确实有补丁存在
+    <span class="hljs-keyword">if</span> (current.length) {
+        // 将元素和补丁对应起来，放到大补丁包中
+        patches[index] = current;
+    }
+}
+
+<span class="hljs-keyword">function</span> isString(obj) {
+    <span class="hljs-built_in">return</span> typeof obj === <span class="hljs-string">'string'</span>;
+}
+
+<span class="hljs-keyword">function</span> diffAttr(oldAttrs, newAttrs) {
+    <span class="hljs-built_in">let</span> patch = {};
+    // 判断老的属性中和新的属性的关系
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">let</span> key <span class="hljs-keyword">in</span> oldAttrs) {
+        <span class="hljs-keyword">if</span> (oldAttrs[key] !== newAttrs[key]) {
+            patch[key] = newAttrs[key]; // 有可能还是undefined
+        }
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">let</span> key <span class="hljs-keyword">in</span> newAttrs) {
+        // 老节点没有新节点的属性
+        <span class="hljs-keyword">if</span> (!oldAttrs.hasOwnProperty(key)) {
+            patch[key] = newAttrs[key];
+        }
+    }
+    <span class="hljs-built_in">return</span> patch;
+}
+
+// 所有都基于一个序号来实现
+<span class="hljs-built_in">let</span> num = 0;
+
+<span class="hljs-keyword">function</span> diffChildren(oldChildren, newChildren, patches) {
+    // 比较老的第一个和新的第一个
+    oldChildren.forEach((child, index) =&gt; {
+        walk(child, newChildren[index], ++num, patches);
+    });
+}
+
+// 默认导出
+<span class="hljs-built_in">export</span> default diff;
+<span class="copy-code-btn">复制代码</span></code></pre><p>代码虽然又臭又长，但是这些代码就让我们实现了diff算法了，所以大家先不要盲动，不要盲动，且听风吟，让我一一道来</p>
+<h3 class="heading" data-id="heading-8">比较规则</h3>
+<ul>
+<li>新的DOM节点不存在{type: 'REMOVE', index}</li>
+<li>文本的变化{type: 'TEXT', text: 1}</li>
+<li>当节点类型相同时，去看一下属性是否相同，产生一个属性的补丁包{type: 'ATTR', attr: {class: 'list-group'}}</li>
+<li>节点类型不相同，直接采用替换模式{type: 'REPLACE', newNode}</li>
+</ul>
+<p>根据这些<strong>规则</strong>，我们再来看一下diff代码中的<strong>walk方法</strong>这位关键先生</p>
+<p>walk方法都做了什么？</p>
+<ul>
+<li>每个元素都有一个补丁，所以需要创建一个放当前补丁的数组</li>
+<li>如果没有new节点的话，就直接将type为REMOVE的类型放到当前补丁里</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">    <span class="hljs-keyword">if</span> (!newNode) {
+        current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'REMOVE'</span>, index });
+    }
+<span class="copy-code-btn">复制代码</span></code></pre><ul>
+<li>如果新老节点是文本的话，判断一下文本是否一致，再指定类型TEXT并把新节点放到当前补丁</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isString(oldNode) &amp;&amp; isString(newNode)) {
+        <span class="hljs-keyword">if</span> (oldNode !== newNode) {
+            current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'TEXT'</span>, text: newNode });
+        }
+    }
+<span class="copy-code-btn">复制代码</span></code></pre><ul>
+<li>如果新老节点的类型相同，那么就来比较一下他们的属性props
+<ul>
+<li>属性比较
+<ul>
+<li>diffAttr
+<ul>
+<li>去比较新老Attr是否相同</li>
+<li>把newAttr的键值对赋给patch对象上并返回此对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>然后如果有子节点的话就再比较一下子节点的不同，再调一次walk
+<ul>
+<li>diffChildren
+<ul>
+<li>遍历oldChildren，然后递归调用walk再通过child和newChildren[index]去diff</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldNode.type === newNode.type) {
+        // 比较属性是否有更改
+        <span class="hljs-built_in">let</span> attr = diffAttr(oldNode.props, newNode.props);
+        <span class="hljs-keyword">if</span> (Object.keys(attr).length &gt; 0) {
+            current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'ATTR'</span>, attr });
+        }
+        
+        // 如果有子节点，遍历子节点
+        diffChildren(oldNode.children, newNode.children, patches);
+    }
+<span class="copy-code-btn">复制代码</span></code></pre><ul>
+<li>上面三个如果都没有发生的话，那就表示节点单纯的被替换了，type为REPLACE，直接用newNode替换即可</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">    <span class="hljs-keyword">else</span> {
+        current.push({ <span class="hljs-built_in">type</span>: <span class="hljs-string">'REPLACE'</span>, newNode});
+    }
+<span class="copy-code-btn">复制代码</span></code></pre><ul>
+<li>当前补丁里确实有值的情况，就将对应的补丁放进大补丁包里</li>
+</ul>
+<pre><code class="hljs bash copyable" lang="bash">    <span class="hljs-keyword">if</span> (current.length &gt; 0) {
+        // 将元素和补丁对应起来，放到大补丁包中
+        patches[index] = current;
+    }
+<span class="copy-code-btn">复制代码</span></code></pre><p>以上就是关于diff算法的分析过程了，没太明白的话没关系，再反复看几遍试试，意外总是不期而遇的</p>
+<p>diff已经完事了，那么最后一步就是大家所熟知的<strong>打补丁</strong>了</p>
+<p>补丁要怎么打？那么让久违的patch出来吧</p>
+<h2 class="heading" data-id="heading-9">patch补丁更新</h2>
+<p>打补丁需要传入两个参数，一个是要打补丁的元素，另一个就是所要打的补丁了，那么直接看代码</p>
+<pre><code class="hljs bash copyable" lang="bash">import { Element, render, <span class="hljs-built_in">set</span>Attr } from <span class="hljs-string">'./element'</span>;
+
+<span class="hljs-built_in">let</span> allPatches;
+<span class="hljs-built_in">let</span> index = 0;  // 默认哪个需要打补丁
+
+<span class="hljs-keyword">function</span> patch(node, patches) {
+    allPatches = patches;
+    
+    // 给某个元素打补丁
+    walk(node);
+}
+
+<span class="hljs-keyword">function</span> walk(node) {
+    <span class="hljs-built_in">let</span> current = allPatches[index++];
+    <span class="hljs-built_in">let</span> childNodes = node.childNodes;
+
+    // 先序深度，继续遍历递归子节点
+    childNodes.forEach(child =&gt; walk(child));
+
+    <span class="hljs-keyword">if</span> (current) {
+        <span class="hljs-keyword">do</span>Patch(node, current); // 打上补丁
+    }
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-keyword">do</span>Patch(node, patches) {
+    // 遍历所有打过的补丁
+    patches.forEach(patch =&gt; {
+        switch (patch.type) {
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'ATTR'</span>:
+                <span class="hljs-keyword">for</span> (<span class="hljs-built_in">let</span> key <span class="hljs-keyword">in</span> patch.attr) {
+                    <span class="hljs-built_in">let</span> value = patch.attr[key];
+                    <span class="hljs-keyword">if</span> (value) {
+                        <span class="hljs-built_in">set</span>Attr(node, key, value);
+                    } <span class="hljs-keyword">else</span> {
+                        node.removeAttribute(key);
+                    }
+                }
+                <span class="hljs-built_in">break</span>;
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'TEXT'</span>:
+                node.textContent = patch.text;
+                <span class="hljs-built_in">break</span>;
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'REPLACE'</span>:
+                <span class="hljs-built_in">let</span> newNode = patch.newNode;
+                newNode = (newNode instanceof Element) ? render(newNode) : document.createTextNode(newNode);
+                node.parentNode.replaceChild(newNode, node);
+                <span class="hljs-built_in">break</span>;
+            <span class="hljs-keyword">case</span> <span class="hljs-string">'REMOVE'</span>:
+                node.parentNode.removeChild(node);
+                <span class="hljs-built_in">break</span>;
+            default:
+                <span class="hljs-built_in">break</span>;
+        }
+    });
+}
+
+<span class="hljs-built_in">export</span> default patch;
+<span class="copy-code-btn">复制代码</span></code></pre><p>看完代码还需要再来简单的分析一下</p>
+<h3 class="heading" data-id="heading-10">patch做了什么？</h3>
+<ul>
+<li>用一个变量来得到传递过来的所有补丁allPatches</li>
+<li>patch方法接收两个参数(node, patches)
+<ul>
+<li>在方法内部调用walk方法，给某个元素打上补丁</li>
+</ul>
+</li>
+<li>walk方法里获取所有的子节点
+<ul>
+<li>给子节点也进行先序深度优先遍历，递归walk</li>
+<li>如果当前的补丁是存在的，那么就对其打补丁(doPatch)</li>
+</ul>
+</li>
+<li>doPatch打补丁方法会根据传递的patches进行遍历
+<ul>
+<li>判断补丁的类型来进行不同的操作
+<ol>
+<li>
+<p>属性ATTR
+for in去遍历attrs对象，当前的key值如果存在，就直接设置属性setAttr； 如果不存在对应的key值那就直接删除这个key键的属性</p>
+</li>
+<li>
+<p>文字TEXT
+直接将补丁的text赋值给node节点的textContent即可</p>
+</li>
+<li>
+<p>替换REPLACE
+新节点替换老节点，需要先判断新节点是不是Element的实例，是的话调用render方法渲染新节点；</p>
+<p>不是的话就表明新节点是个文本节点，直接创建一个文本节点就OK了。</p>
+<p>之后再通过调用父级parentNode的replaceChild方法替换为新的节点</p>
+</li>
+<li>
+<p>删除REMOVE
+直接调用父级的removeChild方法删除该节点</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>将patch方法默认导出方便调用</li>
+</ul>
+<p>好了，一切都安静下来了。让我们回归index.js文件中，去调用一下diff和patch这两个重要方法，看看奇迹会不会发生吧</p>
+<h2 class="heading" data-id="heading-11">回归</h2>
+<pre><code class="hljs bash copyable" lang="bash">// index.js
+
+import { createElement, render, renderDom } from <span class="hljs-string">'./element'</span>;
+// +++ 引入diff和patch方法
+import diff from <span class="hljs-string">'./diff'</span>;
+import patch from <span class="hljs-string">'./patch'</span>;
+// +++
+
+<span class="hljs-built_in">let</span> virtualDom = createElement(<span class="hljs-string">'ul'</span>, {class: <span class="hljs-string">'list'</span>}, [
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'周杰伦'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'林俊杰'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'王力宏'</span>])    
+]);
+
+<span class="hljs-built_in">let</span> el = render(virtualDom);
+renderDom(el, window.root);
+
+// +++
+// 创建另一个新的虚拟DOM
+<span class="hljs-built_in">let</span> virtualDom2 = createElement(<span class="hljs-string">'ul'</span>, {class: <span class="hljs-string">'list-group'</span>}, [
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item active'</span>}, [<span class="hljs-string">'七里香'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'一千年以后'</span>]),
+    createElement(<span class="hljs-string">'li'</span>, {class: <span class="hljs-string">'item'</span>}, [<span class="hljs-string">'需要人陪'</span>])    
+]);
+// diff一下两个不同的虚拟DOM
+<span class="hljs-built_in">let</span> patches = diff(virtualDom, virtualDom2);
+console.log(patches);
+// 将变化打补丁，更新到el
+patch(el, patches);
+// +++
+<span class="copy-code-btn">复制代码</span></code></pre><p>将修改后的代码保存，会在浏览器里看到DOM被更新了，如下图
+</p><figure><img class="lazyload inited loaded" data-src="assets/1557109737-00752340242d78a207417e5ba861ca2d" data-width="1280" data-height="659" src="assets/1557109737-00752340242d78a207417e5ba861ca2d"><figcaption></figcaption></figure>
+到这里就finish了，内容有些多，可能不是很好的消耗，不过没关系，就让我用最后几句话来总结一下实现的整个过程吧<p></p>
+<h2 class="heading" data-id="heading-12">四句话</h2>
+<p>我们来梳理一下整个<strong>DOM-diff</strong>的过程：</p>
+<ol>
+<li>用JS对象模拟DOM（虚拟DOM）</li>
+<li>把此虚拟DOM转成真实DOM并插入页面中（render）</li>
+<li>如果有事件发生修改了虚拟DOM，比较两棵虚拟DOM树的差异，得到差异对象（diff）</li>
+<li>把差异对象应用到真正的DOM树上（patch）</li>
+</ol>
+<p>行了，就这四句话吧，说多了就有点画蛇添足了。好久没有写文章了，很感谢小伙伴们的观看，辛苦各位了，886</p>
+<p><strong>参考：</strong></p>
+<p><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fwww.zhihu.com%2Fquestion%2F31809713%2Fanswer%2F53544875" rel="nofollow noopener noreferrer">虚拟DOM和原生谁更快？</a></p>
+<p><a target="_blank" href="https://link.juejin.im/?target=https%3A%2F%2Fpan.baidu.com%2Fs%2F1I0glERv96CxaBmCvDSRo5g" rel="nofollow noopener noreferrer">珠峰 DOM-Diff算法学习-提取码：rtcu</a></p>
+</div></article><div data-v-4a12c3f3="" data-v-4b868639="" class="tag-list-box"><div data-v-4a12c3f3="" data-v-4b868639="" class="tag-list-title">关注下面的标签，发现更多相似文章</div><div data-v-4a12c3f3="" data-v-4b868639="" st:block="tagList" class="tag-list"><a data-v-4a12c3f3="" href="https://juejin.im/tag/Vue.js" target="_blank" rel="" st:name="tag" class="item" data-v-4b868639=""><div data-v-acf63380="" data-v-21eddaa6="" data-v-4a12c3f3="" data-src="https://lc-gold-cdn.xitu.io/7b5c3eb591b671749fee.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1" class="lazy thumb tag-icon loaded" style="background-image: url(&quot;https://lc-gold-cdn.xitu.io/7b5c3eb591b671749fee.png?imageView2/2/w/42/h/42/q/85/format/webp/interlace/1&quot;); background-size: contain;"></div><div data-v-4a12c3f3="" class="tag-title">Vue.js</div></a></div></div><a data-v-4a12c3f3="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" data-v-4b868639=""><div data-v-4a12c3f3="" class="footer-author-block"><div data-v-ac159f2a="" data-v-4a12c3f3="" itemscope="itemscope" itemtype="http://schema.org/Person" class="author"><div itemprop="memberOf" itemscope="itemscope" itemtype="http://schema.org/Organization"></div><div data-v-ac159f2a="" class="author-info-block"><a data-v-ac159f2a="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="avatar-link"><div data-v-acf63380="" data-v-37d9a154="" data-v-ac159f2a="" data-src="https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a><div data-v-ac159f2a="" class="author-info-box"><div data-v-ac159f2a="" class="profile-box"><a data-v-ac159f2a="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="username ellipsis">chenhongdong</a><span data-v-ac159f2a="" class="position ellipsis">前端开发 @ 360</span></div><div data-v-ac159f2a="" class="meta-box"><a data-v-ac159f2a="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe/posts" target="_blank" rel="" class="posts"><span data-v-ac159f2a="" class="count post-count">发布了 25 篇专栏 · </span></a><span data-v-ac159f2a="" class="count">获得点赞 12,408 · </span><span data-v-ac159f2a="" class="count">获得阅读 215,532</span></div></div><button data-v-2fe230ac="" data-v-ac159f2a="" class="follow-button follow">关注</button></div></div></div></a><div data-v-4a12c3f3="" data-v-4b868639="" st:block="banner" class="article-banner"><a data-v-4a12c3f3="" data-v-4b868639="" st:name="link" st:state="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" class="banner-title" href="https://juejin.im/extension/?utm_source=juejin.im&amp;utm_medium=post&amp;utm_campaign=extension_promotion" target="_blank">安装掘金浏览器插件</a><div data-v-4a12c3f3="" data-v-4b868639="" class="banner-content">打开新标签页发现好内容，掘金、GitHub、Dribbble、ProductHunt 等站点内容轻松获取。快来安装掘金浏览器插件获取高质量内容吧！</div></div><!----><!----><div data-v-f227228a="" data-v-4a12c3f3="" class="comment-list-box" id="comment-box" data-v-4b868639="" manual="true"><div data-v-f227228a="" class="title">评论</div><div data-v-ec19aada="" data-v-f227228a="" class="comment-form comment-form"><div data-v-ec19aada="" class="avatar-box"><div data-v-acf63380="" data-v-37d9a154="" data-v-ec19aada="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></div><div data-v-ec19aada="" class="form-box"><div data-v-ec19aada="" class="input-box"><div data-v-ec19aada="" contenteditable="true" spellcheck="false" placeholder="输入评论..." class="rich-input empty"><br data-v-ec19aada=""></div><!----></div><!----></div></div><div data-v-b15cf724="" data-v-f227228a="" class="comment-list comment-list"><div data-v-1090d892="" data-v-b15cf724="" class="image-viewer-box"><!----></div><div data-v-b15cf724="" class="item"><div data-v-7a3ef47a="" data-v-b15cf724="" class="comment comment"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="59fac8c7f265da431d3c047c" class="user-popover-box popover"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/59fac8c7f265da431d3c047c" target="_blank" rel="" class="user-link" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-7a3ef47a="" data-src="https://mirror-gold-cdn.xitu.io/168e08af8d0e0d2b803?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e08af8d0e0d2b803?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-7a3ef47a="" class="content-box comment-divider-line"><div data-v-7a3ef47a="" class="meta-box"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="59fac8c7f265da431d3c047c" class="user-popover-box"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/59fac8c7f265da431d3c047c" target="_blank" rel="" class="username ellipsis" data-v-6e26702a="">前端小然子<!----></a></div><div data-v-7a3ef47a="" class="position">前端研发工程师 @ 中国法院网</div></div><div data-v-7a3ef47a="" class="content">简单易懂，初步讲解了domdiff的实现原理，   后续的优化主要在diff算法上，尽可能的减少重绘重排以及优化检索遍历时间<img class="emoji" draggable="false" alt="😁" src="assets/1557109737-a87f1abd4bef64a72c9e480b89d3337e.svg">
+这个用来做diff入门还是一点毛病没有，喜欢你的一句话"我们虽然走的慢，但是却从未停下脚步"<img class="emoji" draggable="false" alt="👍" src="assets/1557109737-bf46c6b0ae409670e3cbe1af9e125d25.svg"></div><div data-v-7a3ef47a="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-7a3ef47a="" class="reply-stat"><time data-v-7a3ef47a="" datetime="2019-04-26T14:22:07.633Z" title="Fri Apr 26 2019 22:22:07 GMT+0800 (中国标准时间)" class="time">9天前</time><div data-v-7a3ef47a="" class="action-box"><div data-v-7a3ef47a="" class="like-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-7a3ef47a="" class="comment-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-7a3ef47a="" class="action-title">回复</span></div></div></div><!----><div data-v-7eda734a="" data-v-7a3ef47a="" class="sub-comment-list sub-comment-list"><div data-v-7eda734a="" class="item"><div data-v-0ce14c07="" data-v-7eda734a="" class="sub-comment sub-comment"><div data-v-0ce14c07="" class="sub-comment-content-row"><div data-v-0ce14c07="" class="sub-comment-content-box"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="585b9ec961ff4b0063e76dbe" class="user-popover-box popover"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="username" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-0ce14c07="" data-src="https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-0ce14c07="" class="user-content-box"><div data-v-0ce14c07="" class="profie"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="585b9ec961ff4b0063e76dbe" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="username" data-v-6e26702a="">chenhongdong<span data-v-0ce14c07="" class="author-badge-text">(作者)</span></a></div><div data-v-0ce14c07="" class="position">前端开发 @ 360</div></div><div data-v-0ce14c07="" class="content-box"><span data-v-0ce14c07=""> 回复 </span><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="59fac8c7f265da431d3c047c" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/59fac8c7f265da431d3c047c" target="_blank" rel="" class="username be-replied" data-v-6e26702a="">前端小然子</a></div><!----><span data-v-0ce14c07="">: </span><span data-v-0ce14c07="" class="content">是啊，都不要停下前端学习的脚步,fighting</span></div><!----><!----><div data-v-0ce14c07="" class="limit-all-box"><!----></div><div data-v-0ce14c07="" class="sub-comment-stat-box"><time data-v-0ce14c07="" datetime="2019-04-28T06:44:25.760Z" title="Sun Apr 28 2019 14:44:25 GMT+0800 (中国标准时间)" class="time">7天前</time><div data-v-0ce14c07="" class="sub-comment-action-box"><div data-v-0ce14c07="" class="like-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-0ce14c07="" class="comment-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-0ce14c07="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-b15cf724="" class="item"><div data-v-7a3ef47a="" data-v-b15cf724="" class="comment comment"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="5870f229ac502e00645925a7" class="user-popover-box popover"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/5870f229ac502e00645925a7" target="_blank" rel="" class="user-link" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-7a3ef47a="" data-src="https://user-gold-cdn.xitu.io/2019/4/16/16a2534ebdbbc874?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2019/4/16/16a2534ebdbbc874?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-7a3ef47a="" class="content-box comment-divider-line"><div data-v-7a3ef47a="" class="meta-box"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="5870f229ac502e00645925a7" class="user-popover-box"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/5870f229ac502e00645925a7" target="_blank" rel="" class="username ellipsis" data-v-6e26702a="">未来1483797033519<!----></a></div><div data-v-7a3ef47a="" class="position">全栈工程师</div></div><div data-v-7a3ef47a="" class="content">太厉害了</div><div data-v-7a3ef47a="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-7a3ef47a="" class="reply-stat"><time data-v-7a3ef47a="" datetime="2019-04-16T08:31:43.422Z" title="Tue Apr 16 2019 16:31:43 GMT+0800 (中国标准时间)" class="time">19天前</time><div data-v-7a3ef47a="" class="action-box"><div data-v-7a3ef47a="" class="like-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-7a3ef47a="" class="comment-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-7a3ef47a="" class="action-title">回复</span></div></div></div><!----><div data-v-7eda734a="" data-v-7a3ef47a="" class="sub-comment-list sub-comment-list"><div data-v-7eda734a="" class="item"><div data-v-0ce14c07="" data-v-7eda734a="" class="sub-comment sub-comment"><div data-v-0ce14c07="" class="sub-comment-content-row"><div data-v-0ce14c07="" class="sub-comment-content-box"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="585b9ec961ff4b0063e76dbe" class="user-popover-box popover"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="username" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-0ce14c07="" data-src="https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://mirror-gold-cdn.xitu.io/168e083b4551b770de1?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-0ce14c07="" class="user-content-box"><div data-v-0ce14c07="" class="profie"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="585b9ec961ff4b0063e76dbe" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/585b9ec961ff4b0063e76dbe" target="_blank" rel="" class="username" data-v-6e26702a="">chenhongdong<span data-v-0ce14c07="" class="author-badge-text">(作者)</span></a></div><div data-v-0ce14c07="" class="position">前端开发 @ 360</div></div><div data-v-0ce14c07="" class="content-box"><span data-v-0ce14c07=""> 回复 </span><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="5870f229ac502e00645925a7" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/5870f229ac502e00645925a7" target="_blank" rel="" class="username be-replied" data-v-6e26702a="">未来1483797033519</a></div><!----><span data-v-0ce14c07="">: </span><span data-v-0ce14c07="" class="content"><img class="emoji" draggable="false" alt="👏" src="assets/1557109737-c4adc4953dc797f2c5949ce9e1189d49.svg"></span></div><!----><!----><div data-v-0ce14c07="" class="limit-all-box"><!----></div><div data-v-0ce14c07="" class="sub-comment-stat-box"><time data-v-0ce14c07="" datetime="2019-04-17T03:06:39.870Z" title="Wed Apr 17 2019 11:06:39 GMT+0800 (中国标准时间)" class="time">18天前</time><div data-v-0ce14c07="" class="sub-comment-action-box"><div data-v-0ce14c07="" class="like-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-0ce14c07="" class="comment-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-0ce14c07="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div><div data-v-b15cf724="" class="item"><div data-v-7a3ef47a="" data-v-b15cf724="" class="comment comment"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="5b6dafa75188251b134ea751" class="user-popover-box popover"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/5b6dafa75188251b134ea751" target="_blank" rel="" class="user-link" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-7a3ef47a="" data-src="https://user-gold-cdn.xitu.io/2018/8/12/1652d0c5f55b84b0?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://user-gold-cdn.xitu.io/2018/8/12/1652d0c5f55b84b0?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1&quot;);"></div></a></div><div data-v-7a3ef47a="" class="content-box comment-divider-line"><div data-v-7a3ef47a="" class="meta-box"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="5b6dafa75188251b134ea751" class="user-popover-box"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/5b6dafa75188251b134ea751" target="_blank" rel="" class="username ellipsis" data-v-6e26702a="">ccccccccc<!----></a></div><div data-v-7a3ef47a="" class="position">前端 @ 划水公司</div></div><div data-v-7a3ef47a="" class="content">看了视频又来看源码，还是不是很懂为什么diffchild那边不能直接传index而且又定义了个闭包num来记录，为什么穿index会拿到的会变成4而num就是正常的6</div><div data-v-7a3ef47a="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-7a3ef47a="" class="reply-stat"><time data-v-7a3ef47a="" datetime="2019-04-10T15:51:53.774Z" title="Wed Apr 10 2019 23:51:53 GMT+0800 (中国标准时间)" class="time">25天前</time><div data-v-7a3ef47a="" class="action-box"><div data-v-7a3ef47a="" class="like-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-7a3ef47a="" class="comment-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-7a3ef47a="" class="action-title">回复</span></div></div></div><!----><div data-v-7eda734a="" data-v-7a3ef47a="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-b15cf724="" class="item"><div data-v-7a3ef47a="" data-v-b15cf724="" class="comment comment"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="58ebcfecac502e4957d0083f" class="user-popover-box popover"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/58ebcfecac502e4957d0083f" target="_blank" rel="" class="user-link" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-7a3ef47a="" data-src="https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg" class="lazy avatar avatar loaded" style="background-image: url(&quot;https://b-gold-cdn.xitu.io/v3/static/img/default-avatar.e30559a.svg&quot;);"></div></a></div><div data-v-7a3ef47a="" class="content-box comment-divider-line"><div data-v-7a3ef47a="" class="meta-box"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="58ebcfecac502e4957d0083f" class="user-popover-box"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/58ebcfecac502e4957d0083f" target="_blank" rel="" class="username ellipsis" data-v-6e26702a="">爱客<!----></a></div><div data-v-7a3ef47a="" class="position"></div></div><div data-v-7a3ef47a="" class="content">很不错，感谢~
+不过，在diff时使用的是先序深度优先遍历，而在patch时使用的是后序深度优先遍历，这样会导致一个问题——比如某个节点被替换了，但是它的子节点在patch时使用后序深度优先遍历仍然会分配一个index，而这在先序深度优先遍历时是不会发生的；故导致了两种遍历方式在diff和patch的时候可能分配到不同的index，从而导致patch出现出乎意料的结果</div><div data-v-7a3ef47a="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-7a3ef47a="" class="reply-stat"><time data-v-7a3ef47a="" datetime="2019-04-08T14:48:04.786Z" title="Mon Apr 08 2019 22:48:04 GMT+0800 (中国标准时间)" class="time">27天前</time><div data-v-7a3ef47a="" class="action-box"><div data-v-7a3ef47a="" class="like-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-7a3ef47a="" class="action-title">2</span></div><div data-v-7a3ef47a="" class="comment-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-7a3ef47a="" class="action-title">回复</span></div></div></div><!----><div data-v-7eda734a="" data-v-7a3ef47a="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-b15cf724="" class="item"><div data-v-7a3ef47a="" data-v-b15cf724="" class="comment comment"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="58ba193bac502e006bebd999" class="user-popover-box popover"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/58ba193bac502e006bebd999" target="_blank" rel="" class="user-link" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-7a3ef47a="" data-src="https://mirror-gold-cdn.xitu.io/168e0843c54ae2bafff?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar" style="background-image: none;"></div></a></div><div data-v-7a3ef47a="" class="content-box comment-divider-line"><div data-v-7a3ef47a="" class="meta-box"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="58ba193bac502e006bebd999" class="user-popover-box"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/58ba193bac502e006bebd999" target="_blank" rel="" class="username ellipsis" data-v-6e26702a="">w2cc<!----></a></div><div data-v-7a3ef47a="" class="position"></div></div><div data-v-7a3ef47a="" class="content">我有个疑问 在diff.js 文件中， diffChildren 方法上面 定义了一个 let num = 0 貌似这个num有安全问题吧，每次都++；万一内存溢出了怎么办。</div><div data-v-7a3ef47a="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-7a3ef47a="" class="reply-stat"><time data-v-7a3ef47a="" datetime="2019-04-01T04:19:53.081Z" title="Mon Apr 01 2019 12:19:53 GMT+0800 (中国标准时间)" class="time">1月前</time><div data-v-7a3ef47a="" class="action-box"><div data-v-7a3ef47a="" class="like-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-7a3ef47a="" class="comment-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-7a3ef47a="" class="action-title">回复</span></div></div></div><!----><div data-v-7eda734a="" data-v-7a3ef47a="" class="sub-comment-list sub-comment-list"><!----></div></div><!----></div></div><div data-v-b15cf724="" class="item"><div data-v-7a3ef47a="" data-v-b15cf724="" class="comment comment"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="5c09e657518825371057ff40" class="user-popover-box popover"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/5c09e657518825371057ff40" target="_blank" rel="" class="user-link" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-7a3ef47a="" data-src="https://mirror-gold-cdn.xitu.io/168e096f09aa3eb5bdd?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar" style="background-image: none;"></div></a></div><div data-v-7a3ef47a="" class="content-box comment-divider-line"><div data-v-7a3ef47a="" class="meta-box"><div data-v-6e26702a="" data-v-7a3ef47a="" st:block="userPopover" st:state="5c09e657518825371057ff40" class="user-popover-box"><!----><a data-v-7a3ef47a="" href="https://juejin.im/user/5c09e657518825371057ff40" target="_blank" rel="" class="username ellipsis" data-v-6e26702a="">anthinkingcoder<!----></a></div><div data-v-7a3ef47a="" class="position">前端工程师 @ 3vjia</div></div><div data-v-7a3ef47a="" class="content">这里有个问题，diffChildren(oldChildren, newChildren, patches)函数里，如果oldChildren的长度length1小于newChildren的长度length2，那么newChildren[length1 -1]～newChildren[length2- 1]的元素是没办法生成新增补丁的吧。</div><div data-v-7a3ef47a="" class="limit-ctl-box"><!----><!----></div><!----><div data-v-7a3ef47a="" class="reply-stat"><time data-v-7a3ef47a="" datetime="2019-03-31T11:12:22.654Z" title="Sun Mar 31 2019 19:12:22 GMT+0800 (中国标准时间)" class="time">1月前</time><div data-v-7a3ef47a="" class="action-box"><div data-v-7a3ef47a="" class="like-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><span data-v-7a3ef47a="" class="action-title">1</span></div><div data-v-7a3ef47a="" class="comment-action action"><svg data-v-7a3ef47a="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-7a3ef47a="" fill="none" fill-rule="evenodd"><path data-v-7a3ef47a="" d="M0 0h20v20H0z"></path> <path data-v-7a3ef47a="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-7a3ef47a="" class="action-title">回复</span></div></div></div><!----><div data-v-7eda734a="" data-v-7a3ef47a="" class="sub-comment-list sub-comment-list"><div data-v-7eda734a="" class="item"><div data-v-0ce14c07="" data-v-7eda734a="" class="sub-comment sub-comment"><div data-v-0ce14c07="" class="sub-comment-content-row"><div data-v-0ce14c07="" class="sub-comment-content-box"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="5c09e657518825371057ff40" class="user-popover-box popover"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/5c09e657518825371057ff40" target="_blank" rel="" class="username" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-0ce14c07="" data-src="https://mirror-gold-cdn.xitu.io/168e096f09aa3eb5bdd?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar" style="background-image: none;"></div></a></div><div data-v-0ce14c07="" class="user-content-box"><div data-v-0ce14c07="" class="profie"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="5c09e657518825371057ff40" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/5c09e657518825371057ff40" target="_blank" rel="" class="username" data-v-6e26702a="">anthinkingcoder<!----></a></div><div data-v-0ce14c07="" class="position">前端工程师 @ 3vjia</div></div><div data-v-0ce14c07="" class="content-box"><span data-v-0ce14c07=""> 回复 </span><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="5c09e657518825371057ff40" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/5c09e657518825371057ff40" target="_blank" rel="" class="username be-replied" data-v-6e26702a="">anthinkingcoder</a></div><!----><span data-v-0ce14c07="">: </span><span data-v-0ce14c07="" class="content">而且walk函数里虽然有oldNode为空，则表示为新增补丁的代码。但oldNode不可能为空呀，而且判断oldNode为空的时机应该在oldNode.type === newNode.type的条件前吧。</span></div><!----><!----><div data-v-0ce14c07="" class="limit-all-box"><!----></div><div data-v-0ce14c07="" class="sub-comment-stat-box"><time data-v-0ce14c07="" datetime="2019-03-31T11:17:30.226Z" title="Sun Mar 31 2019 19:17:30 GMT+0800 (中国标准时间)" class="time">1月前</time><div data-v-0ce14c07="" class="sub-comment-action-box"><div data-v-0ce14c07="" class="like-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-0ce14c07="" class="comment-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-0ce14c07="">回复</span></div></div></div><!----></div></div></div><!----></div></div><div data-v-7eda734a="" class="item"><div data-v-0ce14c07="" data-v-7eda734a="" class="sub-comment sub-comment"><div data-v-0ce14c07="" class="sub-comment-content-row"><div data-v-0ce14c07="" class="sub-comment-content-box"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="58ba193bac502e006bebd999" class="user-popover-box popover"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/58ba193bac502e006bebd999" target="_blank" rel="" class="username" data-v-6e26702a=""><div data-v-acf63380="" data-v-37d9a154="" data-v-0ce14c07="" data-src="https://mirror-gold-cdn.xitu.io/168e0843c54ae2bafff?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1" class="lazy avatar avatar" style="background-image: none;"></div></a></div><div data-v-0ce14c07="" class="user-content-box"><div data-v-0ce14c07="" class="profie"><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="58ba193bac502e006bebd999" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/58ba193bac502e006bebd999" target="_blank" rel="" class="username" data-v-6e26702a="">w2cc<!----></a></div><div data-v-0ce14c07="" class="position"></div></div><div data-v-0ce14c07="" class="content-box"><span data-v-0ce14c07=""> 回复 </span><div data-v-6e26702a="" data-v-0ce14c07="" st:block="userPopover" st:state="5c09e657518825371057ff40" class="user-popover-box"><!----><a data-v-0ce14c07="" href="https://juejin.im/user/5c09e657518825371057ff40" target="_blank" rel="" class="username be-replied" data-v-6e26702a="">anthinkingcoder</a></div><!----><span data-v-0ce14c07="">: </span><span data-v-0ce14c07="" class="content">我也发现了当newChildren比oldChildren多的时候，无法更新上去。不知道react源码怎么实现的</span></div><!----><!----><div data-v-0ce14c07="" class="limit-all-box"><!----></div><div data-v-0ce14c07="" class="sub-comment-stat-box"><time data-v-0ce14c07="" datetime="2019-04-02T05:16:44.396Z" title="Tue Apr 02 2019 13:16:44 GMT+0800 (中国标准时间)" class="time">1月前</time><div data-v-0ce14c07="" class="sub-comment-action-box"><div data-v-0ce14c07="" class="like-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon like-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M4.58 8.25V17h-1.4C2.53 17 2 16.382 2 15.624V9.735c0-.79.552-1.485 1.18-1.485h1.4zM11.322 2c1.011.019 1.614.833 1.823 1.235.382.735.392 1.946.13 2.724-.236.704-.785 1.629-.785 1.629h4.11c.434 0 .838.206 1.107.563.273.365.363.84.24 1.272l-1.86 6.513A1.425 1.425 0 0 1 14.724 17H6.645V7.898C8.502 7.51 9.643 4.59 9.852 3.249A1.47 1.47 0 0 1 11.322 2z"></path></g></svg><!----></div><div data-v-0ce14c07="" class="comment-action action"><svg data-v-0ce14c07="" aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" class="icon comment-icon"><g data-v-0ce14c07="" fill="none" fill-rule="evenodd"><path data-v-0ce14c07="" d="M0 0h20v20H0z"></path> <path data-v-0ce14c07="" stroke="#8A93A0" stroke-linejoin="round" d="M10 17c-4.142 0-7.5-2.91-7.5-6.5S5.858 4 10 4c4.142 0 7.5 2.91 7.5 6.5 0 1.416-.522 2.726-1.41 3.794-.129.156.41 3.206.41 3.206l-3.265-1.134c-.998.369-2.077.634-3.235.634z"></path></g></svg> <span data-v-0ce14c07="">回复</span></div></div></div><!----></div></div></div><!----></div></div><!----></div></div><!----></div></div></div><div data-v-f227228a="" class="fetch-more-comment">查看更多 &gt;</div></div></div></DIV></MAIN></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="https://juejin.im/post/5c8e5e4951882545c109ae9c" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 10:28:57</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>

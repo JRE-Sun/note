@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+<html>
+  <!-- OriginalSrc: http://www.cnblogs.com/moqing/p/5665126.html -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>过目不忘JS正则表达式 - 全凭一口仙气儿活着 - 博客园@正则</title>
+    
+<link type="text/css" rel="stylesheet" href="assets/1557109556-3e2429d1e6d2e97c7f387699f4bc1983.css">
+
+<link id="MainCss" type="text/css" rel="stylesheet" href="assets/1557109556-195c4e4a1a00ee66175855f23fec5c2c.css">
+
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="assets/1557109556-c3bbcbeeedc962ef081c4a0db3588c42.css">
+<style>
+
+</style>
+<style>
+
+:root .sidebar-image,
+:root .my_money,
+:root .h_ads,
+:root .focus-gg,
+:root .c_ad_block,
+:root .ad_right,
+:root .adPopup,
+:root .topbanner
+{ display: none !important; }
+</style>
+<style>
+.simpread-theme-root{font-size:62.5%!important}sr-rd-content,sr-rd-desc,sr-rd-title{width:100%}sr-rd-title{text-rendering:optimizelegibility;margin:1em 0 .5em}sr-rd-content{text-align:left;word-break:break-word}sr-rd-desc{text-align:left;line-height:2.4;margin:0 0 1.2em}sr-rd-content,sr-rd-content div,sr-rd-content p{font-size:25.6px;font-size:1.6rem;line-height:1.6}sr-rd-content div,sr-rd-content p{display:block;float:inherit}sr-rd-content div,sr-rd-content p,sr-rd-content pre,sr-rd-content sr-blockquote{margin:0 0 1.2em;word-break:break-word}sr-rd-content a{padding:0 5px;vertical-align:baseline;vertical-align:initial}sr-rd-content a,sr-rd-content a:link{color:inherit;font-size:medium;font-weight:inherit;border:none}sr-rd-content a:hover{background:transparent}sr-rd-content img{margin:10px;padding:5px;background:#fff;border:1px solid #bbb;box-shadow:1px 1px 3px #d4d4d4}sr-rd-content sr-blockquote{display:block;position:relative;padding:15px 25px;text-align:left;line-height:inherit}sr-rd-content sr-blockquote:before{position:absolute}sr-rd-content sr-blockquote *{margin:0;font-size:inherit}sr-rd-content table{width:100%;margin:0 0 1.2em;word-break:keep-all;word-break:normal;overflow:auto;border:none}sr-rd-content table td,sr-rd-content table th{border:none}sr-rd-content ol,sr-rd-content ul{margin:0;padding:0}sr-rd-content ul{margin:0 0 1.2em;margin-left:1.3em;padding:0;list-style:disc}sr-rd-content ol{list-style:decimal;margin-left:1.3em}sr-rd-content ol li,sr-rd-content ul li{font-size:inherit;list-style:disc;margin:0 0 1.2em}sr-rd-content ol li *,sr-rd-content ul li *{margin:0;text-align:left;text-align:initial}sr-rd-content li ol,sr-rd-content li ul{margin-bottom:.8em;margin-left:2em}sr-rd-content li ul{list-style:circle}sr-rd-content pre{font-family:Consolas,Monaco,Andale Mono,Source Code Pro,Liberation Mono,Courier,monospace;display:block;padding:15px;line-height:1.5;word-break:break-all;word-wrap:break-word;white-space:pre;overflow:auto}sr-rd-content pre,sr-rd-content pre *,sr-rd-content pre div{font-size:17.6px;font-size:1.1rem}sr-rd-content li pre code,sr-rd-content p pre code,sr-rd-content pre{background-color:transparent;border:none}sr-rd-content pre code{margin:0;padding:0}sr-rd-content pre code,sr-rd-content pre code *{font-size:17.6px;font-size:1.1rem}sr-rd-content li code,sr-rd-content p code{margin:0 4px;padding:2px 4px;font-size:17.6px;font-size:1.1rem}.sr-rd-content-img{width:90%;height:auto}.sr-rd-content-img-load{width:48px;height:48px;margin:0;padding:0;border-style:none;border-width:0;background-repeat:no-repeat;background-image:url(data:image/gif;base64,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)}.sr-rd-content-center{text-align:center;display:-webkit-box;-webkit-box-align:center;-webkit-box-pack:center;-webkit-box-orient:vertical}.sr-rd-content-nobeautify{margin:0;padding:0;border:0;box-shadow:0 0 0}sr-rd-mult{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin:0 0 16px;padding:16px 0 24px;width:100%;min-width:840.72px;background-color:#fafafa;border-radius:2px;box-shadow:0 1px 5px rgba(0,0,0,.16)}sr-rd-mult:hover{-webkit-transition:all .45s 0ms;transition:all .45s 0ms;box-shadow:1px 1px 8px rgba(0,0,0,.16)}sr-rd-mult sr-rd-mult-content{padding:0 16px;overflow:auto}sr-rd-mult sr-rd-mult-avatar,sr-rd-mult sr-rd-mult-content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}sr-rd-mult sr-rd-mult-avatar{-webkit-box-align:center;-ms-flex-align:center;align-items:center}sr-rd-mult sr-rd-mult-avatar span{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;max-width:75px;overflow:hidden;text-overflow:ellipsis;text-align:left;font-size:16px;font-size:1rem}sr-rd-mult sr-rd-mult-avatar img{margin-bottom:0;max-width:50px;max-height:50px;width:50px;height:50px;border-radius:50%}sr-rd-mult sr-rd-mult-avatar .sr-rd-content-center{margin:0}sr-page{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%}
+</style>
+<style>
+sr-rd-theme-github{display:none}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{position:relative;margin-top:1em;margin-bottom:1pc;font-weight:700;line-height:1.4;text-align:left;color:#363636}sr-rd-content h1{padding-bottom:.3em;font-size:57.6px;font-size:3.6rem;line-height:1.2}sr-rd-content h2{padding-bottom:.3em;font-size:44.8px;font-size:2.8rem;line-height:1.225}sr-rd-content h3{font-size:38.4px;font-size:2.4rem;line-height:1.43}sr-rd-content h4{font-size:32px;font-size:2rem}sr-rd-content h5,sr-rd-content h6{font-size:25.6px;font-size:1.6rem}sr-rd-content h6{color:#777}sr-rd-content ol,sr-rd-content ul{list-style-type:disc;padding:0;padding-left:2em}sr-rd-content ol ol,sr-rd-content ul ol{list-style-type:lower-roman}sr-rd-content ol ol ol,sr-rd-content ol ul ol,sr-rd-content ul ol ol,sr-rd-content ul ul ol{list-style-type:lower-alpha}sr-rd-content table{width:100%;overflow:auto;word-break:normal;word-break:keep-all}sr-rd-content table th{font-weight:700}sr-rd-content table td,sr-rd-content table th{padding:6px 13px;border:1px solid #ddd}sr-rd-content table tr{background-color:#fff;border-top:1px solid #ccc}sr-rd-content table tr:nth-child(2n){background-color:#f8f8f8}sr-rd-content sr-blockquote{border-left:4px solid #ddd}.simpread-theme-root{background-color:#fff;color:#333}sr-rd-title{font-family:PT Sans,SF UI Display,\.PingFang SC,PingFang SC,Neue Haas Grotesk Text Pro,Arial Nova,Segoe UI,Microsoft YaHei,Microsoft JhengHei,Helvetica Neue,Source Han Sans SC,Noto Sans CJK SC,Source Han Sans CN,Noto Sans SC,Source Han Sans TC,Noto Sans CJK TC,Hiragino Sans GB,sans-serif;font-size:54.4px;font-size:3.4rem;font-weight:700;line-height:1.3}sr-rd-desc{position:relative;margin:0;margin-bottom:30px;padding:25px;padding-left:56px;font-size:28.8px;font-size:1.8rem;color:#777;background-color:rgba(0,0,0,.05)}sr-rd-desc:before{content:"\201C";position:absolute;top:-9px;left:16px;font-size:80px;font-family:Arial;color:rgba(0,0,0,.15)}sr-rd-content,sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#363636;font-weight:400;line-height:1.8}sr-rd-content a,sr-rd-content a:link{color:#4183c4;text-decoration:none}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#4183c4;text-decoration:underline}sr-rd-content pre{background-color:#f7f7f7;border-radius:3px}sr-rd-content li code,sr-rd-content p code{background-color:rgba(0,0,0,.04);border-radius:3px}
+</style>
+<style>
+sr-rd-theme-newsprint{display:none}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{font-weight:700}sr-rd-content h1{font-size:48px;font-size:3rem;line-height:1.6em;margin-top:2em}sr-rd-content h2,sr-rd-content h3{font-size:32px;font-size:2rem;line-height:1.15;margin-top:2.285714em;margin-bottom:1.15em}sr-rd-content h3{font-weight:400}sr-rd-content h4{font-size:28.8px;font-size:1.8rem;margin-top:2.67em}sr-rd-content h5,sr-rd-content h6{font-size:25.6px;font-size:1.6rem}sr-rd-content h1{border-bottom:1px solid;margin-bottom:1.875em;padding-bottom:.8125em}sr-rd-content ol,sr-rd-content ul{margin:0 0 1.5em 1.5em}sr-rd-content ol li{list-style-type:decimal;list-style-position:outside}sr-rd-content ul li{list-style-type:disc;list-style-position:outside}sr-rd-content table{width:100%;margin-bottom:1.5em;font-size:25.6px;font-size:1.6rem}sr-rd-content thead th,tfoot th{padding:.25em .25em .25em .4em;text-transform:uppercase}sr-rd-content th{text-align:left}sr-rd-content td{vertical-align:top;padding:.25em .25em .25em .4em}sr-rd-content thead{background-color:#dadada}sr-rd-content tr:nth-child(2n){background:#e8e7e7}sr-rd-content sr-blockquote{padding:10px 15px;border-left-style:solid;border-left-width:10px;border-color:#d6dbdf;background:none repeat scroll 0 0 rgba(102,128,153,.05);text-align:left}sr-rd-content sr-blockquote:before{content:""}.simpread-theme-root{background-color:#f3f2ee;color:#2c3e50}sr-rd-title{font-family:PingFang SC,Hiragino Sans GB,Microsoft Yahei,WenQuanYi Micro Hei,sans-serif;line-height:1.5;font-weight:500;font-size:48px;font-size:3rem;color:#07b;border-bottom:1px solid;margin-bottom:1.875em;padding-bottom:.8125em}sr-rd-desc{color:rgba(102,128,153,.6);background-color:rgba(102,128,153,.075);border-radius:4px;margin-bottom:1em;padding:15px;font-size:32px;font-size:2rem;line-height:1.5;text-align:center}sr-rd-content,sr-rd-content *,sr-rd-content div,sr-rd-content p{line-height:1.8;color:#2c3e50}sr-rd-content a,sr-rd-content a:link{color:#08c;text-decoration:none}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#5ba4e5}sr-rd-content li code,sr-rd-content p code,sr-rd-content pre{background-color:#dadada}sr-rd-mult{background-color:rgba(102,128,153,.075)}
+</style>
+<style>
+sr-rd-theme-gothic{display:none}sr-rd-content h1{line-height:64px;line-height:4rem;margin:64px 0 28px;margin:4rem 0 1.75rem;padding:20px 30px}sr-rd-content h1,sr-rd-content h2{font-weight:400;text-align:center;text-transform:uppercase}sr-rd-content h2{line-height:48px;line-height:3rem;margin:48px 0 31px;margin:3rem 0 1.9375rem;padding:0 30px}sr-rd-content h3,sr-rd-content h4,sr-rd-content h5{font-weight:400}sr-rd-content h6{font-weight:700}sr-rd-content h1{font-size:57.6px;font-size:3.6rem}sr-rd-content h2{font-size:51.2px;font-size:3.2rem}sr-rd-content h3{font-size:40px;font-size:2.5rem}sr-rd-content h4{font-size:35.2px;font-size:2.2rem}sr-rd-content h5{font-size:30.4px;font-size:1.9rem}sr-rd-content h6{font-size:27.2px;font-size:1.7rem}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{margin-top:1.2em;margin-bottom:.6em;color:#111}sr-rd-content ol,sr-rd-content ul{list-style-type:disc;margin-left:3em}sr-rd-content ol ol,sr-rd-content ul ol{list-style-type:lower-roman}sr-rd-content ol ol ol,sr-rd-content ol ul ol,sr-rd-content ul ol ol,sr-rd-content ul ul ol{list-style-type:lower-alpha}sr-rd-content table{margin-bottom:20px}sr-rd-content table td,sr-rd-content table th{padding:8px;line-height:20px;line-height:1.25rem;vertical-align:top;border-top:1px solid #ddd}sr-rd-content table th{font-weight:700}sr-rd-content table thead th{vertical-align:bottom}sr-rd-content table caption+thead tr:first-child td,sr-rd-content table caption+thead tr:first-child th,sr-rd-content table colgroup+thead tr:first-child td,sr-rd-content table colgroup+thead tr:first-child th,sr-rd-content table thead:first-child tr:first-child td,sr-rd-content table thead:first-child tr:first-child th{border-top:0}sr-rd-content table tbody+tbody{border-top:2px solid #ddd}sr-rd-content sr-blockquote{margin:0 0 17.777px;margin:0 0 1.11111rem;padding:8px 17.777px 0 16.888px;padding:.5rem 1.11111rem 0 1.05556rem;border-left:1px solid gray}sr-rd-content sr-blockquote,sr-rd-content sr-blockquote p{line-height:2;color:#6f6f6f}.simpread-theme-root{background:#fcfcfc;color:#333}sr-rd-title{font-weight:400;line-height:64px;line-height:4rem;text-align:center;text-transform:uppercase;color:#111;font-size:51.2px;font-size:3.2rem}sr-rd-desc{margin:0 0 17.777px;margin:0 0 1.11111rem;padding:8px 17.777px 0 16.888px;padding:.5rem 1.11111rem 0 1.05556rem;font-size:32px;font-size:2rem;line-height:2;color:#6f6f6f;border-left:1px solid gray}sr-rd-content{font-weight:400;color:#333}sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#333}sr-rd-content a,sr-rd-content a:link{color:#900;text-decoration:none}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#900;text-decoration:underline}sr-rd-content li code,sr-rd-content p code,sr-rd-content pre{background-color:transparent;border:1px solid #ccc}sr-rd-mult{background-color:#f2f2f2}
+</style>
+<style>
+sr-rd-theme-engwrite{display:none}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{margin:20px 0 10px;padding:0;font-weight:500;-webkit-font-smoothing:antialiased}sr-rd-content h1{font-weight:300;text-align:center;font-size:44.8px;font-size:2.8rem;color:#933d3f}sr-rd-content h2{font-size:38.4px;font-size:2.4rem;border-bottom:1px solid #ccc;color:#000}sr-rd-content h3{font-size:28.8px;font-size:1.8rem}sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{font-size:25.6px;font-size:1.6rem}sr-rd-content h6{color:#777}sr-rd-content ol,sr-rd-content ul{padding-left:30px}sr-rd-content ol li>:first-child,sr-rd-content ol li ol:first-of-type,sr-rd-content ol li ul:first-of-type,sr-rd-content ul li>:first-child,sr-rd-content ul li ol:first-of-type,sr-rd-content ul li ul:first-of-type{margin-top:0}sr-rd-content ol ol,sr-rd-content ol ul,sr-rd-content ul ol,sr-rd-content ul ul{margin-bottom:0}sr-rd-content table th{font-weight:700}sr-rd-content table td,sr-rd-content table th{border:1px solid #ccc;padding:6px 13px}sr-rd-content table tr{border-top:1px solid #ccc;background-color:#fff}sr-rd-content table tr:nth-child(2n){background-color:#f8f8f8}sr-rd-content sr-blockquote{text-align:left;border-top:1px dotted #cdc7bc;border-bottom:1px dotted #cdc7bc;background-color:#f8edda;color:#777}sr-blockquote>:first-child{margin-top:0}sr-blockquote>:last-child{margin-bottom:0}.simpread-theme-root{background-color:#fcf5ed;color:#333}sr-rd-title{font-weight:300;text-align:center;font-size:44.8px;font-size:2.8rem;color:#933d3f}sr-rd-desc{padding:10px;background-color:#f8edda;color:#777;font-size:32px;font-size:2rem;text-align:center;border-top:1px dotted #cdc7bc;border-bottom:1px dotted #cdc7bc}sr-rd-content{padding:20px 0;margin:0 auto}sr-rd-content,sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#333;line-height:1.8}sr-rd-content a,sr-rd-content a:link{color:#ae3737;text-decoration:none}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{text-decoration:underline}sr-rd-content pre{background-color:transparent;border:1px solid #ccc;border-radius:3px}sr-rd-content li code,sr-rd-content p code{border:1px solid #eaeaea;background-color:#f4ece3;border-radius:3px}sr-rd-mult{background-color:#f8edda}
+</style>
+<style>
+sr-rd-theme-octopress{display:none}sr-rd-content h1{font-size:56.32px;font-size:3.52rem;line-height:30.72px;line-height:1.92rem}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{text-rendering:optimizelegibility;margin-bottom:20.8px;margin-bottom:1.3rem;font-weight:700}sr-rd-content h2{font-size:38.4px;font-size:2.4rem}sr-rd-content h3{font-size:33.28px;font-size:2.08rem}sr-rd-content h4{font-size:28.8px;font-size:1.8rem}sr-rd-content h5,sr-rd-content h6{font-size:25.6px;font-size:1.6rem}sr-rd-content h1,sr-rd-content h2{padding-top:27.2px;padding-top:1.7rem;padding-bottom:19.2px;padding-bottom:1.2rem;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAABCAYAAACsXeyTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAFUlEQVQIHWNIS0sr/v//PwMMDzY+ADqMahlW4J91AAAAAElFTkSuQmCC") 0 100% repeat-x}sr-rd-content h2{padding-top:20.8px;padding-top:1.3rem;padding-bottom:0}sr-rd-content ul{list-style-type:disc}sr-rd-content ul ul{list-style-type:circle;margin-bottom:0}sr-rd-content ul ul ul{list-style-type:square;margin-bottom:0}sr-rd-content ol{list-style-type:decimal}sr-rd-content ol ol{list-style-type:lower-alpha;margin-bottom:0}sr-rd-content ol ol ol{list-style-type:lower-roman;margin-bottom:0}sr-rd-content ol,sr-rd-content ol ol,sr-rd-content ol ul,sr-rd-content ul,sr-rd-content ul ol,sr-rd-content ul ul{margin-left:1.3em}sr-rd-content ol ol,sr-rd-content ol ul,sr-rd-content ul ol,sr-rd-content ul ul{margin-bottom:0}sr-rd-content table{width:100%;overflow:auto;word-break:normal;word-break:keep-all}sr-rd-content table th{font-weight:700}sr-rd-content table td,sr-rd-content table th{padding:6px 13px;border:1px solid #ddd}sr-rd-content table tr{background-color:#fff;border-top:1px solid #ccc}sr-rd-content table tr:nth-child(2n){background-color:#f8f8f8}sr-rd-content sr-blockquote{font-style:italic;font-size:inherit;line-height:2;padding-left:1em;border-left:4px solid hsla(0,0%,67%,.5)}.simpread-theme-root{background:#f8f8f8 url("") 0 0;color:#333}sr-rd-title{font-size:56.32px;font-size:3.52rem;line-height:64px;line-height:4rem;font-weight:700;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAABCAYAAACsXeyTAAAACXBIW…sTAAALEwEAmpwYAAAAFUlEQVQIHWNIS0sr/v//PwMMDzY+ADqMahlW4J91AAAAAElFTkSuQmCC) 0 100% repeat-x}sr-rd-desc{font-style:italic;font-size:30.72px;font-size:1.92rem;line-height:2;padding-left:1em;border-left:4px solid hsla(0,0%,67%,.5)}sr-rd-content{margin:0 auto;padding:1em 0}sr-rd-content,sr-rd-content *,sr-rd-content div,sr-rd-content p{line-height:2;color:#333}sr-rd-content a,sr-rd-content a:link{color:#1863a1;text-decoration:underline}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#0181eb;text-decoration:underline}sr-rd-content pre{color:#586e75;background-color:#fdf6e3;border-radius:.4em;border:1px solid #e7dec3}sr-rd-content li code,sr-rd-content p code{color:#555;background-color:transparent;border:1px solid #ddd}sr-rd-mult{background-color:#ededed}
+</style>
+<style>
+sr-rd-theme-pixyii{display:none}sr-rd-content h1,sr-rd-content h1 *,sr-rd-content h2,sr-rd-content h2 *,sr-rd-content h3,sr-rd-content h3 *,sr-rd-content h4,sr-rd-content h4 *,sr-rd-content h5,sr-rd-content h5 *,sr-rd-content h6,sr-rd-content h6 *{color:inherit;font-weight:900;line-height:1.2;margin:1em 0}sr-rd-content h1,sr-rd-content h1 *{font-size:62.72px;font-size:3.92rem}sr-rd-content h2,sr-rd-content h2 *{font-size:58.24px;font-size:3.64rem}sr-rd-content h3,sr-rd-content h3 *{font-size:36.4px;font-size:2.275rem}sr-rd-content h4,sr-rd-content h4 *{font-size:29.12px;font-size:1.82rem}sr-rd-content h5,sr-rd-content h5 *,sr-rd-content h6,sr-rd-content h6 *{font-size:25.168px;font-size:1.573rem}sr-rd-content ol,sr-rd-content ul{font-size:28px;font-size:1.75rem;line-height:24px;line-height:1.5rem}sr-rd-content li{font-size:25.2px;font-size:1.575rem;line-height:1.8;margin:0;position:relative}sr-rd-content table{width:100%;font-size:25.2px;font-size:1.575rem}sr-rd-content table>tbody>tr>td,sr-rd-content table>tbody>tr>th,sr-rd-content table>tfoot>tr>td,sr-rd-content table>tfoot>tr>th,sr-rd-content table>thead>tr>td,sr-rd-content table>thead>tr>th{padding:12px;line-height:1.2;vertical-align:top;border-top:1px solid #333}sr-rd-content table>thead>tr>th{vertical-align:bottom;border-bottom:2px solid #333}sr-rd-content table>caption+thead>tr:first-child>td,sr-rd-content table>caption+thead>tr:first-child>th,sr-rd-content table>colgroup+thead>tr:first-child>td,sr-rd-content table>colgroup+thead>tr:first-child>th,sr-rd-content table>thead:first-child>tr:first-child>td,sr-rd-content table>thead:first-child>tr:first-child>th{border-top:0}sr-rd-content table>tbody+tbody{border-top:2px solid #333}sr-rd-content sr-blockquote{margin:16px 0;margin:1rem 0;padding:1.33em;font-style:italic;border-left:5px solid #7a7a7a;color:#555}.simpread-theme-root{background-color:#fff;color:#555}sr-rd-title{font-family:PingFang SC,Hiragino Sans GB,Microsoft Yahei,WenQuanYi Micro Hei,sans-serif;font-size:67.2px;font-size:4.2rem;font-weight:900;line-height:1.2}sr-rd-desc{margin:16px 0;margin:1rem 0;padding:1.33em;font-style:italic;font-size:32px;font-size:2rem;line-height:2;border-left:5px solid #7a7a7a;color:#555}sr-rd-content{font-size:33.6px;font-size:2.1rem;line-height:1.8;font-weight:400;color:#555}sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#555;font-size:28px;font-size:1.75rem;line-height:1.8;font-weight:300}sr-rd-content strong{font-weight:400}sr-rd-content a,sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover,sr-rd-content a:link{color:#463f5c;text-decoration:underline}sr-rd-content sr-blockquote code{font-size:inherit}sr-rd-content pre{border:1px solid #7a7a7a}sr-rd-content li code,sr-rd-content p code,sr-rd-content pre{color:#7a7a7a;background-color:transparent}
+</style>
+<style>
+sr-rd-theme-monospace{display:none}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{font-weight:700;color:#6363ac}sr-rd-content h1{font-size:35.2px;font-size:2.2rem}sr-rd-content h2{font-size:32px;font-size:2rem}sr-rd-content h3{font-size:28.8px;font-size:1.8rem}sr-rd-content h4{font-size:25.6px;font-size:1.6rem}sr-rd-content h5{font-size:22.4px;font-size:1.4rem}sr-rd-content h6{font-size:20.8px;font-size:1.3rem}sr-rd-content strong{color:#b5302e}sr-rd-content em{font-style:italic;color:#400469}sr-rd-content ol,sr-rd-content ul{list-style-type:none}sr-rd-content ol li,sr-rd-content ul li{margin:0}sr-rd-content table{line-height:25.6px;line-height:1.6rem;border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb}sr-rd-content thead{background-color:#e0e0e0;color:#000;text-align:left;vertical-align:bottom}sr-rd-content td,sr-rd-content th{border-left:1px solid #cbcbcb;border-width:0 0 0 1px;margin:0;overflow:visible;padding:.5em 1em}sr-rd-content sr-blockquote{background-color:hsla(0,0%,50%,.05);border-top-right-radius:5px;border-bottom-right-radius:5px;border-left:8px solid #979797;line-height:2}sr-rd-content sr-blockquote *{line-height:inherit}.simpread-theme-root{color:#333;background:#fff}sr-rd-title{font-size:44.8px;font-size:2.8rem;line-height:1.2;font-weight:700;color:#6363ac}sr-rd-desc{padding:10px;background-color:hsla(0,0%,50%,.05);font-size:28.8px;font-size:1.8rem;text-align:center;border-top-right-radius:5px;border-bottom-right-radius:5px;border-left:8px solid #979797}sr-rd-content{color:#333}sr-rd-content,sr-rd-content *,sr-rd-content div,sr-rd-content p{line-height:1.7}sr-rd-content a,sr-rd-content a:link{color:#005dad;text-decoration:underline}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#fff;background-color:#2a6496;text-decoration:none}sr-rd-content pre{color:#e9eded;background-color:#263238}sr-rd-content li code,sr-rd-content p code{color:#949415;background-color:transparent}
+</style>
+<style>
+sr-rd-theme-night{display:none}sr-rd-content h1{margin-top:2em}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{color:#dedede;font-weight:400;clear:both;-ms-word-wrap:break-word;word-wrap:break-word;margin:0;padding:0}sr-rd-content h1{font-size:57.6px;font-size:3.6rem;line-height:64px;line-height:4rem;margin-bottom:38.4px;margin-bottom:2.4rem;letter-spacing:-1.5px}sr-rd-content h2{font-size:38.4px;font-size:2.4rem;line-height:48px;line-height:3rem}sr-rd-content h2,sr-rd-content h3{margin-bottom:38.4px;margin-bottom:2.4rem;letter-spacing:-1px}sr-rd-content h3{font-size:28.8px;font-size:1.8rem;line-height:38.4px;line-height:2.4rem}sr-rd-content h4{font-size:25.6px;font-size:1.6rem;line-height:35.2px;line-height:2.2rem;margin-bottom:38.4px;margin-bottom:2.4rem}sr-rd-content h5{font-size:16px;font-size:1rem;line-height:20px;line-height:1.25rem;margin-bottom:24px;margin-bottom:1.5rem}sr-rd-content h6{font-size:25.6px;font-size:1.6rem;line-height:25.6px;line-height:1.6rem;margin-bottom:12px;margin-bottom:.75rem;font-weight:700}sr-rd-content ol,sr-rd-content ul{padding:0 0 0 30px;padding:0 0 0 1.875rem}sr-rd-content ul{list-style:square}sr-rd-content ol{list-style:decimal}sr-rd-content ol ol,sr-rd-content ol ul,sr-rd-content ul ol,sr-rd-content ul ul{margin:0}sr-rd-content li div{padding-top:0}sr-rd-content li,sr-rd-content li p{margin:0;position:relative}sr-rd-content table{margin-top:0;margin-bottom:24px;margin-bottom:1.5rem;border-collapse:collapse;border-spacing:0;page-break-inside:auto;text-align:left}sr-rd-content table a{color:#dedede}sr-rd-content thead{display:table-header-group}sr-rd-content table td,sr-rd-content table th{border:1px solid #474d54}sr-rd-content sr-blockquote{margin:0 0 30px 30px;margin:0 0 1.875rem 1.875rem;border-left:2px solid #474d54;padding-left:30px;margin-top:35px;line-height:2}.simpread-theme-root{background:#363b40;color:#b8bfc6}sr-rd-title{color:#dedede;font-size:50.4px;font-size:3.15rem;line-height:56px;line-height:3.5rem;letter-spacing:-1.5px}sr-rd-desc{margin:35px;margin-left:0;padding-left:30px;padding-left:1.875rem;font-size:32px;font-size:2rem;line-height:2;border-left:2px solid #474d54}sr-rd-content,sr-rd-desc{color:#b8bfc6}sr-rd-content *,sr-rd-content div,sr-rd-content p{color:#b8bfc6;margin-top:0;line-height:2}sr-rd-content a,sr-rd-content a:link{color:#e0e0e0;text-decoration:underline;-webkit-transition:all .2s ease-in-out;transition:all .2s ease-in-out}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{color:#fff}sr-rd-content pre{background-color:transparent;border:1px solid}sr-rd-content li code,sr-rd-content p code{background:rgba(0,0,0,.05)}sr-rd-mult{background-color:#2d3034}
+</style>
+<style>
+sr-rd-theme-dark{display:none}sr-rd-content h1,sr-rd-content h2,sr-rd-content h3,sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{font-weight:700;color:#dbdbfd}sr-rd-content h1{font-size:48px;font-size:3rem}sr-rd-content h2{font-size:44.8px;font-size:2.8rem}sr-rd-content h3{font-size:40px;font-size:2.5rem}sr-rd-content h4,sr-rd-content h5,sr-rd-content h6{color:#549ad8}sr-rd-content h5{font-size:32px;font-size:2rem}sr-rd-content h6{font-size:28.8px;font-size:1.8rem}sr-rd-content strong{color:#ffffc5}sr-rd-content em{color:#c885f5}sr-rd-content table{width:100%;line-height:25.6px;line-height:1.6rem;border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb}sr-rd-content thead{background-color:#263238;color:#f5f5f5;text-align:left;vertical-align:bottom}sr-rd-content table td,sr-rd-content table th{border-left:1px solid #cbcbcb;border-width:0 0 0 1px;margin:0;overflow:visible;padding:.5em 1em}sr-rd-content sr-blockquote{background-color:hsla(0,0%,50%,.05);border-top-right-radius:5px;border-bottom-right-radius:5px;border-left:8px solid #979797;color:#ebebeb}.simpread-theme-root{color:#ebebeb;background:#222}sr-rd-title{padding-bottom:.3em;font-size:44.8px;font-size:2.8rem;font-weight:700;line-height:1.2;color:#dbdbfd;border-bottom:1px solid #eee}sr-rd-desc{margin:20px;margin-left:0;padding:5px 20px;font-size:28.8px;font-size:1.8rem;background-color:hsla(0,0%,50%,.05);color:#ebebeb;border-top-right-radius:5px;border-bottom-right-radius:5px;border-left:8px solid #979797}sr-rd-content,sr-rd-content *,sr-rd-content div,sr-rd-content p{line-height:1.7;color:#ebebeb}sr-rd-content a,sr-rd-content a:link{color:#8ac9ff;text-decoration:underline}sr-rd-content a:active,sr-rd-content a:focus,sr-rd-content a:hover{background-color:#2a6496;color:#fff;text-decoration:none}sr-rd-content pre{color:#e9eded;background-color:#263238}sr-rd-content li code,sr-rd-content p code{color:#caca16;background-color:transparent}sr-rd-mult{background-color:hsla(0,0%,50%,.1)}
+</style>
+<style>
+/*!
+ * Waves v0.7.5
+ * http://fian.my.id/Waves
+ * 
+ * Copyright 2014-2016 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
+ * https://github.com/fians/Waves/blob/master/LICENSE
+ */.md-waves-effect{position:relative;cursor:pointer;display:inline-block;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}.md-waves-effect .md-waves-ripple{position:absolute;border-radius:50%;width:100px;height:100px;margin-top:-50px;margin-left:-50px;opacity:0;background:rgba(0,0,0,.2);background:-webkit-radial-gradient(rgba(0,0,0,.2) 0,rgba(0,0,0,.3) 40%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 60%,hsla(0,0%,100%,0) 70%);background:radial-gradient(rgba(0,0,0,.2) 0,rgba(0,0,0,.3) 40%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.5) 60%,hsla(0,0%,100%,0) 70%);-webkit-transition:all .5s ease-out;transition:all .5s ease-out;-webkit-transition-property:-webkit-transform,opacity;-webkit-transition-property:opacity,-webkit-transform;transition-property:opacity,-webkit-transform;transition-property:transform,opacity;transition-property:transform,opacity,-webkit-transform;-webkit-transform:scale(0) translate(0);transform:scale(0) translate(0);pointer-events:none}.md-waves-effect.md-waves-light .md-waves-ripple{background:hsla(0,0%,100%,.4);background:-webkit-radial-gradient(hsla(0,0%,100%,.2) 0,hsla(0,0%,100%,.3) 40%,hsla(0,0%,100%,.4) 50%,hsla(0,0%,100%,.5) 60%,hsla(0,0%,100%,0) 70%);background:radial-gradient(hsla(0,0%,100%,.2) 0,hsla(0,0%,100%,.3) 40%,hsla(0,0%,100%,.4) 50%,hsla(0,0%,100%,.5) 60%,hsla(0,0%,100%,0) 70%)}.md-waves-effect.md-waves-classic .md-waves-ripple{background:rgba(0,0,0,.2)}.md-waves-effect.md-waves-classic.md-waves-light .md-waves-ripple{background:hsla(0,0%,100%,.4)}.md-waves-notransition{-webkit-transition:none!important;transition:none!important}.md-waves-button,.md-waves-circle{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-mask-image:-webkit-radial-gradient(circle,#fff 100%,#000 0)}.md-waves-button,.md-waves-button-input,.md-waves-button:hover,.md-waves-button:visited{white-space:nowrap;vertical-align:middle;cursor:pointer;border:none;outline:none;color:inherit;background-color:transparent;font-size:1em;line-height:1em;text-align:center;text-decoration:none;z-index:1}.md-waves-button{padding:.85em 1.1em;border-radius:.2em}.md-waves-button-input{margin:0;padding:.85em 1.1em}.md-waves-input-wrapper{border-radius:.2em;vertical-align:bottom}.md-waves-input-wrapper.md-waves-button{padding:0}.md-waves-input-wrapper .md-waves-button-input{position:relative;top:0;left:0;z-index:1}.md-waves-circle{text-align:center;width:2.5em;height:2.5em;line-height:2.5em;border-radius:50%}.md-waves-float{-webkit-mask-image:none;box-shadow:0 1px 1.5px 1px rgba(0,0,0,.12);-webkit-transition:all .3s;transition:all .3s}.md-waves-float:active{box-shadow:0 8px 20px 1px rgba(0,0,0,.3)}.md-waves-block{display:block}
+</style>
+<style>
+.simpread-font{font:300 16px/1.8 -apple-system,PingFang SC,Microsoft Yahei,Lantinghei SC,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;color:#333;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}.simpread-hidden{display:none}.simpread-focus-root{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background-color:hsla(0,0%,92%,.9);z-index:2147483645;opacity:0;-webkit-transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms;transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms}.simpread-focus-highlight{position:relative;box-shadow:0 0 0 20px #fff;background-color:#fff;overflow:visible;z-index:2147483646}.sr-controlbar-bg sr-rd-crlbar,.sr-controlbar-bg sr-rd-crlbar fab{z-index:2147483647}.simpread-read-root{display:-webkit-flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;margin:0;top:-1000px;left:0;width:100%;z-index:2147483646;overflow-x:hidden;opacity:0;-webkit-transition:all 1s cubic-bezier(.23,1,.32,1) .1s;transition:all 1s cubic-bezier(.23,1,.32,1) .1s}.simpread-read-root-show{top:0}.simpread-read-root-hide{top:1000px}sr-read{display:-webkit-flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;margin:20px 20%;min-width:400px;min-height:400px;text-align:center}read-process{position:fixed;top:0;left:0;height:3px;width:100%;background-color:#64b5f6;-webkit-transition:width 2s;transition:width 2s;z-index:20000}sr-rd-content-error{display:block;position:relative;margin:0;margin-bottom:30px;padding:25px;background-color:rgba(0,0,0,.05)}sr-rd-footer{-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column;font-size:14px}sr-rd-footer,sr-rd-footer-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal}sr-rd-footer-group{-webkit-box-orient:horizontal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}sr-rd-footer-line{width:100%;border-top:1px solid #e0e0e0}sr-rd-footer-text{min-width:150px}sr-rd-footer-copywrite{margin:10px 0 20px;color:inherit}sr-rd-footer-copywrite a,sr-rd-footer-copywrite a:link{margin:0;padding:0;color:inherit;background-color:transparent;font-size:inherit!important;line-height:normal;text-decoration:none;vertical-align:baseline;vertical-align:initial;border:none!important;box-sizing:border-box}sr-rd-footer-copywrite a:focus,sr-rd-footer-copywrite a:hover,sr-rd-footer a:active{color:inherit;text-decoration:underline}sr-rd-crlbar.controlbar{position:fixed;right:0;bottom:0;width:100px;height:100%;opacity:0;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}sr-rd-crlbar.controlbar:hover{opacity:1}@media (max-height:620px){fab{zoom:.8}}@media (max-height:783px){dialog-gp dialog-content{max-height:580px}dialog-gp dialog-footer{border-top:1px solid #e0e0e0}}.simpread-highlight-selector{background-color:#fafafa;outline:3px dashed #1976d2;opacity:.8;cursor:pointer;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}toc-bg{position:fixed;left:0;top:0;width:200px;height:500px;font-size:medium}toc-bg:hover{z-index:3}.toc-bg-hidden{opacity:0;-webkit-transition:opacity .5s ease;transition:opacity .5s ease}.toc-bg-hidden:hover{opacity:1;z-index:3}toc *{all:unset}toc{position:fixed;left:0;top:100px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;padding:10px;max-width:200px;max-height:500px;overflow-x:hidden;cursor:pointer;border:1px solid hsla(0,0%,62%,.22);-webkit-transition:width 1.5s;transition:width 1.5s}toc,toc outline{-webkit-box-orient:vertical}toc outline{position:relative;display:-webkit-box;-webkit-line-clamp:1;overflow:hidden;text-overflow:ellipsis;margin:2px 0;min-height:21px;line-height:21px;text-align:left}toc outline a,toc outline a:active,toc outline a:focus,toc outline a:visited{color:inherit;font-size:11px;text-decoration:none!important}toc outline a:hover{font-weight:700!important;text-decoration:underline!important}toc outline a.toc-outline-theme-dark,toc outline a.toc-outline-theme-night{color:#fff!important}.toc-level-h2{padding-left:10px}.toc-level-h3{padding-left:25px}.toc-level-h4{padding-left:35px}.toc-outline-active{background-color:#f44336}toc outline active{position:absolute;right:0;top:0;bottom:0;padding:0 0 0 3px}sr-kbd{background:-webkit-gradient(linear,0 0,0 100%,from(#fff785),to(#ffc542));border:1px solid #e3be23;-o-border-image:none;border-image:none;-o-border-image:initial;border-image:initial;position:absolute;left:0;padding:1px 3px 0;font-size:11px!important;font-weight:700;box-shadow:0 3px 7px 0 rgba(0,0,0,.3);overflow:hidden;border-radius:3px}.sr-kbd-a{position:relative}kbd-mapping{position:fixed;left:5px;bottom:5px;-ms-flex-direction:column;flex-direction:column;width:500px;height:550px;background-color:#fff;border:1px solid hsla(0,0%,62%,.22);box-shadow:0 2px 5px rgba(0,0,0,.26);border-radius:3px}kbd-mapping,kbd-maps{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal}kbd-maps{-ms-flex-flow:column wrap;flex-flow:column wrap}kbd-mapping kbd-map-title{margin:5px 0;font-size:14px;font-weight:700}kbd-maps-group{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}kbd-maps-title{margin:5px 0;padding-left:53px;font-size:12px;font-weight:700}kbd-map kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fafbfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5}kbd-map kbd-name{display:inline-block;text-align:right;width:50px}kbd-map kbd-desc{padding-left:3px}
+</style>
+<style>
+sr-opt-focus,sr-opt-read{-webkit-box-orient:vertical;-ms-flex-direction:column;flex-direction:column}sr-opt-focus,sr-opt-gp,sr-opt-read{display:-webkit-flex;-webkit-box-direction:normal;width:100%}sr-opt-gp{position:relative;-webkit-box-orient:horizontal;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;margin-bottom:25px;font-size:15px}sr-opt-gp sr-opt-label{display:block;position:absolute;margin:-8px 0 0;font-size:14px;font-weight:700;color:rgba(0,137,123,.8);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;-webkit-transform:scale(.75) translateY(-8px);transform:scale(.75) translateY(-8px);-webkit-transform-origin:left top 0;transform-origin:left top 0}sr-opt-themes{display:-webkit-flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-flow:row nowrap;flex-flow:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%;margin:8px 0 17px;padding:0}sr-opt-theme{width:40px;height:20px;cursor:pointer;list-style:none;border-radius:3px;border:1px solid #212121;box-sizing:border-box;opacity:1;-webkit-transition:all opacity .5s cubic-bezier(.23,1,.32,1) 1s 0ms;transition:all opacity .5s cubic-bezier(.23,1,.32,1) 1s 0ms}sr-opt-theme:hover{opacity:.2;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}sr-opt-theme:not(:first-child){margin-left:5px}sr-opt-theme[sr-type=active]{box-shadow:0 3px 3px 0 rgba(0,0,0,.14),0 2px 20px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.7)}
+</style>
+<style>
+notify-gp{font:300 14px -apple-system,PingFang SC,Microsoft Yahei,Lantinghei SC,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;text-rendering:optimizelegibility;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;display:-webkit-flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end;position:fixed;top:0;right:0;margin:0 15px 0 0;padding:0;text-transform:none;pointer-events:none}notify-gp notify{display:-webkit-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin:0;margin-top:15px;padding:14px 24px;min-width:288px;max-width:568px;height:48px;max-height:48px;color:hsla(0,0%,100%,.7);background-color:#323232;box-sizing:border-box;border-radius:4px;pointer-events:auto;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0);-webkit-transform-origin:left top 0;transform-origin:left top 0;-webkit-transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;transition:opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;transition:transform .45s cubic-bezier(.23,1,.32,1) 0ms,opacity 1s cubic-bezier(.23,1,.32,1) 0ms;transition:transform .45s cubic-bezier(.23,1,.32,1) 0ms,opacity 1s cubic-bezier(.23,1,.32,1) 0ms,-webkit-transform .45s cubic-bezier(.23,1,.32,1) 0ms;box-shadow:0 1px 3px 0 rgba(60,64,67,.302),0 4px 8px 3px rgba(60,64,67,.149)}notify-gp notify-title{font-size:13px;font-weight:700}notify-gp notify-content{display:block;font-size:14px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}notify-gp notify-content a,notify-gp notify-content a:active,notify-gp notify-content a:link,notify-gp notify-content a:visited{margin:inherit;padding-bottom:5px;color:#fff;font-size:inherit;text-decoration:none;-webkit-transition:color .5s;transition:color .5s}notify-gp notify-content a:hover{margin:0;margin:initial;padding:0;padding:initial;color:inherit;font-size:inherit;text-decoration:none}notify-gp notify-i{display:none;margin:0 10px 0 0;width:24px;height:24px;background-position:50%;background-repeat:no-repeat}notify-gp notify-action,notify-gp notify-cancel{display:none;margin:0 0 0 24px;max-width:80px;min-width:56px;color:#8ab4f8;font-weight:500;font-size:inherit;text-transform:uppercase;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}notify-gp notify-cancel{margin:0}notify-gp notify-a{display:block;position:absolute;top:5px;right:5px;cursor:pointer}notify-gp notify-a notify-span{display:block;width:16px;height:16px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABpFBMVEUAAADl5eXj4+NSVFRTVVVaXFxLTU1hY2NdX18pLCwhJCSdnp5sbm6HiYmjpKSDhYX///+rrKytrq6XmJgzNTUoKyt3eXlydHRlZ2dbXV1ucHB4enrv7++KjIyIiort7e1oamosLy8aHR0VGBgUFxcbHh4rLi5oamprbGwgIyMKDQ0KDQ0iJSVjZWWfoaEkJiYICwsLDg4KDQ0MDw8iJSWMjo41ODgMDw8JDAw2OTkvMTELDg4LDg4xMzM1NzcJDAwLDg40NjYeISEHCgoeISFkZmYtLy8yNDRvcXEWGRkHCgoaHR3///8RFBQHCgohJCShoqLIyMgaHR0HCgoZGxv4+PgRFBQLDg4xMzOWl5eam5ssLi4bHh7///8fIiIJDAwwMzNzdHQXGhoeISFlZmYsLi4KDQ0gIiI6PDwOEREuMDAXGhoHCgodHx8pLCwNEBA1ODj///8nKSkICwsICwsJDAwnKSnZ2dl9fn4pKysNDw8OEREpLCxyc3ORkpIzNTUjJSUVGBgUFxcgIyM5PDyanJwEBwcDBwcDBgYFCAgGCQn///+5RDDmAAAAhnRSTlMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQUFAQU+i7S0jkAGEYrw8Y8SBIn++Pr3jQQ67fx8dvX6iWr27z+B/YsOcoMPdPiEAaL7iAgEcfWsA6D7iAkGcawDef2LDnOFD3T4gTLnfHb6iWrqNQJ4+ff7fQILd+ToewsCLHWZmXUwAyFsKwcAAAABYktHRBCVsg0sAAAAzElEQVQY02NgwAoYZWTl5JngXGYFRSVlFVU1dRYIn1VDU6sNCLR1dNlAfHY9fQNDw/YOI2MDE1MOoACnmbmFpZW1ja2dvYMjFwMDN4NTp7OLq5u7h6dXpzcDDwOvj29bm59/QGBQcFtbSCgfA79AWFtHeERkVLR1W1tMrCCDEENcZ3xCYlJySmpaZzqDMAODSEamRVZ2cE5unn1+gSjQFrHCIqNir7a2nJLSsnJxkEMkKiqrutrauqpraiUhTpWqq29obGpuaZVmIAYAAO06McffKEk8AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDEzLTA0LTAzVDE3OjE4OjAzKzA4OjAwRdgB9wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxMS0wNS0xOFQyMDowMTowMCswODowMB0r3XkAAABNdEVYdHNvZnR3YXJlAEltYWdlTWFnaWNrIDYuOC44LTcgUTE2IHg4Nl82NCAyMDE0LTAyLTI4IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3JnWaRffwAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpIZWlnaHQAMTI4Q3xBgAAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAAxMjjQjRHdAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADEzMDU3MjAwNjArP9HVAAAAE3RFWHRUaHVtYjo6U2l6ZQAxLjAzS0JCZtQvXwAAAFx0RVh0VGh1bWI6OlVSSQBmaWxlOi8vL2hvbWUvZnRwLzE1MjAvZWFzeWljb24uY24vZWFzeWljb24uY24vY2RuLWltZy5lYXN5aWNvbi5jbi9wbmcvMTcvMTc4Ni5wbmcRsze7AAAAAElFTkSuQmCC)}notify-gp notify-i.holdon{display:block;margin:0 0 0 24px;width:20px;height:20px;background-image:url("");cursor:pointer}notify-gp .notify-show{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1)}notify-gp .notify-hide{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}notify-gp .notify-success{color:rgba(118,255,3,.8)}notify-gp .notify-warning{color:#ffee58}notify-gp .notify-error{color:#ef5350}notify-gp .notify-modal{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-flow:column nowrap;flex-flow:column;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;height:auto;max-height:200px;box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12),0 3px 1px -2px rgba(0,0,0,.2)}notify-gp .notify-modal .notify-modal-content{margin-top:5px;font-size:13px;white-space:normal}notify-gp .notify-modal .notify-modal-content a{margin:0;padding:0;color:inherit;font-size:inherit;text-decoration:underline;cursor:pointer}notify-gp .notify-modal .notify-modal-content a:active,notify-gp .notify-modal .notify-modal-content a:focus,notify-gp .notify-modal .notify-modal-content a:hover,notify-gp .notify-modal .notify-modal-content a:visited{color:inherit}notify-gp .notify-snackbar{position:fixed;bottom:0;left:50%;margin-bottom:5px;-webkit-transform-origin:left bottom 0;transform-origin:left bottom 0}.notify-position-lt-corner{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;margin:0 0 0 15px;left:0;right:auto}.notify-position-lb-corner{margin:0 0 15px 15px;right:auto;left:0}.notify-position-lb-corner,.notify-position-rb-corner{-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-flow:column-reverse wrap-reverse;flex-flow:column-reverse wrap-reverse;top:auto;bottom:0}.notify-position-rb-corner{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;margin:0 15px 15px 0;left:auto;right:0}
+</style>
+<style>
+object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}
+</style>
+<style>
+
+:root #header + #content > #left > #rlblock_left,
+:root [href*="/afu.php"],
+:root [data-uri^="https://s3.amazonaws.com"],
+:root [data-lnguri^="https://s3.amazonaws.com"],
+:root [href="http://www.trafficjunky.net"],
+:root iframe[src^="https://smitionsory.co/"],
+:root [data-lnguri*="vipbox"],
+:root a[href*="/open?bver"],
+:root a[href*="/open?refer"],
+:root [href^="//look.ufinkln.com/"],
+:root [href*="https://recommendedforyou.xyz/"],
+:root a[href*="?bver="],
+:root [src="/static/img/download-top.png"],
+:root [href="https://alter.pandanetwork.tk"],
+:root a[href="http://linkswala.club/"],
+:root AD-SLOT,
+:root AD-TRIPLE-BOX,
+:root ADS-RIGHT,
+:root AFS-AD,
+:root DFP-AD,
+:root FBS-AD,
+:root LEADERBOARD-AD,
+:root [ad-id^="googlead"],
+:root [href*="//xml.revrtb.com/"],
+:root [id^="bunyad_ads_"],
+:root [lazy-ad="leftbottom_banner"],
+:root [lazy-ad="leftthin_banner"],
+:root [lazy-ad="lefttop_banner"],
+:root [lazy-ad="top_banner"],
+:root [onclick^="window.open('http://adultfriendfinder.com/search/"],
+:root [onclick^="window.open('https://www.brazzersnetwork.com/landing/"],
+:root [onclick^="window.open('window.open('//delivery.trafficfabrik.com/"],
+:root [src^="/Redirect.a2b?"],
+:root a[data-obtrack^="http://paid.outbrain.com/network/redir?"],
+:root a[data-oburl^="http://paid.outbrain.com/network/redir?"],
+:root a[data-oburl^="https://paid.outbrain.com/network/redir?"],
+:root a[data-redirect^="http://click.plista.com/pets"],
+:root a[data-redirect^="http://paid.outbrain.com/network/redir?"],
+:root a[data-redirect^="https://paid.outbrain.com/network/redir?"],
+:root a[data-redirect^="this.href='http://paid.outbrain.com/network/redir?"],
+:root a[data-url^="http://paid.outbrain.com/network/redir?"],
+:root a[data-widget-outbrain-redirect^="http://paid.outbrain.com/network/redir?"],
+:root a[href$="/vghd.shtml"],
+:root a[href*=".adk2x.com/"],
+:root a[href*=".approvallamp.club/"],
+:root a[href*=".bang.com/"][href*="&aff="],
+:root a[href*=".clkcln.com/"],
+:root a[href*=".clksite.com/"],
+:root a[href*=".ichlnk.com/"],
+:root a[href*=".inclk.com/"],
+:root a[href*=".intab.fun/"],
+:root a[href*=".irtyc.com/"],
+:root a[href*=".qertewrt.com/"],
+:root a[href*=".revimedia.com/"],
+:root a[href*="//3wr110.xyz/"],
+:root a[href*="//xml.revrtb.com/"],
+:root a[href*="/adServe/banners?"],
+:root a[href*="/adrotate-out.php?"],
+:root a[href*="/cmd.php?ad="],
+:root a[href*="/servlet/click/zone?"],
+:root a[href*="5iclx7wa4q.com"],
+:root a[href*="=Adtracker"],
+:root a[href*="=adscript"],
+:root a[href*="=exoclick"],
+:root a[href*="?adlivk="][href*="&refer="],
+:root a[href*="a2g-secure.com"],
+:root a[href*="ad2upapp.com/"],
+:root a[href*="deliver.trafficfabrik.com"],
+:root a[href*="delivery.trafficfabrik.com"],
+:root a[href*="emprestimo.eu"],
+:root a[href*="googleme.eu"],
+:root a[href*="letsadvertisetogether.com"],
+:root a[href*="mfroute.com/"],
+:root a[href*="onclkds."],
+:root a[href*="pussl3.com"],
+:root [href^="//00ae8b5a9c1d597.com/"],
+:root [href^="//40ceexln7929.com/"],
+:root [href^="//4c7og3qcob.com/"],
+:root [href^="//4f6b2af479d337cf.com/"],
+:root [href^="//5e1fcb75b6d662d.com/"],
+:root [href^="//88d7b6aa44fb8eb.com/"],
+:root [href^="//adbit.co/?a=Advertise&"],
+:root [href^="//ads.ad-center.com/"],
+:root [href^="//api.ad-goi.com/"],
+:root [href^="//bwnjijl7w.com/"],
+:root [href^="//db52cc91beabf7e8.com/"],
+:root [href^="//go.onclasrv.com/"],
+:root [href^="//go.vedohd.org/"],
+:root [href^="//healthaffiliate.center/"],
+:root [href^="//jsmptjmp.com/"],
+:root [href^="//look.djfiln.com/"],
+:root [href^="//medleyads.com/spot/"],
+:root [href^="//nlkdom.com/"],
+:root [href^="//porngames.adult/?SID="],
+:root [href^="//srv.buysellads.com/"],
+:root [href^="//t.MtagMonetizationA.com/"],
+:root [href^="//tracking.content-recommendation.net/"][href*="/sponsored/click.html?"],
+:root [href^="//voyeurhit.com/cs/"],
+:root [href^="//www.mgid.com/"],
+:root [href^="//www.pd-news.com/"],
+:root [href^="//z6naousb.com/"],
+:root [href^="//zenhppyad.com/"],
+:root [href^="http://9nl.es/"],
+:root [href^="http://campeeks.com/"][href*="&utm_"],
+:root [href^="http://extra.bet365.com/"][href*="?affiliate="],
+:root [href^="http://games.ucoz.ru/"][target="_blank"],
+:root [href^="http://taboola-"][href*="/redirect.php?app.type="],
+:root [href^="http://www.bet365.com/"][href*="&affiliate="],
+:root [href^="http://www.bet365.com/"][href*="?affiliate="],
+:root [href^="http://www.myfreecams.com/?co_id="][href*="&track="],
+:root [href^="https://betway.com/"][href*="&a="],
+:root [href^="https://chaturbate.jjgirls.com/"][href*="?tour="],
+:root [href^="https://djtcollectorclub.org/"][href*="?affiliate_id="],
+:root [href^="https://go.stripchat.com/"][href*="&campaignId="],
+:root [href^="https://prf.hn/click/"][href*="/adref:"],
+:root [href^="https://topoffers.com/"][href*="/?pid="],
+:root [href^="https://understandsolar.com/signup/?lead_source="][href*="&tracking_code="],
+:root [href^="https://www.adultempire.com/"][href*="?partner_id="],
+:root [href^="https://www.camyou.com/?cam="][href*="&track="],
+:root [href^="https://www.goldenfrog.com/vyprvpn?offer_id="][href*="&aff_id="],
+:root [href^="https://www.pornhat.com/"][rel="nofollow"],
+:root a[onclick*="//m.economictimes.com/etmack/click.htm"],
+:root a[onmousedown^="this.href='/wp-content/embed-ad-content/"],
+:root a[onmousedown^="this.href='http://paid.outbrain.com/network/redir?"][target="_blank"],
+:root a[onmousedown^="this.href='http://staffpicks.outbrain.com/network/redir?"][target="_blank"],
+:root a[onmousedown^="this.href='https://paid.outbrain.com/network/redir?"][target="_blank"],
+:root a[style="display:block;width:300px;min-height:250px"][href^="http://li.cnet.com/click?"],
+:root a[target="_blank"][href^="http://api.taboola.com/"],
+:root a[target="_blank"][onmousedown="this.href^='http://paid.outbrain.com/network/redir?"],
+:root aside[id^="adrotate_widgets-"],
+:root aside[id^="advads_ad_widget-"],
+:root aside[id^="div-gpt-ad"],
+:root aside[id^="tn_ads_widget-"],
+:root aside[itemtype="https://schema.org/WPAdBlock"],
+:root bottomadblock,
+:root div[class*="-storyBodyAd-"],
+:root div[class*="_AdInArticle_"],
+:root div[class^="Ad__adContainer"],
+:root div[class^="Ad__bigBox"],
+:root div[class^="Ad__container"],
+:root div[class^="AdhesionAd_"],
+:root div[class^="BlockAdvert-"],
+:root div[class^="ResponsiveAd-"],
+:root div[class^="ad_border_"],
+:root div[class^="ad_position_"],
+:root div[class^="adbanner_"],
+:root div[class^="adpubs-"],
+:root div[class^="ads-partner-"],
+:root div[class^="awpcp-random-ads"],
+:root div[class^="backfill-taboola-home-slot-"],
+:root div[class^="block-openx-"],
+:root div[class^="gemini-ad"],
+:root div[class^="index_adAfterContent_"],
+:root div[class^="index_adBeforeContent_"],
+:root div[class^="index_displayAd_"],
+:root div[class^="largeRectangleAd_"],
+:root div[class^="lifeOnwerAd"],
+:root div[class^="local-feed-banner-ads"],
+:root div[class^="pane-google-admanager-"],
+:root div[class^="proadszone-"],
+:root div[data-ad-underplayer],
+:root div[data-mediatype="advertising"],
+:root div[data-native_ad],
+:root div[data-spotim-slot],
+:root div[data-subscript="Advertising"],
+:root div[id^="ADV-SLOT-"],
+:root div[id^="MarketGid"],
+:root div[id^="YFBMSN"],
+:root div[id^="acm-ad-tag-"],
+:root div[id^="ad-cid-"],
+:root div[id^="ad-div-"],
+:root div[id^="ad-gpt-"],
+:root div[id^="ad-position-"],
+:root div[id^="ad-server-"],
+:root div[id^="ad_bigbox_"],
+:root div[id^="ad_script_"],
+:root div[id^="adfox_"],
+:root div[id^="adrotate_widgets-"],
+:root div[id^="ads120_600-widget"],
+:root div[id^="ads250_250-widget"],
+:root div[id^="ads300_100-widget"],
+:root div[id^="ads300_250-widget"],
+:root div[id^="ads300_600-widget"],
+:root div[id^="adspot-"],
+:root div[id^="advads-"],
+:root div[id^="advads_"],
+:root div[id^="advt-"],
+:root div[id^="block-views-topheader-ad-block-"],
+:root div[id^="cns_ads_"],
+:root div[id^="crt-"][style],
+:root div[id^="dfp-ad-"],
+:root div[id^="dfp-slot-"],
+:root div[id^="div-ads-"],
+:root div[id^="div-adtech-ad-"],
+:root div[id^="div-gpt-ad"],
+:root div[id^="div_ad_stack_"],
+:root div[id^="div_openx_ad_"],
+:root div[id^="dmRosAdWrapper"],
+:root div[id^="drudge-column-ads-"],
+:root div[id^="google_ads_iframe_"],
+:root div[id^="google_dfp_"],
+:root div[id^="lazyad-"],
+:root div[id^="proadszone-"],
+:root div[id^="q1-adset-"],
+:root div[id^="tms-ad-dfp-"],
+:root div[id^="yandex_ad"],
+:root div[itemtype="http://schema.org/WPAdBlock"],
+:root div[itemtype="http://www.schema.org/WPAdBlock"],
+:root iframe[id^="google_ads_frame"],
+:root iframe[id^="google_ads_iframe"],
+:root iframe[src^="http://ad.yieldmanager.com/"],
+:root iframe[src^="http://cdn1.adexprt.com/"],
+:root iframe[src^="http://cdn2.adexprt.com/"],
+:root img[alt^="Fuckbook"],
+:root p[id^="div-gpt-ad-"],
+:root topadblock,
+:root [id*="MGWrap"],
+:root [id*="MarketGid"],
+:root [id*="ScriptRoot"],
+:root input[onclick^="window.open('http://www.FriendlyDuck.com/"],
+:root input[onclick^="window.open('http://www.friendlyduck.com/"],
+:root a[href*=".trust.zone"],
+:root [onclick*="content.ad/"],
+:root AMP-AD,
+:root iframe[src^="http://static.mozo.com.au/strips/"],
+:root div[data-flt-ve="sponsored_search_ads"],
+:root div[id^="mainads"],
+:root div[id^="zergnet-widget"],
+:root A[href*=".com/?Agent="],
+:root a[href*=".05cg.com/"],
+:root a[href*=".08an.com/"],
+:root a[href*=".123ch.cn"],
+:root a[href*=".17yyba.com/"],
+:root a[href*=".222bz.com/"],
+:root a[href*=".41gw.com/"],
+:root a[href*=".7wkw.com"],
+:root a[href*=".9xiazaiqi.com"],
+:root a[href*=".acuxrecv.cn"],
+:root a[href*=".ahhxwavi.cn"],
+:root a[href*=".biwbmsyt.cn"],
+:root a[href*=".cangpie.com/"],
+:root a[href*=".com/?Extend="],
+:root a[href*=".com/Register.aspx?aid="],
+:root a[href*=".com/Register/?a="],
+:root a[href*=".com?aff="],
+:root a[href*=".com?intr="],
+:root a[href*=".downok.com"],
+:root a[href*=".dpcpfw.com/"],
+:root a[href*=".gongnou.com/"],
+:root a[href*=".gsxzq.com/"],
+:root a[href*=".guzaosf.com/"],
+:root a[href*=".hbjimin.com/"],
+:root a[href*=".iziyo.com/"],
+:root a[href*=".mieseng.com/"],
+:root a[href*=".qpzqxz.com/"],
+:root a[href*=".qtj5.com/"],
+:root a[href*=".tduou.com/"],
+:root a[href*=".ttz5.cn"],
+:root a[href*=".tudown.com/"],
+:root a[href*=".wenpie.com/"],
+:root a[href*=".wjLkj.com/"],
+:root a[href*=".yyk2.com/"],
+:root a[href*="/?INTR="],
+:root a[href*="/?Intr="],
+:root a[href*="/?aff="],
+:root a[href*="/?intr="],
+:root a[href*="/Register?a="],
+:root a[href="http://t.cn/E2PgiG1"],
+:root a[href="http://t.cn/Ex0cCbt"],
+:root a[href="http://www.yabovip5.cc/"],
+:root a[href="https://7449k.com/"],
+:root a[href="https://t.cn/Rr4eSOx"],
+:root div[class^="ADTOPLB_"],
+:root div[class^="hongbao_hd_"],
+:root div[id^="ad_thread"],
+:root img[data-link][data-src*="/u/"]:not([data-link*="/i/"]),
+:root img[src*=".sinaimg."][style="width:1025px;height:80px"],
+:root img[src*=".sinaimg."][style="width:150px;height:300px"],
+:root a[href*="/cpro."],
+:root a[href*="/cpro/"],
+:root a[href*="/mobads.php?"],
+:root a[href*=".gotourls.bid"],
+:root [href^="/dasp.php?a="]
+{ display: none !important; }
+:root *[cpivtop][hidden] { display: none !important; }
+</style>
+<style>
+#rwl-iqxin{position:fixed;transform:translate(-90px,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin button{margin: 0;padding: 0 2px;border: none;border-radius: 2px;cursor: pointer;}#rwl-setMenu{text-align:left;font-size:14px;z-index:999999;border: 1px solid cornflowerblue;}#rwl-setMenu p{margin:5px auto;} 
+</style>
+<style>
+#leftdiv,#rightdiv,#stickey_footer,#top_box,.ershiba,.recommend-box,.floatBottom img,.ad_float_left,body .img,.side-widget,.blog-post  .row .side,.content__tech,.bui-left.index-left{display:none!important;}<br>.box.pic_text img,#wp img,#postlist img{max-height: 400px;width: auto;}<br>.post-topheader__info--title{text-align: center;}<br>.blog-post  .row .main,.container.main-container .container,.main-area.article-area{width: 100%;max-width: 100%;}<br><br>#juejin .container{max-width:1140px;}<br><br>.container.main-container .sidebar,.container.main-container .article-suspended-panel,.global-component-box .suspension-panel{display:none!important;}<br>
+</style>
+
+    <style class="mx-wc-style">
+      .mx-wc-main img {max-width: 100%;}
+      .mx-wc-main{
+        background-color: rgb(222, 231, 222) !important;
+        margin: 0 auto;
+        min-width: 100%!important;
+        max-width: 100%!important;
+        width: 100%!important;
+        padding: 15px!important;
+        box-sizing: border-box;
+      }
+      .mx-wc-main .single .content{border:none!important;}
+      .mx-wc-main .show-content .image-package{margin-left:0!important;}
+      code{white-space:pre-wrap!important;}
+
+      .clipping-information{
+        text-align: left;
+        margin-top: 20px;
+        background-color: #eeeeee !important;
+        padding: 15px;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px !important;
+        line-height: 22px !important;
+      }
+      .clipping-information a {
+        color: blue !important;
+        text-decoration: underline !important;
+      }
+      .clipping-information label {
+        display: inline;
+        text-transform: none;
+      }
+      .clipping-information label > code {
+        padding: 2px 8px;
+        background-color: rgba(200, 200, 200, 0.7)!important;
+        font-size: 14px;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #ffffff !important;min-height:100%;min-width:100%!important;max-width:100%!important;width:100%!important; height: auto;" id="" class="">
+    <div class="mx-wc-main">
+      <DIV id="home" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><DIV id="main" style="display: block; float: none; position: relative; top: 0; left: 0; border: 0px; width: 100%; min-width:100%; max-width: 100%; min-height: auto; max-height: 100%; height: auto; padding: 0px; margin: 0px;"><div id="mainContent" class="mx-wc-selected-elem" style="float: none; position: relative; top: 0px; left: 0px; margin: 0px; flex: unset; width: 100%; max-width: 100%; box-sizing: border-box;">
+	<div class="forFlow">
+		
+        <div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/moqing/p/5665126.html">过目不忘JS正则表达式</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p><span style="font-family: 'Microsoft YaHei';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 正则表达式，有木有人像我一样，学了好几遍却还是很懵圈，学的时候老明白了，学完了忘光了。好吧，其实还是练的不够，所谓温故而知新，可以为师矣，今天就随我来复习一下这傲娇的正则表达式吧。</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;为啥要有正则表达式呢？其实就是因为计算机笨（这话不是我说的），比如123456@qq.com，我们一看就是邮箱，可是计算机不认识啊，所以我们就要用一些计算机认识的语言，来制定好规则，告诉它符合这个规则的就是个邮箱，这样计算机就能帮我们找到对应的东西了。所以正则就是用来设置规则，来完成我们需求的一些操作的，比如登录验证啦，搜索指定的东西啦等等，说太多都是多余，直接看正题吧。</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">&nbsp; <span style="color: #ff0000; font-size: 15px;">&nbsp; &nbsp;<strong> 定义正则：</strong></span></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 'Microsoft YaHei';"> 1 <span style="color: #0000ff;">var</span> re = <span style="color: #0000ff;">new</span> RegExp(“a”);  <span style="color: #008000;">//</span><span style="color: #008000;">RegExp对象。参数就是我们想要制定的规则。有一种情况必须用这种方式，下面会提到。</span>
+ 2 <span style="color: #0000ff;">var</span> re = /a/;   <span style="color: #008000;">//</span><span style="color: #008000;"> 简写方法 推荐使用 性能更好  不能为空 不然以为是注释 ，</span></span></pre>
+</div>
+<p><span style="font-family: 'Microsoft YaHei';"><strong><span style="font-size: 15px; color: #ff0000;">&nbsp; &nbsp;正则的常用方法&nbsp;</span></strong></span></p>
+<p><span style="color: #000000; font-family: 'Microsoft YaHei';"><strong><span style="font-size: 15px;">&nbsp; &nbsp; &nbsp; 1 &nbsp;test() &nbsp;:在字符串中查找符合正则的内容，若查找到返回true,反之返回false.</span></strong></span></p>
+<p><span style="color: #000000; font-family: 'Microsoft YaHei';"><strong><span style="font-size: 15px;">&nbsp; &nbsp; &nbsp; &nbsp; 用法：正则.test(字符串)&nbsp;</span></strong></span></p>
+<p><span style="color: #000000; font-family: 'Microsoft YaHei';"><strong><span style="font-size: 15px;">&nbsp;<span style="color: #008000;">&nbsp; &nbsp; &nbsp; &nbsp;例子：判断是否是数字</span></span></strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = '374829348791'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> re = /\D/;      <span style="color: #008000;">//</span><span style="color: #008000;">  \D代表非数字</span>
+<span style="color: #0000ff;">if</span>( re.test(str) ){   <span style="color: #008000;">//</span><span style="color: #008000;"> 返回true,代表在字符串中找到了非数字。</span>
+    alert('不全是数字'<span style="color: #000000;">);
+}</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+    alert(</span>'全是数字'<span style="color: #000000;">);
+}</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: 'Microsoft YaHei';"><strong>&nbsp;正则表达式中有很多符号，代表着不同的意思，用来让我们去定义不同的规则，比如上面\D，还有下面的这些：</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';">\s : 空格</span><br><span style="font-family: 'Microsoft YaHei';">\S : 非空格</span><br><span style="font-family: 'Microsoft YaHei';">\d : 数字</span><br><span style="font-family: 'Microsoft YaHei';">\D : 非数字</span><br><span style="font-family: 'Microsoft YaHei';">\w : 字符 ( 字母 ，数字，下划线_ )</span><br><span style="font-family: 'Microsoft YaHei';">\W : 非字符例子：是否有不是数字的字符</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">（下面会根据例子，依次讲一些常用的字符，最后再作总结。）</span></p>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong>&nbsp;2 &nbsp; search() &nbsp;：在字符串搜索符合正则的内容，搜索到就返回出现的位置（从0开始，如果匹配的不只是一个字母，那只会返回第一个字母的位置）， 如果搜索失败就返回 -1&nbsp;</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';">&nbsp; &nbsp;<strong>用法</strong><strong>：字符串.search(正则)</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';">&nbsp; &nbsp;<strong>在字符串中查找复合正则的内容。</strong><strong>忽略大小写：i——ignore</strong>（正则中默认是区分大小写的 如果不区分大小写的话，在正则的最后加标识 i&nbsp;）</span></p>
+<p><span style="color: #008000; font-family: 'Microsoft YaHei';"><strong>例子：在字符串中找字母b，且不区分大小写</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = 'abcdef'<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> re = /B/<span style="color: #000000;">i;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">var re = new RegExp('B','i'); 也可以这样写</span>
+<span style="color: #000000;">
+alert( str.search(re) ); // 1</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong>3 &nbsp;match() &nbsp;在字符串中搜索复合规则的内容，搜索成功就返回内容，格式为数组，失败就返回null。</strong></span><br><span style="font-family: 'Microsoft YaHei';"><strong>&nbsp; &nbsp; &nbsp;用法： 字符串.match(正则)</strong></span><br><span style="font-family: 'Microsoft YaHei';"><strong>&nbsp; &nbsp; &nbsp;量词：+    至少出现一次 匹配不确定的次数（匹配就是搜索查找的意思）</strong></span><br><span style="font-family: 'Microsoft YaHei';"><strong>&nbsp; &nbsp; 全局匹配：g——global</strong>（正则中默认，只要搜索到复合规则的内容就会结束搜索&nbsp;）</span></p>
+<pre><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong><span style="color: #008000;">例子：找出指定格式的所有数字，如下找到 123，54，33，879<br></span></strong></span></pre>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = 'haj123sdk54hask33dkhalsd879'<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> re = /\d+/g;   <span style="color: #008000;">//</span><span style="color: #008000;"> 每次匹配至少一个数字  且全局匹配  如果不是全局匹配，当找到数字123，它就会停止了。就只会弹出123.加上全局匹配，就会从开始到结束一直去搜索符合规则的。如果没有加号，匹配的结果就是1，2，3，5，4，3，3，8，7，9并不是我们想要的，有了加号，每次匹配的数字就是至少一个了。</span>
+<span style="color: #000000;">
+alert( str.match(re) );   </span><span style="color: #008000;">//</span><span style="color: #008000;"> [123，54，33，879]</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei'; background-color: #ffffff;"><strong>4 replace() :查找符合正则的字符串，就替换成对应的字符串。返回替换后的内容。</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';"><strong>&nbsp; &nbsp; 用法： 字符串.replace(正则,新的字符串/回调函数)（在回调函数中，第一个参数指的是每次匹配成功的字符）</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';"><strong>&nbsp; &nbsp; &nbsp;<span class="Apple-tab-span">| : 或的意思</span>&nbsp;。</strong></span></p>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong><span style="color: #008000;">&nbsp; &nbsp;例子：敏感词过滤，比如 我爱北京天安门，天安门上太阳升。------<strong>我爱*****，****上太阳升。即北京和</strong>天安门变成*号，</span></strong></span></p>
+<p><span style="font-size: 14px; color: #000000; font-family: 'Microsoft YaHei';"><strong>一开始我们可能会想到这样的方法：</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = "我爱北京天安门，天安门上太阳升。"<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> re = /北京|天安门/g;  <span style="color: #008000;">//</span><span style="color: #008000;">  找到北京 或者天安门 全局匹配</span>
+<span style="color: #0000ff;">var</span> str2 = str.replace(re,'*'<span style="color: #000000;">); 
+alert(str2)  </span><span style="color: #008000;">//</span><span style="color: #008000;">我爱**，*上太阳升 </span>
+
+<span style="color: #008000;">//</span><span style="color: #008000;">这种只是把找到的变成了一个*，并不能几个字就对应几个*。</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: 'Microsoft YaHei';"><strong>要想实现几个字对应几个*，我们可以用回调函数实现：</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = "我爱北京天安门，天安门上太阳升。"<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> re = /北京|天安门/g;  <span style="color: #008000;">//</span><span style="color: #008000;">  找到北京 或者天安门 全局匹配</span>
+<span style="color: #0000ff;">var</span> str2 = str.replace(re,<span style="color: #0000ff;">function</span><span style="color: #000000;">(str){
+              alert(str); </span><span style="color: #008000;">//</span><span style="color: #008000;">用来测试：函数的第一个参数代表每次搜索到的符合正则的字符，所以第一次str指的是北京 第二次str是天安门 第三次str是天安门</span>
+            <span style="color: #0000ff;">var</span> result = ''<span style="color: #000000;">;
+            </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i=0;i&lt;str.length;i++<span style="color: #000000;">){
+                result </span>+= '*'<span style="color: #000000;">;
+            }              
+            </span><span style="color: #0000ff;">return</span> result; <span style="color: #008000;">//</span><span style="color: #008000;">所以搜索到了几个字就返回几个* </span>
+<span style="color: #000000;">        });
+alert(str2)  </span><span style="color: #008000;">//</span><span style="color: #008000;">我爱*****，***上太阳升         </span>
+
+<span style="color: #008000;">//</span><span style="color: #008000;">整个过程就是，找到北京，替换成了两个*，找到天安门替换成了3个*，找到天安门替换成3个*。</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: 'Microsoft YaHei';">replace是一个很有用的方法，经常会用到。</span></p>
+<p><span style="font-family: 'Microsoft YaHei';"><strong><span style="color: #ff0000; font-size: 16px;">正则中的字符</span></strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';"><strong>()：，小括号，叫做分组符。就相当于数学里面的括号。如下：</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = '2013-6-7'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> re1 = /\d-+/g;  <span style="color: #008000;">//</span><span style="color: #008000;"> 全局匹配数字，横杠，横杠数量至少为1，匹配结果为：  3- 6-</span>
+<span style="color: #0000ff;">var</span> re1 = /(\d-）+/g;  <span style="color: #008000;">//</span><span style="color: #008000;"> 全局匹配数字，横杠，数字和横杠整体数量至少为1   3-6-</span>
+<span style="color: #0000ff;">var</span> re2  = /(\d+)(-)/g;   <span style="color: #008000;">//</span><span style="color: #008000;">  全局匹配至少一个数字，匹配一个横杠 匹配结果：2013- 6-</span></span></pre>
+</div>
+<p><span style="font-family: 'Microsoft YaHei'; color: #ff0000; font-size: 15px;">同时，正则中的每一个带小括号的项，都叫做这个正则的子项。子项在某些时候非常的有用，比如我们来看一个栗子。</span></p>
+<p><span style="color: #008000; font-family: 'Microsoft YaHei'; background-color: #ffffff;"><strong>例子：让2013-6-7 变成 2013.6.7</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = '2013-6-7'<span style="color: #000000;">;
+</span><span style="color: #0000ff;">var</span> re = /(\d+)(-)/<span style="color: #000000;">g;
+
+str </span>= str.replace(re,<span style="color: #0000ff;">function</span>($0,$1,$2<span style="color: #000000;">){
+    
+       </span><span style="color: #008000;">//</span><span style="color: #008000;">replace()中如果有子项，<br>      //第一个参数：$0（匹配成功后的整体结果  2013-  6-）,</span>
+         <span style="color: #008000;">//</span><span style="color: #008000;"> 第二个参数 : $1(匹配成功的第一个分组，这里指的是\d   2013, 6)</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;">第三个参数 : $1(匹配成功的第二个分组，这里指的是-    - - )   </span>
+    <span style="color: #0000ff;">return</span> $1 + '.';  <span style="color: #008000;">//</span><span style="color: #008000;">分别返回2013.   6.</span>
+<span style="color: #000000;">    
+});
+
+alert( str );   </span><span style="color: #008000;">//</span><span style="color: #008000;">2013.6.7</span><span style="color: #008000;">
+//</span><span style="color: #008000;">整个过程就是利用子项把2013- 6- 分别替换成了2013. 6.  最终</span><span style="color: #008000;">弹出2013.6.7</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: 'Microsoft YaHei';"><strong>match方法也会返回自己的子项，如下：</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = 'abc'<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> re = /(a)(b)(c)/<span style="color: #000000;">;
+
+alert( str.match(re) );  </span><span style="color: #008000;">//</span><span style="color: #008000;">[abc,a,b,c]( 返回的是匹配结果 以及每个子项  当match不加g的时候才可以获取到子项的集合)</span>
+</span></pre>
+</div>
+<p><span style="font-size: 16px;"><strong><span style="font-family: 'Microsoft YaHei';">补充：exec()方法：和match方法一样，搜索符合规则的内容，并返回内容，格式为数组。</span></strong></span></p>
+<p><span style="font-size: 15px;"><strong><span style="font-family: 'Microsoft YaHei';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 用法：正则.exec(字符串)；</span></strong></span></p>
+<p><span style="font-size: 15px;"><strong><span style="font-family: 'Microsoft YaHei';">属性：input(代表要匹配的字符串) &nbsp;</span></strong></span></p>
+<p><span style="font-size: 15px; color: #008000;"><strong><span style="font-family: 'Microsoft YaHei';">栗子：</span></strong></span><span style="color: #008000; font-size: 15px;"><strong>不是全局匹配的情况：</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre> <span style="color: #0000ff;">var</span> testStr = "now test001 test002"<span style="color: #000000;">;   
+ </span><span style="color: #0000ff;">var</span> re = /test(\d+)/; <span style="color: #008000;">//</span><span style="color: #008000;">只匹配一次     </span>
+ <span style="color: #0000ff;">var</span> r = ""<span style="color: #000000;">;   
+ </span><span style="color: #0000ff;">var</span> r =<span style="color: #000000;"> re.exec(testStr)
+  alert(r);</span><span style="color: #008000;">//</span><span style="color: #008000;"> test001  001 返回匹配结果，以及子项</span>
+  alert(r.length); <span style="color: #008000;">//</span><span style="color: #008000;">2   返回内容的长度</span>
+  alert(r.input); <span style="color: #008000;">//</span><span style="color: #008000;">now test001 test002    代表每次匹配成功的字符串 </span>
+  alert(r[0]);   <span style="color: #008000;">//</span><span style="color: #008000;">test001   </span>
+  alert(r[1]);  <span style="color: #008000;">//</span><span style="color: #008000;">001    代表每次匹配成功字符串中的第一个子项 (\d+) </span>
+  alert(r.index );   <span style="color: #008000;">//</span><span style="color: #008000;">  4   每次匹配成功的字符串中的第一个字符的位置</span>
+ </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 15px;"><strong><span style="color: #008000;">全局匹配：如果是全局匹配，可以通过while循环 找到每次匹配到的字符串，以及子项。每次匹配都接着上次的位置开始匹配</span></strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre> <span style="color: #0000ff;">var</span> testStr = "now test001 test002"<span style="color: #000000;">;   
+ </span><span style="color: #0000ff;">var</span> re = /test(\d+)/<span style="color: #000000;">g;    
+ </span><span style="color: #0000ff;">var</span> r = ""<span style="color: #000000;">;   
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">匹配两次 每次匹配都接着上一次的位置开始匹配，一直匹配到最后r就为false,就停止匹配了 匹配到test001 test002  </span>
+<span style="color: #0000ff;">while</span>(r =<span style="color: #000000;"> re.exec(testStr)){
+    alert(r);</span><span style="color: #008000;">//</span><span style="color: #008000;">返回每次匹配成功的字符串，以及子项，分别弹出 ：test001 001,test002  002</span>
+    alert(r.input); <span style="color: #008000;">//</span><span style="color: #008000;">分别弹出：   now test001 test002    now test001 test002  </span>
+    alert(r[0]);   <span style="color: #008000;">//</span><span style="color: #008000;">代表每次匹配成功的字符串  分别弹出：  test001     test002</span>
+    alert(r[1]);  <span style="color: #008000;">//</span><span style="color: #008000;">代表每次匹配成功字符串中的第一个子项 (\d+)  分别弹出：001   002</span>
+    alert(r.index );   <span style="color: #008000;">//</span><span style="color: #008000;"> 每次匹配成功的字符串中的第一个字符的位置，分别弹出：4  12</span>
+    alert(r.length); <span style="color: #008000;">//</span><span style="color: #008000;">分别弹出：2   2</span>
+}</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;</p>
+<p><span style="font-family: 'Microsoft YaHei';">[] ： 表示某个集合中的任意一个，比如&nbsp;[abc] 整体代表一个字符 匹配 a b c 中的任意一个，也可以是范围，[0-9] 范围必须从小到大 。</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">[^a] 整体代表一个字符 &nbsp; ：^写在[]里面的话，就代表排除的意思</span></p>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong><span style="color: #008000;">例子：匹配HTML标签 比如&lt;div class="b"&gt;hahahah &lt;/div&gt; 找出标签&lt;div class="b"&gt;&lt;/div&gt;</span></strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> re = /&lt;[^&gt;]+&gt;/g; <span style="color: #008000;">//</span><span style="color: #008000;">匹配左括号 中间至少一个非右括号的内容(因为标签里面还有属性等一些东西)，然后匹配右括号</span>
+<span style="color: #0000ff;">var</span> re = /&lt;[\w\W]+&gt;/g; <span style="color: #008000;">//</span><span style="color: #008000;">匹配左括号 中间至少一个字符或者非字符的内容，然后匹配右括号<br>// 其实就是找到左括号，然后中间可以有至少一个内容，一直到找到右括号就代表是一个标签。</span></span></pre>
+</div>
+<p><span style="color: #ff0000; font-family: 'Microsoft YaHei'; font-size: 16px;"><strong>转义字符</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';">\s : 空格</span><br><span style="font-family: 'Microsoft YaHei';">\S : 非空格</span><br><span style="font-family: 'Microsoft YaHei';">\d : 数字</span><br><span style="font-family: 'Microsoft YaHei';">\D : 非数字</span><br><span style="font-family: 'Microsoft YaHei';">\w : 字符   ( 字母 ，数字，下划线_ )</span><br><span style="font-family: 'Microsoft YaHei';">\W : 非字符</span><br><span style="font-family: 'Microsoft YaHei';">.（点）——任意字符</span><br><span style="font-family: 'Microsoft YaHei';">\. : 真正的点</span><br><span style="font-family: 'Microsoft YaHei';">\b : 独立的部分   （ 起始，结束，空格 ）</span><br><span style="font-family: 'Microsoft YaHei';">\B : 非独立的部分</span></p>
+<p><span style="color: #008000; font-family: 'Microsoft YaHei';"><strong>关于最后两个来看个栗子：</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = <span style="color: #008000;">'onetwo';
+var</span> str2 ="one two"<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> re = /one\b/;  <span style="color: #008000;">//</span><span style="color: #008000;"> e后面必须是独立的 可以是起始，空格，或结束</span>
+<span style="color: #000000;">
+alert( re.test(str) ); </span><span style="color: #008000;">//</span><span style="color: #008000;">false</span>
+alert( re.test(str2) );<span style="color: #008000;">//</span><span style="color: #008000;">true  </span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong><span style="color: #008000;">例子：写一个用class名获取节点的函数：</span></strong></span></p>
+<p><span style="font-size: 15px; font-family: 'Microsoft YaHei';"><strong><span style="color: #008000;">我们之前可能见过这样的函数：</span></strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';">    <span style="color: #0000ff;">function</span><span style="color: #000000;"> getByClass(parent,classname){ 
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;">(parent.getElementsByClassName){ 
+                </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> parent.getElementsByClassName(classname);
+    }
+    </span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+        </span><span style="color: #0000ff;">var</span> results = <span style="color: #0000ff;">new</span> Array();<span style="color: #008000;">//</span><span style="color: #008000;">用来存储所有取到的class为box的元素</span>
+        <span style="color: #0000ff;">var</span> elems = parent.getElementsByTagName("*"<span style="color: #000000;">);
+        </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i =0;i&lt;elems.length;i++<span style="color: #000000;">){ 
+          </span><span style="color: #0000ff;">if</span>(elems[i].className==<span style="color: #000000;">classname){ 
+             results.push(elems[i]);
+           }
+        }
+       </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> results;  
+    }
+} </span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: 'Microsoft YaHei';">其实这是存在问题的，比如它如果一个标签里面有两个class,或者存在相同名字的class,比如&lt;div class="box1 box1"&gt;,&lt;div class="box1 box2&gt;它就没办法获取到了，我们可以用正则来解决这个问题。</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">function</span><span style="color: #000000;"> getByClass(parent,classname){
+
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;">(parent.getElementsByClassName){ 
+       </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> parent.getElementsByClassName(classname);
+    }</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+        </span><span style="color: #0000ff;">var</span> arr =<span style="color: #000000;"> [];
+        </span><span style="color: #0000ff;">var</span> aEle = parent.getElementsByTagName('*'<span style="color: #000000;">);
+        
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">var re = /\bclassname\b/;  //不能这样写，当正则需要用到参数时候，一定要用全称的写法，简写方式会把classname当做一个字符串去匹配。</span>
+        <span style="color: #0000ff;">var</span> re = <span style="color: #0000ff;">new</span> RegExp('\\b'+classname+'\\b');  <span style="color: #008000;">//</span><span style="color: #008000;"> 匹配的时候，classname前面必须是起始或者空格，后面也是。 默认匹配成功就停止，所以就算有重复的也不会再匹配进去了。</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;">需要注意的是，全称的方式声明正则的时候，参数是字符串类型的，所以我们用的时候，需要保证这些特殊的字符在字符串内也能输出才行。\b本身是特殊字符，在字符串中无法输出，所以要加反斜杠转义才行。  </span>
+
+        <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i=0;i&lt;aEle.length;i++<span style="color: #000000;">){
+            </span><span style="color: #0000ff;">if</span><span style="color: #000000;">( re.test(aEle[i].className) ){
+                arr.push( aEle[i] );
+            }
+        }
+        
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> arr;
+    }    
+        
+}</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-family: 'Microsoft YaHei';"><strong><span style="line-height: 1.5;">\a 表示重复的某个子项 比如：</span></strong></span></p>
+<p><span style="line-height: 1.5; font-family: 'Microsoft YaHei';">\1 重复的第一个子项</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">\2 重复的第二个子项</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-family: 'Microsoft YaHei';">/ (a) (b) (c) \1/-----匹配 abca
+/ (a) (b) (c) \2/------匹配 abcb</span></pre>
+</div>
+<p><span style="font-family: 'Microsoft YaHei';"><span style="font-size: 15px;"><strong><span style="color: #008000;">例子</span></strong></span>（面试题中经常问到）<span style="font-size: 15px;"><strong><span style="color: #008000;">：找重复项最多的字符个数</span></strong></span></span></p>
+<p><span style="font-size: 14px; font-family: 'Microsoft YaHei';"><span style="color: #008000;">split():字符串中的方法，把字符串转成数组。</span></span></p>
+<p><span style="font-size: 14px; font-family: 'Microsoft YaHei';"><span style="color: #008000;">sort():数组中的排序方法，按照ACALL</span><span style="color: #008000;">码进行排序。</span></span></p>
+<p><span style="font-size: 14px; font-family: 'Microsoft YaHei';"><span style="color: #008000;">join():数组中的方法，把数组转换为字符串</span></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = 'assssjdssskssalsssdkjsssdss'<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> arr = str.split(''); <span style="color: #008000;">//</span><span style="color: #008000;">把字符串转换为数组</span>
+str = arr.sort().join(''); <span style="color: #008000;">//</span><span style="color: #008000;">首先进行排序，这样结果会把相同的字符放在一起，然后再转换为字符串</span><span style="color: #008000;">
+//</span><span style="color: #008000;">alert(str);  // aaddjjkklsssssssssssssssss</span>
+
+ <span style="color: #0000ff;">var</span> value = ''<span style="color: #000000;">;
+ </span><span style="color: #0000ff;">var</span> index = 0<span style="color: #000000;">; 
+</span><span style="color: #0000ff;">var</span> re = /(\w)\1+/g;  <span style="color: #008000;">//</span><span style="color: #008000;">匹配字符，且重复这个字符，重复次数至少一次。</span>
+str.replace(re,<span style="color: #0000ff;">function</span>($0,$1<span style="color: #000000;">){ 
+   </span><span style="color: #008000;">//</span><span style="color: #008000;">alert($0);   代表每次匹配成功的结果 : aa dd jj kk l sssssssssssssssss</span>
+     <span style="color: #008000;">//</span><span style="color: #008000;">alert($1);  代表每次匹配成功的第一个子项，也就是\w:  a d j k l S </span>
+　　
+    <span style="color: #0000ff;">if</span>(index&lt;$0.length){  <span style="color: #008000;">//</span><span style="color: #008000;">如果index保存的值小于$0的长度就进行下面的操作</span>
+          index = $0.length;  <span style="color: #008000;">//</span><span style="color: #008000;"> 这样index一直保存的就在最大的长度</span>
+           value = $1;  <span style="color: #008000;">//</span><span style="color: #008000;">value保存的是出现最多的这个字符</span>
+<span style="color: #000000;">    }
+
+}); 
+
+alert(</span>'最多的字符:'+value+',重复的次数:'+index);  // s   17</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #ff0000; font-size: 15px;"><span style="font-size: 16px;"><strong>量词</strong></span>：</span><span style="font-size: 14px;">代表出现的次数</span></span></pre>
+<p><span style="font-family: 'Microsoft YaHei';">{n,m}：至少出现n次，最多m次</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">{n,} :至少n次</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">* :任意次 相当于{0,}</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">？ ：零次或一次 相当于{0,1}</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">+ ：一次或任意次相当于 {1,}</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">{n}： 正好n次</span></p>
+<p><span style="color: #008000; font-size: 15px; font-family: 'Microsoft YaHei';"><strong>例子：判断是不是QQ号</strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';">//^ : 放在正则的最开始位置，就代表起始的意思，<span style="color: #ff0000;"><strong>注意 &nbsp;/[^a] / &nbsp; 和 &nbsp; /^[a]/是不一样的，前者是排除的意思，后者是代表首位。</strong></span></span><br><span style="font-family: 'Microsoft YaHei';">//$ : 正则的最后位置 , 就代表结束的意思</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';">     <span style="color: #008000;">//</span><span style="color: #008000;">首先想QQ号的规则 </span>
+      1<span style="color: #000000;"> 首位不能是0 
+      </span>2 必须是 5-<span style="color: #000000;">12位的数字
+   
+    </span><span style="color: #0000ff;">var</span> aInput = document.getElementsByTagName('input'<span style="color: #000000;">);
+    </span><span style="color: #0000ff;">var</span> re = /^[1-9]\d{4,11}$/<span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">123456abc为了防止出现这样的情况，所以必须限制最后</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;">首位是0-9，接着是4-11位的数字类型。</span>
+aInput[1].onclick = <span style="color: #0000ff;">function</span><span style="color: #000000;">(){
+    </span><span style="color: #0000ff;">if</span>( re.test(aInput[0<span style="color: #000000;">].value) ){
+        alert(</span>'是QQ号'<span style="color: #000000;">);
+    }</span><span style="color: #0000ff;">else</span><span style="color: #000000;">{
+        alert(</span>'不是QQ号'<span style="color: #000000;">);
+    }
+
+};
+    </span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p><span style="color: #008000; font-size: 15px; font-family: 'Microsoft YaHei';"><strong>例子：去掉前后空格（面试题经常出现）</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';"><span style="color: #0000ff;">var</span> str = '  hello  '<span style="color: #000000;">;
+
+alert( </span>'('+trim(str)+')' );<span style="color: #008000;">//</span><span style="color: #008000;">为了看出区别所以加的括号。 (hello)</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> trim(str){
+   </span><span style="color: #0000ff;">var</span> re = /^\s+|\s+$/g; <span style="color: #008000;">//</span><span style="color: #008000;"> |代表或者   \s代表空格  +至少一个    前面有至少一个空格 或者后面有至少一个空格 且全局匹配</span>
+  <span style="color: #0000ff;">return</span> str.replace(re,''); <span style="color: #008000;">//</span><span style="color: #008000;">把空格替换成空</span>
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000; font-size: 16px; font-family: 'Microsoft YaHei';"><strong>常用的一些表单校验</strong></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-family: 'Microsoft YaHei';">匹配中文：[\u4e00-\u9fa5] <span style="color: #008000;">//</span><span style="color: #008000;">中文ACALL码的范围</span>
+行首行尾空格：^\s*|\s*$ <span style="color: #008000;">//</span><span style="color: #008000;">首行出现任意个空格或者尾行出现任意个空格（任意表示也可以没有空格）</span>
+<span style="color: #000000;">
+Email：</span>^\w+@[a-z0-9]+(\.[a-z]+){1,3<span style="color: #000000;">}$  
+</span><span style="color: #008000;">      //</span><span style="color: #008000;">起始至少为一个字符(\w字母，数字或者下划线)，然后匹配@,接着为任意个字母或者数字，\.代表真正的点，.后面为至少一个的字符（a-z）,同时这个(比如.com)整体为一个子项作为结束，可以出现1-3次。因为有的邮箱是这样的.cn.net。（xxxx.@qq.com xxxx.@163.com xxxx.@16.cn.net ）</span>
+<span style="color: #000000;">
+网址：[a</span>-zA-z]+:<span style="color: #008000;">//</span><span style="color: #008000;">[^\s]*   http://......</span><span style="color: #008000;">
+  //</span><span style="color: #008000;">匹配不分大小写的任意字母，接着是//,后面是非空格的任意字符</span>
+<span style="color: #000000;">
+邮政编码：[</span>1-9]\d{5<span style="color: #000000;">}  //起始数字不能为0，然后是5个数字
+身份证：[</span>1-9]\d{14}|[1-9]\d{17}|[1-9]\d{16}x</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="assets/1557109556-69c5a8ac3fa60e0848d784a6dd461da6.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px; font-family: 'Microsoft YaHei';"><strong><span style="color: #ff0000;">为了方便且不冲突，我们可以用json的格式 建立自己的空间，如下：</span></strong></span></p>
+<p><span style="font-family: 'Microsoft YaHei';">/*</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">var re = {</span><br><span style="font-family: 'Microsoft YaHei';">	email : /^\w+@[a-z0-9]+(\.[a-z]+){1,3}$/,</span><br><span style="font-family: 'Microsoft YaHei';">	number : /\d+/</span><br><span style="font-family: 'Microsoft YaHei';">};</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">re.email</span></p>
+<p><span style="font-family: 'Microsoft YaHei';">*/</span></p>
+<p>&nbsp;</p>
+<p><span style="color: #ff0000; font-size: 16px; font-family: 'Microsoft YaHei';">正则的基础知识点大概就这么多，写的有些乱，欢迎指正，如果要转载 请注明出处。</span></p>
+<p><span style="color: #ff0000; font-size: 16px; font-family: 'Microsoft YaHei';">&nbsp;</span></p>
+<p>&nbsp;</p></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="https://www.cnblogs.com/moqing/category/841673.html" target="_blank">JS那点事</a></div>
+<div id="EntryTag">标签: <a href="https://www.cnblogs.com/moqing/tag/JS%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">JS正则表达式</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5665126,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow('dd7b0e05-a3f5-e511-9fc1-ac853d9f53cc');" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="assets/1557109556-d5aea86bdec32a66be1446dacc4efd84.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="assets/1557109556-0d5b76b4ae98cefd7c2d4300c27b1c69.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/moqing/" target="_blank"><img src="assets/1557109556-ae3536d04056bfaaf50ea5ab41f97925.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/moqing/">全凭一口仙气儿活着</a><br>
+            <a href="http://home.cnblogs.com/u/moqing/followees">关注 - 9</a><br>
+            <a href="http://home.cnblogs.com/u/moqing/followers">粉丝 - 385</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow('dd7b0e05-a3f5-e511-9fc1-ac853d9f53cc');return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5665126,'Digg')">
+        <span class="diggnum" id="digg_count">75</span>
+    </div>
+    <div class="buryit" onclick="votePost(5665126,'Bury')">
+        <span class="burynum" id="bury_count">5</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/moqing/p/5654762.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/moqing/p/5654762.html" title="发布于2016-07-08 22:32">git常用命令</a><br><a href="https://www.cnblogs.com/moqing/p/5666476.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/moqing/p/5666476.html" title="发布于2016-07-14 20:20">JS运动从入门到兴奋1</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2016-07-13 09:24</span> <a href="https://www.cnblogs.com/moqing/">全凭一口仙气儿活着</a> 阅读(<span id="post_view_count">54427</span>) 评论(<span id="post_comment_count">66</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5665126" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/moqing/p/5665126.html#" onclick="AddToWz(5665126);return false;">收藏</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"><div class="pager"><a href="#!comments" onclick="commentManager.renderComments(1,50);return false;">&lt; Prev</a><a href="#!comments" onclick="commentManager.renderComments(1,50);return false;">1</a><span class="current">2</span></div></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3859382" class="layer">#51楼</a><a name="3859382" id="comment_anchor_3859382"></a>  <span class="comment_date">2017-12-06 16:49</span> <a id="a_comment_author_3859382" href="https://www.cnblogs.com/javazxy/" target="_blank">$&gt;_&lt;$</a> <a href="http://msg.cnblogs.com/send/%24%26gt%3B_%26lt%3B%24" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3859382" class="blog_comment_body">写的很好，看着很舒服，这博客页面是自己开发的吗</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3859382,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3859382,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3859953" class="layer">#52楼</a><a name="3859953" id="comment_anchor_3859953"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2017-12-07 11:40</span> <a id="a_comment_author_3859953" href="https://www.cnblogs.com/moqing/" target="_blank">全凭一口仙气儿活着</a> <a href="http://msg.cnblogs.com/send/%E5%85%A8%E5%87%AD%E4%B8%80%E5%8F%A3%E4%BB%99%E6%B0%94%E5%84%BF%E6%B4%BB%E7%9D%80" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3859953" class="blog_comment_body"><a href="#3859382" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3859382);">@</a>
+$&gt;_&lt;$<br>不是阿 ，博客园自动开通的。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3859953,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3859953,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3860078" class="layer">#53楼</a><a name="3860078" id="comment_anchor_3860078"></a>  <span class="comment_date">2017-12-07 14:03</span> <a id="a_comment_author_3860078" href="https://www.cnblogs.com/javazxy/" target="_blank">$&gt;_&lt;$</a> <a href="http://msg.cnblogs.com/send/%24%26gt%3B_%26lt%3B%24" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3860078" class="blog_comment_body"><a href="#3859953" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3859953);">@</a>
+沫晴的前端世界<br>噢噢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3860078,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3860078,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3870224" class="layer">#54楼</a><a name="3870224" id="comment_anchor_3870224"></a>  <span class="comment_date">2017-12-20 15:42</span> <a id="a_comment_author_3870224" href="http://home.cnblogs.com/u/1298711/" target="_blank">竹林中</a> <a href="http://msg.cnblogs.com/send/%E7%AB%B9%E6%9E%97%E4%B8%AD" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3870224" class="blog_comment_body">博主666</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3870224,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3870224,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3873399" class="layer">#55楼</a><a name="3873399" id="comment_anchor_3873399"></a>  <span class="comment_date">2017-12-25 15:08</span> <a id="a_comment_author_3873399" href="https://www.cnblogs.com/founderswitch/" target="_blank">Mr.方</a> <a href="http://msg.cnblogs.com/send/Mr.%E6%96%B9" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3873399" class="blog_comment_body">写得好</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3873399,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3873399,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3889346" class="layer">#56楼</a><a name="3889346" id="comment_anchor_3889346"></a>  <span class="comment_date">2018-01-15 17:21</span> <a id="a_comment_author_3889346" href="http://home.cnblogs.com/u/1317296/" target="_blank">black--pi</a> <a href="http://msg.cnblogs.com/send/black--pi" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3889346" class="blog_comment_body">厉害！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3889346,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3889346,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3901287" class="layer">#57楼</a><a name="3901287" id="comment_anchor_3901287"></a>  <span class="comment_date">2018-01-31 17:10</span> <a id="a_comment_author_3901287" href="http://home.cnblogs.com/u/1128536/" target="_blank">翻滚吧核桃</a> <a href="http://msg.cnblogs.com/send/%E7%BF%BB%E6%BB%9A%E5%90%A7%E6%A0%B8%E6%A1%83" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3901287" class="blog_comment_body">支持一个，很清晰谢啦</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3901287,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3901287,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3935030" class="layer">#58楼</a><a name="3935030" id="comment_anchor_3935030"></a>  <span class="comment_date">2018-03-27 17:37</span> <a id="a_comment_author_3935030" href="https://www.cnblogs.com/denfeier/" target="_blank">码就完事了</a> <a href="http://msg.cnblogs.com/send/%E7%A0%81%E5%B0%B1%E5%AE%8C%E4%BA%8B%E4%BA%86" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3935030" class="blog_comment_body">舒服了，条理畅通，思路清晰（首评）</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3935030,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3935030,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3935815" class="layer">#59楼</a><a name="3935815" id="comment_anchor_3935815"></a>  <span class="comment_date">2018-03-28 15:41</span> <a id="a_comment_author_3935815" href="https://www.cnblogs.com/keson-xiao/" target="_blank">keson_xiao</a> <a href="http://msg.cnblogs.com/send/keson_xiao" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3935815" class="blog_comment_body">厉害，通熟易懂，我每个例子都试了一下，收获很大，多谢博主！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3935815,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3935815,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3935824" class="layer">#60楼</a><a name="3935824" id="comment_anchor_3935824"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2018-03-28 15:45</span> <a id="a_comment_author_3935824" href="https://www.cnblogs.com/moqing/" target="_blank">全凭一口仙气儿活着</a> <a href="http://msg.cnblogs.com/send/%E5%85%A8%E5%87%AD%E4%B8%80%E5%8F%A3%E4%BB%99%E6%B0%94%E5%84%BF%E6%B4%BB%E7%9D%80" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3935824" class="blog_comment_body"><a href="#3935815" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3935815);">@</a>
+keson_xiao<br>嘿嘿，谢谢支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3935824,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3935824,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3935825" class="layer">#61楼</a><a name="3935825" id="comment_anchor_3935825"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2018-03-28 15:45</span> <a id="a_comment_author_3935825" href="https://www.cnblogs.com/moqing/" target="_blank">全凭一口仙气儿活着</a> <a href="http://msg.cnblogs.com/send/%E5%85%A8%E5%87%AD%E4%B8%80%E5%8F%A3%E4%BB%99%E6%B0%94%E5%84%BF%E6%B4%BB%E7%9D%80" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3935825" class="blog_comment_body"><a href="#3935030" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,3935030);">@</a>
+码就完事了<br>谢谢支持，好久没更了，评论让我坚持阿。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3935825,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3935825,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3944687" class="layer">#62楼</a><a name="3944687" id="comment_anchor_3944687"></a>  <span class="comment_date">2018-04-08 09:52</span> <a id="a_comment_author_3944687" href="https://www.cnblogs.com/jianzhan/" target="_blank">野生程序员</a> <a href="http://msg.cnblogs.com/send/%E9%87%8E%E7%94%9F%E7%A8%8B%E5%BA%8F%E5%91%98" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3944687" class="blog_comment_body">写的不错,记录下</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3944687,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3944687,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4003770" class="layer">#63楼</a><a name="4003770" id="comment_anchor_4003770"></a>  <span class="comment_date">2018-06-22 22:14</span> <a id="a_comment_author_4003770" href="http://home.cnblogs.com/u/1409807/" target="_blank">幻殇丶银</a> <a href="http://msg.cnblogs.com/send/%E5%B9%BB%E6%AE%87%E4%B8%B6%E9%93%B6" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4003770" class="blog_comment_body">ASCALL码？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4003770,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4003770,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4018928" class="layer">#64楼</a><a name="4018928" id="comment_anchor_4018928"></a>  <span class="comment_date">2018-07-12 15:49</span> <a id="a_comment_author_4018928" href="https://www.cnblogs.com/-YJ01-/" target="_blank">奈何鸿飞雁</a> <a href="http://msg.cnblogs.com/send/%E5%A5%88%E4%BD%95%E9%B8%BF%E9%A3%9E%E9%9B%81" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4018928" class="blog_comment_body">感谢博主，博主的文章都清晰易懂，写得很好！！！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4018928,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4018928,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4225856" class="layer">#65楼</a><a name="4225856" id="comment_anchor_4225856"></a>  <span class="comment_date">2019-04-09 09:06</span> <a id="a_comment_author_4225856" href="https://www.cnblogs.com/whq920729/" target="_blank">whq920729</a> <a href="http://msg.cnblogs.com/send/whq920729" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4225856" class="blog_comment_body"><img src="assets/1557109556-257406bbc47e5f526d46a029e6f21fb1.png" alt="" border="0" "=""><br>文章写的极度舒适，这里有个问题，在控制台运行报错？大神这是咋回事？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4225856,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4225856,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4226876" class="layer">#66楼</a><a name="4226876" id="comment_anchor_4226876"></a>  <span class="comment_date">2019-04-10 08:15</span> <a id="a_comment_author_4226876" href="https://www.cnblogs.com/whq920729/" target="_blank">whq920729</a> <a href="http://msg.cnblogs.com/send/whq920729" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4226876" class="blog_comment_body"><img src="assets/1557109556-04ec41597262318e32d4b55f6b48522f.png" alt="" border="0" "="">今天运行这段代码，和您运行的结果不一致？“l”字符没有打出来。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4226876,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4226876,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"><div class="pager"><a href="#!comments" onclick="commentManager.renderComments(1,50);return false;">&lt; Prev</a><a href="#!comments" onclick="commentManager.renderComments(1,50);return false;">1</a><span class="current">2</span></div></div></div>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/moqing/p/5665126.html#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-工控')">【推荐】超50万C++/C#源码: 大型实时仿真组态图形源码</a><br><a href="https://www.bagevent.com/event/2195041?bag_track=13072958" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-看雪')">【活动】看雪2019安全开发者峰会，共话安全领域焦点话题</a><br><a href="https://ke.qq.com/adActivity.html?name=xiangxueketang2" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-享学')">【培训】Java程序员年薪40W，他1年走了别人5年的路</a><br></div>
+<div id="opt_under_post"></div>
+
+
+
+
+<div id="under_post_news"></div>
+
+<div id="under_post_kb"></div>
+
+
+</div>
+
+    
+	</div><!--end: forFlow -->
+	</div></DIV></DIV>
+      
+        <hr />
+        <!-- clipping information -->
+        <div class="clipping-information">
+          <label>原网址: <a href="http://www.cnblogs.com/moqing/p/5665126.html" target="_blank" referrerpolicy="no-referrer" rel="noopener noreferrer">访问</a></label><br />
+          <label>创建于: 2019-05-06 10:25:56</label><br />
+          <label>目录: default</label><br />
+          <label>标签: 无</label>
+        </div>
+    </div>
+  </body>
+</html>
